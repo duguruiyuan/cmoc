@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:tx="http://www.springframework.org/schema/tx" 
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/task 
+http://www.springframework.org/schema/task/spring-task-4.0.xsd" > 
+	
+    <http pattern="/js/**" security="none" />
+	<http pattern="/css/**" security="none" />
+	<http pattern="/**/*.js" security="none"/>
+	<http pattern="/**/*.css" security="none"/>
+	<http pattern="/images/**" security="none" />
+	<http pattern="/image/**" security="none" />
+	<http pattern="/auth/login" security="none" />
+	<http pattern="/favicon.ico" security="none" />
+	<http pattern="/index.jsp" security="none"/>
+	<http pattern="/common/**" security="none"/>
+	<http pattern="/servlet/VerifyCodeServlet" security="none" />
+	
+    <http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+        <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+        <access-denied-handler error-page="/403.html"/>        
+    	<logout invalidate-session="true" logout-success-url="/" logout-url="/logout"/>
+       	<!-- 单用户登陆 -->
+        <session-management invalid-session-url="/auth/login">
+        	<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
+        <!-- 自定义UsernamePasswordAuthenticationFilter，校验用户输入和验证码 -->
+	    <custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER" />
+	    <!--自定义filter，用户的角色和角色对应权限的映射  -->
+	    <custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+    </http>
+    
+    <!-- 登录验证器 -->  
+  	<beans:bean id="loginFilter"  
+    	class="com.xuequ.cmoc.auth.MyUsernamePasswordAuthenticationFilter">  
+    	<beans:property name="filterProcessesUrl" value="/j_spring_security_check"></beans:property>
+        <!-- 验证成功后的处理  -->   
+    	<beans:property name="authenticationSuccessHandler" ref="loginAuthenticationSuccessHandler"></beans:property>  
+        <!-- 验证失败后的处理  --> 
+    	<beans:property name="authenticationFailureHandler" ref="loginAuthenticationFailureHandler"></beans:property>  
+    	
+    	<beans:property name="authenticationManager" ref="loginAuthenticationManage"></beans:property>
+    	
+    	<beans:property name="useCaptcha" value="true"></beans:property>
+  	</beans:bean>
+  	
+  	<beans:bean id="myFilter"
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<!-- 全量的权限和角色的对应关系 -->
+		<beans:property name="securityMetadataSource" ref="defaultSecurityMetadataSource" />
+		<!-- 用户拥有的权限 -->
+		<beans:property name="authenticationManager" ref="loginAuthenticationManage" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="defaultAccessDecisionManager" />
+	</beans:bean>  
+	
+	<!-- 资源源数据定义，即定义某一资源可以被哪些角色访问 -->
+	<beans:bean id="defaultSecurityMetadataSource" 
+		class="com.xuequ.cmoc.auth.DefaultSecurityMetadataSource" />
+    
+    <authentication-manager alias="loginAuthenticationManage">
+  		<authentication-provider ref="loginAuthenticationProvider" />
+  	</authentication-manager> 
+  	
+  	 <!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->
+	<beans:bean id="defaultAccessDecisionManager" 
+		class="com.xuequ.cmoc.auth.DefaultAccessDecisionManager" />
+		
+  	<authentication-manager alias="loginAuthenticationManage">
+  		<authentication-provider ref="loginAuthenticationProvider" />
+  	</authentication-manager> 
+  	
+  	<beans:bean id="loginAuthenticationProvider" class="com.xuequ.cmoc.auth.LoginAuthenticationProvider">
+  		<beans:property name="userDetailService" ref="dbUserDetailService" />
+  		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+  	</beans:bean>
+  	
+  	<beans:bean id="dbUserDetailService"
+		class="com.xuequ.cmoc.service.DefaultUserDetailsService" />
+		
+	<!-- 存储的密码的加密方式 -->
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+		
+  	<!-- 登陆成功处理 -->
+  	<beans:bean id="loginAuthenticationSuccessHandler" 
+  		class="com.xuequ.cmoc.auth.DefaultAuthenticationSuccessHandler" />
+  		
+  	<!-- 登陆失败处理 -->
+  	<beans:bean id="loginAuthenticationFailureHandler"
+  		class="com.xuequ.cmoc.auth.DefaultAuthenticationFailureHandler" />
+  	
+    <!-- 未登录的切入点 -->  
+  	<beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">  
+    	<beans:property name="loginFormUrl" value="/auth/login"></beans:property>  
+  	</beans:bean>
+  
+</beans:beans>
