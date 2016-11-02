@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiazhangbang.jzb.mapper.SysUserMapper">
-  <resultMap id="BaseResultMap" type="com.jiazhangbang.jzb.domain.SysUser">
+<mapper namespace="com.xuequ.cmoc.dao.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.SysUser">
     <id column="ID_USER" jdbcType="VARCHAR" property="idUser" />
     <result column="USER_ACCOUNT" jdbcType="VARCHAR" property="userAccount" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
@@ -16,7 +16,7 @@
   
   <sql id="Base_Column_List">
     ID_USER, USER_ACCOUNT, USER_NAME, VALID_FLAG, CREATOR, LAST_UPDATOR, CREATE_TIME, 
-    LAST_UPDATE_TIME
+    LAST_UPDATE_TIME,USER_TYPE
   </sql>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -26,14 +26,14 @@
     where ID_USER = #{idUser,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectUser" parameterType="com.jiazhangbang.jzb.mapper.SysUserMapper" resultMap="BaseResultMap">
+  <select id="selectUser" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" />
   	from t_sys_user where VALID_FLAG = 1 and
   	USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR} and
   	PASSWORD = #{password,jdbcType=VARCHAR}
   </select>
   
-  <insert id="insertSelective" parameterType="com.jiazhangbang.jzb.domain.SysUser">
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.SysUser">
     insert into t_sys_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="idUser != null">
@@ -95,7 +95,7 @@
     </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.jiazhangbang.jzb.domain.SysUser">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.SysUser">
     update t_sys_user
     <set>
       <if test="userAccount != null">

@@ -10,19 +10,17 @@ String basePath = request.getScheme() + "://"
 <html>       
 	<head>
 		<meta charset="utf-8">
-		<title>客服工单管理系统</title>
+		<title>支付清算管理系统</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 		<link rel="icon" href="<%=basePath %>/favicon.ico" type="image/x-icon"/>  
 		<link rel="shortcut icon" href="<%=basePath %>/favicon.ico" type="image/x-icon" />
-		<link href="<%=basePath %>/animated_favicon.gif" rel="icon" type="image/gif" >  
+		<link href="<%=basePath %>/animated_favicon.gif" rel="icon" type="image/gif" />  
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/login.css"/>
 		<script type="text/javascript">
 			if (window.top !== window.self) {
 				window.top.location.href = window.self.location.href;
 			}
-			var sessionId = '${sessionId}';
-			var outURL = ${outURL};
 		</script>
 	</head>
     <body>
@@ -37,9 +35,6 @@ String basePath = request.getScheme() + "://"
 	 			</div>
 	 			<div class="loginLine pr clearfix">
 	 				<label>密码：</label><input id="j_password" name="j_password" type="password" class="loginInput loginPwd" maxlength="16"><span class="icon_pwd"></span>
-	 			</div>
-	 			<div class="loginLine clearfix">
-	 				<label>验证码：</label><input type="text" id="veryCode" name="validateCode" class="loginInput loginCode" maxlength="4"/><img id="verifyCodeImgId" class="hand" title="点击刷新验证码" onclick="changeVerifyCode()" src="<%=basePath %>/servlet/VerifyCodeServlet" width="84" height="24"/>
 	 			</div>
 	 			<div class="loginLine clearfix">
 	 				<button type="submit" class="loginBtn">登&nbsp;&nbsp;录</button>
@@ -69,6 +64,6 @@ String basePath = request.getScheme() + "://"
 		};
 	</script>
 	<script src="<%=basePath %>/js/jquery.min.js"></script>
+	<script src="<%=basePath %>/js/login.js"></script>
 	<script src="<%=basePath %>/js/common.js"></script>
-	<script src="<%=basePath %>/js/login.js"></script>	
 </html>

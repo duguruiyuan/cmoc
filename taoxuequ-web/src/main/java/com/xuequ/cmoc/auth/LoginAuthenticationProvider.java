@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.xuequ.cmoc.service.DefaultUserDetailsService;
@@ -44,12 +45,13 @@ public class LoginAuthenticationProvider extends AbstractUserDetailsAuthenticati
 	 * @param userVO
 	 * @return
 	 */
-	private UserDetails userLoginAuth(UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-		UserDetails appUser = null;
+	private AppUser userLoginAuth(UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+		AppUser appUser = null;
 		String userAccount = authentication.getPrincipal().toString();
 		String password = authentication.getCredentials().toString();
 		try {
 			appUser = userDetailService.setUserDetails(userAccount, MD5Util.md5(password));
+			appUser.setAuthorities(getAuthorities());
 		} catch (AuthException e1){
         	throw new AuthException(e1.getMessage());
         } catch (Exception e) {
@@ -66,12 +68,11 @@ public class LoginAuthenticationProvider extends AbstractUserDetailsAuthenticati
 	 * @return
 	 */
 	public Collection<GrantedAuthority> getAuthorities() {
-
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new GrantedAuthorityImpl("ROLE_USER"));
 		return authList;
 	}
-
+	
 	public Md5PasswordEncoder getPasswordEncoder() {
 		return passwordEncoder;
 	}

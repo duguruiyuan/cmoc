@@ -19,7 +19,7 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 >
 	
 	<!-- 自动扫描(自动注入),不扫描带有@Controller注解的类。因为这些类已经随容器启动时,在servlet-context中扫描过一遍了 -->  
-	<context:component-scan base-package="com.xuecheng.cta">
+	<context:component-scan base-package="com.xuequ.cmoc">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>  
 	</context:component-scan>
 	
@@ -97,7 +97,8 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.xuequ.cmoc.dao" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="annotationClass" value="org.mybatis.spring.annotation.MapperScan"/>
+		<!-- <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> -->
 	</bean>
 
 	<!-- 配置事务管理器 -->
@@ -128,7 +129,7 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 	</tx:advice>
 	<!--加入proxy-target-class="true" 即可,默认是false;-->  
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="transactionPointcut" expression="execution(* com.xuequ.cmoc.service..*Impl.*(..))" />
+		<aop:pointcut id="transactionPointcut" expression="execution(* com.xuequ.cmoc.*.*Service+.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>
 
@@ -150,4 +151,6 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     	<property name="maxUploadSize" value="20000000"/>
     </bean>
+    
+    <import resource="classpath:spring-security.xml"/>
 </beans>

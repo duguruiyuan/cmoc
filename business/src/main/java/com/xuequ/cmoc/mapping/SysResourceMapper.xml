@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jiazhangbang.jzb.mapper.SysResourceMapper" >
-  <resultMap id="BaseResultMap" type="com.jiazhangbang.jzb.domain.SysResource" >
+<mapper namespace="com.xuequ.cmoc.dao.SysResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.SysResource" >
     <id column="ID_RESOURCE" property="idResource" jdbcType="INTEGER" />
     <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
     <result column="RESOURCE_URL" property="resourceUrl" jdbcType="VARCHAR" />
@@ -9,13 +9,18 @@
     <result column="RESOURCE_CODE" property="resourceCode" jdbcType="VARCHAR" />
     <result column="PARENT_RESOURCE_ID" property="parentResourceId" jdbcType="INTEGER" />
     <result column="WEIGHT" property="weight" jdbcType="INTEGER" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP" />
     <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
+    <result column="IS_QUICK_MENU" property="isQuickMenu" jdbcType="VARCHAR" />
     <result column="IS_SYSTEM_CONF_MENU" property="isSystemConfMenu" jdbcType="VARCHAR" />
   </resultMap>
-  
   <sql id="Base_Column_List" >
     ID_RESOURCE, RESOURCE_NAME, RESOURCE_URL, RESOURCE_TYPE, RESOURCE_CODE, PARENT_RESOURCE_ID, 
-    WEIGHT, IS_DELETE, IS_SYSTEM_CONF_MENU
+    WEIGHT, CREATOR, LAST_UPDATOR, CREATE_TIME, LAST_UPDATE_TIME, IS_DELETE, IS_QUICK_MENU, 
+    IS_SYSTEM_CONF_MENU
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -40,7 +45,7 @@
   	from t_sys_resource where IS_DELETE = 'N'
   </select>
   
-  <insert id="insertSelective" parameterType="com.jiazhangbang.jzb.domain.SysResource" >
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.SysResource" >
     insert into t_sys_resource
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idResource != null" >
@@ -102,7 +107,7 @@
     </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.jiazhangbang.jzb.domain.SysResource" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.SysResource" >
     update t_sys_resource
     <set >
       <if test="resourceName != null" >

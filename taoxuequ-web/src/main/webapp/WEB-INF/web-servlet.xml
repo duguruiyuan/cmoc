@@ -22,7 +22,8 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>  
 	</context:component-scan>  
 
- 	<mvc:resources location="/images/" mapping="/images/**"/>  
+ 	<mvc:resources location="/images/" mapping="/images/**"/> 
+ 	<mvc:resources location="/image/" mapping="/image/**"/>  
  	<mvc:resources location="/js/" mapping="/js/**"/>  
  	<mvc:resources location="/css/" mapping="/css/**"/>  
 
@@ -42,7 +43,7 @@
 		        <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
 		        <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-					<property name="prefix" value="/page/"/>
+					<property name="prefix" value="/WEB-INF/page/"/>
 					<property name="suffix" value=".jsp"/>
 				</bean>
 		    </list>

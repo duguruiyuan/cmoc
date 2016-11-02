@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.xuequ.cmoc.auth.AppUser;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.enums.StatusEnum;
-import org.springframework.core.DefaultParameterNameDiscoverer;
 
 @RequestMapping("auth")
 @Controller
 public class LoginController {
 	
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(LoginController.class);
+	
 	/**
      * 根据用户角色来决定默认的展现页面.
      * @return String

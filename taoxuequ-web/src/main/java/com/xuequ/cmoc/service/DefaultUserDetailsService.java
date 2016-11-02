@@ -30,7 +30,7 @@ public class DefaultUserDetailsService {
      * @param userPassword
      * @return
      */
-	public UserDetails setUserDetails(String userName, String userPassword) throws AuthException,Exception{
+	public AppUser setUserDetails(String userName, String userPassword) throws AuthException,Exception{
 		SysUser sysUser = sysUserMapper.selectUser(userName, userPassword);
 		if(sysUser == null) {
 			throw new com.xuequ.cmoc.auth.AuthException(AuthConstant.USER_PASSWORD_NOT_MATCH_MESSAGE);

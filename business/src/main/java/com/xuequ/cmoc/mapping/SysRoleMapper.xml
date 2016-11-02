@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jiazhangbang.jzb.mapper.SysRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.jiazhangbang.jzb.domain.SysRole" >
+<mapper namespace="com.xuequ.cmoc.dao.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.SysRole" >
     <id column="ID_ROLE" property="idRole" jdbcType="INTEGER" />
     <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
     <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     where ID_ROLE = #{idRole,jdbcType=INTEGER}
   </select>
   
-  <insert id="insertSelective" parameterType="com.jiazhangbang.jzb.domain.SysRole" >
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.SysRole" >
     insert into t_sys_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idRole != null" >
@@ -80,7 +80,7 @@
     </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.jiazhangbang.jzb.domain.SysRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.SysRole" >
     update t_sys_role
     <set >
       <if test="roleName != null" >

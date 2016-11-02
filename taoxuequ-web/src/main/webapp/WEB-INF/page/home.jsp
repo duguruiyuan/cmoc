@@ -10,18 +10,13 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>主页</title>
+		<title>支付清算管理项目</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>css/display.css"/>
 		<!--[if lt IE 9]><script src="js/html5.js"></script><![endif]-->
-		<script src="<%=basePath %>js/jquery.min.js"></script>
-		<script src="<%=basePath %>js/plugin/artDialog/artDialog.source.js?skin=chrome"></script>
-		<script src="<%=basePath %>js/plugin/artDialog/plugins/iframeTools.source.js"></script>
-		<script src="<%=basePath %>js/common.js"></script>
-		
 	</head>
 	<body style="height:800px;background:#fff;">
-		<img src="<%=basePath %>image/homeBG.jpg" style="margin-top:50px;" width="100%">
+		<img src="<%=basePath %>image/homeBG.jpg" style="margin-top:80px;" width="100%">
 	</body>
 </html>
