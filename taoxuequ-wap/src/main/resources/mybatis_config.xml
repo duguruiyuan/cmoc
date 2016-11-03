@@ -3,7 +3,7 @@
 <configuration>
 	<plugins>
 		<plugin interceptor="com.xuequ.cmoc.interceptor.PageInterceptor">
-			<property name="databaseType" value="Oracle" />
+			<property name="databaseType" value="mysql" />
 		</plugin>
 	</plugins>
 </configuration>

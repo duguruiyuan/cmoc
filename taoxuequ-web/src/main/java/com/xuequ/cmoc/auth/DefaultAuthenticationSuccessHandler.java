@@ -31,6 +31,10 @@ public class DefaultAuthenticationSuccessHandler implements
         session = request.getSession(true);
         //将原session 的参数转移到新的session
         transferAttributes(attributesToMigrate, session);
+        if (authentication != null) {
+        	AppUser appUser = (AppUser)authentication.getPrincipal();
+            request.getSession().setAttribute("appUser", appUser);
+        }
         //记录日志
         LOG.info("Authentication success: account:" + request.getParameter("j_username")
                 + ", ipadress:" + request.getRemoteAddr());

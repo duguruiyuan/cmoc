@@ -97,7 +97,8 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.xuequ.cmoc.dao" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="annotationClass" value="org.mybatis.spring.annotation.MapperScan"/>
+		<!-- <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> -->
 	</bean>
 
 	<!-- 配置事务管理器 -->
@@ -128,7 +129,7 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 	</tx:advice>
 	<!--加入proxy-target-class="true" 即可,默认是false;-->  
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="transactionPointcut" expression="execution(* com.xuequ.cmoc.service..*Impl.*(..))" />
+		<aop:pointcut id="transactionPointcut" expression="execution(* com.xuequ.cmoc.*.*Service+.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>
 

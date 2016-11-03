@@ -45,17 +45,6 @@
 			</div>
 			<nav>
 				<ul>
-					<c:forEach var="item" items="${appUser.sysChannelList }" varStatus="status">
-						<c:choose>
-							<c:when test="${status.index == 0 }">
-								<li onclick="channelShow('N',this,'${item.idChannel}')" id="channelConf" ><div class="navCenter"><div class="navRight"><div class="navLeft">${item.channelName}</div></div></div></li>
-							</c:when>
-							<c:otherwise>
-								<li onclick="channelShow('N',this,'${item.idChannel}')" ><div class="navCenter"><div class="navRight"><div class="navLeft">${item.channelName}</div></div></div></li>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					<li onclick="channelShow('Y',this)" id="sysConf" data-order="00-01" class="navOn"><div class="navCenter"><div class="navRight"><div class="navLeft">系统配置</div></div></div></li>
 				</ul>
 			</nav>
 			<%--
@@ -96,24 +85,20 @@
 					--%>
 					<ul id="siderMenu" class="clearfix">
 						<c:forEach var="item" items="${appUser.sysMenuList }">
-							<c:if test="${item.isSystemConfMenu == 'Y' }">
-								<li class="menuItem menu-01">
-									<dl class="menuItemInner clearfix">
-										<dt class="menuLev1"><div class="menuLev1Inner">${item.resourceName }</div></dt>
-										<dd class="menuLev2Wrap">
-											<ul class="clearfix">
-												<c:if test="${item.hasChild }">
-													<c:forEach var="user" items="${item.subMenuList }" varStatus="status">
-														<c:if test="${user.isSystemConfMenu == 'Y' }">
-															<li class="menuLev2 menu-01-0${status.index }" onclick="mainShow('${user.resourceName }','<%=basePath %>${user.resourceUrl }','${user.parentResourceId }-${user.idResource }',780,'${user.isSystemConfMenu }')"><div class="menuLev2Inner">${user.resourceName }</div></li>
-														</c:if>
-													</c:forEach>
-												</c:if>
-											</ul>
-										</dd>
-									</dl>
-								</li>
-							</c:if>
+							<li class="menuItem menu-01">
+								<dl class="menuItemInner clearfix">
+									<dt class="menuLev1"><div class="menuLev1Inner">${item.resourceName }</div></dt>
+									<dd class="menuLev2Wrap">
+										<ul class="clearfix">
+											<c:if test="${item.hasChild }">
+												<c:forEach var="user" items="${item.subMenuList }" varStatus="status">
+													<li class="menuLev2 menu-01-0${status.index }" onclick="mainShow('${user.resourceName }','<%=basePath %>${user.resourceUrl }','${user.parentResourceId }-${user.idResource }',780,'${user.isSystemConfMenu }')"><div class="menuLev2Inner">${user.resourceName }</div></li>
+												</c:forEach>
+											</c:if>
+										</ul>
+									</dd>
+								</dl>
+							</li>
 						</c:forEach>
 					</ul>
 				</div>
