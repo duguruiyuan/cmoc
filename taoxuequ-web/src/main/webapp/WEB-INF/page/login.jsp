@@ -63,7 +63,7 @@ String basePath = request.getScheme() + "://"
 		    return estimatingURL;
 		};
 	</script>
-	<script src="<%=basePath %>/js/jquery.min.js"></script>
+	<script src="<%=basePath %>/js/plugin/jquery-2.1.4.min.js"></script>
 	<script src="<%=basePath %>/js/login.js"></script>
 	<script src="<%=basePath %>/js/common.js"></script>
 </html>

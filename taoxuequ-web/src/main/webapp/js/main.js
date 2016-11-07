@@ -18,17 +18,12 @@ function init(){
 function leftSlide(){
 	$(".menuLev1").click(function(){
 		var obj=$(this);
-		var nextobj=obj.next();
-		var objLi=obj.closest("li");
-		var objSiblings=objLi.siblings().find(".menuLev2Wrap");
-		
-		nextobj.slideToggle("slow");
-		if(objSiblings.is(":visible")){
-			objSiblings.slideUp("slow");
+		if(obj.parent("div").attr('class') == "collapsed") {
+			obj.parent("div").removeClass("collapsed");
+		}else {
+			obj.parent("div").addClass("collapsed");
 		}
 	})
-	
-	$(".menuLev2Wrap ul li:last-child").css({"border-bottom":"0"});
 }
 
 //左侧伸缩按钮
@@ -42,13 +37,11 @@ function leftBtn(){
 			obj.css({"left":"0px"});
 			obj.addClass("siderBtnOn");
 			$("#mainWrap").css({"margin-left":0});
-			$("body").removeClass("image");
 		}else{
 			$("#sider").show();
-			obj.css({"left":"211px"});
+			obj.css({"left":"220px"});
 			obj.removeClass("siderBtnOn");
-			$("#mainWrap").css({"margin-left":"211px"});
-			$("body").addClass("image");
+			$("#mainWrap").css({"margin-left":"220px"});
 		}
 	})
 	

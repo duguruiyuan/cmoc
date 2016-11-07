@@ -23,84 +23,42 @@
 		<link href="<%=basePath %>/animated_favicon.gif" rel="icon" type="image/gif" />  
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/main.css"/>
+		<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+		<link href="<%=basePath %>/css/bootstrap.css" rel="stylesheet">
 		<!--[if lt IE 9]><script src="<%=basePath %>/js/html5.js"></script><![endif]-->
-		<script src="<%=basePath %>/js/jquery.min.js"></script>		
+		<script src="<%=basePath %>/js/plugin/jquery-2.1.4.min.js"></script>		
 		<script src="<%=basePath %>/js/main.js"></script>
-		<script src="<%=basePath %>/js/plugin/artDialog/artDialog.source.js?skin=chrome"></script>
-	    <script src="<%=basePath %>/js/plugin/artDialog/plugins/iframeTools.source.js"></script>
 	    <script src="<%=basePath %>/js/common.js"></script>	
 	</head>
-	<body class="image">
+	<body>
 		<header id="top" class="clearfix">
-			<div id="logoArea">
-				<div class="logoPic fl"><img src="<%=basePath %>/image/logo.png"></div>
-				<%-- 
-				<div class="logoTextWrap fl ml15">
-					<h3 class="logoText-ch">客服工单管理系统</h3>
-				</div>
-				--%>
-			</div>
-			<div class="top-slog mr20 fr">
+			<a href="/auth/main"><img class="logoIns" /></a>
+			<%-- <div class="top-slog mr20 fr">
 				<p class="fr mr20"><a href="javascript:void(0)" onclick="addFavorite();" class="collection">收藏系统</a> <a href="<%=basePath %>/logout" class="logout">退出系统</a></p>
-			</div>
+			</div> --%>
+			<div class="header-right">
+		        <a href="<%=basePath %>/logout" role="button" data-toggle="modal"><i class="fa fa-sign-out" style="color:#fff;"></i> 退出</a>
+		        <a id="changeUserPassword" href="#changeUserPasswordBox" role="button" data-toggle="modal"><i class="fa fa-edit" style="color:#fff;"></i> 修改密码</a>
+		    	<a href="javascript:void(0)"><i class="fa fa-user" style="color:#fff;"></i> ${appUser.userName }</a>
+		    </div>
 			<nav>
 				<ul>
 				</ul>
 			</nav>
-			<%--
-			<div id="top-searchWrap">
-				<div class="top-searchKefu"></div>
-				<div class="top-searchForm">
-				<div class="top-searchRight">
-				<div class="top-searchLeft">
-					 <div class="top-searchSelect fl pr">
-					 	<div class="top-searchType"><span class="top-searchTypeText"></span></div>
-					 	<ul class="top-searchTypeList">
-					 		<li>分类二一</li>
-					 		<li>分类二一</li>
-					 		<li>分类二一</li>
-					 	</ul>
-					 </div>
-					 <div class="top-searchInputWrap fl pr">
-					 	<input type="text" class="top-searchInput">
-					 	<ul class="top-searchInputList">
-					 		<li>分类二一</li>
-					 		<li>分类二一</li>
-					 		<li>分类二一</li>
-					 	</ul>
-					 </div>
-					 <div class="top-searchBtn fr"></div>
-				</div>
-				</div>
-				</div>
-			</div>
-			--%>
 		</header>
 		<section id="wrap" class="clearfix">
-			<aside id="sider">
-				<div id="siderInner">
-					<div class="siderWelcome"><div class="siderWelcomeInner">欢迎您，${appUser.userName }</div></div>
-					<%-- 
-					<div class="ucpWrap"></div>
-					--%>
-					<ul id="siderMenu" class="clearfix">
-						<c:forEach var="item" items="${appUser.sysMenuList }">
-							<li class="menuItem menu-01">
-								<dl class="menuItemInner clearfix">
-									<dt class="menuLev1"><div class="menuLev1Inner">${item.resourceName }</div></dt>
-									<dd class="menuLev2Wrap">
-										<ul class="clearfix">
-											<c:if test="${item.hasChild }">
-												<c:forEach var="user" items="${item.subMenuList }" varStatus="status">
-													<li class="menuLev2 menu-01-0${status.index }" onclick="mainShow('${user.resourceName }','<%=basePath %>${user.resourceUrl }','${user.parentResourceId }-${user.idResource }',780,'${user.isSystemConfMenu }')"><div class="menuLev2Inner">${user.resourceName }</div></li>
-												</c:forEach>
-											</c:if>
-										</ul>
-									</dd>
-								</dl>
-							</li>
-						</c:forEach>
-					</ul>
+			<aside id="sider" class="left">
+				<div class="sdmenu">
+					<c:forEach var="item" items="${appUser.sysMenuList }">
+						<div class="collapsed">
+               				<span class="menuLev1">${item.resourceName }</span>
+               				<c:if test="${item.hasChild }">
+								<c:forEach var="user" items="${item.subMenuList }" varStatus="status">
+									<a onclick="mainShow('${user.resourceName }','<%=basePath %>${user.resourceUrl }','${user.parentResourceId }-${user.idResource }',780,'${user.isSystemConfMenu }')">${user.resourceName }</a>
+								</c:forEach>
+							</c:if>
+          				</div>
+					</c:forEach>
 				</div>
 			</aside>
 			<section id="mainWrap">

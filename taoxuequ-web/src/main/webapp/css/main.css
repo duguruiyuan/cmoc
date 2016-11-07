@@ -12,21 +12,124 @@ body{
 	background-color: #f1f1f1;
 	background-repeat: repeat-y;
 	background-position: 0 0;
+	font-size: 16px;
 }
+
 #top{
 	margin:0 auto;
 	width:100%;
 	height:75px;
-	border-bottom: 3px #2d77be solid;
-	background: #f6f6f6;
-	background: url(../image/header_bg.jpg) repeat-x 0 0;
+	border-bottom: 5px #ee5f5b solid;
+	background: rgb(253, 137, 16);
 	position:relative;
 	z-index: 2;
 }
-#wrap{margin:0 auto;width:100%;}
+.logoIns {
+    display: inline-block;
+    width: 126px;
+    height: 75px;
+    background: url(../images/taoxuequ.jpg) no-repeat;
+}
+
+.header-right {
+    float: right;
+    padding-left: 50px;
+}
+
+.header-right a {
+    color: #fff;
+    line-height: 60px;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.header-right a:hover{
+	color: #fff;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.left {
+    float: left;
+    width: 220px;
+    background: #fff url(../images/left_bg.png) repeat-y right;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    position: relative;
+}
+
+div.sdmenu {
+    font-size: 12px;
+    background: #ccc;
+    color: #fff;
+}
+
+div.sdmenu div {
+    overflow: hidden;
+    margin-top: -1px;
+}
+
+div.sdmenu div.collapsed {
+    height: 30px;
+}
+
+div.sdmenu div span {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    cursor: pointer;
+    background: url(../images/left2.png);
+    font-size: 12px;
+    color: #38A3D5;
+    text-indent: 30px;
+    font-weight: bold;
+    font-family: "microsoft yahei";
+}
+
+div.sdmenu div.collapsed span {
+    background: #ccc;
+    background: url(../images/left.png);
+    font-family: "microsoft yahei";
+    font-size: 12px;
+    color: #333;
+    text-indent: 30px;
+    font-weight: bold;
+}
+
+div.sdmenu div {
+    background: #fff url(../images/left_bg.png) repeat-y right;
+}
+
+div.sdmenu div a {
+    display: block;
+    color: #066;
+    text-indent: 50px;
+    padding: 2px 0;
+}
+
+div.sdmenu div a.current {
+    border-left: 3px solid #F65241;
+    color: #fff;
+}
+
+div.sdmenu div a:hover {
+    background-color: #e2e2e2;
+    color: #333;
+    text-decoration: none;
+}
+
+div.sdmenu div a.current:hover {
+    border-left: 3px solid #F65241;
+    color: #fff;
+}
+
+#wrap{margin:0 auto;width:100%;height:100%;position: relative;}
 #sider{
 	float:left;
 	width:221px;
+	height: 100%;
 }
 #siderInner{
 	padding-bottom: 30px;
@@ -264,7 +367,7 @@ nav li{
 }
 #siderBtn{
 	position: absolute;
-	left:211px;
+	left:220px;
 	top:50%;
 	width:8px;
 	height: 41px;
