@@ -37,9 +37,12 @@ public class SysRoleAuthServiceImpl implements ISysRoleAuthService {
 		Map<String, List<SysMenu>> menuMap = new HashMap<String, List<SysMenu>>();
 		if(list != null) {
 			for(SysMenu menu : sysMenuList) {
-				String key = String.valueOf(menu.getParentResourceId());
-				if(StringUtils.isBlank(key) || "0".equals(key)) {
+				String key = null;
+				Integer parentReasourceId = menu.getParentResourceId();
+				if(!(parentReasourceId != null && parentReasourceId != 0)) {
 					key = Constants.ROOT_MENU_KEY;
+				}else {
+					key = String.valueOf(parentReasourceId);
 				}
 				List<SysMenu> childMenuList = menuMap.get(key);
 				if(childMenuList == null) {

@@ -15,6 +15,7 @@ import com.xuequ.cmoc.dao.SysUserMapper;
 import com.xuequ.cmoc.model.SysMenu;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.utils.BeanUtils;
+import com.xuequ.cmoc.utils.StringUtil;
 
 public class DefaultUserDetailsService {
 	
@@ -57,10 +58,12 @@ public class DefaultUserDetailsService {
     private AppUser getAppUser(String userId, Integer userType) throws Exception{
     	AppUser appUser = new AppUser();
     	List<SysMenu> list = sysRoleAuthService.fillMenuInfo(userId, userType);
-    	appUser.setSysMenuList(list);
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		setResource(authorities, list);
-		appUser.setAuthorities(authorities);
+    	if(!StringUtil.isNullOrEmpty(list)) {
+    		appUser.setSysMenuList(list);
+    		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    		setResource(authorities, list);
+    		appUser.setAuthorities(authorities);
+    	}
         return appUser;
     }
     

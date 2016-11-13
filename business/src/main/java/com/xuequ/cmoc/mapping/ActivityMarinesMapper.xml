@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.paic.clearing.mapper.ActivityMarinesMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityMarines" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
+    <result column="marine_img" property="marineImg" jdbcType="VARCHAR" />
+    <result column="lines" property="lines" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="votes" property="votes" jdbcType="INTEGER" />
+    <result column="reads" property="reads" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, marine_name, marine_img, lines, activity_id, activity_name, votes, reads, score, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity_marines
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_activity_marines
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
+    insert into t_activity_marines (id, marine_name, marine_img, 
+      lines, activity_id, activity_name, 
+      votes, reads, score, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{marineImg,jdbcType=VARCHAR}, 
+      #{lines,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, 
+      #{votes,jdbcType=INTEGER}, #{reads,jdbcType=INTEGER}, #{score,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
+    insert into t_activity_marines
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="marineName != null" >
+        marine_name,
+      </if>
+      <if test="marineImg != null" >
+        marine_img,
+      </if>
+      <if test="lines != null" >
+        lines,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="votes != null" >
+        votes,
+      </if>
+      <if test="reads != null" >
+        reads,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="marineName != null" >
+        #{marineName,jdbcType=VARCHAR},
+      </if>
+      <if test="marineImg != null" >
+        #{marineImg,jdbcType=VARCHAR},
+      </if>
+      <if test="lines != null" >
+        #{lines,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="votes != null" >
+        #{votes,jdbcType=INTEGER},
+      </if>
+      <if test="reads != null" >
+        #{reads,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
+    update t_activity_marines
+    <set >
+      <if test="marineName != null" >
+        marine_name = #{marineName,jdbcType=VARCHAR},
+      </if>
+      <if test="marineImg != null" >
+        marine_img = #{marineImg,jdbcType=VARCHAR},
+      </if>
+      <if test="lines != null" >
+        lines = #{lines,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="votes != null" >
+        votes = #{votes,jdbcType=INTEGER},
+      </if>
+      <if test="reads != null" >
+        reads = #{reads,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
+    update t_activity_marines
+    set marine_name = #{marineName,jdbcType=VARCHAR},
+      marine_img = #{marineImg,jdbcType=VARCHAR},
+      lines = #{lines,jdbcType=VARCHAR},
+      activity_id = #{activityId,jdbcType=INTEGER},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      votes = #{votes,jdbcType=INTEGER},
+      reads = #{reads,jdbcType=INTEGER},
+      score = #{score,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

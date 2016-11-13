@@ -39,7 +39,7 @@
 			<div class="header-right">
 		        <a href="<%=basePath %>/logout" role="button" data-toggle="modal"><i class="fa fa-sign-out" style="color:#fff;"></i> 退出</a>
 		        <a id="changeUserPassword" href="#changeUserPasswordBox" role="button" data-toggle="modal"><i class="fa fa-edit" style="color:#fff;"></i> 修改密码</a>
-		    	<a href="javascript:void(0)"><i class="fa fa-user" style="color:#fff;"></i> ${appUser.userName }</a>
+		    	<span><i class="fa fa-user" style="color:#fff;"></i> ${appUser.userName }</span>
 		    </div>
 			<nav>
 				<ul>

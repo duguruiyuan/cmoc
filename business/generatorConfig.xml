@@ -27,12 +27,12 @@
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
-		<!-- <javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.paic.clearing.mapper" targetProject="${local.dir}/src/main/java">
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.xuequ.cmoc.mapper" targetProject="${local.dir}/src/main/java">
 			<property name="enableSubPackages" value="true" />
-		</javaClientGenerator> -->
+		</javaClientGenerator>
 		
-		<table tableName="t_sys_resource" domainObjectName="SysResource"
+		<table tableName="t_activity_marines_support" domainObjectName="ActivityMarinesSupport"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">

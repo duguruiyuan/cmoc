@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.paic.clearing.mapper.ActivityHmSignMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityHmSign" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="hm_name" property="hmName" jdbcType="VARCHAR" />
+    <result column="hm_mobile" property="hmMobile" jdbcType="VARCHAR" />
+    <result column="sign_date" property="signDate" jdbcType="VARCHAR" />
+    <result column="is_effect" property="isEffect" jdbcType="INTEGER" />
+    <result column="effect_date" property="effectDate" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DECIMAL" />
+    <result column="judge" property="judge" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activity_id, activity_name, hm_name, hm_mobile, sign_date, is_effect, effect_date, 
+    score, judge, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity_hm_sign
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_activity_hm_sign
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityHmSign" >
+    insert into t_activity_hm_sign (id, activity_id, activity_name, 
+      hm_name, hm_mobile, sign_date, 
+      is_effect, effect_date, score, 
+      judge, create_time)
+    values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, 
+      #{hmName,jdbcType=VARCHAR}, #{hmMobile,jdbcType=VARCHAR}, #{signDate,jdbcType=VARCHAR}, 
+      #{isEffect,jdbcType=INTEGER}, #{effectDate,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
+      #{judge,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityHmSign" >
+    insert into t_activity_hm_sign
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="hmName != null" >
+        hm_name,
+      </if>
+      <if test="hmMobile != null" >
+        hm_mobile,
+      </if>
+      <if test="signDate != null" >
+        sign_date,
+      </if>
+      <if test="isEffect != null" >
+        is_effect,
+      </if>
+      <if test="effectDate != null" >
+        effect_date,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="judge != null" >
+        judge,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="hmName != null" >
+        #{hmName,jdbcType=VARCHAR},
+      </if>
+      <if test="hmMobile != null" >
+        #{hmMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="signDate != null" >
+        #{signDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffect != null" >
+        #{isEffect,jdbcType=INTEGER},
+      </if>
+      <if test="effectDate != null" >
+        #{effectDate,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="judge != null" >
+        #{judge,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityHmSign" >
+    update t_activity_hm_sign
+    <set >
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="hmName != null" >
+        hm_name = #{hmName,jdbcType=VARCHAR},
+      </if>
+      <if test="hmMobile != null" >
+        hm_mobile = #{hmMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="signDate != null" >
+        sign_date = #{signDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffect != null" >
+        is_effect = #{isEffect,jdbcType=INTEGER},
+      </if>
+      <if test="effectDate != null" >
+        effect_date = #{effectDate,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="judge != null" >
+        judge = #{judge,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityHmSign" >
+    update t_activity_hm_sign
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      hm_name = #{hmName,jdbcType=VARCHAR},
+      hm_mobile = #{hmMobile,jdbcType=VARCHAR},
+      sign_date = #{signDate,jdbcType=VARCHAR},
+      is_effect = #{isEffect,jdbcType=INTEGER},
+      effect_date = #{effectDate,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL},
+      judge = #{judge,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
