@@ -96,8 +96,9 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.xuequ.cmoc.dao" />
-		<property name="annotationClass" value="org.mybatis.spring.annotation.MapperScan"/>
-		<!-- <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> -->
+<!-- 		<property name="annotationClass" value="org.mybatis.spring.annotation.MapperScan"/>
+ -->		
+ 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 
 	<!-- 配置事务管理器 -->

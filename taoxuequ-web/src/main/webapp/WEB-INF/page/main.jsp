@@ -18,18 +18,8 @@
 		<meta charset="utf-8">
 		<title>支付清算管理系统</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-		<link rel="icon" href="<%=basePath %>/favicon.ico" type="image/x-icon"/>  
-		<link rel="shortcut icon" href="<%=basePath %>/favicon.ico" type="image/x-icon" />
-		<link href="<%=basePath %>/animated_favicon.gif" rel="icon" type="image/gif" />  
-		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/main.css"/>
-		<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-		<link href="<%=basePath %>/css/bootstrap.css" rel="stylesheet">
-		<!--[if lt IE 9]><script src="<%=basePath %>/js/html5.js"></script><![endif]-->
-		<script src="<%=basePath %>/js/plugin/jquery-2.1.4.min.js"></script>		
-		<script src="<%=basePath %>/js/main.js"></script>
-	    <script src="<%=basePath %>/js/common.js"></script>	
 	</head>
+	<jsp:include page="/WEB-INF/page/common/_header.jsp"></jsp:include>
 	<body>
 		<header id="top" class="clearfix">
 			<a href="/auth/main"><img class="logoIns" /></a>

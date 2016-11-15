@@ -1,3 +1,7 @@
+var config = {};
+config.pageSize = 10;
+config.pageList = [10,20,30,40,50,100,200,500];
+
 //type:有三种型号，succeed、warning、error
 function diaAlert(type,text){
 	if(type!='succeed'&&type!='warning'&&type!='error'){

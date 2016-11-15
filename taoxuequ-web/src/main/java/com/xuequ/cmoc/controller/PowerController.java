@@ -1,12 +1,22 @@
 package com.xuequ.cmoc.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuequ.cmoc.RoleQueryVO;
+import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysMenu;
 import com.xuequ.cmoc.model.SysResource;
 import com.xuequ.cmoc.model.SysRole;
 import com.xuequ.cmoc.model.SysUser;
+import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.service.IRoleService;
 
 /**
  * 权限管理
@@ -15,7 +25,11 @@ import com.xuequ.cmoc.model.SysUser;
  *
  */
 @RequestMapping("power")
+@Controller
 public class PowerController {
+	
+	@Autowired
+	private IRoleService roleService;
 
 	/**
 	 * 角色管理页
@@ -36,8 +50,18 @@ public class PowerController {
 	 * @return
 	 */
 	@RequestMapping("role/json/query")
-	@ResponseBody Object roleQuery(SysMenu menu) {
-		return null;
+	@ResponseBody Object roleQuery(RoleQueryVO vo) {
+		Page<SysRole> page = new Page<SysRole>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Grid grid = new Grid();
+		paramMap.put("roleName", vo.getRoleName());
+		page.setParams(paramMap);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<SysRole> list = roleService.selectListByPage(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
 	}
 	
 	/**
