@@ -15,4 +15,5 @@ public interface SysResourceMapper {
     List<SysResource> selectByUserId(String userId);
     
     List<SysResource> selectAll();
+    
 }

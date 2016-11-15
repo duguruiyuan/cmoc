@@ -4,18 +4,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.event.MenuListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.RoleQueryVO;
+import com.xuequ.cmoc.auth.AppUser;
+import com.xuequ.cmoc.common.Constants;
+import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysMenu;
 import com.xuequ.cmoc.model.SysResource;
 import com.xuequ.cmoc.model.SysRole;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.reqVo.AddAndUpdateRoleVO;
 import com.xuequ.cmoc.service.IRoleService;
 
 /**
@@ -26,7 +35,9 @@ import com.xuequ.cmoc.service.IRoleService;
  */
 @RequestMapping("power")
 @Controller
-public class PowerController {
+public class PowerController extends BaseController {
+	
+	private Logger logger = LoggerFactory.getLogger(PowerController.class);
 	
 	@Autowired
 	private IRoleService roleService;
@@ -71,20 +82,38 @@ public class PowerController {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping("role/json/add")
-	@ResponseBody Object roleAdd(SysRole role) {
-		return null;
+	@RequestMapping("role/json/addUpdate")
+	@ResponseBody Object roleAdd(AddAndUpdateRoleVO vo) {
+		try {
+			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
+			roleService.addAndUpdateRole(vo, sysUser);
+			return StatusEnum.success;
+		} catch (Exception e) {
+			logger.error("----roleAdd, error={}", e);
+		}
+		return StatusEnum.fail;
 	}
 	
 	/**
-	 * 修改角色
+	 * 获取角色信息
 	 * @auther 胡启萌
 	 * @Date 2016年11月14日
 	 * @return
 	 */
-	@RequestMapping("role/json/update")
-	@ResponseBody Object roleUpdate() {
-		return null;
+	@RequestMapping("role/json/queryRoleInfo")
+	@ResponseBody Object roleUpdate(@RequestParam("idRole") Integer idRole) {
+		return roleService.selectRoleInfo(idRole);
+	}
+	
+	/**
+	 * 查询所有菜单
+	 * @auther 胡启萌
+	 * @Date 2016年11月15日
+	 * @return
+	 */
+	@RequestMapping("/json/menuList")
+	@ResponseBody Object menuList(){
+		return roleService.selectResourceAll();
 	}
 	
 	/**

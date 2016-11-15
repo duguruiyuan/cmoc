@@ -17,8 +17,9 @@
 <link rel="stylesheet" href="<%=basePath%>/js/plugin/jquery-easyui-1.4.3/themes/bootstrap/easyui.css" type="text/css"></link>
 <link rel="stylesheet" href="<%=basePath%>/js/plugin/jquery-easyui-1.4.3/themes/icon.css" type="text/css"></link>
 
+<script src="<%=basePath %>/js/plugin/jquery-2.1.4.min.js"></script>
+<script src="<%=basePath %>/js/plugin/extJquery.js"></script>
 <!-- bootstrap js -->
-<script src="<%=basePath%>/js/plugin/jquery-easyui-1.4.3/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/ie-emulation-modes-warning.js" type="text/javascript" charset="utf-8"></script>
 
@@ -31,7 +32,6 @@
 <script src="<%=basePath%>/js/plugin/jquery-ui-date.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/messages_zh.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
-
 
 <!--[if lt IE 9]><script src="<%=basePath %>/js/html5.js"></script><![endif]-->
 <script src="<%=basePath %>/js/main.js"></script>

@@ -1,4 +1,4 @@
-package com.xuequ.cmoc.mapper;
+package com.xuequ.cmoc.dao;
 
 import com.xuequ.cmoc.model.ActivityMarinesSupport;
 

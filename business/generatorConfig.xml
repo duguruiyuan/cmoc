@@ -28,11 +28,17 @@
 		</sqlMapGenerator>
 
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.xuequ.cmoc.mapper" targetProject="${local.dir}/src/main/java">
+			targetPackage="com.xuequ.cmoc.dao" targetProject="${local.dir}/src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table tableName="t_activity_marines_support" domainObjectName="ActivityMarinesSupport"
+		<table tableName="t_sys_user_role_rel" domainObjectName="SysUserRoleRel"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<table tableName="t_sys_resource_role_rel" domainObjectName="SysResourceRoleRel"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">

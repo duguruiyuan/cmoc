@@ -24,7 +24,24 @@
     where ID_ROLE = #{idRole,jdbcType=INTEGER}
   </select>
   
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.SysRole" >
+  <select id="selectListByPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_role
+    where is_delete = 'N'
+    <if test="params.roleName != null">
+    	and role_name like concat('%',#{params.roleName,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+  
+  <select id="selectRoleAll" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_sys_role
+    where is_delete = 'N'
+  </select>
+  
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="idRole" parameterType="com.xuequ.cmoc.model.SysRole" >
     insert into t_sys_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idRole != null" >

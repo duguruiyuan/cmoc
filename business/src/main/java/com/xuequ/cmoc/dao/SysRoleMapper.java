@@ -14,5 +14,6 @@ public interface SysRoleMapper {
     int updateByPrimaryKeySelective(SysRole record);
     
     List<SysRole> selectListByPage(Page<SysRole> page);
-
+    
+    List<SysRole> selectRoleAll();
 }

@@ -14,6 +14,10 @@ import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.xuequ.cmoc.common.Constants;
+import com.xuequ.cmoc.model.SysUser;
+import com.xuequ.cmoc.utils.BeanUtils;
+
 public class DefaultAuthenticationSuccessHandler implements
 		AuthenticationSuccessHandler {
 	
@@ -33,7 +37,8 @@ public class DefaultAuthenticationSuccessHandler implements
         transferAttributes(attributesToMigrate, session);
         if (authentication != null) {
         	AppUser appUser = (AppUser)authentication.getPrincipal();
-            request.getSession().setAttribute("appUser", appUser);
+            SysUser sysUser = BeanUtils.copyAs(appUser, SysUser.class);
+        	request.getSession().setAttribute(Constants.APP_USER, sysUser);
         }
         //记录日志
         LOG.info("Authentication success: account:" + request.getParameter("j_username")
