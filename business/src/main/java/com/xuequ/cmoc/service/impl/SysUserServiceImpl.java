@@ -15,6 +15,7 @@ import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.AddAndUpdateUserVO;
 import com.xuequ.cmoc.service.ISysUserService;
 import com.xuequ.cmoc.utils.BeanUtils;
+import com.xuequ.cmoc.utils.MD5Util;
 import com.xuequ.cmoc.view.SysUserInfo;
 
 @Service("sysUserService")
@@ -34,11 +35,12 @@ public class SysUserServiceImpl implements ISysUserService {
 	public int addAndUpdateUser(AddAndUpdateUserVO vo, SysUser sysUser) {
 		SysUser user = BeanUtils.copyAs(vo, SysUser.class);
 		if(vo.getIdUser() == null) {
-			user.setCreator(sysUser.getCreator());
+			user.setPassword(MD5Util.md5(vo.getPassword()));
+			user.setCreator(sysUser.getUserAccount());
 			user.setCreateTime(new Date());
 			sysUserMapper.insertSelective(user);
 		}else {
-			user.setLastUpdator(sysUser.getLastUpdator());
+			user.setLastUpdator(sysUser.getUserAccount());
 			user.setLastUpdateTime(new Date());
 			sysUserMapper.updateByPrimaryKeySelective(user);
 			sysUserRoleRelMapper.deleteByIdUser(vo.getIdUser());

@@ -38,14 +38,14 @@ public class RoleServiceImpl implements IRoleService {
 	public int addAndUpdateRole(AddAndUpdateRoleVO vo, SysUser sysUser) {
 		SysRole role = BeanUtils.copyAs(vo, SysRole.class);
 		if(vo.getIdRole() == null) {
-			role.setCreator(sysUser.getUserName());
+			role.setCreator(sysUser.getUserAccount());
 			role.setCreateTime(new Date());
 			role.setRoleName(vo.getRoleName());
 			role.setRoleDesc(vo.getRoleDesc());
 			sysRoleMapper.insertSelective(role);
 		}else {
 			role.setIdRole(vo.getIdRole());
-			role.setLastUpdator(sysUser.getUserName());
+			role.setLastUpdator(sysUser.getUserAccount());
 			role.setLastUpdateTime(new Date());
 			role.setRoleName(vo.getRoleName());
 			role.setRoleDesc(vo.getRoleDesc());

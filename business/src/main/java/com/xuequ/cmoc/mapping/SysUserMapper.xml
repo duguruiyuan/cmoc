@@ -19,11 +19,27 @@
     LAST_UPDATE_TIME,USER_TYPE
   </sql>
   
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_sys_user
-    where ID_USER = #{idUser,jdbcType=VARCHAR}
+    where ID_USER = #{idUser,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectListByPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where USER_TYPE = 2
+    <if test="params.userName != null">
+    	and USER_NAME like concat('%',#{params.userName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.userAccount != null">
+    	and USER_ACCOUNT like concat('%',#{params.userAccount,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.validFlag != null">
+    	and VALID_FLAG = #{params.validFlag,jdbcType=INTEGER}
+    </if>
   </select>
   
   <select id="selectUser" resultMap="BaseResultMap">
@@ -33,7 +49,7 @@
   	PASSWORD = #{password,jdbcType=VARCHAR}
   </select>
   
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.SysUser">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="idUser" parameterType="com.xuequ.cmoc.model.SysUser">
     insert into t_sys_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="idUser != null">

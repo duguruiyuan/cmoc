@@ -25,10 +25,7 @@ function loadData() {
 		nowrap : true,
 		striped : true,
 		rownumbers : true,
-		columns : [ [  {
-			field : 'idRole',
-			checkbox : true
-		},{
+		columns : [ [ {
 			field : 'action',
 			title : '操作',
 			align : 'center',
@@ -299,10 +296,11 @@ function validator() {
 					success : function(data) {
 						$.messager.progress('close');
 						if (data.code == '000') {
-							$.messager.alert('系统提示', $("#idResource").val() == '' ? '角色新增成功' : '角色修改成功', 'info');
+							$.messager.alert('系统提示', $("#idRole").val() == '' ? '角色新增成功' : '角色修改成功', 'info');
+							cleanFormPanel("addForm");
 							loadData();
 						} else {
-							$.messager.alert('系统提示', $("#idResource").val() == '' ? '角色新增失败' : '角色修改失败', 'warning');
+							$.messager.alert('系统提示', $("#idRole").val() == '' ? '角色新增失败' : '角色修改失败', 'warning');
 						}
 					}
 				});

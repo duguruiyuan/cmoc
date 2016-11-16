@@ -174,7 +174,7 @@ public class PowerController extends BaseController {
 	 * @Date 2016年11月14日
 	 * @return
 	 */
-	@RequestMapping("role/json/queryUserInfo")
+	@RequestMapping("user/json/queryUserInfo")
 	@ResponseBody Object queryUserInfo(@RequestParam("idUser") Integer idUser) {
 		return sysUserService.selectUserInfo(idUser);
 	}

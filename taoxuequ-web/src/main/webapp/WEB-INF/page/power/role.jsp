@@ -19,7 +19,7 @@
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<td>角色名称： <input class="input-medium search-query search-comp" type="text" name="roleName" id="roleName"/></td>
+									<td>角色名称： <input class="form-control1" type="text" name="roleName" id="roleName"/></td>
 								 </tr>
 								 <tr>
 									<td>

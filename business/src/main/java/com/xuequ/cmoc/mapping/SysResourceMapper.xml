@@ -31,13 +31,15 @@
   </select>
   
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-  	select <include refid="Base_Column_List" /> 
-  	from t_sys_resource a
-  	inner join t_sys_resource_role_rel b on a.ID_RESOURCE = b.RESOURCE_ID  and b.IS_DELETE = 'N'
-  	inner join t_sys_user_role_rel c on c.ID_ROLE = b.ID_ROLE and c.IS_DELETE = 'N'
-  	inner join t_sys_user d on d.ID_USER = c.ID_USER and d.VALID_FLAG = 1
-  	where d.ID_USER = #{idUser,jdbcType=VARCHAR} and a.IS_DELETE = 'N'
-  	order by a.WEIGHT
+  	SELECT a.ID_RESOURCE, RESOURCE_NAME, RESOURCE_URL, RESOURCE_TYPE, RESOURCE_CODE, 
+  		PARENT_RESOURCE_ID, a.WEIGHT, IS_QUICK_MENU, IS_SYSTEM_CONF_MENU       
+    FROM t_sys_resource a    
+    INNER JOIN t_sys_resource_role_rel b ON a.ID_RESOURCE = b.ID_RESOURCE  AND b.IS_DELETE = 'N'    
+    INNER JOIN t_sys_user_role_rel c ON c.ID_ROLE = b.ID_ROLE AND c.IS_DELETE = 'N'    
+    INNER JOIN t_sys_user d ON d.ID_USER = c.ID_USER AND d.VALID_FLAG = 1    
+    WHERE d.ID_USER = #{idUser,jdbcType=VARCHAR} AND a.IS_DELETE = 'N'    
+    ORDER BY a.WEIGHT
+  	
   </select>
   
   <select id="selectAll" resultMap="BaseResultMap">

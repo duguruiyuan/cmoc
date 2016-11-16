@@ -53,7 +53,7 @@ CREATE TABLE `t_activity_family` (
   FULLTEXT KEY `idx_father_mobile` (`father_mobile`),
   FULLTEXT KEY `idx_mother_name` (`mother_name`),
   FULLTEXT KEY `idx_mother_mobile` (`mother_mobile`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='活动报名家庭信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动报名家庭信息';
 
 /*Data for the table `t_activity_family` */
 
@@ -74,7 +74,7 @@ CREATE TABLE `t_activity_hm_sign` (
   `judge` varchar(512) DEFAULT NULL COMMENT '评价',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='透明人活动报名表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='透明人活动报名表';
 
 /*Data for the table `t_activity_hm_sign` */
 
@@ -96,7 +96,7 @@ CREATE TABLE `t_activity_info` (
   `updater` varchar(128) DEFAULT NULL COMMENT '更新人',
   `updater_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='活动信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动信息';
 
 /*Data for the table `t_activity_info` */
 
@@ -116,7 +116,7 @@ CREATE TABLE `t_activity_marines` (
   `score` decimal(8,2) DEFAULT NULL COMMENT '得分',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='活动战队信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动战队信息';
 
 /*Data for the table `t_activity_marines` */
 
@@ -133,7 +133,7 @@ CREATE TABLE `t_activity_marines_support` (
   `margin_name` varchar(64) DEFAULT NULL COMMENT '战队名称',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='战队支持记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='战队支持记录';
 
 /*Data for the table `t_activity_marines_support` */
 
@@ -152,7 +152,7 @@ CREATE TABLE `t_activity_resource` (
   `is_delete` varchar(2) DEFAULT NULL COMMENT '是否有效 N有效 Y失效',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='活动资源表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动资源表';
 
 /*Data for the table `t_activity_resource` */
 
@@ -172,7 +172,7 @@ CREATE TABLE `t_buy_record` (
   `buy_type` varchar(2) DEFAULT '1' COMMENT '购买类型 1现金 2积分',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='购买记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购买记录';
 
 /*Data for the table `t_buy_record` */
 
@@ -193,7 +193,7 @@ CREATE TABLE `t_goods_detail` (
   `creater` varchar(128) DEFAULT NULL COMMENT '创建人',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_goods_detail` */
 
@@ -210,7 +210,7 @@ CREATE TABLE `t_goods_info` (
   `updater` varchar(128) DEFAULT NULL COMMENT '变更人',
   `updater_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '变更时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_goods_info` */
 
@@ -238,7 +238,7 @@ CREATE TABLE `t_hollow_man_info` (
   `updater` varchar(128) DEFAULT NULL COMMENT '变更人',
   `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '变更时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='透明人信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='透明人信息';
 
 /*Data for the table `t_hollow_man_info` */
 
@@ -257,7 +257,7 @@ CREATE TABLE `t_parent_info` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `idx_mobile` (`mobile`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='家长信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='家长信息';
 
 /*Data for the table `t_parent_info` */
 
@@ -375,7 +375,7 @@ CREATE TABLE `t_validate_code` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `idx_mobile` (`mobile`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='验证码表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='验证码表';
 
 /*Data for the table `t_validate_code` */
 

@@ -22,7 +22,7 @@
     where ID_USER_ROLE_REL = #{idUserRoleRel,jdbcType=INTEGER}
   </select>
   
-  <select id="selectListByIdUser" parameterType="java.lang.Integer" >
+  <select id="selectListByIdUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from t_sys_user_role_rel
@@ -49,7 +49,7 @@
   </insert>
   
   <insert id="insertBatch" parameterType="com.xuequ.cmoc.reqVo.AddAndUpdateUserVO" >
-    insert into t_sys_resource_role_rel 
+    insert into t_sys_user_role_rel 
     (ID_USER, ID_ROLE, CREATOR, CREATE_TIME)
     values 
     <foreach collection="roleIds" item="item" index="index" separator=",">  
