@@ -18,6 +18,8 @@ public class AddAndUpdateUserVO implements Serializable{
 	private String password;
 	
 	private List<Integer> roleIds;
+	
+	private String creator;
 
 	public Integer getIdUser() {
 		return idUser;
@@ -67,5 +69,12 @@ public class AddAndUpdateUserVO implements Serializable{
 		this.roleIds = roleIds;
 	}
 
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
 	
 }

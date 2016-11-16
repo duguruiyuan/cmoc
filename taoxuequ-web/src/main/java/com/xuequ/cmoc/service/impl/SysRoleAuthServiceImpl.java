@@ -25,7 +25,7 @@ public class SysRoleAuthServiceImpl implements ISysRoleAuthService {
 	@Autowired
 	private SysResourceMapper sysResourceMapper;
 	
-	public List<SysMenu> fillMenuInfo(String userId, Integer userType) {
+	public List<SysMenu> fillMenuInfo(Integer userId, Integer userType) {
 		List<SysResource> list = null;
 		if(1 == userType) {
 			list = sysResourceMapper.selectAll();

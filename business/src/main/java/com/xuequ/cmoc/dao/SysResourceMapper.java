@@ -12,7 +12,7 @@ public interface SysResourceMapper {
 
     int updateByPrimaryKeySelective(SysResource record);
 
-    List<SysResource> selectByUserId(String userId);
+    List<SysResource> selectByUserId(Integer userId);
     
     List<SysResource> selectAll();
     

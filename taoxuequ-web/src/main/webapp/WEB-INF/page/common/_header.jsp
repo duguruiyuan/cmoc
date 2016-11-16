@@ -4,6 +4,7 @@
 %>
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/main.css"/>
+<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/display.css"/>
 
 <!-- Bootstrap core CSS -->
 <link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">

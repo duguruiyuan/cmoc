@@ -37,8 +37,7 @@ public class DefaultAuthenticationSuccessHandler implements
         transferAttributes(attributesToMigrate, session);
         if (authentication != null) {
         	AppUser appUser = (AppUser)authentication.getPrincipal();
-            SysUser sysUser = BeanUtils.copyAs(appUser, SysUser.class);
-        	request.getSession().setAttribute(Constants.APP_USER, sysUser);
+        	request.getSession().setAttribute(Constants.APP_USER, appUser);
         }
         //记录日志
         LOG.info("Authentication success: account:" + request.getParameter("j_username")

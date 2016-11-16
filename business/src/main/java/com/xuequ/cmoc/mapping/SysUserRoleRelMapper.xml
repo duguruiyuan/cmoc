@@ -21,10 +21,24 @@
     from t_sys_user_role_rel
     where ID_USER_ROLE_REL = #{idUserRoleRel,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectListByIdUser" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from t_sys_user_role_rel
+    where ID_USER = #{idUser,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_sys_user_role_rel
     where ID_USER_ROLE_REL = #{idUserRoleRel,jdbcType=INTEGER}
   </delete>
+  
+  <delete id="deleteByIdUser" parameterType="java.lang.Integer">
+  	delete from t_sys_user_role_rel 
+  	where ID_USER = #{idUser,jdbcType=INTEGER}
+  </delete>
+  
   <insert id="insert" parameterType="com.xuequ.cmoc.model.SysUserRoleRel" >
     insert into t_sys_user_role_rel (ID_USER_ROLE_REL, ID_USER, ID_ROLE, 
       CREATOR, LAST_UPDATOR, CREATE_TIME, 
@@ -33,6 +47,17 @@
       #{creator,jdbcType=VARCHAR}, #{lastUpdator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{lastUpdateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
   </insert>
+  
+  <insert id="insertBatch" parameterType="com.xuequ.cmoc.reqVo.AddAndUpdateUserVO" >
+    insert into t_sys_resource_role_rel 
+    (ID_USER, ID_ROLE, CREATOR, CREATE_TIME)
+    values 
+    <foreach collection="roleIds" item="item" index="index" separator=",">  
+      	(#{idUser,jdbcType=INTEGER}, #{item,jdbcType=INTEGER}, 
+      	 #{creator,jdbcType=VARCHAR}, sysDate())
+    </foreach>
+  </insert>
+  
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.SysUserRoleRel" >
     insert into t_sys_user_role_rel
     <trim prefix="(" suffix=")" suffixOverrides="," >

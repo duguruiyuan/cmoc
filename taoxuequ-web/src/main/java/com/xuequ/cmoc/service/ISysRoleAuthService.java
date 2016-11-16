@@ -10,7 +10,7 @@ import com.xuequ.cmoc.model.SysMenu;
 
 public interface ISysRoleAuthService {
 
-	List<SysMenu> fillMenuInfo(String userId, Integer userType);
+	List<SysMenu> fillMenuInfo(Integer userId, Integer userType);
 	
 	/**
 	 * 加载URL与操作的映射关系

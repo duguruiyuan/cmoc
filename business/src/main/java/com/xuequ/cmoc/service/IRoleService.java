@@ -33,14 +33,6 @@ public interface IRoleService {
 	public SysRoleInfo selectRoleInfo(Integer idRole);
 	
 	/**
-	 * 查询所有菜单
-	 * @auther 胡启萌
-	 * @Date 2016年11月15日
-	 * @return
-	 */
-	public List<SysResource> selectResourceAll();
-	
-	/**
 	 * 
 	 * @auther 胡启萌
 	 * @Date 2016年11月15日

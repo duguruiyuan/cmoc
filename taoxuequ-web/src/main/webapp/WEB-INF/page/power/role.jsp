@@ -13,11 +13,8 @@
 			</div> --%>
 			<div class="col-md-10" id="content_div">
 				<div>
-					<!--begin  用户位置信息 -->
-					<%-- <jsp:include page="${path}/layout/localinfo.jsp"></jsp:include> --%>
-					<!--end  用户位置信息 -->
 					<!--begin 搜索栏 -->
-					<div class="span12">
+					<div class="span12" id="body_div">
 					  <form id="searchForm" class="form-search" method="post">
 						<table class="table table-bordered">
 							<tbody>
@@ -28,7 +25,7 @@
 									<td>
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
-										<button class="btn btn-success" type="button" onclick="forward_add()">新增</button>
+										<button class="btn btn-success" type="button" onclick="addRole()">新增</button>
 									</td>
 								</tr>
 							</tbody>
@@ -41,36 +38,41 @@
 					<table id="dataGrid"></table>
 				</div>
 			</div>
-			<div class="col-md-10 hide" id="role_add">
+			<div class="col-md-10" style="display: none;" id="role_add">
+			  <form id="addForm" class="row" novalidate="novalidate">
+				<input type="hidden" id="idRole" name="idRole">
 				<table class="table table-bordered">
 						<col width="15%">
 						<col width="85%">
 						<tbody>
 							<tr>
 								<td>角色名称：</td>
-								<td><input class="form-control" style="width: 300px;"
-									name="roleName" id="roleName" />
-								<div id="roleNameTip" style="width: 300px;"></div></td>
+								<td><input class="form-control" style="width: 300px;display:inline;"
+									name="roleName" id="roleName" />  <span id="roleNameTip"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>角色描述：</td>
+								<td><input class="form-control" style="width: 300px;display:inline;"
+									name="roleDesc" id="roleDesc" /> <span id="roleDescTip"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>角色菜单：</td>
 								<td><span id="checkboxMenu"></span></td>
-							</tr>
-							<tr id="showMsg">
-								<td colspan="2"><div id="checkboxTip"></div></td>
 							</tr>
 							<tr>
 								<td colspan="2" class="text-center">
 								<button class="btn btn-primary" type="button" id="selAll"> 全选</button>
 									<button class="btn btn-primary" type="button" id="unselAll">全不选</button>
 										<button class="btn btn-primary" type="button" id="reverse">反选</button>
-									<button class="btn btn-primary" type="button"
-										onclick="checkform();">保存</button>
+									<button type="submit" class="btn btn-success">提交</button>
 									<button class="btn btn-info" type="button"
 										onclick="returnBack()">返回</button></td>
 							</tr>
 						</tbody>
 					</table>
+				</form>
 			</div>
 		</div>
 	</div>

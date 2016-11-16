@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.event.MenuListener;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xuequ.cmoc.RoleQueryVO;
-import com.xuequ.cmoc.auth.AppUser;
 import com.xuequ.cmoc.common.Constants;
+import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysMenu;
@@ -25,7 +22,13 @@ import com.xuequ.cmoc.model.SysRole;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.AddAndUpdateRoleVO;
+import com.xuequ.cmoc.reqVo.AddAndUpdateUserVO;
 import com.xuequ.cmoc.service.IRoleService;
+import com.xuequ.cmoc.service.ISysMenuService;
+import com.xuequ.cmoc.service.ISysRoleAuthService;
+import com.xuequ.cmoc.service.ISysUserService;
+import com.xuequ.cmoc.vo.SysRoleQueryVO;
+import com.xuequ.cmoc.vo.SysUserQueryVO;
 
 /**
  * 权限管理
@@ -41,6 +44,12 @@ public class PowerController extends BaseController {
 	
 	@Autowired
 	private IRoleService roleService;
+	@Autowired
+	private ISysUserService sysUserService;
+	@Autowired
+	private ISysMenuService sysMenuService;
+	@Autowired
+	private ISysRoleAuthService sysRoleAuthService;
 
 	/**
 	 * 角色管理页
@@ -61,7 +70,7 @@ public class PowerController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("role/json/query")
-	@ResponseBody Object roleQuery(RoleQueryVO vo) {
+	@ResponseBody Object roleQuery(SysRoleQueryVO vo) {
 		Page<SysRole> page = new Page<SysRole>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		Grid grid = new Grid();
@@ -83,15 +92,15 @@ public class PowerController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("role/json/addUpdate")
-	@ResponseBody Object roleAdd(AddAndUpdateRoleVO vo) {
+	@ResponseBody Object roleAddUpdate(AddAndUpdateRoleVO vo) {
 		try {
 			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
 			roleService.addAndUpdateRole(vo, sysUser);
-			return StatusEnum.success;
+			return new RspResult(StatusEnum.success);
 		} catch (Exception e) {
 			logger.error("----roleAdd, error={}", e);
 		}
-		return StatusEnum.fail;
+		return new RspResult(StatusEnum.fail);
 	}
 	
 	/**
@@ -101,19 +110,8 @@ public class PowerController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("role/json/queryRoleInfo")
-	@ResponseBody Object roleUpdate(@RequestParam("idRole") Integer idRole) {
+	@ResponseBody Object queryRoleInfo(@RequestParam("idRole") Integer idRole) {
 		return roleService.selectRoleInfo(idRole);
-	}
-	
-	/**
-	 * 查询所有菜单
-	 * @auther 胡启萌
-	 * @Date 2016年11月15日
-	 * @return
-	 */
-	@RequestMapping("/json/menuList")
-	@ResponseBody Object menuList(){
-		return roleService.selectResourceAll();
 	}
 	
 	/**
@@ -135,32 +133,68 @@ public class PowerController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("user/json/query")
-	@ResponseBody Object userQuery(SysMenu menu) {
-		return null;
+	@ResponseBody Object userQuery(SysUserQueryVO vo) {
+		Page<SysUser> page = new Page<SysUser>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Grid grid = new Grid();
+		paramMap.put("userName", vo.getUserName());
+		paramMap.put("userAccount", vo.getUserAccount());
+		paramMap.put("validFlag", vo.getValidFlag());
+		page.setParams(paramMap);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<SysUser> list = sysUserService.selectListByPage(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
 	}
 	
 	/**
-	 * 新增用户
+	 * 新增修改用户
 	 * @auther 胡启萌
 	 * @Date 2016年11月14日
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping("user/json/add")
-	@ResponseBody Object userAdd(SysUser user) {
-		return null;
+	@RequestMapping("user/json/addUpdate")
+	@ResponseBody Object userAddUpdate(AddAndUpdateUserVO vo) {
+		try {
+			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
+			sysUserService.addAndUpdateUser(vo, sysUser);
+			return new RspResult(StatusEnum.success);
+		} catch (Exception e) {
+			logger.error("----roleAdd, error={}", e);
+		}
+		return new RspResult(StatusEnum.fail);
 	}
 	
 	/**
-	 * 修改用户信息
+	 * 获取用户信息
 	 * @auther 胡启萌
 	 * @Date 2016年11月14日
-	 * @param user
 	 * @return
 	 */
-	@RequestMapping("user/json/update")
-	@ResponseBody Object userUpdate(SysUser user) {
-		return null;
+	@RequestMapping("role/json/queryUserInfo")
+	@ResponseBody Object queryUserInfo(@RequestParam("idUser") Integer idUser) {
+		return sysUserService.selectUserInfo(idUser);
+	}
+	
+	/**
+	 * 查询所有菜单
+	 * @return
+	 */
+	@RequestMapping("/json/queryAllMenu")
+	@ResponseBody Object queryAllMenu() {
+		return sysRoleAuthService.fillMenuInfo(null, 1);
+	}
+	
+	/**
+	 * 查询所有角色
+	 * @return
+	 */
+	@RequestMapping("/json/queryAllRole")
+	@ResponseBody Object queryAllRole() {
+		return roleService.selectSysRoleAll();
 	}
 	
 	/**

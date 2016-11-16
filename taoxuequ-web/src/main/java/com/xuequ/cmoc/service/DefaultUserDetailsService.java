@@ -41,7 +41,7 @@ public class DefaultUserDetailsService {
 		return user;
 	}
 
-	private AppUser loadUser(String userId, Integer userType)
+	private AppUser loadUser(Integer userId, Integer userType)
 			throws Exception {
 		AppUser appUser = this.getAppUser(userId, userType);
 		//角色与资源的映射关系
@@ -55,7 +55,7 @@ public class DefaultUserDetailsService {
      * @param userName
      * @return
      */
-    private AppUser getAppUser(String userId, Integer userType) throws Exception{
+    private AppUser getAppUser(Integer userId, Integer userType) throws Exception{
     	AppUser appUser = new AppUser();
     	List<SysMenu> list = sysRoleAuthService.fillMenuInfo(userId, userType);
     	if(!StringUtil.isNullOrEmpty(list)) {

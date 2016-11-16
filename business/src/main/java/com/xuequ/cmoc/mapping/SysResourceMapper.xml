@@ -30,7 +30,7 @@
     where ID_RESOURCE = #{idResource,jdbcType=INTEGER}
   </select>
   
-  <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
   	select <include refid="Base_Column_List" /> 
   	from t_sys_resource a
   	inner join t_sys_resource_role_rel b on a.ID_RESOURCE = b.RESOURCE_ID  and b.IS_DELETE = 'N'

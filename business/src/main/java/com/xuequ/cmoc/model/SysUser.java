@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class SysUser implements Serializable {
-    private String idUser;
+    private Integer idUser;
 
     private String userAccount;
 
@@ -26,15 +26,15 @@ public class SysUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getIdUser() {
-        return idUser;
-    }
+    public Integer getIdUser() {
+		return idUser;
+	}
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser == null ? null : idUser.trim();
-    }
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
+	}
 
-    public String getUserAccount() {
+	public String getUserAccount() {
         return userAccount;
     }
 

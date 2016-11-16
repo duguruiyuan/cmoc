@@ -32,7 +32,7 @@ public class LoginController {
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage(HttpServletRequest request,Model model) {
     	try {
-    		SysUser user = (SysUser) request.getSession().getAttribute(Constants.APP_USER);
+    		AppUser user = (AppUser) request.getSession().getAttribute(Constants.APP_USER);
         	if(user != null) {
         		return "redirect:/common/main";
         	}

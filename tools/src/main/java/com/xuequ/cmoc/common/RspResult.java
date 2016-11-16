@@ -15,6 +15,11 @@ public class RspResult {
 	public RspResult() {
 	}
 	
+	public RspResult(String code, String msg) {
+		this.code = code;
+		this.msg = msg;
+	}
+	
 	public RspResult(String code, String msg, Object data) {
 		this.code = code;
 		this.msg = msg;
@@ -25,6 +30,11 @@ public class RspResult {
 		this.code = status.getCode();
 		this.msg = status.getMsg();
 		this.data = data;
+	}
+	
+	public RspResult(StatusEnum status) {
+		this.code = status.getCode();
+		this.msg = status.getMsg();
 	}
 
 	public String getCode() {

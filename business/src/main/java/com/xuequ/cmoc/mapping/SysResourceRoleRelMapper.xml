@@ -47,7 +47,7 @@
       CREATOR, CREATE_TIME)
     values 
     <foreach collection="menuIds" item="item" index="index" separator=",">  
-      	(#{idResource,jdbcType=INTEGER}, #{idRole,jdbcType=INTEGER}, 
+      	(#{item,jdbcType=INTEGER}, #{idRole,jdbcType=INTEGER}, 
       	 #{creator,jdbcType=VARCHAR}, sysDate())
     </foreach>
   </insert>

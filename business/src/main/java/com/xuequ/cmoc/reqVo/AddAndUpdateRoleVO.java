@@ -14,6 +14,8 @@ public class AddAndUpdateRoleVO implements Serializable{
 	private String roleDesc;
 	
 	private List<Integer> menuIds;
+	
+	private String creator;
 
 	public Integer getIdRole() {
 		return idRole;
@@ -46,7 +48,13 @@ public class AddAndUpdateRoleVO implements Serializable{
 	public void setMenuIds(List<Integer> menuIds) {
 		this.menuIds = menuIds;
 	}
-	
-	
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
 
 }

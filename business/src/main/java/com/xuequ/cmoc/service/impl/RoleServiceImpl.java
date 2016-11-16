@@ -52,6 +52,7 @@ public class RoleServiceImpl implements IRoleService {
 			sysRoleMapper.updateByPrimaryKeySelective(role);
 			sysResourceRoleRelMapper.deleteByIdRole(role.getIdRole());
 		}
+		vo.setIdRole(role.getIdRole());
 		return sysResourceRoleRelMapper.insertBatch(vo);
 	}
 
@@ -62,11 +63,6 @@ public class RoleServiceImpl implements IRoleService {
 		List<SysResourceRoleRel> relList = sysResourceRoleRelMapper.selectListByIdRole(idRole);
 		info.setRelList(relList);
 		return info;
-	}
-
-	@Override
-	public List<SysResource> selectResourceAll() {
-		return sysResourceMapper.selectAll();
 	}
 
 	@Override

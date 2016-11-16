@@ -1,4 +1,4 @@
-package com.xuequ.cmoc;
+package com.xuequ.cmoc.vo;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.xuequ.cmoc.model.GridBase;
 
-public class RoleQueryVO extends GridBase implements Serializable {
+public class SysRoleQueryVO extends GridBase implements Serializable {
 
 	private static final long serialVersionUID = -4951724878289640248L;
 
