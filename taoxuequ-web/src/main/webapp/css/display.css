@@ -5,6 +5,42 @@ body{
 	background-color: #f1f1f1;
 }
 
+#middle {
+    position: relative;
+    width: 100%;
+}
+
+
+#left {
+    float: left;
+    width: 220px;
+    background: #fff url(../images/left_bg.png) repeat-y right;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    position: relative;
+}
+
+#right {
+    background: #fff;
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 100%;
+    position: relative;
+}
+
+.switch {
+    float: left;
+    width: 5px;
+    height: 100%;
+    background: #fff url(../images/switch.png) no-repeat center center;
+    cursor: pointer;
+}
+
+.breadcrumb {
+    background: rgba(0, 0, 0, 0) url("../images/left11.png") repeat scroll 0 0;
+}
+
 /* 表单 */
 .input{
 	color:#232323;

@@ -51,7 +51,6 @@ public class LoginAuthenticationProvider extends AbstractUserDetailsAuthenticati
 		String password = authentication.getCredentials().toString();
 		try {
 			appUser = userDetailService.setUserDetails(userAccount, MD5Util.md5(password));
-			appUser.setAuthorities(getAuthorities());
 		} catch (AuthException e1){
         	throw new AuthException(e1.getMessage());
         } catch (Exception e) {
@@ -59,18 +58,6 @@ public class LoginAuthenticationProvider extends AbstractUserDetailsAuthenticati
 			throw new AuthException(AuthConstant.SYS_EXCEPTION_MESSAGE);
 		}
 		return appUser;
-	}
-	
-	/**
-	 * 获得访问角色权限
-	 * 
-	 * @param access
-	 * @return
-	 */
-	public Collection<GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		authList.add(new GrantedAuthorityImpl("ROLE_USER"));
-		return authList;
 	}
 	
 	public Md5PasswordEncoder getPasswordEncoder() {

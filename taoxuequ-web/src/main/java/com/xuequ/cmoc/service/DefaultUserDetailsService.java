@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,6 +62,7 @@ public class DefaultUserDetailsService {
     	if(!StringUtil.isNullOrEmpty(list)) {
     		appUser.setSysMenuList(list);
     		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    		authorities.add(new SimpleGrantedAuthority(AuthConstant.ROOT_AUTHORITY));
     		setResource(authorities, list);
     		appUser.setAuthorities(authorities);
     	}

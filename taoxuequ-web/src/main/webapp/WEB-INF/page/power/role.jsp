@@ -6,12 +6,12 @@
 %>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"></jsp:include>
 <body>
-	<div class="container-fluid" style="padding-top: 20px;">
-		<div class="row-fluid">
-			<%-- <div class="col-md-2">
-				<jsp:include page="${path}/layout/menu.jsp"></jsp:include>
-			</div> --%>
-			<div class="col-md-10" id="content_div">
+	<jsp:include page="/WEB-INF/page/common/header.jsp"></jsp:include>
+	<div id="middle">
+		<jsp:include page="/WEB-INF/page/common/menu.jsp"></jsp:include>
+		<div id="right">
+		    <jsp:include page="/WEB-INF/page/common/localinfo.jsp" />
+			<div class="col-md-12" id="content_div">
 				<div>
 					<!--begin 搜索栏 -->
 					<div class="span12" id="body_div">
@@ -38,8 +38,8 @@
 					<table id="dataGrid"></table>
 				</div>
 			</div>
-			<div class="col-md-10" style="display: none;" id="role_add">
-			  <form id="addForm" class="row" novalidate="novalidate">
+			<div class="col-md-12" style="display: none;" id="role_add">
+			  <form id="addForm" novalidate="novalidate">
 				<input type="hidden" id="idRole" name="idRole">
 				<table class="table table-bordered">
 						<col width="15%">

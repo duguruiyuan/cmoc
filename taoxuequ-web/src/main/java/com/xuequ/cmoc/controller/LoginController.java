@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.xuequ.cmoc.auth.AppUser;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.enums.StatusEnum;
-import com.xuequ.cmoc.model.SysUser;
 
 @RequestMapping("auth")
 @Controller
@@ -34,7 +33,7 @@ public class LoginController {
     	try {
     		AppUser user = (AppUser) request.getSession().getAttribute(Constants.APP_USER);
         	if(user != null) {
-        		return "redirect:/common/main";
+        		return "redirect:/auth/main";
         	}
     	}catch (Exception e) {
 			logger.error("loginPage exception : {}",e);
@@ -45,7 +44,7 @@ public class LoginController {
     @RequestMapping(value = "main", method = RequestMethod.GET)
     public String forwardToDefaultPage(HttpServletRequest request, Model model) {
     	model.addAttribute(Constants.APP_USER, request.getSession().getAttribute(Constants.APP_USER));
-        return "main";
+        return "index";
     }
 
     /**
