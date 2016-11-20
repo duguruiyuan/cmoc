@@ -22,10 +22,6 @@
     <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
     <result column="marine_id" jdbcType="INTEGER" property="marineId" />
     <result column="marine_name" jdbcType="VARCHAR" property="marineName" />
-    <result column="hm_name" jdbcType="VARCHAR" property="hmName" />
-    <result column="hm_mobile" jdbcType="VARCHAR" property="hmMobile" />
-    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
-    <result column="teacher_mobile" jdbcType="VARCHAR" property="teacherMobile" />
     <result column="creater_user_id" jdbcType="INTEGER" property="createrUserId" />
     <result column="creater" jdbcType="VARCHAR" property="creater" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -37,9 +33,8 @@
   <sql id="Base_Column_List">
     id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
     other_name, other_mobile, other_age, child_name, child_mobile, child_age, child_img, 
-    child_title, child_comment, activity_id, activity_name, marine_id, marine_name, hm_name, 
-    hm_mobile, teacher_name, teacher_mobile, creater_user_id, creater, create_time, updater_user_id, 
-    updater, update_time, is_delete
+    child_title, child_comment, activity_id, activity_name, marine_id, marine_name, creater_user_id, 
+    creater, create_time, updater_user_id, updater, update_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -58,22 +53,20 @@
       other_age, child_name, child_mobile, 
       child_age, child_img, child_title, 
       child_comment, activity_id, activity_name, 
-      marine_id, marine_name, hm_name, 
-      hm_mobile, teacher_name, teacher_mobile, 
-      creater_user_id, creater, create_time, 
-      updater_user_id, updater, update_time, 
-      is_delete)
+      marine_id, marine_name, creater_user_id, 
+      creater, create_time, updater_user_id, 
+      updater, update_time, is_delete
+      )
     values (#{id,jdbcType=INTEGER}, #{fatherName,jdbcType=VARCHAR}, #{fatherMobile,jdbcType=VARCHAR}, 
       #{fatherAge,jdbcType=INTEGER}, #{motherName,jdbcType=VARCHAR}, #{motherMobile,jdbcType=VARCHAR}, 
       #{motherAge,jdbcType=INTEGER}, #{otherName,jdbcType=VARCHAR}, #{otherMobile,jdbcType=VARCHAR}, 
       #{otherAge,jdbcType=INTEGER}, #{childName,jdbcType=VARCHAR}, #{childMobile,jdbcType=VARCHAR}, 
       #{childAge,jdbcType=INTEGER}, #{childImg,jdbcType=VARCHAR}, #{childTitle,jdbcType=VARCHAR}, 
       #{childComment,jdbcType=VARCHAR}, #{activityId,jdbcType=DECIMAL}, #{activityName,jdbcType=VARCHAR}, 
-      #{marineId,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{hmName,jdbcType=VARCHAR}, 
-      #{hmMobile,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, #{teacherMobile,jdbcType=VARCHAR}, 
-      #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=VARCHAR})
+      #{marineId,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{createrUserId,jdbcType=INTEGER}, 
+      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, 
+      #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityFamily">
     insert into t_activity_family
@@ -137,18 +130,6 @@
       </if>
       <if test="marineName != null">
         marine_name,
-      </if>
-      <if test="hmName != null">
-        hm_name,
-      </if>
-      <if test="hmMobile != null">
-        hm_mobile,
-      </if>
-      <if test="teacherName != null">
-        teacher_name,
-      </if>
-      <if test="teacherMobile != null">
-        teacher_mobile,
       </if>
       <if test="createrUserId != null">
         creater_user_id,
@@ -233,18 +214,6 @@
       <if test="marineName != null">
         #{marineName,jdbcType=VARCHAR},
       </if>
-      <if test="hmName != null">
-        #{hmName,jdbcType=VARCHAR},
-      </if>
-      <if test="hmMobile != null">
-        #{hmMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherName != null">
-        #{teacherName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherMobile != null">
-        #{teacherMobile,jdbcType=VARCHAR},
-      </if>
       <if test="createrUserId != null">
         #{createrUserId,jdbcType=INTEGER},
       </if>
@@ -328,18 +297,6 @@
       <if test="marineName != null">
         marine_name = #{marineName,jdbcType=VARCHAR},
       </if>
-      <if test="hmName != null">
-        hm_name = #{hmName,jdbcType=VARCHAR},
-      </if>
-      <if test="hmMobile != null">
-        hm_mobile = #{hmMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherName != null">
-        teacher_name = #{teacherName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherMobile != null">
-        teacher_mobile = #{teacherMobile,jdbcType=VARCHAR},
-      </if>
       <if test="createrUserId != null">
         creater_user_id = #{createrUserId,jdbcType=INTEGER},
       </if>
@@ -385,10 +342,6 @@
       activity_name = #{activityName,jdbcType=VARCHAR},
       marine_id = #{marineId,jdbcType=INTEGER},
       marine_name = #{marineName,jdbcType=VARCHAR},
-      hm_name = #{hmName,jdbcType=VARCHAR},
-      hm_mobile = #{hmMobile,jdbcType=VARCHAR},
-      teacher_name = #{teacherName,jdbcType=VARCHAR},
-      teacher_mobile = #{teacherMobile,jdbcType=VARCHAR},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -398,5 +351,4 @@
       is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
 </mapper>

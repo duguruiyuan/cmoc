@@ -8,8 +8,13 @@ package com.xuequ.cmoc.common.enums;
 public enum StatusEnum {
 	
 	SUCCESS("000", "成功"),
-	PRIMARYKEYNULL("1001","ID为空"),
+	PRIMARYKEYNULL("1001","id为空"),
 	NOTEXITUSER("1002", "用户不存在"),
+	TEMPLATE_ERROR("1003", "导入失败,请检查模板或数据!"),
+	TEMPLATE_DATA_NULL("1004", "文件没有数据！"),
+	ACTIVITY_OVER("1005", "活动已结束"),
+	ACTIVITY_NOT_EXISTS("1006","活动不存在"),
+	ACTIVITY_INVALID("1007","活动已失效"),
 	FAIL("9999", "失败");
 	
 	private String code;

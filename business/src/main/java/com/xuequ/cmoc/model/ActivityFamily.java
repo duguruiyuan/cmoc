@@ -44,14 +44,6 @@ public class ActivityFamily implements Serializable {
 
     private String marineName;
 
-    private String hmName;
-
-    private String hmMobile;
-
-    private String teacherName;
-
-    private String teacherMobile;
-
     private Integer createrUserId;
 
     private String creater;
@@ -226,38 +218,6 @@ public class ActivityFamily implements Serializable {
 
     public void setMarineName(String marineName) {
         this.marineName = marineName == null ? null : marineName.trim();
-    }
-
-    public String getHmName() {
-        return hmName;
-    }
-
-    public void setHmName(String hmName) {
-        this.hmName = hmName == null ? null : hmName.trim();
-    }
-
-    public String getHmMobile() {
-        return hmMobile;
-    }
-
-    public void setHmMobile(String hmMobile) {
-        this.hmMobile = hmMobile == null ? null : hmMobile.trim();
-    }
-
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName == null ? null : teacherName.trim();
-    }
-
-    public String getTeacherMobile() {
-        return teacherMobile;
-    }
-
-    public void setTeacherMobile(String teacherMobile) {
-        this.teacherMobile = teacherMobile == null ? null : teacherMobile.trim();
     }
 
     public Integer getCreaterUserId() {

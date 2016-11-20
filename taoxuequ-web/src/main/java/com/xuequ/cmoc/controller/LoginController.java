@@ -63,9 +63,9 @@ public class LoginController {
         String veryCode = request.getParameter("c");         
         PrintWriter out = response.getWriter();                  
         if(validateC.equalsIgnoreCase(veryCode)){         
-            out.println(StatusEnum.success.getCode());         
+            out.println(StatusEnum.SUCCESS.getCode());         
         }else{         
-            out.println(StatusEnum.fail.getCode());         
+            out.println(StatusEnum.FAIL.getCode());         
         }                  
         out.flush();         
         out.close();         

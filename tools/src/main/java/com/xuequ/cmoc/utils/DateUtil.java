@@ -70,6 +70,27 @@ public class DateUtil {
 		return null;
 	}
 	
+	/**
+	 * 两个时间比较
+	 * date1 > date2 = 1
+	 * date1 = date2 = 0
+	 * date1 < date2 = -1
+	 * @auther 胡启萌
+	 * @Date 2016年11月20日
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static int compare(Date date1, Date date2) {
+		if (date1.getTime() > date2.getTime()) {
+            return 1;
+        } else if (date1.getTime() < date2.getTime()) {
+            return -1;
+        } else {
+            return 0;
+        }
+	}
+	
 	public static void main(String[] args) {
 		System.out.println(getYear(new Date()));
 		System.out.println(getMonth(new Date()));

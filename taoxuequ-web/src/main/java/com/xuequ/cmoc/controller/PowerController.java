@@ -96,11 +96,11 @@ public class PowerController extends BaseController {
 		try {
 			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
 			roleService.addAndUpdateRole(vo, sysUser);
-			return new RspResult(StatusEnum.success);
+			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("----roleAdd, error={}", e);
 		}
-		return new RspResult(StatusEnum.fail);
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 	/**
@@ -161,11 +161,11 @@ public class PowerController extends BaseController {
 		try {
 			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
 			sysUserService.addAndUpdateUser(vo, sysUser);
-			return new RspResult(StatusEnum.success);
+			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("----roleAdd, error={}", e);
 		}
-		return new RspResult(StatusEnum.fail);
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 	/**
