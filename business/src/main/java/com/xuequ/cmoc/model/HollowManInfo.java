@@ -41,6 +41,8 @@ public class HollowManInfo implements Serializable {
 
     private Date updateTime;
 
+    private String isDelete;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -185,5 +187,13 @@ public class HollowManInfo implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 }

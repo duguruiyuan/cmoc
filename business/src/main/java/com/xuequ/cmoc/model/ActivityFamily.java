@@ -32,6 +32,10 @@ public class ActivityFamily implements Serializable {
 
     private String childImg;
 
+    private String childTitle;
+
+    private String childComment;
+
     private Long activityId;
 
     private String activityName;
@@ -48,9 +52,13 @@ public class ActivityFamily implements Serializable {
 
     private String teacherMobile;
 
-    private String create;
+    private Integer createrUserId;
+
+    private String creater;
 
     private Date createTime;
+
+    private Integer updaterUserId;
 
     private String updater;
 
@@ -172,6 +180,22 @@ public class ActivityFamily implements Serializable {
         this.childImg = childImg == null ? null : childImg.trim();
     }
 
+    public String getChildTitle() {
+        return childTitle;
+    }
+
+    public void setChildTitle(String childTitle) {
+        this.childTitle = childTitle == null ? null : childTitle.trim();
+    }
+
+    public String getChildComment() {
+        return childComment;
+    }
+
+    public void setChildComment(String childComment) {
+        this.childComment = childComment == null ? null : childComment.trim();
+    }
+
     public Long getActivityId() {
         return activityId;
     }
@@ -236,12 +260,20 @@ public class ActivityFamily implements Serializable {
         this.teacherMobile = teacherMobile == null ? null : teacherMobile.trim();
     }
 
-    public String getCreate() {
-        return create;
+    public Integer getCreaterUserId() {
+        return createrUserId;
     }
 
-    public void setCreate(String create) {
-        this.create = create == null ? null : create.trim();
+    public void setCreaterUserId(Integer createrUserId) {
+        this.createrUserId = createrUserId;
+    }
+
+    public String getCreater() {
+        return creater;
+    }
+
+    public void setCreater(String creater) {
+        this.creater = creater == null ? null : creater.trim();
     }
 
     public Date getCreateTime() {
@@ -250,6 +282,14 @@ public class ActivityFamily implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getUpdaterUserId() {
+        return updaterUserId;
+    }
+
+    public void setUpdaterUserId(Integer updaterUserId) {
+        this.updaterUserId = updaterUserId;
     }
 
     public String getUpdater() {

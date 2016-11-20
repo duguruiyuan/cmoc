@@ -19,13 +19,25 @@ public class GoodsDetail implements Serializable {
 
     private BigDecimal price;
 
-    private BigDecimal discountprice;
+    private BigDecimal discountPrice;
 
     private Integer points;
+
+    private String productDescUrl;
+
+    private Integer createrUserId;
 
     private String creater;
 
     private Date createTime;
+
+    private Integer updaterUserId;
+
+    private String updater;
+
+    private Date updaterTime;
+
+    private String isDelete;
 
     private static final long serialVersionUID = 1L;
 
@@ -85,12 +97,12 @@ public class GoodsDetail implements Serializable {
         this.price = price;
     }
 
-    public BigDecimal getDiscountprice() {
-        return discountprice;
+    public BigDecimal getDiscountPrice() {
+        return discountPrice;
     }
 
-    public void setDiscountprice(BigDecimal discountprice) {
-        this.discountprice = discountprice;
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     public Integer getPoints() {
@@ -99,6 +111,22 @@ public class GoodsDetail implements Serializable {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public String getProductDescUrl() {
+        return productDescUrl;
+    }
+
+    public void setProductDescUrl(String productDescUrl) {
+        this.productDescUrl = productDescUrl == null ? null : productDescUrl.trim();
+    }
+
+    public Integer getCreaterUserId() {
+        return createrUserId;
+    }
+
+    public void setCreaterUserId(Integer createrUserId) {
+        this.createrUserId = createrUserId;
     }
 
     public String getCreater() {
@@ -115,5 +143,37 @@ public class GoodsDetail implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getUpdaterUserId() {
+        return updaterUserId;
+    }
+
+    public void setUpdaterUserId(Integer updaterUserId) {
+        this.updaterUserId = updaterUserId;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater == null ? null : updater.trim();
+    }
+
+    public Date getUpdaterTime() {
+        return updaterTime;
+    }
+
+    public void setUpdaterTime(Date updaterTime) {
+        this.updaterTime = updaterTime;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 }

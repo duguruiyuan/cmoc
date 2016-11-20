@@ -24,8 +24,9 @@
 
  	<mvc:resources location="/images/" mapping="/images/**"/>  
  	<mvc:resources location="/js/" mapping="/js/**"/>  
- 	<mvc:resources location="/css/" mapping="/css/**"/>  
-
+ 	<mvc:resources location="/css/" mapping="/css/**"/> 
+ 	<!-- 接入微信公众平台必要文件，不要修改 --> 
+	<mvc:resources location="/mp/" mapping="/mp/**"/>
 	<!-- To enable @RequestMapping process on type level and method level -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />

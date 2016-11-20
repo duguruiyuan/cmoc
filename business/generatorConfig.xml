@@ -32,18 +32,11 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table tableName="t_sys_user_role_rel" domainObjectName="SysUserRoleRel"
+		<table tableName="t_activity_hm_sign" domainObjectName="ActivityHmSign"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
 			<property name="useActualColumnNames" value="false" />
 		</table>
-		<table tableName="t_sys_resource_role_rel" domainObjectName="SysResourceRoleRel"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
-			<property name="useActualColumnNames" value="false" />
-		</table>
-		
 	</context>
 </generatorConfiguration>

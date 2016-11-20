@@ -52,7 +52,10 @@ function loadData() {
 			field : 'createTime',
 			title : '创建时间',
 			align : "center",
-			resizable : true
+			resizable : true,
+			formatter : function(value) {
+				return getTime(value, "yyyy-MM-dd hh:mm:ss");
+			}
 		}] ]
 	});
 }

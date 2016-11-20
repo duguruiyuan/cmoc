@@ -12,10 +12,7 @@
 	<http pattern="/**/*.css" security="none"/>
 	<http pattern="/images/**" security="none" />
 	<http pattern="/image/**" security="none" />
-	<http pattern="/auth/**" security="none" />
-	<http pattern="/favicon.ico" security="none" />
 	<http pattern="/common/**" security="none"/>
-	<http pattern="/servlet/VerifyCodeServlet" security="none" />
 	
     <http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
@@ -25,6 +22,8 @@
         <session-management invalid-session-url="/auth/login">
         	<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
         </session-management>
+        <!-- 如果退出登录，再操作页面需要跳转到登录页面 -->
+		<custom-filter ref="defaultSessionValidateFilter" before="SESSION_MANAGEMENT_FILTER" />
         <!-- 自定义UsernamePasswordAuthenticationFilter，校验用户输入和验证码 -->
 	    <custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER" />
 	    <!--自定义filter，用户的角色和角色对应权限的映射  -->
@@ -53,6 +52,20 @@
 		<beans:property name="authenticationManager" ref="loginAuthenticationManage" />
 		<!-- 用户是否拥有所请求资源的权限 -->
 		<beans:property name="accessDecisionManager" ref="defaultAccessDecisionManager" />
+	</beans:bean>
+	
+	<beans:bean id="defaultSessionValidateFilter"
+		class="com.xuequ.cmoc.auth.DefaultSessionValidateFilter">
+		<beans:property name="securityContextRepository" ref="securityContextRepository"/> 
+		<beans:property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+	</beans:bean>
+	
+	<beans:bean id="securityContextRepository" 
+		class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" >
+	</beans:bean>
+	
+	<beans:bean id="sessionAuthenticationStrategy"
+		class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy">
 	</beans:bean>
   	
   	 <!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->

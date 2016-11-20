@@ -1,153 +1,218 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.paic.clearing.mapper.GoodsDetailMapper" >
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.GoodsDetail" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
-    <result column="stock" property="stock" jdbcType="INTEGER" />
-    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
-    <result column="color" property="color" jdbcType="VARCHAR" />
-    <result column="main_img" property="mainImg" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="discountPrice" property="discountprice" jdbcType="DECIMAL" />
-    <result column="points" property="points" jdbcType="INTEGER" />
-    <result column="creater" property="creater" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuequ.cmoc.dao.GoodsDetailMapper">
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.GoodsDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="goods_no" jdbcType="VARCHAR" property="goodsNo" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="main_img" jdbcType="VARCHAR" property="mainImg" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
+    <result column="points" jdbcType="INTEGER" property="points" />
+    <result column="product_desc_url" jdbcType="VARCHAR" property="productDescUrl" />
+    <result column="creater_user_id" jdbcType="INTEGER" property="createrUserId" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater_user_id" jdbcType="INTEGER" property="updaterUserId" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updater_time" jdbcType="TIMESTAMP" property="updaterTime" />
+    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, goods_name, stock, goods_no, color, main_img, price, discountPrice, points, creater, 
-    create_time
+  <sql id="Base_Column_List">
+    id, goods_name, stock, goods_no, color, main_img, price, discount_price, points, 
+    product_desc_url, creater_user_id, creater, create_time, updater_user_id, updater, 
+    updater_time, is_delete
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_goods_detail
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_goods_detail
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.GoodsDetail" >
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.GoodsDetail">
     insert into t_goods_detail (id, goods_name, stock, 
       goods_no, color, main_img, 
-      price, discountPrice, points, 
-      creater, create_time)
+      price, discount_price, points, 
+      product_desc_url, creater_user_id, creater, 
+      create_time, updater_user_id, updater, 
+      updater_time, is_delete)
     values (#{id,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, 
       #{goodsNo,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{mainImg,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{discountprice,jdbcType=DECIMAL}, #{points,jdbcType=INTEGER}, 
-      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+      #{price,jdbcType=DECIMAL}, #{discountPrice,jdbcType=DECIMAL}, #{points,jdbcType=INTEGER}, 
+      #{productDescUrl,jdbcType=VARCHAR}, #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, 
+      #{updaterTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.GoodsDetail" >
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.GoodsDetail">
     insert into t_goods_detail
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="goodsName != null" >
+      <if test="goodsName != null">
         goods_name,
       </if>
-      <if test="stock != null" >
+      <if test="stock != null">
         stock,
       </if>
-      <if test="goodsNo != null" >
+      <if test="goodsNo != null">
         goods_no,
       </if>
-      <if test="color != null" >
+      <if test="color != null">
         color,
       </if>
-      <if test="mainImg != null" >
+      <if test="mainImg != null">
         main_img,
       </if>
-      <if test="price != null" >
+      <if test="price != null">
         price,
       </if>
-      <if test="discountprice != null" >
-        discountPrice,
+      <if test="discountPrice != null">
+        discount_price,
       </if>
-      <if test="points != null" >
+      <if test="points != null">
         points,
       </if>
-      <if test="creater != null" >
+      <if test="productDescUrl != null">
+        product_desc_url,
+      </if>
+      <if test="createrUserId != null">
+        creater_user_id,
+      </if>
+      <if test="creater != null">
         creater,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
+      <if test="updaterUserId != null">
+        updater_user_id,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updaterTime != null">
+        updater_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="goodsName != null" >
+      <if test="goodsName != null">
         #{goodsName,jdbcType=VARCHAR},
       </if>
-      <if test="stock != null" >
+      <if test="stock != null">
         #{stock,jdbcType=INTEGER},
       </if>
-      <if test="goodsNo != null" >
+      <if test="goodsNo != null">
         #{goodsNo,jdbcType=VARCHAR},
       </if>
-      <if test="color != null" >
+      <if test="color != null">
         #{color,jdbcType=VARCHAR},
       </if>
-      <if test="mainImg != null" >
+      <if test="mainImg != null">
         #{mainImg,jdbcType=VARCHAR},
       </if>
-      <if test="price != null" >
+      <if test="price != null">
         #{price,jdbcType=DECIMAL},
       </if>
-      <if test="discountprice != null" >
-        #{discountprice,jdbcType=DECIMAL},
+      <if test="discountPrice != null">
+        #{discountPrice,jdbcType=DECIMAL},
       </if>
-      <if test="points != null" >
+      <if test="points != null">
         #{points,jdbcType=INTEGER},
       </if>
-      <if test="creater != null" >
+      <if test="productDescUrl != null">
+        #{productDescUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createrUserId != null">
+        #{createrUserId,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null">
         #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterUserId != null">
+        #{updaterUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterTime != null">
+        #{updaterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.GoodsDetail" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.GoodsDetail">
     update t_goods_detail
-    <set >
-      <if test="goodsName != null" >
+    <set>
+      <if test="goodsName != null">
         goods_name = #{goodsName,jdbcType=VARCHAR},
       </if>
-      <if test="stock != null" >
+      <if test="stock != null">
         stock = #{stock,jdbcType=INTEGER},
       </if>
-      <if test="goodsNo != null" >
+      <if test="goodsNo != null">
         goods_no = #{goodsNo,jdbcType=VARCHAR},
       </if>
-      <if test="color != null" >
+      <if test="color != null">
         color = #{color,jdbcType=VARCHAR},
       </if>
-      <if test="mainImg != null" >
+      <if test="mainImg != null">
         main_img = #{mainImg,jdbcType=VARCHAR},
       </if>
-      <if test="price != null" >
+      <if test="price != null">
         price = #{price,jdbcType=DECIMAL},
       </if>
-      <if test="discountprice != null" >
-        discountPrice = #{discountprice,jdbcType=DECIMAL},
+      <if test="discountPrice != null">
+        discount_price = #{discountPrice,jdbcType=DECIMAL},
       </if>
-      <if test="points != null" >
+      <if test="points != null">
         points = #{points,jdbcType=INTEGER},
       </if>
-      <if test="creater != null" >
+      <if test="productDescUrl != null">
+        product_desc_url = #{productDescUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createrUserId != null">
+        creater_user_id = #{createrUserId,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null">
         creater = #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterUserId != null">
+        updater_user_id = #{updaterUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterTime != null">
+        updater_time = #{updaterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.GoodsDetail" >
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.GoodsDetail">
     update t_goods_detail
     set goods_name = #{goodsName,jdbcType=VARCHAR},
       stock = #{stock,jdbcType=INTEGER},
@@ -155,10 +220,17 @@
       color = #{color,jdbcType=VARCHAR},
       main_img = #{mainImg,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},
-      discountPrice = #{discountprice,jdbcType=DECIMAL},
+      discount_price = #{discountPrice,jdbcType=DECIMAL},
       points = #{points,jdbcType=INTEGER},
+      product_desc_url = #{productDescUrl,jdbcType=VARCHAR},
+      creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updater_user_id = #{updaterUserId,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=VARCHAR},
+      updater_time = #{updaterTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
 </mapper>

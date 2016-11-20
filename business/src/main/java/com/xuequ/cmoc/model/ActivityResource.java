@@ -8,6 +8,10 @@ public class ActivityResource implements Serializable {
 
     private String url;
 
+    private Integer activityId;
+
+    private String activityName;
+
     private Integer marineId;
 
     private String marineName;
@@ -38,6 +42,22 @@ public class ActivityResource implements Serializable {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName == null ? null : activityName.trim();
     }
 
     public Integer getMarineId() {

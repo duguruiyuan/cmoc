@@ -2,17 +2,19 @@
 	String basePath = request.getScheme() + "://" + request.getServerName()
 			+ ":" + request.getServerPort() + request.getContextPath();
 %>
-<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
-<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/main.css"/>
-<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/display.css"/>
 
 <!-- Bootstrap core CSS -->
 <link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/docs.min.css" rel="stylesheet">
 <link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/bootstrap.css.map" rel="stylesheet">
 <link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/bootstrap-theme.css" rel="stylesheet">
+<link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/fileinput.css" rel="stylesheet">
 
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
+<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/main.css"/>
+<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/display.css"/>
 
 <!-- easyui css -->
 <link rel="stylesheet" href="<%=basePath%>/js/plugin/jquery-easyui-1.4.3/themes/bootstrap/easyui.css" type="text/css"></link>
@@ -21,6 +23,7 @@
 <script src="<%=basePath %>/js/plugin/jquery-2.1.4.min.js"></script>
 <script src="<%=basePath %>/js/plugin/extJquery.js"></script>
 <!-- bootstrap js -->
+<script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/fileinput.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/ie-emulation-modes-warning.js" type="text/javascript" charset="utf-8"></script>
 

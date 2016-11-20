@@ -25,7 +25,7 @@ body{
     background: #fff;
     overflow-y: auto;
     overflow-x: auto;
-    height: 100%;
+    min-height: 100%;
     position: relative;
 }
 
@@ -38,7 +38,8 @@ body{
 }
 
 .breadcrumb {
-    background: rgba(0, 0, 0, 0) url("../images/left11.png") repeat scroll 0 0;
+    font-size: 15px;
+    height: 35px;
 }
 
 /* 表单 */

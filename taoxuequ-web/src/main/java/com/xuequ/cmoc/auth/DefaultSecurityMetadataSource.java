@@ -54,16 +54,29 @@ public class DefaultSecurityMetadataSource implements
 	
 	private static SysResource getCurrMenu(List<SysMenu> menuList, String resourceId) {
 		if(!StringUtil.isNullOrEmpty(menuList) && !StringUtils.isEmpty(resourceId)) {
+			SysResource result = null;
+			for(SysMenu menu : menuList) {
+				result = eachMenu(menu.getSubMenuList(), resourceId);
+				if(result != null) {
+					return result;
+				}
+			}
+		}
+		return new SysMenu();
+	}
+	
+	private static SysResource eachMenu(List<SysMenu> menuList, String resourceId) {
+		if(!StringUtil.isNullOrEmpty(menuList) && !StringUtils.isEmpty(resourceId)) {
 			for(SysMenu menu : menuList) {
 				if(String.valueOf(menu.getIdResource()).equals(resourceId)) {
 					return menu;
 				}
 				if(menu.isHasChild()) {
-					return getCurrMenu(menu.getSubMenuList(), resourceId);
+					return eachMenu(menu.getSubMenuList(), resourceId);
 				}
 			}
 		}
-		return new SysResource();
+		return null;
 	}
 
 	public boolean supports(Class<?> clazz) {
