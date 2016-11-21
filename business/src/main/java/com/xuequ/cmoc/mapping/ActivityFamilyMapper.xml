@@ -41,6 +41,14 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectListByMarineId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity_family
+    where is_delete = 'N' and
+	marine_id = #{marineId,jdbcType=INTEGER}
+  </select>
+  
   <resultMap id="PageBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityFamilyView" >
   	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
     <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />

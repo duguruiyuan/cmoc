@@ -14,7 +14,7 @@ public class Page<T> {
 	private int totalRecord;// 总记录数
 	private int totalPage;// 总页数
 	private List results;// 对应的当前页记录
-	private Map<String, Object> params = new HashMap<String, Object>();// 其他的参数我们把它分装成一个Map对象
+	private Object params = new Object();// 其他的参数我们把它分装成一个Map对象
 	private Date startDate;  //开始日期  用于分页查询的时候 时间查询  这个可以通用
 	private Date endDate;	//结束日期
     public Page() {
@@ -83,16 +83,16 @@ public class Page<T> {
 	public void setResults(List<T> results) {
 		this.results = results;
 	}
-
-	public Map<String, Object> getParams() {
+	
+    public Object getParams() {
 		return params;
 	}
 
-	public void setParams(Map<String, Object> params) {
+	public void setParams(Object params) {
 		this.params = params;
 	}
-	
-    /**
+
+	/**
      * 根据pageNo和pageSize计算当前页第一条记录在总结果集中的位置,序号从1开始.
      */
     public int getFirst() {

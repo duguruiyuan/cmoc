@@ -20,4 +20,6 @@ public interface ActivityMarinesMapper {
     int updateByPrimaryKey(ActivityMarines record);
     
     List<ActivityMarinesView> selectListByPage(Page<ActivityMarinesView> page);
+    
+    List<ActivityMarines> selectListByActivityId(Integer activityId);
 }

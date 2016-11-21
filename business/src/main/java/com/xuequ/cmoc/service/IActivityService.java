@@ -39,4 +39,5 @@ public interface IActivityService {
 	 */
 	public RspResult addImportActivityNamelist(List<ActivityNamelistVO> list, SysUser user);
 	
+	public List<ActivityInfo> selectListByParam(Page<ActivityInfo> page);
 }

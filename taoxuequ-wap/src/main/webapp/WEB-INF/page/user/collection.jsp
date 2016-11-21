@@ -1,29 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+%>
 <!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>个人收藏</title>
+		<title>个人收藏-陶学趣</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../css/display.css"/>
 	</head>
-
+	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <h1 class="mui-title">个人收藏</h1>
 		</header>
-		<nav class="mui-bar mui-bar-tab footer">
-		    <a class="mui-tab-item" href="page2.html">
-		        <span class="mui-tab-label">热文推荐</span>
-		    </a>
-		    <a class="mui-tab-item" href="page3.html">
-		        <span class="mui-tab-label">实践课堂</span>
-		    </a>
-		    <a class="mui-tab-item mui-active" href="page1.html">
-		        <span class="mui-tab-label">个人中心</span>
-		    </a>
-		</nav>
+		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
 		    <div id="slider" class="mui-slider">
 		      <div class="mui-slider-group mui-slider-loop">
@@ -111,7 +107,6 @@
 	        </ul>
 		</div>
 		
-		<script src="../js/mui.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui('.footer').on('tap','a',function(){document.location.href=this.href;});

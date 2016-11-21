@@ -39,6 +39,21 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectListByParam" resultMap="BaseResultMap" parameterType="com.xuequ.cmoc.model.ActivityInfo">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_activity_info where is_delete = 'N'
+    <if test="params.year != null">
+    	and year = #{params.year,jdbcType=INTEGER}
+    </if>
+    <if test="params.month != null">
+    	and month = #{params.month,jdbcType=INTEGER}
+    </if>
+    <if test="params.activityType != null">
+    	and activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
   <resultMap id="InfoBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityInfoView">
       <result column="enter_peoples" jdbcType="INTEGER" property="enterPeoples" />
   </resultMap>

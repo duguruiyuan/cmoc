@@ -20,4 +20,6 @@ public interface ActivityInfoMapper {
     int updateByPrimaryKey(ActivityInfo record);
     
     List<ActivityInfoView> selectListByPage(Page<ActivityInfoView> page);
+
+    List<ActivityInfo> selectListByParam(Page<ActivityInfo> page);
 }

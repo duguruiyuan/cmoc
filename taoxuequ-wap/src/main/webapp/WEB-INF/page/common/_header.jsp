@@ -6,7 +6,12 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>
-<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/base.css"/>
-<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/style.css"/>
-<script src="<%=basePath %>/js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%=basePath %>/js/adapt.js" type="text/javascript" charset="utf-8"></script>
+<link href="<%=basePath %>/css/mui.min.css" rel="stylesheet" />
+<link href="<%=basePath %>/css/mui.picker.css" rel="stylesheet" />
+<link href="<%=basePath %>/css/mui.poppicker.css" rel="stylesheet" />
+<link  href="<%=basePath %>/css/display.css" rel="stylesheet" type="text/css"/>
+
+<script src="<%=basePath %>/js/plugins/mui/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%=basePath %>/js/plugins/mui/mui.js"></script>
+<script src="<%=basePath %>/js/plugins/mui/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%=basePath %>/js/plugins/mui/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>

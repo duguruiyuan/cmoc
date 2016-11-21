@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
-import org.lsmp.djep.xjep.function.FromBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -180,6 +178,11 @@ public class ActivityServiceImpl implements IActivityService {
 			activityFamilyMapper.insertSelective(family);
 		}
 		return new RspResult(StatusEnum.SUCCESS);
+	}
+
+	@Override
+	public List<ActivityInfo> selectListByParam(Page<ActivityInfo> page) {
+		return activityInfoMapper.selectListByParam(page);
 	}
 
 }

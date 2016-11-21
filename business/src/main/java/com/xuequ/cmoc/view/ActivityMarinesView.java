@@ -6,7 +6,7 @@ public class ActivityMarinesView extends ActivityMarines {
 
 	private static final long serialVersionUID = 83327574988055913L;
 
-private String activityName;
+	private String activityName;
 	
 	private String marineName;
 	

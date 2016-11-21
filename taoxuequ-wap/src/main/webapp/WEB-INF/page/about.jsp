@@ -1,36 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>关于我们</title>
+		<title>关于我们-陶学趣</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../css/display.css"/>
 	</head>
-
+	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <h1 class="mui-title">关于我们</h1>
 		</header>
-		<nav class="mui-bar mui-bar-tab footer">
-		    <a class="mui-tab-item" href="page2.html">
-		        <span class="mui-tab-label">热文推荐</span>
-		    </a>
-		    <a class="mui-tab-item" href="page3.html">
-		        <span class="mui-tab-label">实践课堂</span>
-		    </a>
-		    <a class="mui-tab-item mui-active" href="page1.html">
-		        <span class="mui-tab-label">个人中心</span>
-		    </a>
-		</nav>
+		
 		<div class="mui-content">
 			<div class="aboutContent mt10 mb10">
 				关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容关于我们内容
 			</div>
 		</div>
-		
-		<script src="../js/mui.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
