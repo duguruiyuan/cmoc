@@ -1,4 +1,4 @@
-var activityQueryUrl = basePath + "/activity/json/query";
+var activityQueryUrl = basePath + "/activity/json/namelist/query";
 var addUpdateActivityUrl = basePath + "/activity/json/addUpdate";
 var queryByIdUrl = basePath + "/activity/json/queryById";
 
@@ -30,7 +30,6 @@ function loadData() {
 			align : 'center',
 			formatter : function(value, row, index) {
 				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">编辑</button>', row.id);
-				str += $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="uploadNamelist(\'{0}\');">名单上传</button>', row.id);
 				return str;
 			}
 		}, {
@@ -57,41 +56,48 @@ function loadData() {
 				return activityTypeFormat(v);
 			}
 		}, {
-			field : 'activityPeoples',
-			title : '活动人数',
+			field : 'fatherName',
+			title : '爸爸姓名',
 			align : "center",
 			resizable : true
 		}, {
-			field : 'startDate',
-			title : '活动开始时间',
+			field : 'fatherMobile',
+			title : '爸爸手机号码',
 			align : "center",
-			resizable : true,
-			formatter : function(value) {
-				return getTime(value, "yyyy-MM-dd hh:mm");
-			}
+			resizable : true
 		}, {
-			field : 'endDate',
-			title : '活动结束时间',
+			field : 'motherName',
+			title : '妈妈姓名',
 			align : "center",
-			resizable : true,
-			formatter : function(value) {
-				return getTime(value, "yyyy-MM-dd hh:mm");
-			}
+			resizable : true
 		},{
-			field : 'activityAddr',
-			title : '活动地址',
+			field : 'motherMobile',
+			title : '妈妈手机号码',
 			align : "center",
 			resizable : true
 		}, {
-			field : 'city',
-			title : '活动城市',
+			field : 'marineName',
+			title : '战队名称',
 			align : "center",
 			resizable : true
 		}, {
-			field : 'activityDesc',
-			title : '活动描述',
+			field : 'childName',
+			title : '小孩姓名',
 			align : "center",
 			resizable : true
+		}, {
+			field : 'childTitle',
+			title : '小孩头衔',
+			align : "center",
+			resizable : true
+		}, {
+			field : 'childImg',
+			title : '小孩相片',
+			align : "center",
+			resizable : true,
+			formatter : function(value) {
+				return "<a style='color: red;'>查看</a>";
+			}
 		}, {
 			field : 'creater',
 			title : '创建人',

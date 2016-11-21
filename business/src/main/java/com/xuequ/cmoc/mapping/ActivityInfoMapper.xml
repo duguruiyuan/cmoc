@@ -1,37 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xuequ.cmoc.dao.ActivityInfoMapper">
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityInfo">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
-    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
-    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
-    <result column="activity_addr" jdbcType="VARCHAR" property="activityAddr" />
-    <result column="line_name" jdbcType="VARCHAR" property="lineName" />
-    <result column="line_id" jdbcType="INTEGER" property="lineId" />
-    <result column="activity_img_url" jdbcType="VARCHAR" property="activityImgUrl" />
-    <result column="city" jdbcType="VARCHAR" property="city" />
-    <result column="city_id" jdbcType="INTEGER" property="cityId" />
-    <result column="activity_num" jdbcType="VARCHAR" property="activityNum" />
-    <result column="activity_desc" jdbcType="VARCHAR" property="activityDesc" />
-    <result column="activity_type" jdbcType="VARCHAR" property="activityType" />
-    <result column="year" jdbcType="INTEGER" property="year" />
-    <result column="month" jdbcType="INTEGER" property="month" />
-    <result column="creater_user_id" jdbcType="INTEGER" property="createrUserId" />
-    <result column="creater" jdbcType="VARCHAR" property="creater" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="updater_user_id" jdbcType="INTEGER" property="updaterUserId" />
-    <result column="updater" jdbcType="VARCHAR" property="updater" />
-    <result column="updater_time" jdbcType="TIMESTAMP" property="updaterTime" />
-    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
-    <result column="activity_peoples" jdbcType="INTEGER" property="activityPeoples" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.ActivityInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="activity_addr" property="activityAddr" jdbcType="VARCHAR" />
+    <result column="line_name" property="lineName" jdbcType="VARCHAR" />
+    <result column="line_id" property="lineId" jdbcType="INTEGER" />
+    <result column="activity_peoples" property="activityPeoples" jdbcType="INTEGER" />
+    <result column="activity_img_url" property="activityImgUrl" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
+    <result column="activity_desc" property="activityDesc" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater_user_id" property="updaterUserId" jdbcType="INTEGER" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="updater_time" property="updaterTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, activity_name, start_date, end_date, activity_addr, line_name, line_id, activity_img_url, 
-    city, city_id, activity_num, activity_desc, activity_type, year, month, creater_user_id, 
-    creater, create_time, updater_user_id, updater, updater_time, is_delete,activity_peoples
+  <sql id="Base_Column_List" >
+    id, activity_name, start_date, end_date, activity_addr, line_name, line_id, activity_peoples, 
+    activity_img_url, city, city_id, activity_num, activity_desc, activity_type, year, 
+    month, creater_user_id, creater, create_time, updater_user_id, updater, updater_time, 
+    is_delete
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_activity_info
@@ -60,248 +61,249 @@
     <if test="params.endDate != null">
     	and DATE_FORMAT(start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
     </if>
+    order by a.id desc
   </select>
-	
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityInfo">
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityInfo" >
     insert into t_activity_info (id, activity_name, start_date, 
       end_date, activity_addr, line_name, 
-      line_id, activity_img_url, city, 
-      city_id, activity_num, activity_desc, 
-      activity_type, year, month, 
-      creater_user_id, creater, create_time, 
-      updater_user_id, updater, updater_time, 
-      is_delete, activity_peoples)
+      line_id, activity_peoples, activity_img_url, 
+      city, city_id, activity_num, 
+      activity_desc, activity_type, year, 
+      month, creater_user_id, creater, 
+      create_time, updater_user_id, updater, 
+      updater_time, is_delete)
     values (#{id,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, 
       #{endDate,jdbcType=TIMESTAMP}, #{activityAddr,jdbcType=VARCHAR}, #{lineName,jdbcType=VARCHAR}, 
-      #{lineId,jdbcType=INTEGER}, #{activityImgUrl,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-      #{cityId,jdbcType=INTEGER}, #{activityNum,jdbcType=VARCHAR}, #{activityDesc,jdbcType=VARCHAR}, 
-      #{activityType,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
-      #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{updaterTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=VARCHAR}, #{activityPeoples,jdbcType=INTEGER})
+      #{lineId,jdbcType=INTEGER}, #{activityPeoples,jdbcType=INTEGER}, #{activityImgUrl,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, #{activityNum,jdbcType=VARCHAR}, 
+      #{activityDesc,jdbcType=VARCHAR}, #{activityType,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
+      #{month,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, 
+      #{updaterTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityInfo">
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityInfo" >
     insert into t_activity_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="activityName != null">
+      <if test="activityName != null" >
         activity_name,
       </if>
-      <if test="startDate != null">
+      <if test="startDate != null" >
         start_date,
       </if>
-      <if test="endDate != null">
+      <if test="endDate != null" >
         end_date,
       </if>
-      <if test="activityAddr != null">
+      <if test="activityAddr != null" >
         activity_addr,
       </if>
-      <if test="lineName != null">
+      <if test="lineName != null" >
         line_name,
       </if>
-      <if test="lineId != null">
+      <if test="lineId != null" >
         line_id,
       </if>
-      <if test="activityImgUrl != null">
-        activity_img_url,
-      </if>
-      <if test="city != null">
-        city,
-      </if>
-      <if test="cityId != null">
-        city_id,
-      </if>
-      <if test="activityNum != null">
-        activity_num,
-      </if>
-      <if test="activityDesc != null">
-        activity_desc,
-      </if>
-      <if test="activityType != null">
-        activity_type,
-      </if>
-      <if test="year != null">
-        year,
-      </if>
-      <if test="month != null">
-        month,
-      </if>
-      <if test="createrUserId != null">
-        creater_user_id,
-      </if>
-      <if test="creater != null">
-        creater,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updaterUserId != null">
-        updater_user_id,
-      </if>
-      <if test="updater != null">
-        updater,
-      </if>
-      <if test="updaterTime != null">
-        updater_time,
-      </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
-      <if test="activityPeoples != null">
+      <if test="activityPeoples != null" >
         activity_peoples,
       </if>
+      <if test="activityImgUrl != null" >
+        activity_img_url,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="activityNum != null" >
+        activity_num,
+      </if>
+      <if test="activityDesc != null" >
+        activity_desc,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="createrUserId != null" >
+        creater_user_id,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updaterUserId != null" >
+        updater_user_id,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updaterTime != null" >
+        updater_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null">
+      <if test="activityName != null" >
         #{activityName,jdbcType=VARCHAR},
       </if>
-      <if test="startDate != null">
+      <if test="startDate != null" >
         #{startDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="endDate != null">
+      <if test="endDate != null" >
         #{endDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="activityAddr != null">
+      <if test="activityAddr != null" >
         #{activityAddr,jdbcType=VARCHAR},
       </if>
-      <if test="lineName != null">
+      <if test="lineName != null" >
         #{lineName,jdbcType=VARCHAR},
       </if>
-      <if test="lineId != null">
+      <if test="lineId != null" >
         #{lineId,jdbcType=INTEGER},
       </if>
-      <if test="activityImgUrl != null">
+      <if test="activityPeoples != null" >
+        #{activityPeoples,jdbcType=INTEGER},
+      </if>
+      <if test="activityImgUrl != null" >
         #{activityImgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="city != null">
+      <if test="city != null" >
         #{city,jdbcType=VARCHAR},
       </if>
-      <if test="cityId != null">
+      <if test="cityId != null" >
         #{cityId,jdbcType=INTEGER},
       </if>
-      <if test="activityNum != null">
+      <if test="activityNum != null" >
         #{activityNum,jdbcType=VARCHAR},
       </if>
-      <if test="activityDesc != null">
+      <if test="activityDesc != null" >
         #{activityDesc,jdbcType=VARCHAR},
       </if>
-      <if test="activityType != null">
+      <if test="activityType != null" >
         #{activityType,jdbcType=VARCHAR},
       </if>
-      <if test="year != null">
+      <if test="year != null" >
         #{year,jdbcType=INTEGER},
       </if>
-      <if test="month != null">
+      <if test="month != null" >
         #{month,jdbcType=INTEGER},
       </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         #{createrUserId,jdbcType=INTEGER},
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         #{updaterUserId,jdbcType=INTEGER},
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updaterTime != null">
+      <if test="updaterTime != null" >
         #{updaterTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         #{isDelete,jdbcType=VARCHAR},
-      </if>
-      <if test="activityPeoples != null">
-        #{activityPeoples,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityInfo" >
     update t_activity_info
-    <set>
-      <if test="activityName != null">
+    <set >
+      <if test="activityName != null" >
         activity_name = #{activityName,jdbcType=VARCHAR},
       </if>
-      <if test="startDate != null">
+      <if test="startDate != null" >
         start_date = #{startDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="endDate != null">
+      <if test="endDate != null" >
         end_date = #{endDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="activityAddr != null">
+      <if test="activityAddr != null" >
         activity_addr = #{activityAddr,jdbcType=VARCHAR},
       </if>
-      <if test="lineName != null">
+      <if test="lineName != null" >
         line_name = #{lineName,jdbcType=VARCHAR},
       </if>
-      <if test="lineId != null">
+      <if test="lineId != null" >
         line_id = #{lineId,jdbcType=INTEGER},
       </if>
-      <if test="activityImgUrl != null">
+      <if test="activityPeoples != null" >
+        activity_peoples = #{activityPeoples,jdbcType=INTEGER},
+      </if>
+      <if test="activityImgUrl != null" >
         activity_img_url = #{activityImgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="city != null">
+      <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
       </if>
-      <if test="cityId != null">
+      <if test="cityId != null" >
         city_id = #{cityId,jdbcType=INTEGER},
       </if>
-      <if test="activityNum != null">
+      <if test="activityNum != null" >
         activity_num = #{activityNum,jdbcType=VARCHAR},
       </if>
-      <if test="activityDesc != null">
+      <if test="activityDesc != null" >
         activity_desc = #{activityDesc,jdbcType=VARCHAR},
       </if>
-      <if test="activityType != null">
+      <if test="activityType != null" >
         activity_type = #{activityType,jdbcType=VARCHAR},
       </if>
-      <if test="year != null">
+      <if test="year != null" >
         year = #{year,jdbcType=INTEGER},
       </if>
-      <if test="month != null">
+      <if test="month != null" >
         month = #{month,jdbcType=INTEGER},
       </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         creater_user_id = #{createrUserId,jdbcType=INTEGER},
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         creater = #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         updater_user_id = #{updaterUserId,jdbcType=INTEGER},
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updaterTime != null">
+      <if test="updaterTime != null" >
         updater_time = #{updaterTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=VARCHAR},
-      </if>
-      <if test="activityPeoples != null">
-        activity_peoples = #{activityPeoples,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityInfo">
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityInfo" >
     update t_activity_info
     set activity_name = #{activityName,jdbcType=VARCHAR},
       start_date = #{startDate,jdbcType=TIMESTAMP},
@@ -309,6 +311,7 @@
       activity_addr = #{activityAddr,jdbcType=VARCHAR},
       line_name = #{lineName,jdbcType=VARCHAR},
       line_id = #{lineId,jdbcType=INTEGER},
+      activity_peoples = #{activityPeoples,jdbcType=INTEGER},
       activity_img_url = #{activityImgUrl,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       city_id = #{cityId,jdbcType=INTEGER},
@@ -323,9 +326,7 @@
       updater_user_id = #{updaterUserId,jdbcType=INTEGER},
       updater = #{updater,jdbcType=VARCHAR},
       updater_time = #{updaterTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=VARCHAR},
-      activity_peoples = #{activityPeoples,jdbcType=VARCHAR}
+      is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
 </mapper>

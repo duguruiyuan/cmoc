@@ -9,6 +9,12 @@ import com.xuequ.cmoc.model.GridBase;
 public class ActivityQueryVO extends GridBase implements Serializable{
 
 	private static final long serialVersionUID = -8903342077438253502L;
+	
+	private Integer activityId;
+	
+	private String childName;
+	
+	private String marineName;
 
 	private String activityType;
 	
@@ -17,6 +23,31 @@ public class ActivityQueryVO extends GridBase implements Serializable{
 	private String startDate;
 	
 	private String endDate;
+
+	
+	public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
+
+	public String getChildName() {
+		return StringUtils.isNotBlank(childName) ? childName : null;
+	}
+
+	public void setChildName(String childName) {
+		this.childName = childName;
+	}
+
+	public String getMarineName() {
+		return StringUtils.isNotBlank(marineName) ? marineName : null;
+	}
+
+	public void setMarineName(String marineName) {
+		this.marineName = marineName;
+	}
 
 	public String getActivityType() {
 		return StringUtils.isNotBlank(activityType) ? activityType : null;

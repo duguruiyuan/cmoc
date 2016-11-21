@@ -12,11 +12,7 @@ public class ActivityTeacher implements Serializable {
 
     private Integer activityId;
 
-    private String activityName;
-
-    private Integer marinesId;
-
-    private String marinesName;
+    private Integer marineId;
 
     private String isDelete;
 
@@ -31,6 +27,10 @@ public class ActivityTeacher implements Serializable {
     private Date updateTime;
 
     private String updater;
+    
+    private String marineName;
+    
+    private String activityName;
 
     private static final long serialVersionUID = 1L;
 
@@ -66,28 +66,12 @@ public class ActivityTeacher implements Serializable {
         this.activityId = activityId;
     }
 
-    public String getActivityName() {
-        return activityName;
+    public Integer getMarineId() {
+        return marineId;
     }
 
-    public void setActivityName(String activityName) {
-        this.activityName = activityName == null ? null : activityName.trim();
-    }
-
-    public Integer getMarinesId() {
-        return marinesId;
-    }
-
-    public void setMarinesId(Integer marinesId) {
-        this.marinesId = marinesId;
-    }
-
-    public String getMarinesName() {
-        return marinesName;
-    }
-
-    public void setMarinesName(String marinesName) {
-        this.marinesName = marinesName == null ? null : marinesName.trim();
+    public void setMarineId(Integer marineId) {
+        this.marineId = marineId;
     }
 
     public String getIsDelete() {
@@ -145,4 +129,21 @@ public class ActivityTeacher implements Serializable {
     public void setUpdater(String updater) {
         this.updater = updater == null ? null : updater.trim();
     }
+
+	public String getMarineName() {
+		return marineName;
+	}
+
+	public void setMarineName(String marineName) {
+		this.marineName = marineName;
+	}
+
+	public String getActivityName() {
+		return activityName;
+	}
+
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+    
 }

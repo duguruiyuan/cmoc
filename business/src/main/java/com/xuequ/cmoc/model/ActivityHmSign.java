@@ -9,19 +9,11 @@ public class ActivityHmSign implements Serializable {
 
     private Integer activityId;
 
-    private String activityName;
-
-    private String lineName;
-
     private Integer lineId;
 
-    private Integer marinesId;
+    private Integer marineId;
 
-    private String marinesName;
-
-    private String hmName;
-
-    private String hmMobile;
+    private Integer hmId;
 
     private String signDate;
 
@@ -46,7 +38,14 @@ public class ActivityHmSign implements Serializable {
     private Date updateTime;
 
     private String isDelete;
-
+    
+    private String activityName;
+    
+    private String marineName;
+    
+    private String hmName;
+    
+    private String hmMobile;
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -65,22 +64,6 @@ public class ActivityHmSign implements Serializable {
         this.activityId = activityId;
     }
 
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName == null ? null : activityName.trim();
-    }
-
-    public String getLineName() {
-        return lineName;
-    }
-
-    public void setLineName(String lineName) {
-        this.lineName = lineName == null ? null : lineName.trim();
-    }
-
     public Integer getLineId() {
         return lineId;
     }
@@ -89,36 +72,20 @@ public class ActivityHmSign implements Serializable {
         this.lineId = lineId;
     }
 
-    public Integer getMarinesId() {
-        return marinesId;
+    public Integer getMarineId() {
+        return marineId;
     }
 
-    public void setMarinesId(Integer marinesId) {
-        this.marinesId = marinesId;
+    public void setMarineId(Integer marineId) {
+        this.marineId = marineId;
     }
 
-    public String getMarinesName() {
-        return marinesName;
+    public Integer getHmId() {
+        return hmId;
     }
 
-    public void setMarinesName(String marinesName) {
-        this.marinesName = marinesName == null ? null : marinesName.trim();
-    }
-
-    public String getHmName() {
-        return hmName;
-    }
-
-    public void setHmName(String hmName) {
-        this.hmName = hmName == null ? null : hmName.trim();
-    }
-
-    public String getHmMobile() {
-        return hmMobile;
-    }
-
-    public void setHmMobile(String hmMobile) {
-        this.hmMobile = hmMobile == null ? null : hmMobile.trim();
+    public void setHmId(Integer hmId) {
+        this.hmId = hmId;
     }
 
     public String getSignDate() {
@@ -216,4 +183,37 @@ public class ActivityHmSign implements Serializable {
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
     }
+
+	public String getActivityName() {
+		return activityName;
+	}
+
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+
+	public String getMarineName() {
+		return marineName;
+	}
+
+	public void setMarineName(String marineName) {
+		this.marineName = marineName;
+	}
+
+	public String getHmName() {
+		return hmName;
+	}
+
+	public void setHmName(String hmName) {
+		this.hmName = hmName;
+	}
+
+	public String getHmMobile() {
+		return hmMobile;
+	}
+
+	public void setHmMobile(String hmMobile) {
+		this.hmMobile = hmMobile;
+	}
+    
 }

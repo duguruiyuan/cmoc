@@ -1,240 +1,267 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xuequ.cmoc.dao.ActivityMarinesMapper">
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityMarines">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="marine_name" jdbcType="VARCHAR" property="marineName" />
-    <result column="marine_img" jdbcType="VARCHAR" property="marineImg" />
-    <result column="marine_slogan" jdbcType="VARCHAR" property="marineSlogan" />
-    <result column="marine_prize" jdbcType="VARCHAR" property="marinePrize" />
-    <result column="line_name" jdbcType="VARCHAR" property="lineName" />
-    <result column="line_id" jdbcType="INTEGER" property="lineId" />
-    <result column="activity_id" jdbcType="INTEGER" property="activityId" />
-    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
-    <result column="votes" jdbcType="INTEGER" property="votes" />
-    <result column="reads" jdbcType="INTEGER" property="reads" />
-    <result column="score" jdbcType="INTEGER" property="score" />
-    <result column="creater_user_id" jdbcType="INTEGER" property="createrUserId" />
-    <result column="creater" jdbcType="VARCHAR" property="creater" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="updater_user_id" jdbcType="INTEGER" property="updaterUserId" />
-    <result column="updater" jdbcType="VARCHAR" property="updater" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.ActivityMarinesMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityMarines" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
+    <result column="marine_img" property="marineImg" jdbcType="VARCHAR" />
+    <result column="marine_slogan" property="marineSlogan" jdbcType="VARCHAR" />
+    <result column="marine_prize" property="marinePrize" jdbcType="VARCHAR" />
+    <result column="line_name" property="lineName" jdbcType="VARCHAR" />
+    <result column="line_id" property="lineId" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="votes" property="votes" jdbcType="INTEGER" />
+    <result column="reads" property="reads" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater_user_id" property="updaterUserId" jdbcType="INTEGER" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, marine_name, marine_img, marine_slogan, marine_prize, line_name, line_id, activity_id, 
-    activity_name, votes, reads, score, creater_user_id, creater, create_time, updater_user_id, 
-    updater, update_time, is_delete
+    votes, reads, score, creater_user_id, creater, create_time, updater_user_id, updater, 
+    update_time, is_delete
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_activity_marines
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  
+  <resultMap id="PageBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityFamilyView" >
+  	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectListByPage" resultMap="PageBaseResultMap" >
+  	select 
+  	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
+  	m.line_id, activity_id, votes, `reads`, score, m.creater, m.create_time,
+    a.activity_name,a.activity_num, a.activity_type
+	FROM t_activity_marines m
+	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
+	WHERE a.`is_delete` = 'N'
+    <if test="params.activityId != null">
+    	and m.activity_id = #{params.activityId,jdbcType=INTEGER}
+    </if>
+    <if test="params.activityType != null">
+    	and a.activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+    <if test="params.marineName != null">
+    	and m.marine_name = #{params.marineName,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityName != null">
+    	and a.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.startDate != null">
+    	and DATE_FORMAT(a.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="params.endDate != null">
+    	and DATE_FORMAT(a.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+    </if>
+    order by m.id desc
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_marines
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityMarines">
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
     insert into t_activity_marines (id, marine_name, marine_img, 
       marine_slogan, marine_prize, line_name, 
-      line_id, activity_id, activity_name, 
-      votes, reads, score, 
-      creater_user_id, creater, create_time, 
-      updater_user_id, updater, update_time, 
-      is_delete)
+      line_id, activity_id, votes, 
+      reads, score, creater_user_id, 
+      creater, create_time, updater_user_id, 
+      updater, update_time, is_delete
+      )
     values (#{id,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{marineImg,jdbcType=VARCHAR}, 
       #{marineSlogan,jdbcType=VARCHAR}, #{marinePrize,jdbcType=VARCHAR}, #{lineName,jdbcType=VARCHAR}, 
-      #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, 
-      #{votes,jdbcType=INTEGER}, #{reads,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
-      #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=VARCHAR})
+      #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{votes,jdbcType=INTEGER}, 
+      #{reads,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, 
+      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, 
+      #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityMarines">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
     insert into t_activity_marines
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="marineName != null">
+      <if test="marineName != null" >
         marine_name,
       </if>
-      <if test="marineImg != null">
+      <if test="marineImg != null" >
         marine_img,
       </if>
-      <if test="marineSlogan != null">
+      <if test="marineSlogan != null" >
         marine_slogan,
       </if>
-      <if test="marinePrize != null">
+      <if test="marinePrize != null" >
         marine_prize,
       </if>
-      <if test="lineName != null">
+      <if test="lineName != null" >
         line_name,
       </if>
-      <if test="lineId != null">
+      <if test="lineId != null" >
         line_id,
       </if>
-      <if test="activityId != null">
+      <if test="activityId != null" >
         activity_id,
       </if>
-      <if test="activityName != null">
-        activity_name,
-      </if>
-      <if test="votes != null">
+      <if test="votes != null" >
         votes,
       </if>
-      <if test="reads != null">
+      <if test="reads != null" >
         reads,
       </if>
-      <if test="score != null">
+      <if test="score != null" >
         score,
       </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         creater_user_id,
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         creater,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         updater_user_id,
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         updater,
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time,
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         is_delete,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="marineName != null">
+      <if test="marineName != null" >
         #{marineName,jdbcType=VARCHAR},
       </if>
-      <if test="marineImg != null">
+      <if test="marineImg != null" >
         #{marineImg,jdbcType=VARCHAR},
       </if>
-      <if test="marineSlogan != null">
+      <if test="marineSlogan != null" >
         #{marineSlogan,jdbcType=VARCHAR},
       </if>
-      <if test="marinePrize != null">
+      <if test="marinePrize != null" >
         #{marinePrize,jdbcType=VARCHAR},
       </if>
-      <if test="lineName != null">
+      <if test="lineName != null" >
         #{lineName,jdbcType=VARCHAR},
       </if>
-      <if test="lineId != null">
+      <if test="lineId != null" >
         #{lineId,jdbcType=INTEGER},
       </if>
-      <if test="activityId != null">
+      <if test="activityId != null" >
         #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null">
-        #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="votes != null">
+      <if test="votes != null" >
         #{votes,jdbcType=INTEGER},
       </if>
-      <if test="reads != null">
+      <if test="reads != null" >
         #{reads,jdbcType=INTEGER},
       </if>
-      <if test="score != null">
+      <if test="score != null" >
         #{score,jdbcType=INTEGER},
       </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         #{createrUserId,jdbcType=INTEGER},
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         #{updaterUserId,jdbcType=INTEGER},
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         #{isDelete,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityMarines">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
     update t_activity_marines
-    <set>
-      <if test="marineName != null">
+    <set >
+      <if test="marineName != null" >
         marine_name = #{marineName,jdbcType=VARCHAR},
       </if>
-      <if test="marineImg != null">
+      <if test="marineImg != null" >
         marine_img = #{marineImg,jdbcType=VARCHAR},
       </if>
-      <if test="marineSlogan != null">
+      <if test="marineSlogan != null" >
         marine_slogan = #{marineSlogan,jdbcType=VARCHAR},
       </if>
-      <if test="marinePrize != null">
+      <if test="marinePrize != null" >
         marine_prize = #{marinePrize,jdbcType=VARCHAR},
       </if>
-      <if test="lineName != null">
+      <if test="lineName != null" >
         line_name = #{lineName,jdbcType=VARCHAR},
       </if>
-      <if test="lineId != null">
+      <if test="lineId != null" >
         line_id = #{lineId,jdbcType=INTEGER},
       </if>
-      <if test="activityId != null">
+      <if test="activityId != null" >
         activity_id = #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null">
-        activity_name = #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="votes != null">
+      <if test="votes != null" >
         votes = #{votes,jdbcType=INTEGER},
       </if>
-      <if test="reads != null">
+      <if test="reads != null" >
         reads = #{reads,jdbcType=INTEGER},
       </if>
-      <if test="score != null">
+      <if test="score != null" >
         score = #{score,jdbcType=INTEGER},
       </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         creater_user_id = #{createrUserId,jdbcType=INTEGER},
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         creater = #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         updater_user_id = #{updaterUserId,jdbcType=INTEGER},
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityMarines">
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
     update t_activity_marines
     set marine_name = #{marineName,jdbcType=VARCHAR},
       marine_img = #{marineImg,jdbcType=VARCHAR},
@@ -243,7 +270,6 @@
       line_name = #{lineName,jdbcType=VARCHAR},
       line_id = #{lineId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
-      activity_name = #{activityName,jdbcType=VARCHAR},
       votes = #{votes,jdbcType=INTEGER},
       reads = #{reads,jdbcType=INTEGER},
       score = #{score,jdbcType=INTEGER},
@@ -256,5 +282,4 @@
       is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
 </mapper>

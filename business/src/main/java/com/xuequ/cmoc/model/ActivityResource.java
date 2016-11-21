@@ -10,17 +10,13 @@ public class ActivityResource implements Serializable {
 
     private Integer activityId;
 
-    private String activityName;
-
     private Integer marineId;
 
-    private String marineName;
-
-    private String hmMobile;
-
-    private String hmName;
+    private Integer hmId;
 
     private String resourceType;
+
+    private String resource;
 
     private String isDelete;
 
@@ -52,14 +48,6 @@ public class ActivityResource implements Serializable {
         this.activityId = activityId;
     }
 
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName == null ? null : activityName.trim();
-    }
-
     public Integer getMarineId() {
         return marineId;
     }
@@ -68,28 +56,12 @@ public class ActivityResource implements Serializable {
         this.marineId = marineId;
     }
 
-    public String getMarineName() {
-        return marineName;
+    public Integer getHmId() {
+        return hmId;
     }
 
-    public void setMarineName(String marineName) {
-        this.marineName = marineName == null ? null : marineName.trim();
-    }
-
-    public String getHmMobile() {
-        return hmMobile;
-    }
-
-    public void setHmMobile(String hmMobile) {
-        this.hmMobile = hmMobile == null ? null : hmMobile.trim();
-    }
-
-    public String getHmName() {
-        return hmName;
-    }
-
-    public void setHmName(String hmName) {
-        this.hmName = hmName == null ? null : hmName.trim();
+    public void setHmId(Integer hmId) {
+        this.hmId = hmId;
     }
 
     public String getResourceType() {
@@ -98,6 +70,14 @@ public class ActivityResource implements Serializable {
 
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType == null ? null : resourceType.trim();
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource == null ? null : resource.trim();
     }
 
     public String getIsDelete() {

@@ -7,7 +7,6 @@ $(function() {
 	loadData();
 });
 window.onload = uploadInit();
-
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -158,6 +157,7 @@ function updateActivity(id) {
  			$("#addForm #id").val(data.id);
 			$("#addForm #activityName").val(data.activityName);
 			$("#addForm #activityNum").val(data.activityNum);
+			$("#addForm #activityPeoples").val(data.activityPeoples);
 			$("#addForm #city").val(data.city);
 			$("#addForm #activityType").val(data.activityType);
 			$("#addForm #strStartDate").val(getTime(data.startDate, "yyyy-MM-dd hh:mm"));
@@ -188,21 +188,24 @@ function uploadInit() {
                 return ext.match(/(xls|xlsx)$/i);
             },
         },
-        uploadExtraData: {
-            "id": 1
+        uploadExtraData: function(previewId, index) {
+            var obj = {};
+        	obj.id = $("#uploadDialog #activity_id").val()
+        	return obj;
         },
         slugCallback: function(filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
 	});
-	/*$("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
+	$("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
 		if(data.response.code == '000') {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
+			$('#uploadDialog').dialog("close");
 		}else {
-			$.messager.alert('系统提示', data.filenames.toString() + "上传失败!", 'info');
+			$(".kv-file-remove").click();
+			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.msg, 'info');
 		}
-		$(".fileinput-remove").click();
-	});*/
+	});
 }
 
 var uploadNamelist = function(index) {
@@ -216,9 +219,10 @@ var uploadNamelist = function(index) {
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
-			cleanFormPanel("uploadDialog");
-		},onOpen : function() {
-			$("#uploadDialog #id").val(row.id);
+			loadData();
+		},
+		onOpen : function() {
+			$("#uploadDialog #activity_id").val(row.id);
 			$("#uploadDialog #activityName").val(row.activityName);
 			$("#uploadDialog #activityNum").val(row.activityNum);
 		}

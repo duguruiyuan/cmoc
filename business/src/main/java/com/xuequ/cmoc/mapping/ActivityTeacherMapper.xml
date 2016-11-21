@@ -6,9 +6,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="activity_id" property="activityId" jdbcType="INTEGER" />
-    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
-    <result column="marines_id" property="marinesId" jdbcType="INTEGER" />
-    <result column="marines_name" property="marinesName" jdbcType="VARCHAR" />
+    <result column="marine_id" property="marineId" jdbcType="INTEGER" />
     <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
     <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -18,8 +16,8 @@
     <result column="updater" property="updater" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, mobile, activity_id, activity_name, marines_id, marines_name, is_delete, 
-    creater_user_id, create_time, creater, updater_user_id, update_time, updater
+    id, name, mobile, activity_id, marine_id, is_delete, creater_user_id, create_time, 
+    creater, updater_user_id, update_time, updater
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -33,15 +31,15 @@
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityTeacher" >
     insert into t_activity_teacher (id, name, mobile, 
-      activity_id, activity_name, marines_id, 
-      marines_name, is_delete, creater_user_id, 
-      create_time, creater, updater_user_id, 
-      update_time, updater)
+      activity_id, marine_id, is_delete, 
+      creater_user_id, create_time, creater, 
+      updater_user_id, update_time, updater
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{marinesId,jdbcType=INTEGER}, 
-      #{marinesName,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{createrUserId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updaterUserId,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR})
+      #{activityId,jdbcType=INTEGER}, #{marineId,jdbcType=INTEGER}, #{isDelete,jdbcType=VARCHAR}, 
+      #{createrUserId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
+      #{updaterUserId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityTeacher" >
     insert into t_activity_teacher
@@ -58,14 +56,8 @@
       <if test="activityId != null" >
         activity_id,
       </if>
-      <if test="activityName != null" >
-        activity_name,
-      </if>
-      <if test="marinesId != null" >
-        marines_id,
-      </if>
-      <if test="marinesName != null" >
-        marines_name,
+      <if test="marineId != null" >
+        marine_id,
       </if>
       <if test="isDelete != null" >
         is_delete,
@@ -102,14 +94,8 @@
       <if test="activityId != null" >
         #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null" >
-        #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="marinesId != null" >
-        #{marinesId,jdbcType=INTEGER},
-      </if>
-      <if test="marinesName != null" >
-        #{marinesName,jdbcType=VARCHAR},
+      <if test="marineId != null" >
+        #{marineId,jdbcType=INTEGER},
       </if>
       <if test="isDelete != null" >
         #{isDelete,jdbcType=VARCHAR},
@@ -146,14 +132,8 @@
       <if test="activityId != null" >
         activity_id = #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null" >
-        activity_name = #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="marinesId != null" >
-        marines_id = #{marinesId,jdbcType=INTEGER},
-      </if>
-      <if test="marinesName != null" >
-        marines_name = #{marinesName,jdbcType=VARCHAR},
+      <if test="marineId != null" >
+        marine_id = #{marineId,jdbcType=INTEGER},
       </if>
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=VARCHAR},
@@ -184,9 +164,7 @@
     set name = #{name,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
       activity_id = #{activityId,jdbcType=INTEGER},
-      activity_name = #{activityName,jdbcType=VARCHAR},
-      marines_id = #{marinesId,jdbcType=INTEGER},
-      marines_name = #{marinesName,jdbcType=VARCHAR},
+      marine_id = #{marineId,jdbcType=INTEGER},
       is_delete = #{isDelete,jdbcType=VARCHAR},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

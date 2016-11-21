@@ -19,6 +19,7 @@ public class DateUtil {
 	
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public static final String DEFAULT_DATE_FORMAT1 = "yyyy-MM-dd HH:mm";
+	public static final String DATE_FORMAT = "yyyyMMdd";
 	
 	/**
 	 * 
@@ -44,6 +45,13 @@ public class DateUtil {
 		result = c2.get(Calendar.MONTH) - c1.get(Calendar.MONTH);
 		
 		return result == 0 ? 1 : Math.abs(result);
+	}
+	
+	public static String getDate(Date date) {
+		if(date != null) {
+			return new SimpleDateFormat(DATE_FORMAT).format(date);
+		}
+		return null;
 	}
 	
 	public static Integer getYear(Date date) {

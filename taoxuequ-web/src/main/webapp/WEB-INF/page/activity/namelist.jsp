@@ -19,6 +19,7 @@
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
+									<td>活动编号: <input class="form-control1" type="text" name="activityId" id="activityId"/></td>
 									<td>活动名称： <input class="form-control1" type="text" name="activityName" id="activityName"/></td>
 									<td>活动类型： 
 										<select class="form-control1" name="activityType" id="activityType">
@@ -29,11 +30,12 @@
 									</td>
 								 </tr>
 								 <tr>
+								 	<td>小孩姓名: <input class="form-control1" type="text" name="childName" id="childName"/></td>
 									<td colspan="2">活动时间： <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
 										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
 								 </tr>
 								 <tr>
-									<td colspan="2">
+									<td colspan="3">
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
 										<button class="btn btn-success" type="button" onclick="addRole()">新增</button>

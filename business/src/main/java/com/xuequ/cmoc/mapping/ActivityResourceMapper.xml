@@ -1,165 +1,141 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xuequ.cmoc.dao.ActivityResourceMapper">
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityResource">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="activity_id" jdbcType="INTEGER" property="activityId" />
-    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
-    <result column="marine_id" jdbcType="INTEGER" property="marineId" />
-    <result column="marine_name" jdbcType="VARCHAR" property="marineName" />
-    <result column="hm_mobile" jdbcType="VARCHAR" property="hmMobile" />
-    <result column="hm_name" jdbcType="VARCHAR" property="hmName" />
-    <result column="resource_type" jdbcType="VARCHAR" property="resourceType" />
-    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.ActivityResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityResource" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="marine_id" property="marineId" jdbcType="INTEGER" />
+    <result column="hm_id" property="hmId" jdbcType="INTEGER" />
+    <result column="resource_type" property="resourceType" jdbcType="VARCHAR" />
+    <result column="resource" property="resource" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, url, activity_id, activity_name, marine_id, marine_name, hm_mobile, hm_name, 
-    resource_type, is_delete, create_time
+  <sql id="Base_Column_List" >
+    id, url, activity_id, marine_id, hm_id, resource_type, resource, is_delete, create_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_activity_resource
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_resource
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityResource">
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityResource" >
     insert into t_activity_resource (id, url, activity_id, 
-      activity_name, marine_id, marine_name, 
-      hm_mobile, hm_name, resource_type, 
-      is_delete, create_time)
+      marine_id, hm_id, resource_type, 
+      resource, is_delete, create_time
+      )
     values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER}, 
-      #{activityName,jdbcType=VARCHAR}, #{marineId,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, 
-      #{hmMobile,jdbcType=VARCHAR}, #{hmName,jdbcType=VARCHAR}, #{resourceType,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+      #{marineId,jdbcType=INTEGER}, #{hmId,jdbcType=INTEGER}, #{resourceType,jdbcType=VARCHAR}, 
+      #{resource,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityResource">
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityResource" >
     insert into t_activity_resource
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         url,
       </if>
-      <if test="activityId != null">
+      <if test="activityId != null" >
         activity_id,
       </if>
-      <if test="activityName != null">
-        activity_name,
-      </if>
-      <if test="marineId != null">
+      <if test="marineId != null" >
         marine_id,
       </if>
-      <if test="marineName != null">
-        marine_name,
+      <if test="hmId != null" >
+        hm_id,
       </if>
-      <if test="hmMobile != null">
-        hm_mobile,
-      </if>
-      <if test="hmName != null">
-        hm_name,
-      </if>
-      <if test="resourceType != null">
+      <if test="resourceType != null" >
         resource_type,
       </if>
-      <if test="isDelete != null">
+      <if test="resource != null" >
+        resource,
+      </if>
+      <if test="isDelete != null" >
         is_delete,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="activityId != null">
+      <if test="activityId != null" >
         #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null">
-        #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="marineId != null">
+      <if test="marineId != null" >
         #{marineId,jdbcType=INTEGER},
       </if>
-      <if test="marineName != null">
-        #{marineName,jdbcType=VARCHAR},
+      <if test="hmId != null" >
+        #{hmId,jdbcType=INTEGER},
       </if>
-      <if test="hmMobile != null">
-        #{hmMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="hmName != null">
-        #{hmName,jdbcType=VARCHAR},
-      </if>
-      <if test="resourceType != null">
+      <if test="resourceType != null" >
         #{resourceType,jdbcType=VARCHAR},
       </if>
-      <if test="isDelete != null">
+      <if test="resource != null" >
+        #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
         #{isDelete,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityResource">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityResource" >
     update t_activity_resource
-    <set>
-      <if test="url != null">
+    <set >
+      <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="activityId != null">
+      <if test="activityId != null" >
         activity_id = #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null">
-        activity_name = #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="marineId != null">
+      <if test="marineId != null" >
         marine_id = #{marineId,jdbcType=INTEGER},
       </if>
-      <if test="marineName != null">
-        marine_name = #{marineName,jdbcType=VARCHAR},
+      <if test="hmId != null" >
+        hm_id = #{hmId,jdbcType=INTEGER},
       </if>
-      <if test="hmMobile != null">
-        hm_mobile = #{hmMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="hmName != null">
-        hm_name = #{hmName,jdbcType=VARCHAR},
-      </if>
-      <if test="resourceType != null">
+      <if test="resourceType != null" >
         resource_type = #{resourceType,jdbcType=VARCHAR},
       </if>
-      <if test="isDelete != null">
+      <if test="resource != null" >
+        resource = #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityResource">
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityResource" >
     update t_activity_resource
     set url = #{url,jdbcType=VARCHAR},
       activity_id = #{activityId,jdbcType=INTEGER},
-      activity_name = #{activityName,jdbcType=VARCHAR},
       marine_id = #{marineId,jdbcType=INTEGER},
-      marine_name = #{marineName,jdbcType=VARCHAR},
-      hm_mobile = #{hmMobile,jdbcType=VARCHAR},
-      hm_name = #{hmName,jdbcType=VARCHAR},
+      hm_id = #{hmId,jdbcType=INTEGER},
       resource_type = #{resourceType,jdbcType=VARCHAR},
+      resource = #{resource,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
 </mapper>

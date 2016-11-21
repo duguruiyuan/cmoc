@@ -1,327 +1,342 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xuequ.cmoc.dao.ActivityFamilyMapper">
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityFamily">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="father_name" jdbcType="VARCHAR" property="fatherName" />
-    <result column="father_mobile" jdbcType="VARCHAR" property="fatherMobile" />
-    <result column="father_age" jdbcType="INTEGER" property="fatherAge" />
-    <result column="mother_name" jdbcType="VARCHAR" property="motherName" />
-    <result column="mother_mobile" jdbcType="VARCHAR" property="motherMobile" />
-    <result column="mother_age" jdbcType="INTEGER" property="motherAge" />
-    <result column="other_name" jdbcType="VARCHAR" property="otherName" />
-    <result column="other_mobile" jdbcType="VARCHAR" property="otherMobile" />
-    <result column="other_age" jdbcType="INTEGER" property="otherAge" />
-    <result column="child_name" jdbcType="VARCHAR" property="childName" />
-    <result column="child_mobile" jdbcType="VARCHAR" property="childMobile" />
-    <result column="child_age" jdbcType="INTEGER" property="childAge" />
-    <result column="child_img" jdbcType="VARCHAR" property="childImg" />
-    <result column="child_title" jdbcType="VARCHAR" property="childTitle" />
-    <result column="child_comment" jdbcType="VARCHAR" property="childComment" />
-    <result column="activity_id" jdbcType="DECIMAL" property="activityId" />
-    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
-    <result column="marine_id" jdbcType="INTEGER" property="marineId" />
-    <result column="marine_name" jdbcType="VARCHAR" property="marineName" />
-    <result column="creater_user_id" jdbcType="INTEGER" property="createrUserId" />
-    <result column="creater" jdbcType="VARCHAR" property="creater" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="updater_user_id" jdbcType="INTEGER" property="updaterUserId" />
-    <result column="updater" jdbcType="VARCHAR" property="updater" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.ActivityFamilyMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityFamily" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="father_name" property="fatherName" jdbcType="VARCHAR" />
+    <result column="father_mobile" property="fatherMobile" jdbcType="VARCHAR" />
+    <result column="father_age" property="fatherAge" jdbcType="INTEGER" />
+    <result column="mother_name" property="motherName" jdbcType="VARCHAR" />
+    <result column="mother_mobile" property="motherMobile" jdbcType="VARCHAR" />
+    <result column="mother_age" property="motherAge" jdbcType="INTEGER" />
+    <result column="other_name" property="otherName" jdbcType="VARCHAR" />
+    <result column="other_mobile" property="otherMobile" jdbcType="VARCHAR" />
+    <result column="other_age" property="otherAge" jdbcType="INTEGER" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="child_mobile" property="childMobile" jdbcType="VARCHAR" />
+    <result column="child_age" property="childAge" jdbcType="INTEGER" />
+    <result column="child_img" property="childImg" jdbcType="VARCHAR" />
+    <result column="child_title" property="childTitle" jdbcType="VARCHAR" />
+    <result column="child_comment" property="childComment" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="marine_id" property="marineId" jdbcType="INTEGER" />
+    <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater_user_id" property="updaterUserId" jdbcType="INTEGER" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
     other_name, other_mobile, other_age, child_name, child_mobile, child_age, child_img, 
-    child_title, child_comment, activity_id, activity_name, marine_id, marine_name, creater_user_id, 
-    creater, create_time, updater_user_id, updater, update_time, is_delete
+    child_title, child_comment, activity_id, marine_id, creater_user_id, creater, create_time, 
+    updater_user_id, updater, update_time, is_delete
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_activity_family
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  
+  <resultMap id="PageBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityFamilyView" >
+  	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
+    <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectListByPage" resultMap="PageBaseResultMap" >
+  	select 
+  	f.id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
+    other_name, other_mobile, other_age, child_name, child_mobile, child_age, child_img, 
+    child_title, child_comment, f.activity_id, f.marine_id, f.creater, 
+    f.create_time,a.activity_name,a.activity_num, a.activity_type, m.marine_name
+  	from t_activity_family f 
+  	inner join t_activity_info a on a.is_delete = 'N' and f.activity_id = a.id
+  	inner join t_activity_marines m on m.id = f.marine_id
+    where f.is_delete='N'
+    <if test="params.activityId != null">
+    	and f.activity_id = #{params.activityId,jdbcType=INTEGER}
+    </if>
+    <if test="params.childName != null">
+    	and f.child_name = #{params.childName,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityType != null">
+    	and a.activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityName != null">
+    	and a.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.startDate != null">
+    	and DATE_FORMAT(a.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="params.endDate != null">
+    	and DATE_FORMAT(a.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+    </if>
+    order f.id desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_family
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityFamily">
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityFamily" >
     insert into t_activity_family (id, father_name, father_mobile, 
       father_age, mother_name, mother_mobile, 
       mother_age, other_name, other_mobile, 
       other_age, child_name, child_mobile, 
       child_age, child_img, child_title, 
-      child_comment, activity_id, activity_name, 
-      marine_id, marine_name, creater_user_id, 
-      creater, create_time, updater_user_id, 
-      updater, update_time, is_delete
-      )
+      child_comment, activity_id, marine_id, 
+      creater_user_id, creater, create_time, 
+      updater_user_id, updater, update_time, 
+      is_delete)
     values (#{id,jdbcType=INTEGER}, #{fatherName,jdbcType=VARCHAR}, #{fatherMobile,jdbcType=VARCHAR}, 
       #{fatherAge,jdbcType=INTEGER}, #{motherName,jdbcType=VARCHAR}, #{motherMobile,jdbcType=VARCHAR}, 
       #{motherAge,jdbcType=INTEGER}, #{otherName,jdbcType=VARCHAR}, #{otherMobile,jdbcType=VARCHAR}, 
       #{otherAge,jdbcType=INTEGER}, #{childName,jdbcType=VARCHAR}, #{childMobile,jdbcType=VARCHAR}, 
       #{childAge,jdbcType=INTEGER}, #{childImg,jdbcType=VARCHAR}, #{childTitle,jdbcType=VARCHAR}, 
-      #{childComment,jdbcType=VARCHAR}, #{activityId,jdbcType=DECIMAL}, #{activityName,jdbcType=VARCHAR}, 
-      #{marineId,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{createrUserId,jdbcType=INTEGER}, 
-      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, 
-      #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}
-      )
+      #{childComment,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER}, #{marineId,jdbcType=INTEGER}, 
+      #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityFamily">
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityFamily" >
     insert into t_activity_family
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="fatherName != null">
+      <if test="fatherName != null" >
         father_name,
       </if>
-      <if test="fatherMobile != null">
+      <if test="fatherMobile != null" >
         father_mobile,
       </if>
-      <if test="fatherAge != null">
+      <if test="fatherAge != null" >
         father_age,
       </if>
-      <if test="motherName != null">
+      <if test="motherName != null" >
         mother_name,
       </if>
-      <if test="motherMobile != null">
+      <if test="motherMobile != null" >
         mother_mobile,
       </if>
-      <if test="motherAge != null">
+      <if test="motherAge != null" >
         mother_age,
       </if>
-      <if test="otherName != null">
+      <if test="otherName != null" >
         other_name,
       </if>
-      <if test="otherMobile != null">
+      <if test="otherMobile != null" >
         other_mobile,
       </if>
-      <if test="otherAge != null">
+      <if test="otherAge != null" >
         other_age,
       </if>
-      <if test="childName != null">
+      <if test="childName != null" >
         child_name,
       </if>
-      <if test="childMobile != null">
+      <if test="childMobile != null" >
         child_mobile,
       </if>
-      <if test="childAge != null">
+      <if test="childAge != null" >
         child_age,
       </if>
-      <if test="childImg != null">
+      <if test="childImg != null" >
         child_img,
       </if>
-      <if test="childTitle != null">
+      <if test="childTitle != null" >
         child_title,
       </if>
-      <if test="childComment != null">
+      <if test="childComment != null" >
         child_comment,
       </if>
-      <if test="activityId != null">
+      <if test="activityId != null" >
         activity_id,
       </if>
-      <if test="activityName != null">
-        activity_name,
-      </if>
-      <if test="marineId != null">
+      <if test="marineId != null" >
         marine_id,
       </if>
-      <if test="marineName != null">
-        marine_name,
-      </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         creater_user_id,
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         creater,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         updater_user_id,
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         updater,
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time,
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         is_delete,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="fatherName != null">
+      <if test="fatherName != null" >
         #{fatherName,jdbcType=VARCHAR},
       </if>
-      <if test="fatherMobile != null">
+      <if test="fatherMobile != null" >
         #{fatherMobile,jdbcType=VARCHAR},
       </if>
-      <if test="fatherAge != null">
+      <if test="fatherAge != null" >
         #{fatherAge,jdbcType=INTEGER},
       </if>
-      <if test="motherName != null">
+      <if test="motherName != null" >
         #{motherName,jdbcType=VARCHAR},
       </if>
-      <if test="motherMobile != null">
+      <if test="motherMobile != null" >
         #{motherMobile,jdbcType=VARCHAR},
       </if>
-      <if test="motherAge != null">
+      <if test="motherAge != null" >
         #{motherAge,jdbcType=INTEGER},
       </if>
-      <if test="otherName != null">
+      <if test="otherName != null" >
         #{otherName,jdbcType=VARCHAR},
       </if>
-      <if test="otherMobile != null">
+      <if test="otherMobile != null" >
         #{otherMobile,jdbcType=VARCHAR},
       </if>
-      <if test="otherAge != null">
+      <if test="otherAge != null" >
         #{otherAge,jdbcType=INTEGER},
       </if>
-      <if test="childName != null">
+      <if test="childName != null" >
         #{childName,jdbcType=VARCHAR},
       </if>
-      <if test="childMobile != null">
+      <if test="childMobile != null" >
         #{childMobile,jdbcType=VARCHAR},
       </if>
-      <if test="childAge != null">
+      <if test="childAge != null" >
         #{childAge,jdbcType=INTEGER},
       </if>
-      <if test="childImg != null">
+      <if test="childImg != null" >
         #{childImg,jdbcType=VARCHAR},
       </if>
-      <if test="childTitle != null">
+      <if test="childTitle != null" >
         #{childTitle,jdbcType=VARCHAR},
       </if>
-      <if test="childComment != null">
+      <if test="childComment != null" >
         #{childComment,jdbcType=VARCHAR},
       </if>
-      <if test="activityId != null">
-        #{activityId,jdbcType=DECIMAL},
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null">
-        #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="marineId != null">
+      <if test="marineId != null" >
         #{marineId,jdbcType=INTEGER},
       </if>
-      <if test="marineName != null">
-        #{marineName,jdbcType=VARCHAR},
-      </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         #{createrUserId,jdbcType=INTEGER},
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         #{updaterUserId,jdbcType=INTEGER},
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         #{isDelete,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityFamily">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityFamily" >
     update t_activity_family
-    <set>
-      <if test="fatherName != null">
+    <set >
+      <if test="fatherName != null" >
         father_name = #{fatherName,jdbcType=VARCHAR},
       </if>
-      <if test="fatherMobile != null">
+      <if test="fatherMobile != null" >
         father_mobile = #{fatherMobile,jdbcType=VARCHAR},
       </if>
-      <if test="fatherAge != null">
+      <if test="fatherAge != null" >
         father_age = #{fatherAge,jdbcType=INTEGER},
       </if>
-      <if test="motherName != null">
+      <if test="motherName != null" >
         mother_name = #{motherName,jdbcType=VARCHAR},
       </if>
-      <if test="motherMobile != null">
+      <if test="motherMobile != null" >
         mother_mobile = #{motherMobile,jdbcType=VARCHAR},
       </if>
-      <if test="motherAge != null">
+      <if test="motherAge != null" >
         mother_age = #{motherAge,jdbcType=INTEGER},
       </if>
-      <if test="otherName != null">
+      <if test="otherName != null" >
         other_name = #{otherName,jdbcType=VARCHAR},
       </if>
-      <if test="otherMobile != null">
+      <if test="otherMobile != null" >
         other_mobile = #{otherMobile,jdbcType=VARCHAR},
       </if>
-      <if test="otherAge != null">
+      <if test="otherAge != null" >
         other_age = #{otherAge,jdbcType=INTEGER},
       </if>
-      <if test="childName != null">
+      <if test="childName != null" >
         child_name = #{childName,jdbcType=VARCHAR},
       </if>
-      <if test="childMobile != null">
+      <if test="childMobile != null" >
         child_mobile = #{childMobile,jdbcType=VARCHAR},
       </if>
-      <if test="childAge != null">
+      <if test="childAge != null" >
         child_age = #{childAge,jdbcType=INTEGER},
       </if>
-      <if test="childImg != null">
+      <if test="childImg != null" >
         child_img = #{childImg,jdbcType=VARCHAR},
       </if>
-      <if test="childTitle != null">
+      <if test="childTitle != null" >
         child_title = #{childTitle,jdbcType=VARCHAR},
       </if>
-      <if test="childComment != null">
+      <if test="childComment != null" >
         child_comment = #{childComment,jdbcType=VARCHAR},
       </if>
-      <if test="activityId != null">
-        activity_id = #{activityId,jdbcType=DECIMAL},
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="activityName != null">
-        activity_name = #{activityName,jdbcType=VARCHAR},
-      </if>
-      <if test="marineId != null">
+      <if test="marineId != null" >
         marine_id = #{marineId,jdbcType=INTEGER},
       </if>
-      <if test="marineName != null">
-        marine_name = #{marineName,jdbcType=VARCHAR},
-      </if>
-      <if test="createrUserId != null">
+      <if test="createrUserId != null" >
         creater_user_id = #{createrUserId,jdbcType=INTEGER},
       </if>
-      <if test="creater != null">
+      <if test="creater != null" >
         creater = #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updaterUserId != null">
+      <if test="updaterUserId != null" >
         updater_user_id = #{updaterUserId,jdbcType=INTEGER},
       </if>
-      <if test="updater != null">
+      <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityFamily">
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ActivityFamily" >
     update t_activity_family
     set father_name = #{fatherName,jdbcType=VARCHAR},
       father_mobile = #{fatherMobile,jdbcType=VARCHAR},
@@ -338,10 +353,8 @@
       child_img = #{childImg,jdbcType=VARCHAR},
       child_title = #{childTitle,jdbcType=VARCHAR},
       child_comment = #{childComment,jdbcType=VARCHAR},
-      activity_id = #{activityId,jdbcType=DECIMAL},
-      activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_id = #{activityId,jdbcType=INTEGER},
       marine_id = #{marineId,jdbcType=INTEGER},
-      marine_name = #{marineName,jdbcType=VARCHAR},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

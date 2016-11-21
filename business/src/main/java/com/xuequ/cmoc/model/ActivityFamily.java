@@ -36,13 +36,9 @@ public class ActivityFamily implements Serializable {
 
     private String childComment;
 
-    private Long activityId;
-
-    private String activityName;
+    private Integer activityId;
 
     private Integer marineId;
-
-    private String marineName;
 
     private Integer createrUserId;
 
@@ -57,6 +53,10 @@ public class ActivityFamily implements Serializable {
     private Date updateTime;
 
     private String isDelete;
+    
+    private String activityName;
+    
+    private String marineName;
 
     private static final long serialVersionUID = 1L;
 
@@ -188,20 +188,12 @@ public class ActivityFamily implements Serializable {
         this.childComment = childComment == null ? null : childComment.trim();
     }
 
-    public Long getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(Long activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
-    }
-
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName == null ? null : activityName.trim();
     }
 
     public Integer getMarineId() {
@@ -210,14 +202,6 @@ public class ActivityFamily implements Serializable {
 
     public void setMarineId(Integer marineId) {
         this.marineId = marineId;
-    }
-
-    public String getMarineName() {
-        return marineName;
-    }
-
-    public void setMarineName(String marineName) {
-        this.marineName = marineName == null ? null : marineName.trim();
     }
 
     public Integer getCreaterUserId() {
@@ -275,4 +259,21 @@ public class ActivityFamily implements Serializable {
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
     }
+
+	public String getActivityName() {
+		return activityName;
+	}
+
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+
+	public String getMarineName() {
+		return marineName;
+	}
+
+	public void setMarineName(String marineName) {
+		this.marineName = marineName;
+	}
+    
 }

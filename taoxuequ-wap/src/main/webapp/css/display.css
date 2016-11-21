@@ -1,0 +1,439 @@
+.mt10{
+	margin-top: 10px;
+}
+.mb10{
+	margin-bottom: 10px;
+}
+.pb10{
+	padding-bottom: 10px;
+}
+.bg-white{
+	background: #fff;
+}
+.pr{
+	position: relative;
+}
+
+/* 配色 */
+.mui-bar-nav{
+	background-color: rgb(42,178,87);
+}
+.mui-title{
+	color: #fff;
+}
+.mui-slider-title{
+	opacity: .5;
+}
+.mui-navigate-right:after, .mui-push-right:after{
+	color: rgb(42,178,87);
+}
+.mui-bar-tab .mui-tab-item.mui-active{
+	color: rgb(42,178,87);
+}
+.mui-slider-indicator{
+	text-align: right;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color: rgb(42,178,87);
+}
+.mui-slider-indicator.mui-segmented-control{
+	background-color: #fff;
+	  -webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
+}
+
+/* 实践课堂 */
+.sjktList ul{
+	list-style: none;
+}
+.sjktList-content img{
+	max-width: 100%;
+}
+.sjktList-title{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.sjktList .mui-table-view-cell:after{
+	right:15px;
+}
+
+/* 发送验证码按钮 */
+.mui-input-row .verificationCode{
+  font-size: 12px;
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  right: 5px;
+  width: 90px;
+  height: 30px;
+  text-align: center;
+  color: #999;
+  padding: 0;
+}
+
+/*表格*/
+.tableList table{
+	width: 100%;
+	font-size: 12px;
+	background-color: #fff;
+}
+.tableList thead th{
+	font-weight: normal;
+	color: #fff;
+    height: 38px;
+    font-size: 13px;
+    background: rgba(76, 226, 127, .99);
+}
+.tableList tbody td{
+	height: 38px;
+	border-bottom: 1px #c8c7cc solid;
+}
+.tableList .mui-btn{
+	line-height: 1.1;
+}
+
+.aboutContent{
+	padding: 15px;
+	background-color: #fff;
+}
+.aboutContent img{
+	max-width: 100%;
+}
+
+/*直播详情*/
+.liveDetail-title{
+	text-align: center;
+	padding-top: 30px;
+	padding-bottom: 10px;
+}
+.liveDetail-title h1{
+	font-size: 30px;
+	color: #069dd6;
+}
+.liveDetail-title h2{
+	margin-top: 10px;
+	font-size: 15px;
+	color: #595959;
+}
+.liveDetail-listNum{
+	margin:0 15px;
+	padding-top: 15px;
+	border-top: 1px #ebebeb solid;
+}
+.liveDetail-listNum ul{
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+	white-space: normal;
+	position: relative;
+}
+.liveDetail-listNum li{
+	width: 32%;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 1.5;
+	border-left: 1px dashed #ccc;
+}
+.liveDetail-listNum li:first-child{
+	border-left: none;
+}
+.liveDetail-listNum-title{
+	font-size: 20px;
+	color: #000;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.liveDetail-listNum-intro{
+	font-size: 15px;
+	color: #f8322f;
+	font-style: normal;
+	font-weight: bold;
+}
+.liveDetail-listNum-intro1{
+	color: #069dd6;
+}
+.liveDetail-award{
+	margin: 15px;
+	display: -webkit-box;
+	display: box;
+	-webkit-box-pack:center;
+	box-pack:center;
+	-webkit-box-align:center;
+	box-align:center;
+}
+.liveDetail-award img{
+	display: block;
+	width: 100%;
+}
+.liveDetail-user ul{
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+	white-space: normal;
+	position: relative;
+}
+.liveDetail-user li{
+	width: 30%;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 15px;
+}
+.liveDetail-user img{
+	width: 80%;
+	border-radius: 100%;
+	margin-bottom: 10px;
+}
+.liveDetail-user-name{
+	font-size: 20px;
+	font-weight: bold;
+	color: #595959;
+}
+.liveDetail-user-intro{
+	color: #989898;
+}
+.liveDetail-list-title{
+	border-bottom: 1px #ebebeb solid;
+}
+.liveDetail-list-title h4{
+	display: inline-block;
+	padding: 10px;
+}
+.liveDetail-list-title .mui-tab-item{
+	font-weight: bold;
+}
+.liveDetail-list .sort{
+	margin-right: 10px;
+	margin-bottom: 10px;
+	text-align: right;
+}
+.sort-icon{
+	display: inline-block;
+	width: 38px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	color: #696969;
+	font-size: 12px;
+	background: #eeeeee;
+	border: 1px #dedfda solid;
+}
+.sort-icon-active{
+	color: #fff;
+	background: #06a5d2;
+	border: 1px #06a5d2 solid;
+}
+.liveDetail-list-content ul{
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+	white-space: normal;
+	position: relative;
+}
+.liveDetail-list-content ul.mui-control-content{
+	display: none;
+}
+.liveDetail-list-content ul.mui-control-content.mui-active{
+	display: block;
+}
+.liveDetail-list-content li{
+	width: 25%;
+	margin: 0 10px 15px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.liveDetail-list-content li img{
+	width: 100%;
+}
+.liveDetail-list .rightfix{
+	display: none;
+	position: fixed;
+	right: 10px;
+	bottom: 85px;
+}
+.liveDetail-list .rightfix span{
+	display: block;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	border-radius: 100%;
+}
+.liveDetail-list .rightfix .mui-icon{
+	margin-bottom: 20px;
+	color: #0097ff;
+	font-size: 24px;
+	background: #fff;
+	border:1px #e3e3e3 solid;
+}
+.liveDetail-list .rightfix .fixTag{
+	color: #fff;
+	background: #12a2e9;
+}
+
+/*加载中*/
+.loader{
+	width: 100%;
+	font-size: 14px;
+	padding: 0px;
+	text-align: center;
+	color: #787878;
+	position: relative;
+	display: none;
+}
+.loader span {
+   vertical-align:middle;
+   border-radius:100%;
+   
+   display:inline-block;
+   width:10px;
+   height:10px;
+   margin:3px 2px;
+   -webkit-animation:loader 0.8s linear infinite alternate;
+   animation:loader 0.8s linear infinite alternate;
+}
+.loader span:nth-child(1) {
+   -webkit-animation-delay:-1s;
+   animation-delay:-1s;
+   background:rgba(120, 120, 120, 1);
+}
+.loader span:nth-child(2) {
+   -webkit-animation-delay:-0.8s;
+   animation-delay:-0.8s;
+   background:rgba(120, 120, 120, 1);
+}
+.loader span:nth-child(3) {
+   -webkit-animation-delay:-0.26666s;
+   animation-delay:-0.26666s;
+   background:rgba(120, 120, 120, 1);
+}
+@keyframes loader {
+   from {transform: scale(0, 0);}
+   to {transform: scale(1, 1);}
+}
+@-webkit-keyframes loader {
+   from {-webkit-transform: scale(0, 0);}
+   to {-webkit-transform: scale(1, 1);}
+}
+
+.footer .mui-tab-label{font-weight: bold;}
+
+/*战队列表*/
+.banner img{
+	width:100%;
+	height:200px;
+	vertical-align: middle;
+}
+.marines-banner-title{
+	position: absolute;
+	bottom: 30px;
+	padding-left: 27px;
+	color: #fff;
+	font-weight: bold;
+}
+.marines-banner-title1{
+	font-size: 25px;
+}
+.marines-banner-title2{
+	font-size: 14px;
+}
+.marines-list{
+	font-weight: bold;
+}
+.marines-list .mui-media-object{
+	width: 132px;
+	max-width: 132px;
+	height: 106px;
+}
+.marines-list-lev1{
+	font-size: 24px;
+	padding-top: 8px;
+}
+.marines-list-lev2{
+	font-size: 14px;
+	line-height: 45px;
+}
+.marines-list .mui-badge.mui-badge-inverted{
+	color: inherit;
+}
+
+/*课程列表*/
+#courseList .mui-bar-nav{
+	background: #fff;
+}
+#courseList .mui-bar-nav ul{
+	margin: 0;
+	padding:0;
+	list-style: none;
+}
+#courseList .mui-bar-nav li{
+	display: inline-block;
+	margin: 0;
+	padding:0;
+	width: 48%;
+	height: 44px;
+	line-height: 44px;
+	text-align: center;
+}
+#courseList .mui-bar-nav li:first-child{
+	border-right: 1px #efefef solid;
+}
+#courseList .mui-card{
+	margin-left: auto;
+	margin-right: auto;
+	width: 320px;
+}
+#courseList .mui-card a{
+	display: block;
+}
+#courseList .mui-card-content img{
+	vertical-align: middle;
+}
+#courseList .mui-card-footer{
+	display: block;
+	font-weight: bold;
+	line-height: 1.8;
+}
+.courseList-state,.courseList-line3{
+	color: #b2b2b2;
+}
+.courseList-line3{
+	font-size: 12px;
+	margin-top: 5px;
+}
+.clock-ico{
+	display: inline-block;
+	margin-right: 5px;
+	width: 17px;
+	height: 17px;
+	background:url(../images/clock.png) no-repeat 0 0;
+	background-size: contain;
+	vertical-align: middle;
+}
+.courseList-text{
+	position: absolute;
+	right: 10px;
+	bottom: 20px;
+	
+	width: 35px;
+	height: 35px;
+	
+	text-align: center;
+	line-height: 35px;
+	color: #fff;
+	font-size: 12px;
+	
+	background: #06a7d7;
+	border-radius: 100%;
+}

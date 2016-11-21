@@ -10,7 +10,7 @@ public class ActivityNamelistVO implements Serializable{
 	/*
 	 * 战队名称	
 	 */
-	private String marinesName;
+	private String marineName;
 	/*
 	 * 学员姓名	
 	 */
@@ -59,11 +59,11 @@ public class ActivityNamelistVO implements Serializable{
 	public void setActivityId(Integer activityId) {
 		this.activityId = activityId;
 	}
-	public String getMarinesName() {
-		return marinesName;
+	public String getMarineName() {
+		return marineName;
 	}
-	public void setMarinesName(String marinesName) {
-		this.marinesName = marinesName;
+	public void setMarineName(String marineName) {
+		this.marineName = marineName;
 	}
 	public String getChildName() {
 		return childName;

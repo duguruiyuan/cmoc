@@ -20,8 +20,6 @@ public class ActivityMarines implements Serializable {
 
     private Integer activityId;
 
-    private String activityName;
-
     private Integer votes;
 
     private Integer reads;
@@ -41,6 +39,8 @@ public class ActivityMarines implements Serializable {
     private Date updateTime;
 
     private String isDelete;
+    
+    private String activityName;
 
     private static final long serialVersionUID = 1L;
 
@@ -106,14 +106,6 @@ public class ActivityMarines implements Serializable {
 
     public void setActivityId(Integer activityId) {
         this.activityId = activityId;
-    }
-
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName == null ? null : activityName.trim();
     }
 
     public Integer getVotes() {
@@ -195,4 +187,14 @@ public class ActivityMarines implements Serializable {
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
     }
+
+	public String getActivityName() {
+		return activityName;
+	}
+
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+    
+    
 }

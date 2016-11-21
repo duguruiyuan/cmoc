@@ -24,29 +24,33 @@
 
  	<mvc:resources location="/images/" mapping="/images/**"/>  
  	<mvc:resources location="/js/" mapping="/js/**"/>  
- 	<mvc:resources location="/css/" mapping="/css/**"/> 
+ 	<mvc:resources location="/css/" mapping="/css/**"/>
+ 	<mvc:resources location="/fonts/" mapping="/fonts/**"/> 
+ 	<mvc:resources location="/exmple/" mapping="/exmple/**"/>
  	<!-- 接入微信公众平台必要文件，不要修改 --> 
 	<mvc:resources location="/mp/" mapping="/mp/**"/>
+	
 	<!-- To enable @RequestMapping process on type level and method level -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="mediaTypes">
-		    <map>
-		        <entry key="xml" value="application/xml"/>
-		        <entry key="html" value="text/html"/>
-		    </map>
-		</property>
-		<property name="viewResolvers">
-		    <list>
-		        <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
-		        <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-					<property name="prefix" value="/WEB-INF/page/"/>
-					<property name="suffix" value=".jsp"/>
+	<!-- jsp视图 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/page/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+					<property name="supportedMediaTypes" value="application/json" />
 				</bean>
-		    </list>
+			</list>
 		</property>
 	</bean>
 	

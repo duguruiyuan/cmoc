@@ -8,6 +8,8 @@ public class ParentInfo implements Serializable {
 
     private String relation;
 
+    private String name;
+
     private String mobile;
 
     private String nickname;
@@ -36,6 +38,14 @@ public class ParentInfo implements Serializable {
 
     public void setRelation(String relation) {
         this.relation = relation == null ? null : relation.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getMobile() {

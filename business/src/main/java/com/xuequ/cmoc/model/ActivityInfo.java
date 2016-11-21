@@ -18,6 +18,8 @@ public class ActivityInfo implements Serializable {
 
     private Integer lineId;
 
+    private Integer activityPeoples;
+
     private String activityImgUrl;
 
     private String city;
@@ -48,8 +50,6 @@ public class ActivityInfo implements Serializable {
 
     private String isDelete;
 
-    private Integer activityPeoples;
-    
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -106,6 +106,14 @@ public class ActivityInfo implements Serializable {
 
     public void setLineId(Integer lineId) {
         this.lineId = lineId;
+    }
+
+    public Integer getActivityPeoples() {
+        return activityPeoples;
+    }
+
+    public void setActivityPeoples(Integer activityPeoples) {
+        this.activityPeoples = activityPeoples;
     }
 
     public String getActivityImgUrl() {
@@ -227,13 +235,4 @@ public class ActivityInfo implements Serializable {
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
     }
-
-	public Integer getActivityPeoples() {
-		return activityPeoples;
-	}
-
-	public void setActivityPeoples(Integer activityPeoples) {
-		this.activityPeoples = activityPeoples;
-	}
-    
 }

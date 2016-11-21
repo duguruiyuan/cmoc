@@ -12,9 +12,9 @@ public class ActivityMarinesSupport implements Serializable {
 
     private String imgUrl;
 
-    private Integer marginId;
+    private Integer activityId;
 
-    private String marginName;
+    private Integer marginId;
 
     private Date createTime;
 
@@ -52,20 +52,20 @@ public class ActivityMarinesSupport implements Serializable {
         this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
     public Integer getMarginId() {
         return marginId;
     }
 
     public void setMarginId(Integer marginId) {
         this.marginId = marginId;
-    }
-
-    public String getMarginName() {
-        return marginName;
-    }
-
-    public void setMarginName(String marginName) {
-        this.marginName = marginName == null ? null : marginName.trim();
     }
 
     public Date getCreateTime() {

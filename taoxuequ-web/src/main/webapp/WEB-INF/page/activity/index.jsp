@@ -61,10 +61,10 @@
 				  	</p>
 			  	 </div>
 			  	 <div class="col-md-12 p15">
-			  	 	<input type="hidden" name="id" id="id"/>
 			  	 	<form enctype="multipart/form-data">
 		             	<div class="form-group">
-		                    <input id="file-upload" name="files" type="file" accept=".xls,.xlsx" multiple class="file" data-overwrite-initial="false" data-max-file-count="2">
+		                    <input id="file-upload" name="files" type="file" accept=".xls,.xlsx" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+		                	<input type="hidden" name="activity_id" id="activity_id"/>
 		                </div>
 	             	</form>
 	             </div>
@@ -90,7 +90,7 @@
 							</select>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="activityPeoples">活动人数</label>								
+							<label for="activityPeoples">活动发布人数</label>								
 							<input class="form-control" name="activityPeoples" id="activityPeoples">
 						</div>
 						<div class="form-group col-md-6">

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>学习积分</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="../css/display.css" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <h1 class="mui-title">学习积分</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab footer">
+		    <a class="mui-tab-item" href="page2.html">
+		        <span class="mui-tab-label">热文推荐</span>
+		    </a>
+		    <a class="mui-tab-item" href="page3.html">
+		        <span class="mui-tab-label">实践课堂</span>
+		    </a>
+		    <a class="mui-tab-item mui-active" href="page1.html">
+		        <span class="mui-tab-label">个人中心</span>
+		    </a>
+		</nav>
+		<div class="mui-content">
+		    <div class="tableList mt10">
+		    	<table border="0" cellspacing="0" cellpadding="0">
+		    		<thead>
+			    		<tr>
+			    			<th width="90">时间</th>
+			    			<th>项目名称</th>
+			    			<th width="40">金额</th>
+			    			<th width="80">积分兑换</th>
+			    		</tr>
+		    		</thead>
+		    		<tbody>
+		    			<tr>
+		    				<td class="mui-text-center">2015/09/01</td>
+		    				<td>北京7天夏令营</td>
+		    				<td class="mui-text-center">420</td>
+		    				<td class="mui-text-center">
+		    					<button type="button" class="mui-btn mui-btn-primary">兑换</button>
+		    				</td>
+		    			</tr>
+		    			<tr>
+		    				<td class="mui-text-center">2015/09/01</td>
+		    				<td>北京7天夏令营</td>
+		    				<td class="mui-text-center">420</td>
+		    				<td class="mui-text-center">
+		    					<button type="button" class="mui-btn mui-btn-primary">兑换</button>
+		    				</td>
+		    			</tr>
+		    		</tbody>
+		    	</table>
+		    </div>
+		</div>
+		
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
+		</script>
+	</body>
+
+</html>
