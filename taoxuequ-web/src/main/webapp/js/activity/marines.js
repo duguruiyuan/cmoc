@@ -1,12 +1,12 @@
 var activityQueryUrl = basePath + "/activity/json/marines/query";
 var addUpdateActivityUrl = basePath + "/activity/json/addUpdate";
-var queryByIdUrl = basePath + "/activity/json/queryById";
+var queryByIdUrl = basePath + "/activity/json/marines/queryById";
 
 var dataGrid;
 $(function() {
 	loadData();
 });
-
+window.onload = uploadInit("file-upload", basePath + '/activity/namelist/import');
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -29,7 +29,7 @@ function loadData() {
 			title : '操作',
 			align : 'center',
 			formatter : function(value, row, index) {
-				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">编辑</button>', row.id);
+				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateMarine(\'{0}\');">编辑</button>', row.id);
 				return str;
 			}
 		}, {
@@ -76,7 +76,7 @@ function loadData() {
 			align : "center",
 			resizable : true,
 			formatter : function(v){
-				return "<i class='icon-picture' style='color:red;'></i></span>";
+				return "<a style='color: red;'>查看</a>";
 			}
 		},{
 			field : 'votes',
@@ -140,7 +140,7 @@ function addRole() {
 	loadForm(null);
 }
 
-function updateActivity(id) {
+function updateMarine(id) {
 	$.ajax({
  		url : queryByIdUrl,
  		type : "post",
@@ -153,12 +153,8 @@ function updateActivity(id) {
  			$("#addForm #id").val(data.id);
 			$("#addForm #activityName").val(data.activityName);
 			$("#addForm #activityNum").val(data.activityNum);
-			$("#addForm #city").val(data.city);
-			$("#addForm #activityType").val(data.activityType);
-			$("#addForm #strStartDate").val(getTime(data.startDate, "yyyy-MM-dd hh:mm"));
-			$("#addForm #strEndDate").val(getTime(data.endDate, "yyyy-MM-dd hh:mm"));
-			$("#addForm #activityAddr").val(data.activityAddr);
-			$("#addForm #activityDesc").val(data.activityDesc);
+			$("#addForm #marineName").val(data.marineName);
+			$("#addForm #marineSlogan").val(data.marineSlogan);
 			loadForm(1);
  		}
  	});
@@ -170,7 +166,7 @@ function returnBack(){
 
 var loadForm = function(data){
 	confirmDialog = $('#confirmDialog').dialog({
-		title : data != null ? "修改活动" : "新增活动",
+		title : data != null ? "修改战队" : "新增战队",
 		modal : true,
 		width : 800,
 		top : 100,
@@ -253,3 +249,5 @@ function validator() {
 		}
 	});
 }
+
+

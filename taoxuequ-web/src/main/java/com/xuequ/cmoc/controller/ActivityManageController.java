@@ -176,6 +176,11 @@ public class ActivityManageController extends BaseController{
 		return grid;
 	}
 	
+	@RequestMapping("json/marines/queryById")
+	public @ResponseBody Object marinesQueryById(@RequestParam("id")Integer id) {
+		return activityMarinesService.selectById(id);
+	}
+	
 	public RspResult saveBuildInfo(MultipartFile buildInfo, Integer activityId) throws Exception{
     	SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
     	// 创建一个FileInputStream 文件输入流

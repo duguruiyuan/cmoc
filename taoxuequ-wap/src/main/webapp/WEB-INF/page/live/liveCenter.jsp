@@ -29,41 +29,34 @@
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		
 		<div class="mui-content">
-			<div class="mui-card">
-				<a href="<%=basePath %>/live/marine/list/12">
-					<div class="mui-card-content">
-						<img src="<%=basePath %>/images/slider1.jpg" alt="" width="100%" height="154">
-					</div>
-					<div class="mui-card-footer">
-						<div class="courseList-line1">穿越课堂</div>
-						<div class="courseList-line2">[城市体验] 第18期 <span class="courseList-state">[进行中]</span></div>
-						<div class="courseList-line3"><span class="clock-ico"></span>2016-11-12 | 穿越课堂</div>
-						<span class="courseList-text">直播</span>
-					</div>
-				</a>
-			</div>
-		
-			<div class="mui-card">
-				<a href="<%=basePath %>/live/marine/list/12">
-					<div class="mui-card-content">
-						<img src="<%=basePath %>/images/slider1.jpg" alt="" width="100%" height="154">
-					</div>
-					<div class="mui-card-footer">
-						<div class="courseList-line1">穿越课堂</div>
-						<div class="courseList-line2">[城市体验] 第18期 <span class="courseList-state">[进行中]</span></div>
-						<div class="courseList-line3"><span class="clock-ico"></span>2016-11-12 | 穿越课堂</div>
-						<span class="courseList-text">直播</span>
-					</div>
-				</a>
-			</div>
 		</div>
-		
+		<script id="table-template" type="text/x-handlebars-template">
+				{{#if rows}}
+ 				  {{#each rows}}
+				  <div class="mui-card">
+					<a href="<%=basePath %>/live/marine/list/{{id}}">
+						<div class="mui-card-content">
+							<img src="<%=basePath %>/images/slider1.jpg" alt="" width="100%" height="154">
+						</div>
+						<div class="mui-card-footer">
+							<div class="courseList-line1">{{activityName}}</div>
+							<div class="courseList-line2">[{{activityTypeValue}}] {{activityNum}} <span class="courseList-state">[{{statusFormat endDate}}]</span></div>
+							<div class="courseList-line3"><span class="clock-ico"></span>{{startDateFormat startDate}} | {{activityName}}</div>
+							<span class="courseList-text">直播</span>
+						</div>
+					</a>
+				  </div>
+                  {{/each}}
+				{{else}}
+					<div style="text-align: center;padding-top: 20px;">亲，暂无数据哦</div>
+				{{/if}}
+		  </script>
 		<script type="text/javascript">
 			mui.init();
 			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
 			
 			$(function(){
-			
+				initData();
 				var yearPicker = new mui.PopPicker();
 				var monthPicker = new mui.PopPicker();
 				
@@ -136,96 +129,31 @@
 					});
 				})
 				
-			})
+			});
 			
-			/*
-			(function($, doc) {
-//				return false;
-				$.init();
-				$.ready(function() {
-					//普通示例
-					var userPicker = new $.PopPicker();
-					userPicker.setData([{
-						value: 'ywj',
-						text: '董事长 叶文洁'
-					}, {
-						value: 'aaa',
-						text: '总经理 艾AA'
-					}, {
-						value: 'lj',
-						text: '罗辑'
-					}, {
-						value: 'ymt',
-						text: '云天明'
-					}, {
-						value: 'shq',
-						text: '史强'
-					}, {
-						value: 'zhbh',
-						text: '章北海'
-					}, {
-						value: 'zhy',
-						text: '庄颜'
-					}, {
-						value: 'gyf',
-						text: '关一帆'
-					}, {
-						value: 'zhz',
-						text: '智子'
-					}, {
-						value: 'gezh', 
-						text: '歌者'
-					}]);
-					$("#selectYear").click(function(){
-						userPicker.show(function(items) {
-							userResult.innerText = JSON.stringify(items[0]);
-							//返回 false 可以阻止选择框的关闭
-							//return false;
-						});
-					})
-					
-					var showUserPickerButton = doc.getElementById('showUserPicker');
-					var userResult = doc.getElementById('userResult');
-					showUserPickerButton.addEventListener('tap', function(event) {
-						userPicker.show(function(items) {
-							userResult.innerText = JSON.stringify(items[0]);
-							//返回 false 可以阻止选择框的关闭
-							//return false;
-						});
-					}, false);
-					//-----------------------------------------
-					//级联示例
-					var cityPicker = new $.PopPicker({
-						layer: 2
-					});
-					cityPicker.setData(cityData);
-					var showCityPickerButton = doc.getElementById('showCityPicker');
-					var cityResult = doc.getElementById('cityResult');
-					showCityPickerButton.addEventListener('tap', function(event) {
-						cityPicker.show(function(items) {
-							cityResult.innerText = "你选择的城市是:" + items[0].text + " " + items[1].text;
-							//返回 false 可以阻止选择框的关闭
-							//return false;
-						});
-					}, false);
-					//-----------------------------------------
-					//					//级联示例
-					var cityPicker3 = new $.PopPicker({
-						layer: 3
-					});
-					cityPicker3.setData(cityData3);
-					var showCityPickerButton = doc.getElementById('showCityPicker3');
-					var cityResult3 = doc.getElementById('cityResult3');
-					showCityPickerButton.addEventListener('tap', function(event) {
-						cityPicker3.show(function(items) {
-							cityResult3.innerText = "你选择的城市是:" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
-							//返回 false 可以阻止选择框的关闭
-							//return false;
-						});
-					}, false);
+			function initData() {
+				$.ajax({
+				    type: 'post',
+				    url: '<%=basePath %>/live/json/activity/query',
+				    data: {},
+				    dataType: 'json',
+				    success: function(data) {
+				    	var myTemplate = Handlebars.compile($("#table-template").html());
+				    	
+				        Handlebars.registerHelper("startDateFormat", function(startDate) {
+				    		return getTime(startDate, 'yyyy-MM-dd');
+				    	});
+				        
+				        Handlebars.registerHelper("statusFormat", function(date) {
+				        	if(date > new Date().getTime()) {
+				        		return "直播中";
+				        	}
+				    		return "已结束";
+				    	});
+				        $('.mui-content').html(myTemplate(data));
+				    }
 				});
-			})(mui, document);
-		*/
+			}
 		</script>
 	</body>
 

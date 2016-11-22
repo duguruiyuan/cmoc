@@ -29,8 +29,8 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 	}
 
 	@Override
-	public ActivityMarines selectById(Integer marineId) {
-		return activityMarinesMapper.selectByPrimaryKey(marineId);
+	public ActivityMarinesView selectById(Integer marineId) {
+		return activityMarinesMapper.selectById(marineId);
 	}
 
 }

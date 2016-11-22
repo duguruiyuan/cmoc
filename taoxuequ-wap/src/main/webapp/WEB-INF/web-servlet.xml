@@ -29,6 +29,8 @@
  	<mvc:resources location="/exmple/" mapping="/exmple/**"/>
  	<!-- 接入微信公众平台必要文件，不要修改 --> 
 	<mvc:resources location="/mp/" mapping="/mp/**"/>
+	<mvc:resources location="/favicon.ico" mapping="/favicon.ico"/>
+	<mvc:resources location="/animated_favicon.gif" mapping="/animated_favicon.gif"/>
 	
 	<!-- To enable @RequestMapping process on type level and method level -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />

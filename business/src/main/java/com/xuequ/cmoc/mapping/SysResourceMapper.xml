@@ -44,7 +44,7 @@
   
   <select id="selectAll" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" /> 
-  	from t_sys_resource where IS_DELETE = 'N'
+  	from t_sys_resource where IS_DELETE = 'N' ORDER BY WEIGHT
   </select>
   
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.SysResource" >

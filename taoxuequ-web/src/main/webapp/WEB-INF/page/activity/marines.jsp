@@ -52,6 +52,41 @@
 			</div>
 		</div>
 	</div>
+	<div id="confirmDialog" style="display: none;height: 'auto';">
+		<div class="col-md-12 p10">
+		  <form id="addForm" novalidate="novalidate">
+				<input type="hidden" id="id" name="id">
+				<div class="form-group col-md-6">
+					<label for="activityName">活动名称</label>								
+					<input class="form-control" name="activityName" id="activityName" readonly="readonly">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="activityNum">活动期数</label>								
+					<input class="form-control" name="activityNum" id="activityNum" readonly="readonly">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="activityPeoples">战队名称</label>								
+					<input class="form-control" name="marineName" id="marineName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="city">战队口号</label>								
+					<input class="form-control" name="marineSlogan" id="marineSlogan">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="city">战队照片</label>
+					<div id="preview">
+					    <img id="imghead" width=100 height=100 border=0>
+					</div>
+					<input type="file" onchange="previewImage(this)" />
+				</div>
+				<div class="form-group col-md-12 text-right">
+					<button type="submit" class="btn btn-success">保存</button>
+					<button class="btn btn-info" type="button"
+						onclick="closeFormPanel('addForm')">取消</button>
+				</div>
+			</form>
+		</div>
+	</div>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/marines.js"></script>
 </body>
 </html>

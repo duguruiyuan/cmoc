@@ -13,7 +13,7 @@ public interface ActivityMarinesMapper {
 
     int insertSelective(ActivityMarines record);
 
-    ActivityMarines selectByPrimaryKey(Integer id);
+    ActivityMarinesView selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(ActivityMarines record);
 
@@ -22,4 +22,6 @@ public interface ActivityMarinesMapper {
     List<ActivityMarinesView> selectListByPage(Page<ActivityMarinesView> page);
     
     List<ActivityMarines> selectListByActivityId(Integer activityId);
+    
+    ActivityMarinesView selectById(Integer id);
 }

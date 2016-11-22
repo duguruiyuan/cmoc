@@ -3,6 +3,10 @@ package com.xuequ.cmoc.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.xuequ.cmoc.common.enums.ActivityTypeEnum;
+
 public class ActivityInfo implements Serializable {
     private Integer id;
 
@@ -234,5 +238,12 @@ public class ActivityInfo implements Serializable {
 
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
+    }
+    
+    public String getActivityTypeValue() {
+    	if(StringUtils.isNotBlank(activityType)) {
+    		return ActivityTypeEnum.getDesc(activityType);
+    	}
+    	return "";
     }
 }

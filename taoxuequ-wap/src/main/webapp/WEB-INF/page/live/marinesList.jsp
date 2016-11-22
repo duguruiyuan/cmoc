@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -25,42 +27,27 @@
 			<div class="banner pr">
 				<img src="<%=basePath %>/images/slider2.jpg">
 				<div class="marines-banner-title">
-					<div class="marines-banner-title1">第18期</div>
-					<div class="marines-banner-title2">2016-11-12 | 穿越课堂</div>
+					<div class="marines-banner-title1">${activity.activityNum }</div>
+					<div class="marines-banner-title2"><fmt:formatDate value='${activity.startDate}' pattern='yyyy-MM-dd' /> | ${activity.activityTypeValue}</div>
 				</div>
 			</div>
 		    <div class="pb10 marines-list">
 			    <ul class="mui-table-view">
-			        <li class="mui-table-view-cell mui-media">
-			            <a href="<%=basePath %>/live/marine/detail/1">
+			    	<c:if test="${marines == null || marines.isEmpty()}">
+			    		<p style="padding: 10px 10px;">暂无战队列表信息</p>
+			    	</c:if>
+			    	<c:forEach var="itm" items="${marines }">
+			    		<li class="mui-table-view-cell mui-media">
+			            <a href="<%=basePath %>/live/marine/detail/${itm.id}">
 			                <img class="mui-media-object mui-pull-left" src="<%=basePath %>/images/text.png">
 			                <div class="mui-media-body">
-			                    <div class="marines-list-lev1">胜利队</div>
-			                    <div class="marines-list-lev2">二年级3号线</div>
+			                    <div class="marines-list-lev1">${itm.marineName }</div>
+			                    <div class="marines-list-lev2">${itm.lineName }</div>
 			                </div>
-			            	<span class="mui-badge mui-badge-inverted">21票</span>
+			            	<span class="mui-badge mui-badge-inverted">${itm.votes}票</span>
 			            </a>
 			        </li>
-			        <li class="mui-table-view-cell mui-media">
-			            <a href="<%=basePath %>/live/marine/detail/2">
-			                <img class="mui-media-object mui-pull-left" src="<%=basePath %>/images/text.png">
-			                <div class="mui-media-body">
-			                    <div class="marines-list-lev1">胜利队</div>
-			                    <div class="marines-list-lev2">二年级3号线</div>
-			                </div>
-			            	<span class="mui-badge mui-badge-inverted">21票</span>
-			            </a>
-			        </li>
-			        <li class="mui-table-view-cell mui-media">
-			            <a href="<%=basePath %>/live/marine/detail/3">
-			                <img class="mui-media-object mui-pull-left" src="<%=basePath %>/images/text.png">
-			                <div class="mui-media-body">
-			                    <div class="marines-list-lev1">胜利队</div>
-			                    <div class="marines-list-lev2">二年级3号线</div>
-			                </div>
-			            	<span class="mui-badge mui-badge-inverted">21票</span>
-			            </a>
-			        </li>
+			    	</c:forEach>
 			    </ul>
 		    </div>
 		</div>

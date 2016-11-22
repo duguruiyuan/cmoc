@@ -83,7 +83,7 @@
     <if test="params.endDate != null">
     	and DATE_FORMAT(a.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
     </if>
-    order f.id desc
+    order by f.id desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_family

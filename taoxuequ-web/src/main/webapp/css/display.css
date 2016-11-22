@@ -572,3 +572,6 @@ span.error {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+#preview{width:260px;height:190px;border:1px solid #000;overflow:hidden;}
+#imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
+

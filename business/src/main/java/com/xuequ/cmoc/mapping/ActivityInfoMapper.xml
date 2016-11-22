@@ -52,6 +52,9 @@
     <if test="params.activityType != null">
     	and activity_type = #{params.activityType,jdbcType=VARCHAR}
     </if>
+    <if test="params.startDate != null">
+    	and start_date <![CDATA[ <= ]]> #{params.startDate,jdbcType=TIMESTAMP}
+    </if>
   </select>
   
   <resultMap id="InfoBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityInfoView">

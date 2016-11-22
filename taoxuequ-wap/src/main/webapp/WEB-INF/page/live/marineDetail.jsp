@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -76,7 +77,7 @@
 		    </div>
 		    <div class="bg-white pb10 mb10">
 			    <div class="liveDetail-title">
-			    	<h1>战队名称</h1>
+			    	<h1>${marine.marineName }战队名称</h1>
 			    	<h2>勇往超前，永不放弃，第一名我们来了！</h2>
 			    </div>
 			    <div class="liveDetail-listNum">
@@ -89,12 +90,12 @@
 			    		<li>
 			    			<span class="liveDetail-listNum-title">阅读量</span><br>
 
-			    			<em class="liveDetail-listNum-intro">588</em>
+			    			<em class="liveDetail-listNum-intro">${marine.reads }</em>
 			    		</li>
 			    		<li>
 			    			<span class="liveDetail-listNum-title">得分</span><br>
 
-			    			<em class="liveDetail-listNum-intro">1000</em>
+			    			<em class="liveDetail-listNum-intro">${marine.score }</em>
 			    		</li>
 			    	</ul>
 			    </div>
@@ -105,48 +106,15 @@
 		    <div class="bg-white mb10 pb10">
 			    <div class="liveDetail-user">
 			    	<ul>
-			    		<li>
-			    			<img src="<%=basePath %>/images/user.jpg"><br>
-
-			    			<span class="liveDetail-user-name">大娃</span><br>
-
-			    			<span class="liveDetail-user-intro">老大</span>
-			    		</li>
-			    		<li>
-			    			<img src="<%=basePath %>/images/user.jpg"><br>
-
-			    			<span class="liveDetail-user-name">二娃</span><br>
-
-			    			<span class="liveDetail-user-intro">老二</span>
-			    		</li>
-			    		<li>
-			    			<img src="<%=basePath %>/images/user.jpg"><br>
-
-			    			<span class="liveDetail-user-name">三娃</span><br>
-
-			    			<span class="liveDetail-user-intro">老三</span>
-			    		</li>
-			    		<li>
-			    			<img src="<%=basePath %>/images/user.jpg"><br>
-
-			    			<span class="liveDetail-user-name">四娃</span><br>
-
-			    			<span class="liveDetail-user-intro">老四</span>
-			    		</li>
-			    		<li>
-			    			<img src="<%=basePath %>/images/user.jpg"><br>
-
-			    			<span class="liveDetail-user-name">五娃</span><br>
-
-			    			<span class="liveDetail-user-intro">老五</span>
-			    		</li>
-			    		<li>
-			    			<img src="<%=basePath %>/images/user.jpg"><br>
-
-			    			<span class="liveDetail-user-name">六娃</span><br>
-
-			    			<span class="liveDetail-user-intro">老六</span>
-			    		</li>
+			    		<c:forEach var="itm" items="${familys }">
+			    			<li>
+				    			<img src="<%=basePath %>/images/user.jpg"><br>
+	
+				    			<span class="liveDetail-user-name">${itm.childName }</span><br>
+	
+				    			<span class="liveDetail-user-intro">${itm.childTitle }</span>
+				    		</li>
+			    		</c:forEach>
 			    	</ul>
 			    </div>
 		    </div>
