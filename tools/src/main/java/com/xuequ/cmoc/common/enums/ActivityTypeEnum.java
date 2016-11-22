@@ -1,7 +1,5 @@
 package com.xuequ.cmoc.common.enums;
 
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-
 public enum ActivityTypeEnum {
 	activity_type_1("1", "亲子活动"),
 	activity_type_2("2", "城市体验");

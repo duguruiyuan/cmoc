@@ -1,12 +1,12 @@
 var activityQueryUrl = basePath + "/activity/json/namelist/query";
-var addUpdateActivityUrl = basePath + "/activity/json/addUpdate";
-var queryByIdUrl = basePath + "/activity/json/queryById";
+var addUpdateActivityUrl = basePath + "/activity/json/namelist/addUpdate";
+var queryByIdUrl = basePath + "/activity/json/namelist/queryById";
 
 var dataGrid;
 $(function() {
 	loadData();
 });
-
+window.onload = uploadInit("file-upload", basePath + '/attachment/upload/img');
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -155,15 +155,17 @@ function updateActivity(id) {
  		dataType : "json",
  		async : false,
  		success : function(data) {
+ 			$("#addForm #resourceId").val(data.id);
  			$("#addForm #id").val(data.id);
 			$("#addForm #activityName").val(data.activityName);
 			$("#addForm #activityNum").val(data.activityNum);
-			$("#addForm #city").val(data.city);
-			$("#addForm #activityType").val(data.activityType);
-			$("#addForm #strStartDate").val(getTime(data.startDate, "yyyy-MM-dd hh:mm"));
-			$("#addForm #strEndDate").val(getTime(data.endDate, "yyyy-MM-dd hh:mm"));
-			$("#addForm #activityAddr").val(data.activityAddr);
-			$("#addForm #activityDesc").val(data.activityDesc);
+			$("#addForm #marineName").val(data.marineName);
+			$("#addForm #childName").val(data.childName);
+			$("#addForm #childTitle").val(data.childTitle);
+			$("#addForm #fatherName").val(data.fatherName);
+			$("#addForm #fatherMobile").val(data.fatherMobile);
+			$("#addForm #motherName").val(data.motherName);
+			$("#addForm #motherMobile").val(data.motherMobile);
 			loadForm(1);
  		}
  	});
@@ -205,30 +207,23 @@ function validator() {
 				required : true,
 				maxlength : 40
 			},
-			activityType : {
-				required : true
-			},
-			activityPeoples : {
+			marineName : {
 				required : true,
+				maxlength : 40
+			},
+			childName : {
+				required : true,
+				maxlength : 40
+			},
+			childTitle : {
+				required : true,
+				maxlength : 40
+			},
+			fatherMobile : {
 				number : true
 			},
-			city : {
-				required : true,
-				maxlength : 20
-			},
-			startDate : {
-				required : true,
-				date:true
-			},
-			endDate : {
-				required : true,
-				date:true
-			},
-			activityAddr : {
-				maxlength : 100
-			},
-			activityDesc : {
-				maxlength : 200
+			motherMobile : {
+				number : true
 			}
 		},
 		submitHandler : function(form) {
@@ -248,10 +243,10 @@ function validator() {
 					success : function(data) {
 						$.messager.progress('close');
 						if (data.code == '000') {
-							$.messager.alert('系统提示', $("#id").val() == '' ? '活动新增成功' : '活动修改成功', 'info');
+							$.messager.alert('系统提示', $("#id").val() == '' ? '小队员信息新增成功' : '小队员信息修改成功', 'info');
 							returnBack();
 						} else {
-							$.messager.alert('系统提示', $("#id").val() == '' ? '活动新增失败' : '活动修改失败', 'warning');
+							$.messager.alert('系统提示', $("#id").val() == '' ? '小队员信息新增失败' : '小队员信息修改失败', 'warning');
 						}
 					}
 				});

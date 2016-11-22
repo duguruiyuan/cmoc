@@ -176,6 +176,8 @@ function returnBack(){
 function uploadInit() {
 	$("#file-upload").fileinput({
         uploadUrl: basePath + '/activity/namelist/import',
+        showRemove : false,
+        language : 'zh',
         allowedFileExtensions : ['xls','xlsx'],
         overwriteInitial: false,
         previewFileIcon: '<i class="fa fa-file"></i>',

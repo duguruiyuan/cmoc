@@ -27,4 +27,24 @@ public class ActivityFamilyServiceImpl implements IActivityFamilyService {
 		return activityFamilyMapper.selectListByMarineId(marineId);
 	}
 
+	@Override
+	public int updateFamilyImg(String imgUrl, Integer id) {
+		return activityFamilyMapper.updateFamilyImg(imgUrl, id);
+	}
+
+	@Override
+	public ActivityFamily selectByPrimaryKey(Integer id) {
+		return activityFamilyMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int addAndUpdateFamily(ActivityFamily family) {
+		return activityFamilyMapper.updateByPrimaryKeySelective(family);
+	}
+
+	@Override
+	public ActivityFamilyView selectById(Integer id) {
+		return activityFamilyMapper.selectById(id);
+	}
+
 }

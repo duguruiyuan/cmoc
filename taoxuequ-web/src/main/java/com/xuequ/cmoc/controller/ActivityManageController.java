@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.model.ActivityFamily;
+import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
@@ -239,4 +241,30 @@ public class ActivityManageController extends BaseController{
         return activityService.addImportActivityNamelist(list, sysUser); 
     }
 	
+	@RequestMapping("json/marines/addUpdate")
+	public @ResponseBody Object marinesAddUpdate(ActivityMarines vo){
+		try {
+			activityMarinesService.addUpdateMarines(vo);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--marinesAddUpdate, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/namelist/queryById")
+	public @ResponseBody Object namelistQueryById(@RequestParam("id")Integer id) {
+		return activityFamilyService.selectById(id);
+	}
+		
+	@RequestMapping("json/namelist/addUpdate")
+	public @ResponseBody Object familyAddUpdate(ActivityFamily vo) {
+		try {
+			activityFamilyService.addAndUpdateFamily(vo);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--familyAddUpdate, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
 }

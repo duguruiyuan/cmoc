@@ -2,6 +2,8 @@ package com.xuequ.cmoc.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.ActivityMarinesView;
@@ -13,7 +15,7 @@ public interface ActivityMarinesMapper {
 
     int insertSelective(ActivityMarines record);
 
-    ActivityMarinesView selectByPrimaryKey(Integer id);
+    ActivityMarines selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(ActivityMarines record);
 
@@ -24,4 +26,7 @@ public interface ActivityMarinesMapper {
     List<ActivityMarines> selectListByActivityId(Integer activityId);
     
     ActivityMarinesView selectById(Integer id);
+    
+    int updateMarineImg(@Param("marineImg")String marineImg, 
+    		@Param("id")Integer id);
 }

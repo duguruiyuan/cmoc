@@ -13,5 +13,11 @@ public interface IActivityMarinesService {
 	public List<ActivityMarines> selectListByActivityId(Integer activityId);
 
 	public ActivityMarines selectById(Integer marineId);
+	
+	public int updateMarineImg(String imgUrl, Integer id);
+	
+	public ActivityMarines selectByPrimaryKey(Integer id);
+	
+	public int addUpdateMarines(ActivityMarines marines);
 
 }

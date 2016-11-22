@@ -53,6 +53,63 @@
 			</div>
 		</div>
 	</div>
+	<div id="confirmDialog" style="display: none;height: 'auto';">
+		<div class="col-md-12 p10">
+		  <form id="addForm" novalidate="novalidate">
+				<input type="hidden" id="id" name="id">
+				<div class="form-group col-md-6">
+					<label for="activityName">活动名称</label>								
+					<input class="form-control" name="activityName" id="activityName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="activityNum">活动期数</label>								
+					<input class="form-control" name="activityNum" id="activityNum">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="marineName">战队名称</label>								
+					<input class="form-control" name="marineName" id="marineName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childName">小队员姓名</label>								
+					<input class="form-control" name="childName" id="childName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childTitle">小队员头衔</label>								
+					<input class="form-control" name="childTitle" id="childTitle">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="fatherName">爸爸姓名</label>								
+					<input class="form-control" name="fatherName" id="fatherName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="fatherMobile">爸爸手机号码</label>								
+					<input class="form-control" name="fatherMobile" id="fatherMobile">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="motherName">妈妈姓名</label>								
+					<input class="form-control" name="motherName" id="motherName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="motherMobile">妈妈手机号码</label>								
+					<input class="form-control" name="motherMobile" id="motherMobile">
+				</div>
+				<div class="form-group col-md-6"></div>
+				<div class="form-group col-md-6">
+					<label for="files">小队员照片</label>								
+					<input type="hidden" name="resourceId" id="resourceId"/>
+		            <input type="hidden" name="type" id="type" value="MEMBER"/>
+	             	<div class="form-group">
+	                    <input id="file-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+	                </div>
+				</div>
+				<div class="form-group col-md-12 text-right">
+					<button type="submit" class="btn btn-success">保存</button>
+					<button class="btn btn-info" type="button"
+						onclick="closeFormPanel('addForm')">取消</button>
+				</div>
+			</form>
+		</div>
+	</div>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/namelist.js"></script>
 </body>
 </html>

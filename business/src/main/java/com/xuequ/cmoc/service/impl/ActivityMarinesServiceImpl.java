@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.dao.ActivityMarinesMapper;
-import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IActivityMarinesService;
@@ -31,6 +30,21 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 	@Override
 	public ActivityMarinesView selectById(Integer marineId) {
 		return activityMarinesMapper.selectById(marineId);
+	}
+
+	@Override
+	public int updateMarineImg(String imgUrl, Integer id) {
+		return activityMarinesMapper.updateMarineImg(imgUrl, id);
+	}
+
+	@Override
+	public ActivityMarines selectByPrimaryKey(Integer id) {
+		return activityMarinesMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int addUpdateMarines(ActivityMarines marines) {
+		return activityMarinesMapper.updateByPrimaryKeySelective(marines);
 	}
 
 }

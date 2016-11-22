@@ -54,7 +54,7 @@
 	</div>
 	<div id="confirmDialog" style="display: none;height: 'auto';">
 		<div class="col-md-12 p10">
-		  <form id="addForm" novalidate="novalidate">
+		  <form id="addForm" novalidate="novalidate" enctype="multipart/form-data">
 				<input type="hidden" id="id" name="id">
 				<div class="form-group col-md-6">
 					<label for="activityName">活动名称</label>								
@@ -65,20 +65,26 @@
 					<input class="form-control" name="activityNum" id="activityNum" readonly="readonly">
 				</div>
 				<div class="form-group col-md-6">
-					<label for="activityPeoples">战队名称</label>								
+					<label for="marineName">战队名称</label>								
 					<input class="form-control" name="marineName" id="marineName">
 				</div>
 				<div class="form-group col-md-6">
-					<label for="city">战队口号</label>								
+					<label for="marineSlogan">战队口号</label>								
 					<input class="form-control" name="marineSlogan" id="marineSlogan">
 				</div>
 				<div class="form-group col-md-6">
-					<label for="city">战队照片</label>
-					<div id="preview">
+					<label for="files">战队照片</label>
+<!-- 					<div id="preview">
 					    <img id="imghead" width=100 height=100 border=0>
 					</div>
 					<input type="file" onchange="previewImage(this)" />
-				</div>
+ -->				
+ 					<input type="hidden" name="resourceId" id="resourceId"/>
+		            <input type="hidden" name="type" id="type" value="MARINE"/>
+	             	<div class="form-group">
+	                    <input id="file-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+	                </div>
+ 				</div>
 				<div class="form-group col-md-12 text-right">
 					<button type="submit" class="btn btn-success">保存</button>
 					<button class="btn btn-info" type="button"

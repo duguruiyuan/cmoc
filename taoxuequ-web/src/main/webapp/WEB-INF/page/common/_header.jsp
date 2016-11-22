@@ -24,6 +24,7 @@
 <script src="<%=basePath %>/js/plugin/extJquery.js"></script>
 <!-- bootstrap js -->
 <script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/fileinput.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/zh.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/js/ie-emulation-modes-warning.js" type="text/javascript" charset="utf-8"></script>
 

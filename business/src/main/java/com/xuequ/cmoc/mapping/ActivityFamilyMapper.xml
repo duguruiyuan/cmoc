@@ -55,6 +55,19 @@
     <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
     <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <select id="selectById" resultMap="PageBaseResultMap" parameterType="java.lang.Integer">
+  	select 
+  	f.id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
+    other_name, other_mobile, other_age, child_name, child_mobile, child_age, child_img, 
+    child_title, child_comment, f.activity_id, f.marine_id, f.creater, 
+    f.create_time,a.activity_name,a.activity_num, a.activity_type, m.marine_name
+  	from t_activity_family f 
+  	inner join t_activity_info a on a.is_delete = 'N' and f.activity_id = a.id
+  	inner join t_activity_marines m on m.id = f.marine_id
+    where f.is_delete='N' and f.id = #{id,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectListByPage" resultMap="PageBaseResultMap" >
   	select 
   	f.id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
@@ -371,5 +384,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateFamilyImg">
+  	update t_activity_family set
+  	child_img = #{childImg,jdbcType=VARCHAR}
+  	where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

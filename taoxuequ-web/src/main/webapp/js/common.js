@@ -93,7 +93,9 @@ function islegal(str)
 function uploadInit(id, url) {
 	$("#" + id).fileinput({
         uploadUrl: url,
-        overwriteInitial: false,
+        showRemove : false,
+        language : 'zh',
+        initialPreviewShowDelete:true, 
         previewFileIcon: '<i class="fa fa-file"></i>',
         previewFileIconSettings: {
     		'docx': '<i class="fa fa-file-word-o text-primary"></i>',
@@ -105,8 +107,8 @@ function uploadInit(id, url) {
         },
         uploadExtraData: function(previewId, index) {
             var obj = {};
-        	obj.id = $("#" + id + " #id").val();
-        	obj.type = $("#" + id + " #type").val();
+        	obj.resourceId = $("#resourceId").val();
+        	obj.type = $("#type").val();
         	return obj;
         },
         slugCallback: function(filename) {

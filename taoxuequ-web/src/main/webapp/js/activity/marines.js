@@ -1,12 +1,12 @@
 var activityQueryUrl = basePath + "/activity/json/marines/query";
-var addUpdateActivityUrl = basePath + "/activity/json/addUpdate";
+var addUpdateActivityUrl = basePath + "/activity/json/marines/addUpdate";
 var queryByIdUrl = basePath + "/activity/json/marines/queryById";
 
 var dataGrid;
 $(function() {
 	loadData();
 });
-window.onload = uploadInit("file-upload", basePath + '/activity/namelist/import');
+window.onload = uploadInit("file-upload", basePath + '/attachment/upload/img');
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -150,6 +150,7 @@ function updateMarine(id) {
  		dataType : "json",
  		async : false,
  		success : function(data) {
+ 			$("#addForm #resourceId").val(data.id);
  			$("#addForm #id").val(data.id);
 			$("#addForm #activityName").val(data.activityName);
 			$("#addForm #activityNum").val(data.activityNum);
@@ -195,31 +196,13 @@ function validator() {
 			activityNum : {
 				required : true,
 				maxlength : 40
-			},
-			activityType : {
-				required : true
-			},
-			activityPeoples : {
+			},marineName : {
 				required : true,
-				number : true
+				maxlength : 40
 			},
-			city : {
+			marineSlogan : {
 				required : true,
-				maxlength : 20
-			},
-			startDate : {
-				required : true,
-				date:true
-			},
-			endDate : {
-				required : true,
-				date:true
-			},
-			activityAddr : {
 				maxlength : 100
-			},
-			activityDesc : {
-				maxlength : 200
 			}
 		},
 		submitHandler : function(form) {
@@ -239,10 +222,10 @@ function validator() {
 					success : function(data) {
 						$.messager.progress('close');
 						if (data.code == '000') {
-							$.messager.alert('系统提示', $("#id").val() == '' ? '活动新增成功' : '活动修改成功', 'info');
+							$.messager.alert('系统提示', $("#id").val() == '' ? '战队信息新增成功' : '战队信息修改成功', 'info');
 							returnBack();
 						} else {
-							$.messager.alert('系统提示', $("#id").val() == '' ? '活动新增失败' : '活动修改失败', 'warning');
+							$.messager.alert('系统提示', $("#id").val() == '' ? '战队信息新增失败' : '战队信息修改失败', 'warning');
 						}
 					}
 				});
