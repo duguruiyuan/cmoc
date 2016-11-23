@@ -6,7 +6,11 @@ var dataGrid;
 $(function() {
 	loadData();
 });
-window.onload = uploadInit();
+window.onload = initLoad();
+function initLoad(){
+	uploadInit1();
+	uploadInit("activity-img-upload", basePath + '/attachment/upload/img', "activityId");
+}
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -31,6 +35,7 @@ function loadData() {
 			formatter : function(value, row, index) {
 				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">编辑</button>', row.id);
 				str += $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="uploadNamelist({0});">名单上传</button>', index);
+				str += $.formatString('<button  type="button" class="btn btn-danger btn-xs" style="margin:4px 4px;" onclick="uploadImg({0});">图片上传</button>', index);
 				return str;
 			}
 		}, {
@@ -173,7 +178,7 @@ function returnBack(){
 	window.location.reload();
 }
 
-function uploadInit() {
+function uploadInit1() {
 	$("#file-upload").fileinput({
         uploadUrl: basePath + '/activity/namelist/import',
         showRemove : false,
@@ -208,6 +213,28 @@ function uploadInit() {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.msg, 'info');
 		}
 	});
+}
+
+var uploadImg = function(index) {
+	var row = $("#dataGrid").datagrid('getData').rows[index];
+	$('#uploadActivityImgDialog').dialog({
+		title : "名单上传",
+		modal : true,
+		width : 600,
+		top : 100,
+		draggable : true,
+		resizable : true,
+		buttons : '#btns',
+		onClose : function() {
+			loadData();
+		},
+		onOpen : function() {
+			$("#uploadActivityImgDialog #activityId").val(row.id);
+			$("#uploadActivityImgDialog #activityName").val(row.activityName);
+			$("#uploadActivityImgDialog #activityNum").val(row.activityNum);
+		}
+		
+	}).show();
 }
 
 var uploadNamelist = function(index) {

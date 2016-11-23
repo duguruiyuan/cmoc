@@ -58,16 +58,24 @@
 		  <form id="addForm" novalidate="novalidate">
 				<input type="hidden" id="id" name="id">
 				<div class="form-group col-md-6">
+					<label for="files">小队员照片</label>								
+					<input type="hidden" name="resourceId" id="resourceId"/>
+		            <input type="hidden" name="type" id="type" value="MEMBER"/>
+	             	<div class="form-group">
+	                    <input id="file-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+	                </div>
+				</div>
+				<div class="form-group col-md-6">
 					<label for="activityName">活动名称</label>								
-					<input class="form-control" name="activityName" id="activityName">
+					<input class="form-control" name="activityName" id="activityName" readonly="readonly">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="activityNum">活动期数</label>								
-					<input class="form-control" name="activityNum" id="activityNum">
+					<input class="form-control" name="activityNum" id="activityNum" readonly="readonly">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="marineName">战队名称</label>								
-					<input class="form-control" name="marineName" id="marineName">
+					<input class="form-control" name="marineName" id="marineName" readonly="readonly">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="childName">小队员姓名</label>								
@@ -92,15 +100,6 @@
 				<div class="form-group col-md-6">
 					<label for="motherMobile">妈妈手机号码</label>								
 					<input class="form-control" name="motherMobile" id="motherMobile">
-				</div>
-				<div class="form-group col-md-6"></div>
-				<div class="form-group col-md-6">
-					<label for="files">小队员照片</label>								
-					<input type="hidden" name="resourceId" id="resourceId"/>
-		            <input type="hidden" name="type" id="type" value="MEMBER"/>
-	             	<div class="form-group">
-	                    <input id="file-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
-	                </div>
 				</div>
 				<div class="form-group col-md-12 text-right">
 					<button type="submit" class="btn btn-success">保存</button>

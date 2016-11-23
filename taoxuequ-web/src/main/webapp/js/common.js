@@ -90,7 +90,7 @@ function islegal(str)
     return true;
 }
 
-function uploadInit(id, url) {
+function uploadInit(id, url, resourceId) {
 	$("#" + id).fileinput({
         uploadUrl: url,
         showRemove : false,
@@ -107,21 +107,13 @@ function uploadInit(id, url) {
         },
         uploadExtraData: function(previewId, index) {
             var obj = {};
-        	obj.resourceId = $("#resourceId").val();
+        	obj.resourceId = resourceId != null ? $("#" + resourceId).val() : $("#resourceId").val();
         	obj.type = $("#type").val();
         	return obj;
         },
         slugCallback: function(filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
-	});
-	$("#" + id).on("fileuploaded", function(event, data, previewId, index) {
-		if(data.response.code == '000') {
-			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
-		}else {
-			$(".kv-file-remove").click();
-			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.msg, 'info');
-		}
 	});
 }
 

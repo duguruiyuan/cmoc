@@ -33,7 +33,7 @@ function loadData() {
 				return str;
 			}
 		}, {
-			field : 'id',
+			field : 'activityId',
 			title : '活动编号',
 			align : "center",
 			resizable : true
@@ -244,7 +244,8 @@ function validator() {
 						$.messager.progress('close');
 						if (data.code == '000') {
 							$.messager.alert('系统提示', $("#id").val() == '' ? '小队员信息新增成功' : '小队员信息修改成功', 'info');
-							returnBack();
+							closeFormPanel("addForm");
+							loadData();
 						} else {
 							$.messager.alert('系统提示', $("#id").val() == '' ? '小队员信息新增失败' : '小队员信息修改失败', 'warning');
 						}
