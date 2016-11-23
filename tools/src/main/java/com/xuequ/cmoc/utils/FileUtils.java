@@ -41,6 +41,10 @@ public final class FileUtils {
         }
         return null;
     }
+    
+    public static void main(String[] args) {
+		System.out.println(getFileNameExceptExt("小号.jpg"));
+	}
 
     /**
      * 获取指定文件的名称,不包含扩展名

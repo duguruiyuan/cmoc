@@ -29,6 +29,7 @@ import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.view.ActivityInfoView;
+import com.xuequ.cmoc.view.ActivityResourceTypeView;
 
 @Service("activityService")
 public class ActivityServiceImpl implements IActivityService {
@@ -183,6 +184,26 @@ public class ActivityServiceImpl implements IActivityService {
 	@Override
 	public List<ActivityInfo> selectListByParam(Page<ActivityInfo> page) {
 		return activityInfoMapper.selectListByParam(page);
+	}
+
+	@Override
+	public ActivityResourceTypeView selectForUpload1(Integer activityId, String marineName, String childName) {
+		return activityInfoMapper.selectForUpload1(activityId, marineName, childName);
+	}
+
+	@Override
+	public ActivityResourceTypeView selectForUpload(Integer activityId, String name) {
+		return activityInfoMapper.selectForUpload(activityId, name);
+	}
+
+	@Override
+	public ActivityInfo selectByPrimaryKey(Integer id) {
+		return activityInfoMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateActivityImg(String activityImg, Integer id) {
+		return activityInfoMapper.updateActivityImg(activityImg, id);
 	}
 
 }

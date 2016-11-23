@@ -77,8 +77,8 @@
 		    </div>
 		    <div class="bg-white pb10 mb10">
 			    <div class="liveDetail-title">
-			    	<h1>${marine.marineName }战队名称</h1>
-			    	<h2>勇往超前，永不放弃，第一名我们来了！</h2>
+			    	<h1>${marine.marineName }</h1>
+			    	<h2>${marine.marineSlogan }</h2>
 			    </div>
 			    <div class="liveDetail-listNum">
 			    	<ul>
@@ -108,7 +108,14 @@
 			    	<ul>
 			    		<c:forEach var="itm" items="${familys }">
 			    			<li>
-				    			<img src="<%=basePath %>/images/user.jpg"><br>
+			    				<c:choose>
+			    					<c:when test="${itm.childImg != null }">
+			    						<img src="${config.imgUrl }${itm.childImg}"><br>
+			    					</c:when>
+			    					<c:otherwise>
+			    						<img src="<%=basePath %>/images/user.jpg"><br>
+			    					</c:otherwise>
+			    				</c:choose>
 	
 				    			<span class="liveDetail-user-name">${itm.childName }</span><br>
 	
@@ -236,7 +243,7 @@
 						return false;
 					}
 				  if ($(window).scrollTop() + $(window).height() + 10 >= $(document).height() && $(window).scrollTop() > 20) {
-	                $.ajax({
+	                /* $.ajax({
 	                    type:"GET",
 	                    url:'../test/page9.json',
 	                    dataType:'json',
@@ -268,7 +275,7 @@
 	                    		listObj.find(".loader").hide();
 	                    	}
 	                    }
-	                })
+	                }) */
 	              }
 	            }).trigger("scroll");
 				

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class DetailController {
+public class DetailController extends BaseController{
 
 	/**
 	 * 课程详情

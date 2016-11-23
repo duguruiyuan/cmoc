@@ -9,7 +9,8 @@ $(function() {
 window.onload = initLoad();
 function initLoad(){
 	uploadInit1();
-	uploadInit("activity-img-upload", basePath + '/attachment/upload/img', "activityId");
+	uploadInit("activity-img-upload", basePath + '/attachment/activity/upload/img', "activityId");
+	uploadInit("activity1-img-upload", basePath + '/attachment/activity/upload/img', "id", "activity_type");
 }
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
@@ -220,12 +221,13 @@ var uploadImg = function(index) {
 	$('#uploadActivityImgDialog').dialog({
 		title : "名单上传",
 		modal : true,
-		width : 600,
+		width : 800,
 		top : 100,
 		draggable : true,
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
+			$(".fileinput-remove").click();
 			loadData();
 		},
 		onOpen : function() {
@@ -248,6 +250,7 @@ var uploadNamelist = function(index) {
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
+			$(".fileinput-remove").click();
 			loadData();
 		},
 		onOpen : function() {
@@ -269,6 +272,7 @@ var loadForm = function(data){
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
+			$(".fileinput-remove").click();
 			cleanFormPanel("addForm");
 		}
 	}).show();
@@ -335,7 +339,8 @@ function validator() {
 						$.messager.progress('close');
 						if (data.code == '000') {
 							$.messager.alert('系统提示', $("#addForm #id").val() == '' ? '活动新增成功' : '活动修改成功', 'info');
-							returnBack();
+							closeFormPanel("addForm");
+							loadData();
 						} else {
 							$.messager.alert('系统提示', $("#addForm #id").val() == '' ? '活动新增失败' : '活动修改失败', 'warning');
 						}

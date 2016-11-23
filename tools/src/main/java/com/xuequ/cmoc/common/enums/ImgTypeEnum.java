@@ -2,6 +2,7 @@ package com.xuequ.cmoc.common.enums;
 
 public enum ImgTypeEnum {
 	ACTIVITY("ACTIVITY","活动"),
+	MARINE_AND_MEMBER("MARINE_AND_MEMBER", "战队和队员"),
 	MARINE("MARINE", "战队"),
 	MEMBER("MEMBER", "队员");
 	

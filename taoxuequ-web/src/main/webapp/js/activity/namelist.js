@@ -6,7 +6,7 @@ var dataGrid;
 $(function() {
 	loadData();
 });
-window.onload = uploadInit("file-upload", basePath + '/attachment/upload/img');
+window.onload = uploadInit("file-upload", basePath + '/attachment/activity/upload/img');
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -185,6 +185,7 @@ var loadForm = function(data){
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
+			$(".fileinput-remove").click();
 			cleanFormPanel("addForm");
 		}
 	}).show();

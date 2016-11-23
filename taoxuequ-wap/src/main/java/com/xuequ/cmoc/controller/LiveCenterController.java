@@ -20,7 +20,7 @@ import com.xuequ.cmoc.vo.ActivityQueryVO;
 
 @RequestMapping("live")
 @Controller
-public class LiveCenterController {
+public class LiveCenterController extends BaseController{
 	
 	@Autowired
 	private IActivityService activityService;

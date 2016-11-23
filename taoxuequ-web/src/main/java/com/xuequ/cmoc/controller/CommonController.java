@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("common")
 @Controller
-public class CommonController {
+public class CommonController extends BaseController{
 
 	@RequestMapping("home")
 	public String home() {

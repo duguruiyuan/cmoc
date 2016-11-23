@@ -6,7 +6,7 @@ var dataGrid;
 $(function() {
 	loadData();
 });
-window.onload = uploadInit("file-upload", basePath + '/attachment/upload/img');
+window.onload = uploadInit("file-upload", basePath + '/attachment/activity/upload/img');
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -33,7 +33,7 @@ function loadData() {
 				return str;
 			}
 		}, {
-			field : 'id',
+			field : 'activityId',
 			title : '活动编号',
 			align : "center",
 			resizable : true
@@ -175,6 +175,7 @@ var loadForm = function(data){
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
+			$(".fileinput-remove").click();
 			cleanFormPanel("addForm");
 		}
 	}).show();
@@ -223,7 +224,8 @@ function validator() {
 						$.messager.progress('close');
 						if (data.code == '000') {
 							$.messager.alert('系统提示', $("#id").val() == '' ? '战队信息新增成功' : '战队信息修改成功', 'info');
-							returnBack();
+							closeFormPanel("addForm");
+							loadData();
 						} else {
 							$.messager.alert('系统提示', $("#id").val() == '' ? '战队信息新增失败' : '战队信息修改失败', 'warning');
 						}

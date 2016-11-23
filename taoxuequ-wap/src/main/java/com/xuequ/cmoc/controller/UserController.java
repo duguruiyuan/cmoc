@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("user")
 @Controller
-public class UserController {
+public class UserController extends BaseController{
 	
 	/**
 	 * 用户绑定

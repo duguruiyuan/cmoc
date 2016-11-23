@@ -15,6 +15,8 @@ public class Configuration implements Serializable {
 	
 	private String version;
 	
+	private String imgUrl;
+	
 	private static Configuration config;
 	
 	public synchronized static Configuration getInstance() {
@@ -33,6 +35,7 @@ public class Configuration implements Serializable {
 			config.setEnv(prop.getString("env"));
 			config.setAppName(prop.getString("appName"));
 			config.setVersion(prop.getString("version"));
+			config.setImgUrl(prop.getString("imgUrl"));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -62,6 +65,12 @@ public class Configuration implements Serializable {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	
-	
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 }

@@ -90,7 +90,7 @@ function islegal(str)
     return true;
 }
 
-function uploadInit(id, url, resourceId) {
+function uploadInit(id, url, resourceId, type) {
 	$("#" + id).fileinput({
         uploadUrl: url,
         showRemove : false,
@@ -108,7 +108,7 @@ function uploadInit(id, url, resourceId) {
         uploadExtraData: function(previewId, index) {
             var obj = {};
         	obj.resourceId = resourceId != null ? $("#" + resourceId).val() : $("#resourceId").val();
-        	obj.type = $("#type").val();
+        	obj.type = type != null ? $("#" + type).val() : $("#type").val();
         	return obj;
         },
         slugCallback: function(filename) {

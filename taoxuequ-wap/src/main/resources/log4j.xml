@@ -16,7 +16,7 @@
 		</layout>
 	</appender>
 
-	<logger name="com.xuequ.zx">
+	<logger name="com.xuequ.cmoc">
 		<level value="debug" />
 	</logger>
 	<logger name="jdbc.sqltiming">

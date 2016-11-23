@@ -12,7 +12,7 @@ import com.xuequ.cmoc.model.ParentInfo;
  *
  */
 @RequestMapping("parent")
-public class ParentBindController {
+public class ParentBindController extends BaseController {
 
 	/**
 	 * 家长绑定查询页

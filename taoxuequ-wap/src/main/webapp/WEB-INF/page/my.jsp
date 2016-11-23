@@ -79,7 +79,7 @@
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="page9.html">
+	                <a class="mui-navigate-right" href="<%=basePath%>/live">
 	                     直播中心
 	                </a>
 	            </li>

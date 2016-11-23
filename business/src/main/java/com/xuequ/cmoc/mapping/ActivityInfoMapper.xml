@@ -347,4 +347,31 @@
       is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectForUpload" resultType="com.xuequ.cmoc.view.ActivityResourceTypeView">
+	SELECT f.id, 3 type, f.activity_id activityId, f.marine_id marineId
+	FROM t_activity_family f 
+	WHERE f.child_name = #{name,jdbcType=VARCHAR} 
+	AND f.activity_id = #{activityId,jdbcType=INTEGER}
+	UNION
+	SELECT m.id, 2 type, m.activity_id activityId, m.id marineId
+	FROM t_activity_marines m 
+	WHERE m.marine_name = #{name,jdbcType=VARCHAR} 
+	AND m.activity_id = #{activityId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectForUpload1" resultType="com.xuequ.cmoc.view.ActivityResourceTypeView">
+	SELECT f.id, 3 type, f.activity_id activityId, f.marine_id marineId 
+	FROM t_activity_family f
+	INNER JOIN t_activity_marines m ON f.marine_id = m.id
+	WHERE f.activity_id = #{activityId,jdbcType=INTEGER}
+	and f.child_name = #{childName,jdbcType=VARCHAR} 
+	and m.marine_name = #{marineName,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updateActivityImg">
+  	update t_activity_info set 
+  	activity_img_url = #{activityImg,jdbcType=VARCHAR}
+  	where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

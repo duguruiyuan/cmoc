@@ -57,7 +57,7 @@
 			  	 </div>
 			  	 <div class="col-md-12 p15">
 				  	<p class="text-left">
-				  		活动期数： <input type="text" id="activityName" class="form-control1" readonly="readonly">
+				  		活动期数： <input type="text" id="activityNum" class="form-control1" readonly="readonly">
 				  	</p>
 			  	 </div>
 			  	 <div class="col-md-12 p15">
@@ -71,7 +71,7 @@
 			</div>
 			<div id="uploadActivityImgDialog" style="display: none;height: 'auto';">
 				<div class="col-md-12 p10">
-					<form id="addForm" novalidate="novalidate" enctype="multipart/form-data">
+					<form id="uploadForm" novalidate="novalidate" enctype="multipart/form-data">
 						<div class="form-group col-md-6">
 							<label for="activityName">活动名称</label>								
 							<input class="form-control" name="activityName" id="activityName">
@@ -87,7 +87,7 @@
 							</p>
 							<input id="activity-img-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
 							<input type="hidden" name="activityId" id="activityId"/>
-		            		<input type="hidden" name="type" id="type" value="ACTIVITY"/>
+		            		<input type="hidden" name="type" id="type" value="MARINE_AND_MEMBER"/>
 						</div>
 					</form>
 				</div>
@@ -135,6 +135,11 @@
 						<div class="form-group col-md-6">
 							<label for="activityDesc">活动描述</label>	
 							<textarea class="form-control" name="activityDesc" id="activityDesc" rows="3"></textarea>							
+						</div>
+						<div class="form-group col-md-6">
+							<label for="activityDesc">活动图片</label>	
+							<input id="activity1-img-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+		            		<input type="hidden" name="activity_type" id="activity_type" value="ACTIVITY"/>
 						</div>
 						<div class="form-group col-md-12 text-right">
 							<button type="submit" class="btn btn-success">保存</button>

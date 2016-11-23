@@ -36,7 +36,7 @@
 				  <div class="mui-card">
 					<a href="<%=basePath %>/live/marine/list/{{id}}">
 						<div class="mui-card-content">
-							<img src="<%=basePath %>/images/slider1.jpg" alt="" width="100%" height="154">
+							<img src="{{activityImgFormat activityImgUrl}}" alt="" width="100%" height="154">
 						</div>
 						<div class="mui-card-footer">
 							<div class="courseList-line1">{{activityName}}</div>
@@ -150,6 +150,15 @@
 				        	}
 				    		return "已结束";
 				    	});
+				        
+				        Handlebars.registerHelper("activityImgFormat", function(activityImgUrl) {
+				        	if(activityImgUrl) {
+				        		return "${config.imgUrl}" + activityImgUrl;
+				        	}else {
+				        		return "<%=basePath %>/images/slider1.jpg";
+				        	}
+				        });
+				        
 				        $('.mui-content').html(myTemplate(data));
 				    }
 				});

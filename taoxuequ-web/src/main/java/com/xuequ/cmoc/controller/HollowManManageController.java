@@ -1,5 +1,6 @@
 package com.xuequ.cmoc.controller;
 
+import org.codehaus.jackson.map.deser.ValueInstantiators.Base;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +15,7 @@ import com.xuequ.cmoc.model.HollowManInfo;
  */
 @RequestMapping("hm")
 @Controller
-public class HollowManManageController {
+public class HollowManManageController extends BaseController{
 
 	/**
 	 * 透明人查询页

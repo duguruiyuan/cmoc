@@ -25,7 +25,14 @@
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
 			<div class="banner pr">
-				<img src="<%=basePath %>/images/slider2.jpg">
+				<c:choose>
+					<c:when test="${activity.activityImgUrl != null}">
+						<img src="${config.imgUrl }${activity.activityImgUrl}">
+					</c:when>
+					<c:otherwise>
+						<img src="<%=basePath %>/images/slider1.jpg">
+					</c:otherwise>
+				</c:choose>
 				<div class="marines-banner-title">
 					<div class="marines-banner-title1">${activity.activityNum }</div>
 					<div class="marines-banner-title2"><fmt:formatDate value='${activity.startDate}' pattern='yyyy-MM-dd' /> | ${activity.activityTypeValue}</div>
@@ -39,7 +46,14 @@
 			    	<c:forEach var="itm" items="${marines }">
 			    		<li class="mui-table-view-cell mui-media">
 			            <a href="<%=basePath %>/live/marine/detail/${itm.id}">
-			                <img class="mui-media-object mui-pull-left" src="<%=basePath %>/images/text.png">
+				            <c:choose>
+				                <c:when test="${itm.marineImg != null }">
+				                	<img class="mui-media-object mui-pull-left" src="${config.imgUrl }${itm.marineImg}">
+				                </c:when>
+				                <c:otherwise>
+				                	<img class="mui-media-object mui-pull-left" src="<%=basePath %>/images/text.png">
+				                </c:otherwise>
+				            </c:choose>
 			                <div class="mui-media-body">
 			                    <div class="marines-list-lev1">${itm.marineName }</div>
 			                    <div class="marines-list-lev2">${itm.lineName }</div>

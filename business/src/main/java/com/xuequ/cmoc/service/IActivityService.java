@@ -2,13 +2,15 @@ package com.xuequ.cmoc.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xuequ.cmoc.common.RspResult;
-import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.ActivityNamelistVO;
 import com.xuequ.cmoc.view.ActivityInfoView;
+import com.xuequ.cmoc.view.ActivityResourceTypeView;
 
 public interface IActivityService {
 
@@ -40,4 +42,12 @@ public interface IActivityService {
 	public RspResult addImportActivityNamelist(List<ActivityNamelistVO> list, SysUser user);
 	
 	public List<ActivityInfo> selectListByParam(Page<ActivityInfo> page);
+	
+	ActivityResourceTypeView selectForUpload1(Integer activityId, String marineName, String childName);
+    
+    ActivityResourceTypeView selectForUpload(Integer activityId, String name);
+
+    public ActivityInfo selectByPrimaryKey(Integer id);
+    
+    int updateActivityImg(String activityImg, Integer id);
 }

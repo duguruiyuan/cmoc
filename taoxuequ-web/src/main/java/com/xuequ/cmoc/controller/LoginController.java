@@ -20,7 +20,7 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 
 @RequestMapping("auth")
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 	
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(LoginController.class);
 	
