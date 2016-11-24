@@ -75,8 +75,12 @@ function loadData() {
 			title : '战队照片',
 			align : "center",
 			resizable : true,
-			formatter : function(v){
-				return "<a style='color: red;'>查看</a>";
+			formatter : function(v, row, index) {
+				if(v) {
+					return "<img style='width:15px;height:15px;' src='" + imgUrl + v + "'>";
+				}else {
+					return "<span color='gray'>无</span>";
+				}
 			}
 		},{
 			field : 'votes',

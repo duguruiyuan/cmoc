@@ -54,14 +54,14 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	
-	<servlet-mapping>
-            <servlet-name>default</servlet-name>
-            <url-pattern>*.js</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-            <servlet-name>default</servlet-name>
-            <url-pattern>*.css</url-pattern>
-    </servlet-mapping>
+    <servlet-mapping>      
+        <servlet-name>default</servlet-name>   
+        <url-pattern>*.js</url-pattern>   
+    </servlet-mapping>   
+    <servlet-mapping>       
+        <servlet-name>default</servlet-name>      
+        <url-pattern>*.css</url-pattern>     
+	</servlet-mapping>
 	
 	<!-- 字符编码 begin-->
 	<filter>
@@ -70,10 +70,6 @@
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>utf-8</param-value>
-		</init-param>
-		<init-param>
-			<param-name>forceEncoding</param-name>
-			<param-value>true</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

@@ -41,4 +41,10 @@
 <!--[if lt IE 9]><script src="<%=basePath %>/js/html5.js"></script><![endif]-->
 <script src="<%=basePath %>/js/main.js"></script>
 <script src="<%=basePath %>/js/common.js"></script>
-<script>var basePath = '<%=basePath %>';</script>	
+<script>
+	var basePath = '<%=basePath %>';
+	var imgUrl = '${config.imgUrl}';
+	if(!imgUrl) {
+		imgUrl = basePath + '/xuequ/';
+	}
+</script>	

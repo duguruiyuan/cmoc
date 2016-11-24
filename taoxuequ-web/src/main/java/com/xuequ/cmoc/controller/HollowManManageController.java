@@ -1,6 +1,5 @@
 package com.xuequ.cmoc.controller;
 
-import org.codehaus.jackson.map.deser.ValueInstantiators.Base;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,4 +62,5 @@ public class HollowManManageController extends BaseController{
 	@ResponseBody Object resourceJsonQuery(HollowManInfo info) {
 		return null;
 	}
+	
 }

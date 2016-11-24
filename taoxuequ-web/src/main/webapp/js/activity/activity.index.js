@@ -5,13 +5,22 @@ var queryByIdUrl = basePath + "/activity/json/queryById";
 var dataGrid;
 $(function() {
 	loadData();
+	$(".abc").on("click",function() {
+		alert(aaa);
+	})
 });
 window.onload = initLoad();
 function initLoad(){
 	uploadInit1();
 	uploadInit("activity-img-upload", basePath + '/attachment/activity/upload/img', "activityId");
 	uploadInit("activity1-img-upload", basePath + '/attachment/activity/upload/img', "id", "activity_type");
+	$("#activity1-img-upload").on("fileuploaded", function(event, data, previewId, index) {
+		if(data.response.code == '000') {
+			$('#activityImgUrl').val(data.response.data);
+		}
+	});
 }
+
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : activityQueryUrl,
@@ -35,7 +44,7 @@ function loadData() {
 			align : 'center',
 			formatter : function(value, row, index) {
 				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">编辑</button>', row.id);
-				str += $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="uploadNamelist({0});">名单上传</button>', index);
+				str += $.formatString('<button type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="uploadNamelist({0});">名单上传</button>', index);
 				str += $.formatString('<button  type="button" class="btn btn-danger btn-xs" style="margin:4px 4px;" onclick="uploadImg({0});">图片上传</button>', index);
 				return str;
 			}
@@ -54,6 +63,18 @@ function loadData() {
 			title : '活动期数',
 			align : "center",
 			resizable : true
+		}, {
+			field : 'activityImgUrl',
+			title : '活动图片',
+			align : "center",
+			resizable : true,
+			formatter : function(v, row, index) {
+				if(v) {
+					return "<img style='width:15px;height:15px;' src='" + imgUrl + v + "'>";
+				}else {
+					return "<span color='gray'>无</span>";
+				}
+			}
 		}, {
 			field : 'activityType',
 			title : '活动类型',
@@ -117,6 +138,19 @@ function loadData() {
 				return getTime(value, "yyyy-MM-dd hh:mm:ss");
 			}
 		}] ]
+	});
+}
+
+function imgOver(thiz) {
+	$("#" + thiz.id).tooltip({
+	    position: 'right',
+	    content: '<span style="color:#fff">This is the tooltip message.</span>',
+	    onShow: function(){
+	        $(this).tooltip('tip').css({
+	            backgroundColor: '#666',
+	            borderColor: '#666'
+	        });
+	    }
 	});
 }
 

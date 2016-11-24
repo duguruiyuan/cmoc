@@ -1,6 +1,10 @@
 package com.xuequ.cmoc.dao;
 
+import java.util.List;
+
 import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.ActivityHmSignView;
 
 public interface ActivityHmSignMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +18,6 @@ public interface ActivityHmSignMapper {
     int updateByPrimaryKeySelective(ActivityHmSign record);
 
     int updateByPrimaryKey(ActivityHmSign record);
+    
+    public List<ActivityHmSignView> selectListByPage(Page<ActivityHmSignView> page);
 }

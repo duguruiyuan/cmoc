@@ -31,6 +31,49 @@
     from t_activity_hm_sign
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <resultMap id="PageBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityHmSignView" >
+  	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
+    <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="line_id" property="lineId" jdbcType="INTEGER" />
+    <result column="line_name" property="lineName" jdbcType="VARCHAR" />
+    <result column="hm_name" property="hmName" jdbcType="VARCHAR" />
+    <result column="hm_mobile" property="hmMobile" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectListByPage" resultMap="PageBaseResultMap">
+  	SELECT s.id, s.activity_id, s.line_id, s.marine_id, s.hm_id, s.sign_date, s.is_effect, 
+  	s.effect_date, s.score, s.judge, s.creater_user_id, s.creater, s.create_time, 
+  	m.marine_name, m.line_id, m.line_name, 
+  	i.activity_name, i.activity_num, i.activity_type, h.hm_name, h.hm_mobile
+	FROM t_activity_hm_sign s
+	INNER JOIN t_hollow_man_info h ON h.id = s.hm_id
+	INNER JOIN t_activity_marines m ON s.activity_id = m.activity_id
+	INNER JOIN t_activity_info i ON i.id = m.activity_id
+	where s.is_delete = 'N'
+	<if test="params.activityId != null">
+    	and s.activity_id = #{params.activityId,jdbcType=INTEGER}
+    </if>
+    <if test="params.activityType != null">
+    	and i.activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+    <if test="params.marineName != null">
+    	and m.marine_name = #{params.marineName,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityName != null">
+    	and i.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.startDate != null">
+    	and DATE_FORMAT(i.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="params.endDate != null">
+    	and DATE_FORMAT(i.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+    </if>
+    order by s.id desc
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_hm_sign
     where id = #{id,jdbcType=INTEGER}

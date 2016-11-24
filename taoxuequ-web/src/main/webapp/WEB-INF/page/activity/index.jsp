@@ -140,6 +140,7 @@
 							<label for="activityDesc">活动图片</label>	
 							<input id="activity1-img-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
 		            		<input type="hidden" name="activity_type" id="activity_type" value="ACTIVITY"/>
+							<input type="hidden" name="activityImgUrl" id="activityImgUrl" />
 						</div>
 						<div class="form-group col-md-12 text-right">
 							<button type="submit" class="btn btn-success">保存</button>

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,10 +32,12 @@ import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.ActivityNamelistVO;
 import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.view.ActivityFamilyView;
+import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
 import com.xuequ.cmoc.view.ActivityMarinesView;
 import com.xuequ.cmoc.vo.ActivityQueryVO;
@@ -58,6 +61,8 @@ public class ActivityManageController extends BaseController{
 	private IActivityFamilyService activityFamilyService;
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
+	@Autowired
+	private IActivityHmService activityHmService;
 	
 	/**
 	 * 活动管理页
@@ -78,6 +83,11 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("marines")
 	public String marines() {
 		return "activity/marines";
+	}
+	
+	@RequestMapping("hm") 
+	public String activityHm() {
+		return "activity/hm";
 	}
 	
 	/**
@@ -266,5 +276,27 @@ public class ActivityManageController extends BaseController{
 			logger.error("--familyAddUpdate, error={}", e);
 		}
 		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	
+	
+	@RequestMapping("/json/hm/query")
+	public @ResponseBody Object activityHmQuery(ActivityQueryVO vo) {
+		Page<ActivityHmSignView> page = new Page<ActivityHmSignView>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("activityId", vo.getActivityId());
+		paramMap.put("marineName", vo.getMarineName());
+		paramMap.put("activityType", vo.getActivityType());
+		paramMap.put("activityName", vo.getActivityName());
+		paramMap.put("startDate", vo.getStartDate());
+		paramMap.put("endDate", vo.getEndDate());
+		Grid grid = new Grid();
+		page.setParams(paramMap);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<ActivityHmSignView> list = activityHmService.selectListByPage(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
 	}
 }
