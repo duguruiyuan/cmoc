@@ -9,14 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.auth.AppUser;
 import com.xuequ.cmoc.common.Constants;
+import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.service.ISysUserService;
 
 @RequestMapping("auth")
 @Controller
@@ -24,6 +29,8 @@ public class LoginController extends BaseController{
 	
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(LoginController.class);
 	
+	@Autowired
+	private ISysUserService sysUserService;
 	/**
      * 根据用户角色来决定默认的展现页面.
      * @return String
@@ -69,5 +76,18 @@ public class LoginController extends BaseController{
         }                  
         out.flush();         
         out.close();         
-    }         	
+    }
+	
+	@RequestMapping("updatePwd")
+	public @ResponseBody Object updatePwd(@RequestParam("userAccount")String userAccount, 
+			@RequestParam("oldPwd")String oldPwd, 
+			@RequestParam("newPwd")String newPwd) {
+		try {
+			return sysUserService.updatePwd(userAccount, oldPwd, newPwd);
+		} catch (Exception e) {
+			logger.error("--updatePwd, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
 }

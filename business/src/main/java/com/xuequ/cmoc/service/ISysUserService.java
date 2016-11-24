@@ -2,6 +2,7 @@ package com.xuequ.cmoc.service;
 
 import java.util.List;
 
+import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.AddAndUpdateUserVO;
@@ -29,5 +30,7 @@ public interface ISysUserService {
 	 * @return
 	 */
 	public SysUserInfo selectUserInfo(Integer idUser);
+	
+	public RspResult updatePwd(String userAccount, String oldPwd, String newPwd);
 	
 }

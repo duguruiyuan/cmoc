@@ -262,7 +262,7 @@ function changeSonCheck(obj)
 }
 
 function returnBack(){
-	window.location.href = roleQueryUrl;
+	window.location.reload();
 }
 
 //绑定表单验证控件

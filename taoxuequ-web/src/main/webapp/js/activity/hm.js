@@ -23,14 +23,6 @@ function loadData() {
 		striped : true,
 		rownumbers : true,
 		columns : [ [ {
-			field : 'action',
-			title : '操作',
-			align : 'center',
-			formatter : function(value, row, index) {
-				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateMarine(\'{0}\');">编辑</button>', row.id);
-				return str;
-			}
-		}, {
 			field : 'activityId',
 			title : '活动编号',
 			align : "center",

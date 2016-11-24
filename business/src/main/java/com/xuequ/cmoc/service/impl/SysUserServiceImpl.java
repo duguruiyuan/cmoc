@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xuequ.cmoc.common.RspResult;
+import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.dao.SysUserMapper;
 import com.xuequ.cmoc.dao.SysUserRoleRelMapper;
 import com.xuequ.cmoc.model.SysRole;
@@ -56,6 +58,16 @@ public class SysUserServiceImpl implements ISysUserService {
 		List<SysUserRoleRel> relList = sysUserRoleRelMapper.selectListByIdUser(idUser);
 		info.setRelList(relList);
 		return info;
+	}
+
+	@Override
+	public RspResult updatePwd(String userAccount, String oldPwd, String newPwd) {
+		int count = sysUserMapper.selectCount(userAccount, MD5Util.md5(oldPwd));
+		if(count == 0) {
+			return new RspResult(StatusEnum.PWD_ERROR);
+		}
+		count = sysUserMapper.updatePwd(userAccount, MD5Util.md5(newPwd));
+		return new RspResult(StatusEnum.SUCCESS);
 	}
 
 }

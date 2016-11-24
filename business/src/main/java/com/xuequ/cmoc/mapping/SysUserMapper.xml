@@ -42,6 +42,18 @@
     </if>
   </select>
   
+  <select id="selectCount" resultType="java.lang.Integer">
+  	select count(1)
+  	from t_sys_user where VALID_FLAG = 1 and
+  	USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR} and
+  	PASSWORD = #{password,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updatePwd">
+  	update t_sys_user set PASSWORD = #{password,jdbcType=VARCHAR}
+  	where USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR}
+  </update>
+  
   <select id="selectUser" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" />
   	from t_sys_user where VALID_FLAG = 1 and

@@ -18,4 +18,8 @@ public interface SysUserMapper {
     SysUser selectUser(@Param("userAccount")String userAccount, @Param("password")String password);
     
     List<SysUser> selectListByPage(Page page);
+    
+    int selectCount(@Param("userAccount")String userAccount, @Param("password")String password);
+    
+    int updatePwd(@Param("userAccount")String userAccount, @Param("password")String password);
 }

@@ -27,6 +27,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityMarines;
+import com.xuequ.cmoc.model.ActivityTeacher;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
@@ -35,11 +36,13 @@ import com.xuequ.cmoc.service.IActivityFamilyService;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
+import com.xuequ.cmoc.service.IActivityTeacherService;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.view.ActivityFamilyView;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
 import com.xuequ.cmoc.view.ActivityMarinesView;
+import com.xuequ.cmoc.view.ActivityTeacherView;
 import com.xuequ.cmoc.vo.ActivityQueryVO;
 import com.xuequ.cmoc.vo.ActivitySubmitVO;
 
@@ -63,6 +66,8 @@ public class ActivityManageController extends BaseController{
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
 	private IActivityHmService activityHmService;
+	@Autowired
+	private IActivityTeacherService activityTeacherService;
 	
 	/**
 	 * 活动管理页
@@ -88,6 +93,11 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("hm") 
 	public String activityHm() {
 		return "activity/hm";
+	}
+	
+	@RequestMapping("teacher")
+	public String activityTeacher() {
+		return "activity/teacher";
 	}
 	
 	/**
@@ -295,6 +305,26 @@ public class ActivityManageController extends BaseController{
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<ActivityHmSignView> list = activityHmService.selectListByPage(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
+	}
+	
+	@RequestMapping("/json/teacher/query")
+	public @ResponseBody Object activityTeacherQuery(ActivityQueryVO vo) {
+		Page<ActivityTeacherView> page = new Page<ActivityTeacherView>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("activityId", vo.getActivityId());
+		paramMap.put("marineName", vo.getMarineName());
+		paramMap.put("activityType", vo.getActivityType());
+		paramMap.put("activityName", vo.getActivityName());
+		paramMap.put("startDate", vo.getStartDate());
+		paramMap.put("endDate", vo.getEndDate());
+		Grid grid = new Grid();
+		page.setParams(paramMap);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<ActivityTeacherView> list = activityTeacherService.selectListByPage(page);
 		grid.setRows(list);
 		grid.setTotal(page.getTotalRecord());
 		return grid;

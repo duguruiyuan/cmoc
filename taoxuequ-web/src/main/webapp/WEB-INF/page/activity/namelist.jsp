@@ -38,8 +38,8 @@
 									<td colspan="3">
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
-										<button class="btn btn-success" type="button" onclick="addRole()">新增</button>
-									</td>
+<!-- 										<button class="btn btn-success" type="button" onclick="addRole()">新增</button>
+ -->									</td>
 								</tr>
 							</tbody>
 						</table>

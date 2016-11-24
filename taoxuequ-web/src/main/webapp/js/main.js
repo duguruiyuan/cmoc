@@ -12,6 +12,14 @@ $(function(){
 	})
 })
 
+function logout() {
+	$.messager.confirm('系统提示', '确定退出系统吗？', function(r) {
+		if (r) {
+			window.location.href = basePath + "/logout";
+		}
+	});
+}
+
 function addFavorite() {
     try {
         window.external.addFavorite(window.location.href, document.title);
@@ -22,6 +30,74 @@ function addFavorite() {
     		alert("抱歉，由于chrome,safari,opara浏览器还未支持自动收藏,请使用Ctrl+D进行添加!");
     	}
     }
+}
+
+function validator() {
+	$("#updatePwdForm").validate({
+		errorPlacement : function(error, element) {
+			$(element).closest("form").find("#" + element.attr("id") + "Tip").append(error);
+		},
+		errorElement : "span",
+		rules : {
+			userAccount : {
+				required : true,
+				maxlength : 40,
+			},
+			oldPwd : {
+				required : true,
+				maxlength : 50
+			},
+			newPwd : {
+				required : true,
+				maxlength : 50
+			}
+		},
+		submitHandler : function(form) {
+				$.ajax({
+					url : basePath + "/auth/updatePwd",
+					type : 'POST',
+					error : function() {
+						$.messager.progress('close');
+						$.messager.alert('系统提示', '操作异常', 'error');
+					},
+					data : $('#updatePwdForm').serialize(),
+					success : function(data) {
+						$.messager.progress('close');
+						if (data.code == '000') {
+							$.messager.alert('系统提示', '密码修改成功', 'info');
+							closeFormPanel("updatePwdForm");
+						} else {
+							$.messager.alert('系统提示', data.msg, 'warning');
+						}
+					}
+				});
+		}
+	});
+}
+
+var updatePwdForm = function(){
+	$('#updatePwdDialog').dialog({
+		title : "修改密码",
+		modal : true,
+		width : 500,
+		top : 100,
+		draggable : true,
+		resizable : true,
+		buttons : '#btns',
+		onClose : function() {
+			cleanFormPanel("updatePwdForm");
+		}
+	}).show();
+	validator();
+}
+
+function closeFormPanel(formId){
+	$("#" + formId + " #oldPwd").val('');
+	$("#" + formId + " #newPwd").val('');
+	$(".valid").removeClass("valid");
+	$(".error").removeClass("error");
+	$("label").find("span").remove();
+	$('#updatePwdDialog').dialog("close");
 }
 
 //四舍五入到分

@@ -13,7 +13,7 @@
 		<div id="right">
 			<jsp:include page="/WEB-INF/page/common/localinfo.jsp" />
 			<div>
-			  <img src="<%=path %>/image/homeBG.jpg" style="margin-top:80px;" width="100%">
+			  <img style="width: 800px;height: 473px;" src="<%=path %>/images/m-taoxuequ.jpg">
 			</div>
 		</div>
 	</div>

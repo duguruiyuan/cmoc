@@ -27,7 +27,6 @@ String basePath = request.getScheme() + "://"
 	 <div id="loginWrap">
 	 	<div id="loginLogo"></div>
 	 	<div id="loginFormWrap">
-	 		<div id="loginAd"></div>
 	 		<form id="loginForm" method="POST">
 	 			<div id="errorMessage"></div>
 	 			<div class="loginLine pr clearfix">
@@ -44,7 +43,7 @@ String basePath = request.getScheme() + "://"
 	 	</div>
 	 	<div class="footer">
 	 		<div class="copyright">
-	            <p class="cp_txt">版权所有 © 中国平安保险（集团）股份有限公司 未经许可不得复制、转载或摘编，违者必究!<br>Copyright © PING AN INSURANCE (GROUP) COMPANY OF CHINA ,LTD. All Rights Reserved</p>
+	            <p class="cp_txt">版权所有 © 陶学趣 未经许可不得复制、转载或摘编，违者必究!<br></p>
 	        </div>
 	 	</div>
 	 </div>

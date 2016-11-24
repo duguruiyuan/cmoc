@@ -50,7 +50,7 @@
   	i.activity_name, i.activity_num, i.activity_type, h.hm_name, h.hm_mobile
 	FROM t_activity_hm_sign s
 	INNER JOIN t_hollow_man_info h ON h.id = s.hm_id
-	INNER JOIN t_activity_marines m ON s.activity_id = m.activity_id
+	INNER JOIN t_activity_marines m ON s.marine_id = m.id
 	INNER JOIN t_activity_info i ON i.id = m.activity_id
 	where s.is_delete = 'N'
 	<if test="params.activityId != null">
