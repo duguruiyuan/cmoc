@@ -40,6 +40,7 @@ body{
 .breadcrumb {
     font-size: 15px;
     height: 35px;
+    background: rgba(0, 0, 0, 0) url("../images/left11.png") repeat scroll 0 0;
 }
 
 /* 表单 */

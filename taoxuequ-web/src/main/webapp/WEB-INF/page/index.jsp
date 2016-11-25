@@ -17,5 +17,6 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 </body>
 </html>

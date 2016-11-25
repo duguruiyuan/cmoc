@@ -93,6 +93,7 @@
 			</form>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/marines.js"></script>
 </body>
 </html>

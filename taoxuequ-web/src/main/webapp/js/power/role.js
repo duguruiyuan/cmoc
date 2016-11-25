@@ -5,6 +5,8 @@ var queryRoleInfoUrl = basePath + "/power/role/json/queryRoleInfo";
 
 var dataGrid;
 $(function() {
+	$("#content_div").replaceWith($('#body_div'));
+	$("#body_div").show();
 	loadData();
 });
 
@@ -122,6 +124,7 @@ function submitAssetSorting(ids){
 function addRole() {
 	$("#content_div").replaceWith($('#role_add'));
 	$("#role_add").show();
+	$("#body_div").hide();
 	loadItems("");
 }
 
@@ -144,6 +147,7 @@ function updateRole(idRole) {
 			});
 			$("#content_div").replaceWith($('#role_add'));
 			$("#role_add").show();
+			$("#body_div").hide();
 			loadItems(menuIds);
  		}
  	});
@@ -282,7 +286,6 @@ function validator() {
 			}
 		},
 		submitHandler : function(form) {
-//				getMenuIds();
 				$.messager.progress({
 					title : '系统提示',
 					msg : '处理中，请稍候...'
@@ -299,9 +302,11 @@ function validator() {
 					success : function(data) {
 						$.messager.progress('close');
 						if (data.code == '000') {
-							$.messager.alert('系统提示', $("#idRole").val() == '' ? '角色新增成功' : '角色修改成功', 'info');
 							cleanFormPanel("addForm");
-							loadData();
+							$.messager.alert('系统提示', $("#idRole").val() == '' ? '角色新增成功' : '角色修改成功', 'info');
+							$("#content_div").replaceWith($('#body_div'));
+							$("#body_div").show();
+							$("#role_add").hide();
 						} else {
 							$.messager.alert('系统提示', $("#idRole").val() == '' ? '角色新增失败' : '角色修改失败', 'warning');
 						}

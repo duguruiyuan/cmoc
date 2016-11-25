@@ -1,10 +1,12 @@
 package com.xuequ.cmoc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.model.HollowManInfo;
+import com.xuequ.cmoc.service.IActivityHmService;
 
 /**
  * 透明人管理
@@ -15,6 +17,9 @@ import com.xuequ.cmoc.model.HollowManInfo;
 @RequestMapping("hm")
 @Controller
 public class HollowManManageController extends BaseController{
+	
+	@Autowired
+	private IActivityHmService activityHmService;
 
 	/**
 	 * 透明人查询页

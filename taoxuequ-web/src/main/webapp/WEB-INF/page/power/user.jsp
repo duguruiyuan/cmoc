@@ -101,6 +101,7 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/power/user.js"></script>
 </body>
 </html>

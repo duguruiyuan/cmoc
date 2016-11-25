@@ -12,32 +12,34 @@
 		<div id="right">
 		    <jsp:include page="/WEB-INF/page/common/localinfo.jsp" />
 			<div class="col-md-12" id="content_div">
-				<div>
-					<!--begin 搜索栏 -->
-					<div class="span12" id="body_div">
-					  <form id="searchForm" class="form-search" method="post">
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<td>角色名称： <input class="form-control1" type="text" name="roleName" id="roleName"/></td>
-								 </tr>
-								 <tr>
-									<td>
-										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
-										<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
-										<button class="btn btn-success" type="button" onclick="addRole()">新增</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					  </form>
-					</div>
-					<!--end 搜索栏  -->
+				<div></div>
+			</div>
+			<div class="col-md-12" id="body_div" style="display: none;">
+				<!--begin 搜索栏 -->
+				<div class="span12">
+				  <form id="searchForm" class="form-search" method="post">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td>角色名称： <input class="form-control1" type="text" name="roleName" id="roleName"/></td>
+							 </tr>
+							 <tr>
+								<td>
+									<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
+									<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
+									<button class="btn btn-success" type="button" onclick="addRole()">新增</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				  </form>
 				</div>
+				<!--end 搜索栏  -->
 				<div style="height: 330px;">
 					<table id="dataGrid"></table>
 				</div>
 			</div>
+			
 			<div class="col-md-12" style="display: none;" id="role_add">
 			  <form id="addForm" novalidate="novalidate">
 				<input type="hidden" id="idRole" name="idRole">
@@ -76,6 +78,7 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/power/role.js"></script>
 </body>
 </html>

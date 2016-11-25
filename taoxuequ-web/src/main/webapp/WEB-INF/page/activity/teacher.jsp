@@ -52,6 +52,7 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/teacher.js"></script>
 </body>
 </html>

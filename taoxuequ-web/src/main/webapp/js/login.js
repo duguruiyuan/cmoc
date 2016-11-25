@@ -1,18 +1,11 @@
 $(document).ready(function(){
     $('#loginForm').bind('submit', function(){
     	if($("#j_username").val() == "") {
-    		$("#errorMessage").show();
-			$("#errorMessage").html("用户名不能为空，请输入用户名");
+			$("#msgShow").html("用户名不能为空，请输入用户名");
 			return false;
     	}
     	if($("#j_password").val() == "") {
-    		$("#errorMessage").show();
-			$("#errorMessage").html("密码不能为空，请输入密码");
-			return false;
-    	}
-    	if($("#veryCode").val() == "") {
-    		$("#errorMessage").show();
-			$("#errorMessage").html("验证码不能为空，请输入验证码");
+			$("#msgShow").html("密码不能为空，请输入密码");
 			return false;
     	}
     	var dataPara = getFormJson(this);
@@ -22,16 +15,14 @@ $(document).ready(function(){
     		data: dataPara,
     		success: function(data) {
     			if (data != "success") {
-    				$("#errorMessage").show();
-    				$("#errorMessage").html(data);
+    				$("#msgShow").html(data);
     				clear();
-    				changeVerifyCode();
     			} else {
     				window.location.href = getFullURL("/auth/main");
     			}
     		},
     		error: function(data) {
-    			$("#errorMessage").html("系统异常,请联系管理员");
+    			$("#msgShow").html("系统异常,请联系管理员");
     		}
     	});
     	return false;
@@ -63,26 +54,6 @@ function clear(){
 	$("#veryCode").val("");
 }
 
-function login(){
-	$("#info").html("");
-	var username=$("#j_username").val();
-	if(username==""){ 
-		showMessage("请输入用户名");  
-		return ; 
-	}		
-	var password=$("#j_password").val();
-	if(password==""){ 
-		showMessage("请输入密码");  
-		return ; 
-	}
-	var code = $("#veryCode").val();
-	if(code==""){ 
-		showMessage("请输入验证码");  
-		return ; 
-	}	
-	isRightCode(username,password);
-}
-
 function isRightCode(username,password){     
     var code = $("#veryCode").val();           
     $.ajax({     
@@ -100,9 +71,4 @@ function isRightCode(username,password){
         }     
     });     
 }     
-
-function showMessage(message){     
- //   $("#info").html("<font color='red'>"+data+"</font>");  
-	diaAlert("warning",message);    
-}  
 

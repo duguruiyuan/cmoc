@@ -314,11 +314,11 @@ function validator(data) {
 					success : function(data) {
 						$.messager.progress('close');
 						if (data.code == '000') {
-							$.messager.alert('系统提示', $("#idUser").val() == '' ? '角色新增成功' : '角色修改成功', 'info');
+							$.messager.alert('系统提示', $("#idUser").val() == '' ? '用户权限新增成功' : '用户权限修改成功', 'info');
 							cancelHandle("addForm");
 							loadData();
 						} else {
-							$.messager.alert('系统提示', $("#idRole").val() == '' ? '角色新增失败' : '角色修改失败', 'warning');
+							$.messager.alert('系统提示', $("#idRole").val() == '' ? '用户权限新增失败' : '用户权限修改失败', 'warning');
 						}
 					}
 				});

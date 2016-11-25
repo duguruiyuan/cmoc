@@ -152,6 +152,7 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/activity.index.js"></script>
 </body>
 </html>

@@ -109,6 +109,7 @@
 			</form>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/namelist.js"></script>
 </body>
 </html>
