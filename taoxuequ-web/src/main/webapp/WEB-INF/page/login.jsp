@@ -17,14 +17,6 @@ String basePath = request.getScheme() + "://"
 		<link href="<%=basePath %>/animated_favicon.gif" rel="icon" type="image/gif" />  
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/login.css"/>
-		<script>
-	        document.addEventListener('DOMContentLoaded', function () {
-	            particleground(document.getElementById('particles'), {
-	                dotColor: '#fff',
-	                lineColor: '#fff'
-	            });
-	        }, false);
-	    </script>
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp"></jsp:include>
     <body style="background: #5cb85c;">
@@ -67,6 +59,17 @@ String basePath = request.getScheme() + "://"
  	</div>
 	</body>	      
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
+	<script>
+			$(document).ready(function() {
+			  $('#particles').particleground({
+			    dotColor: '#fff',
+			    lineColor: '#fff'
+			  });
+			  $('.intro').css({
+			    'margin-top': -($('.intro').height() / 2)
+			  });
+			});
+	    </script>
 	<script type="text/javascript">
 		var CONTEXT_PATH = '<%=basePath %>';
 		var getFullURL = function(subUrl){
