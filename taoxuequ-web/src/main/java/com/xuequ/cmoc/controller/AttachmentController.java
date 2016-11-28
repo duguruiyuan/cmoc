@@ -19,6 +19,7 @@ import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.ImgTypeEnum;
+import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityInfo;
@@ -43,8 +44,6 @@ public class AttachmentController {
 	private IActivityFamilyService activityFamilyService;
 	@Autowired
 	private IActivityService activityService;
-	
-	private String activityroot = PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_attachment.activity");
 	
 	@RequestMapping("activity/upload/img")
 	@ResponseBody Object uploadImg(AttachmentUploadVO vo, 
@@ -112,7 +111,7 @@ public class AttachmentController {
 	}
 	
 	public String writeFile(String path, MultipartFile buildInfo) {
-		String relativeAttachmentPath = activityroot + Const.SEPARATOR + path;
+		String relativeAttachmentPath = Const.rootPath + ResourcePathEnum.IMGE + Const.SEPARATOR + path;
         createDir(relativeAttachmentPath);
         //数据库保存的文件路径
         String realFileName = UUID.randomUUID().toString();

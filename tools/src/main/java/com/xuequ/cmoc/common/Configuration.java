@@ -36,7 +36,7 @@ public class Configuration implements Serializable {
 			config.setAppName(prop.getString("appName"));
 			config.setVersion(prop.getString("version"));
 			prop.load("config.properties");
-			config.setImgUrl(prop.getString(config.getEnv()+"_"+prop.getString("imgUrl")));
+			config.setImgUrl(prop.getString(config.getEnv() + "_visited.url"));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}

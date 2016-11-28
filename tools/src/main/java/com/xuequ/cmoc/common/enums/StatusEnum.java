@@ -16,6 +16,8 @@ public enum StatusEnum {
 	ACTIVITY_NOT_EXISTS("1006","活动不存在"),
 	ACTIVITY_INVALID("1007","活动已失效"),
 	PWD_ERROR("1008", "账号或密码错误！"),
+	ACCESS_TOKEN_FAIL("获取access_token失败","001"),
+	JSAPI_TICKET_FAIL("获取jsapi_ticket失败","002"),
 	FAIL("9999", "失败");
 	
 	private String code;

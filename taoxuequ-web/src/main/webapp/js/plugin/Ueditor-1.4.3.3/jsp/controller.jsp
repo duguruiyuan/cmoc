@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="com.baidu.ueditor.ActionEnter"
+	import="com.xuequ.cmoc.controller.UeditorUploadAction"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%
@@ -8,7 +8,7 @@
 	response.setHeader("Content-Type" , "text/html");
 	
 	String rootPath = application.getRealPath( "/" );
-	
-	out.write( new ActionEnter( request, rootPath ).exec() );
+	String json = new UeditorUploadAction( request, rootPath ).exec();
+	out.write( json );
 	
 %>
