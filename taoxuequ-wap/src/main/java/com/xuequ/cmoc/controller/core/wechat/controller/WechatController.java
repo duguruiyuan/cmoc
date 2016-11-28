@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.annotations.ResultMap;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +22,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.controller.core.wechat.utils.SHA1;
+import com.xuequ.cmoc.controller.core.wechat.utils.SignUtil;
 import com.xuequ.cmoc.controller.core.wechat.utils.WechatModel;
 import com.xuequ.cmoc.controller.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.utils.HttpClientUtils;
@@ -79,15 +79,7 @@ public class WechatController {
         String timestamp = request.getParameter("timestamp");
         // 随机数
         String nonce = request.getParameter("nonce");
-        logger.info(">>=signature:" + signature + ">echostr:" + echostr + ">timestamp:" + timestamp + ">nonce:" + nonce);
-        String[] str = {WechatConfigure.getInstance().getToken() , timestamp, nonce };
-        Arrays.sort(str); // 字典序排序
-        String bigStr = str[0] + str[1] + str[2];
-        // SHA1加密
-        String digest = new SHA1().getDigestOfString(bigStr.getBytes()).toLowerCase();
-        logger.info(">>=digest" + digest);
-        // 确认请求来至微信
-        if (digest.equals(signature)) {
+        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
         	response.getWriter().print(echostr);
         }
 	}

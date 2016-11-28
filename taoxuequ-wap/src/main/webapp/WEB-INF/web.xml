@@ -36,6 +36,13 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>CoreServlet</display-name>
+		<servlet-name>CoreServlet</servlet-name>
+		<servlet-class>com.xuequ.cmoc.servlet.CoreServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>web</servlet-name>
 		<url-pattern>/</url-pattern>
@@ -45,12 +52,14 @@
 	</session-config>
 	
 	<servlet-mapping>
-            <servlet-name>default</servlet-name>
             <url-pattern>*.js</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-            <servlet-name>default</servlet-name>
             <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>CoreServlet</servlet-name>
+    	<url-pattern>/CoreServlet</url-pattern>
     </servlet-mapping>
 	
 	<!-- 字符编码 begin-->
