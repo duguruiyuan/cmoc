@@ -1,10 +1,11 @@
-package com.xuequ.cmoc.controller.core.wechat.message;
+package com.xuequ.cmoc.core.wechat.message;
 
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-public class ArticleItem implements Serializable {
+@XStreamAlias("item")
+public class ArticleItem extends XStreamSub implements Serializable {
 
 	private static final long serialVersionUID = -6729416960196982499L;
 	

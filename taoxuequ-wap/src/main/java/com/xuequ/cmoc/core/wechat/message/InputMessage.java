@@ -1,4 +1,4 @@
-package com.xuequ.cmoc.controller.core.wechat.message;
+package com.xuequ.cmoc.core.wechat.message;
 
 import java.io.Serializable;
 
@@ -42,20 +42,20 @@ public class InputMessage implements Serializable {
     @XStreamAlias("Format")  
     private String Format; 
     //语音识别结果，使用UTF8编码
-    @XStreamAlias("Recongnition")
-    private String Recongnition;
+    @XStreamAlias("Recognition")
+    private String Recognition;
     
     //视频消息
     //视频消息缩略图的媒体id
     @XStreamAlias("ThumbMediaId")
-    private Long ThumbMediaId;
+    private String ThumbMediaId;
     
     // 位置消息  
     //地理位置维度
-    @XStreamAlias("LocationX")  
+    @XStreamAlias("Location_X")  
     private String LocationX;  
     //地理位置经度
-    @XStreamAlias("LocationY")  
+    @XStreamAlias("Location_Y")  
     private String LocationY;  
     //地图缩放大小
     @XStreamAlias("Scale")  
@@ -148,16 +148,17 @@ public class InputMessage implements Serializable {
 	public void setFormat(String format) {
 		Format = format;
 	}
-	public String getRecongnition() {
-		return Recongnition;
+	
+	public String getRecognition() {
+		return Recognition;
 	}
-	public void setRecongnition(String recongnition) {
-		Recongnition = recongnition;
+	public void setRecognition(String recognition) {
+		Recognition = recognition;
 	}
-	public Long getThumbMediaId() {
+	public String getThumbMediaId() {
 		return ThumbMediaId;
 	}
-	public void setThumbMediaId(Long thumbMediaId) {
+	public void setThumbMediaId(String thumbMediaId) {
 		ThumbMediaId = thumbMediaId;
 	}
 	public String getLocationX() {

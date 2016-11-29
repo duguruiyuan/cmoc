@@ -4,3 +4,4 @@ VALUES(2020,'站内文章编辑','/content/article/edit','M','content_article_ed
 
 http://blog.csdn.net/morning99/article/details/43865471
 http://www.cnblogs.com/prefect/p/5703333.html
+http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index

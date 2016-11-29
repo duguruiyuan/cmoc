@@ -1,10 +1,10 @@
-package com.xuequ.cmoc.controller.core.wechat.message;
+package com.xuequ.cmoc.core.wechat.message;
 
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-public class MusicMessage implements Serializable {
+public class MusicMessage extends XStreamSub implements Serializable {
 
 	private static final long serialVersionUID = 1052866590732472412L;
 	
@@ -25,7 +25,8 @@ public class MusicMessage implements Serializable {
 	private String HQMusicUrl;
 	
 	@XStreamAlias("ThumbMediaId")
-	private Long ThumbMediaId;
+	@XStreamCDATA
+	private String ThumbMediaId;
 
 	public String getTitle() {
 		return Title;
@@ -59,11 +60,11 @@ public class MusicMessage implements Serializable {
 		HQMusicUrl = hQMusicUrl;
 	}
 
-	public Long getThumbMediaId() {
+	public String getThumbMediaId() {
 		return ThumbMediaId;
 	}
 
-	public void setThumbMediaId(Long thumbMediaId) {
+	public void setThumbMediaId(String thumbMediaId) {
 		ThumbMediaId = thumbMediaId;
 	}
 	

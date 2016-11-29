@@ -1,4 +1,4 @@
-package com.xuequ.cmoc.controller.core.wechat.utils;
+package com.xuequ.cmoc.core.wechat.utils;
 
 import java.io.Writer;
 import java.lang.reflect.Field;
@@ -9,7 +9,9 @@ import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
-import com.xuequ.cmoc.controller.core.wechat.message.XStreamCDATA;
+import com.xuequ.cmoc.core.wechat.message.ArticleItem;
+import com.xuequ.cmoc.core.wechat.message.XStreamCDATA;
+import com.xuequ.cmoc.core.wechat.message.XStreamSub;
 
 public class SerializeXmlUtil {
 
@@ -19,14 +21,22 @@ public class SerializeXmlUtil {
             public HierarchicalStreamWriter createWriter(Writer out) {  
                 return new PrettyPrintWriter(out) {  
                     boolean cdata = false;  
-                    Class<?> targetClass = null;  
+                    Class<?> targetClass = null;
+                    Class<?> subTargetClass = null;
   
-                    @Override  
+					@Override  
                     public void startNode(String name, @SuppressWarnings("rawtypes") Class clazz) {  
                         super.startNode(name, clazz);  
                         // 业务处理，对于用XStreamCDATA标记的Field，需要加上CDATA标签  
                         if (!name.equals("xml")) {  
-                            cdata = needCDATA(targetClass, name);  
+                        	if(XStreamSub.class.isAssignableFrom(clazz)) {
+                        		subTargetClass = clazz;
+                        	}
+                        	if(isExistsField(subTargetClass, name)) {
+                        		cdata = needCDATA(subTargetClass, name);
+                        	}else {
+                        		cdata = needCDATA(targetClass, name);
+							}
                         } else {  
                             targetClass = clazz;  
                         }  
@@ -46,6 +56,17 @@ public class SerializeXmlUtil {
             }  
         });  
     }  
+	
+	private static boolean isExistsField(Class<?> clazz, String fieldAlias) {
+		if(clazz == null) return false;
+		Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {  
+        	if(fieldAlias.equals(field.getName())) {
+        		return true;
+        	}
+        }
+        return false;
+	}
   
     private static boolean needCDATA(Class<?> targetClass, String fieldAlias) {  
         boolean cdata = false;  
@@ -68,8 +89,8 @@ public class SerializeXmlUtil {
         if ("MediaId".equals(fieldAlias)) {  
             return true; // 特例添加 morning99  
         }  
-        // scan fields  
-        Field[] fields = clazz.getDeclaredFields();  
+        // scan fields
+        Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {  
             // 1. exists XStreamCDATA  
             if (field.getAnnotation(XStreamCDATA.class) != null) {  
@@ -83,7 +104,7 @@ public class SerializeXmlUtil {
                         return true;  
                 }  
             }  
-        }  
+        }
         return false;  
     }  
     

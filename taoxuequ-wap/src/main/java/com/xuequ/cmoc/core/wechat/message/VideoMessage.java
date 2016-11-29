@@ -1,48 +1,50 @@
-package com.xuequ.cmoc.controller.core.wechat.message;
+package com.xuequ.cmoc.core.wechat.message;
 
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-public class VideoMessage implements Serializable {
+@XStreamAlias("Video")
+public class VideoMessage extends XStreamSub implements Serializable {
 
 	private static final long serialVersionUID = -2830091182614877344L;
 
 	@XStreamAlias("MediaId")
 	@XStreamCDATA
-	private Long MediaId;
+	private String MediaId;
 	
-	@XStreamAlias("Title")
+	@XStreamAlias("title")
 	@XStreamCDATA
-	private String Title;
+	private String title;
 	
-	@XStreamAlias("Description")
+	@XStreamAlias("description")
 	@XStreamCDATA
-	private String Description;
+	private String description;
 
-	public Long getMediaId() {
+	public String getMediaId() {
 		return MediaId;
 	}
 
-	public void setMediaId(Long mediaId) {
+	public void setMediaId(String mediaId) {
 		MediaId = mediaId;
 	}
 
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
+
 	
 	
 }

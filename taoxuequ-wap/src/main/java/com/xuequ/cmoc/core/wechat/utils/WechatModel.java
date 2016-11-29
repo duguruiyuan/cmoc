@@ -1,4 +1,4 @@
-package com.xuequ.cmoc.controller.core.wechat.utils;
+package com.xuequ.cmoc.core.wechat.utils;
 
 import java.io.Serializable;
 
