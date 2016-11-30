@@ -10,62 +10,62 @@ public class MusicMessage extends XStreamSub implements Serializable {
 	
 	@XStreamAlias("Title")
 	@XStreamCDATA
-	private String Title;
+	private String title;
 	
 	@XStreamAlias("Description")
 	@XStreamCDATA
-	private String Description;
+	private String description;
 	
 	@XStreamAlias("MusicUrl")
 	@XStreamCDATA
-	private String MusicUrl;
+	private String musicUrl;
 	
 	@XStreamAlias("HQMusicUrl")
 	@XStreamCDATA
-	private String HQMusicUrl;
+	private String hqMusicUrl;
 	
 	@XStreamAlias("ThumbMediaId")
 	@XStreamCDATA
-	private String ThumbMediaId;
+	private String thumbMediaId;
 
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 
 	public String getMusicUrl() {
-		return MusicUrl;
+		return musicUrl;
 	}
 
 	public void setMusicUrl(String musicUrl) {
-		MusicUrl = musicUrl;
+		this.musicUrl = musicUrl;
 	}
 
-	public String getHQMusicUrl() {
-		return HQMusicUrl;
+	public String getHqMusicUrl() {
+		return hqMusicUrl;
 	}
 
-	public void setHQMusicUrl(String hQMusicUrl) {
-		HQMusicUrl = hQMusicUrl;
+	public void setHqMusicUrl(String hqMusicUrl) {
+		this.hqMusicUrl = hqMusicUrl;
 	}
 
 	public String getThumbMediaId() {
-		return ThumbMediaId;
+		return thumbMediaId;
 	}
 
 	public void setThumbMediaId(String thumbMediaId) {
-		ThumbMediaId = thumbMediaId;
+		this.thumbMediaId = thumbMediaId;
 	}
 	
 }

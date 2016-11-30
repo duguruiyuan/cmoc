@@ -11,50 +11,51 @@ public class ArticleItem extends XStreamSub implements Serializable {
 	
 	@XStreamAlias("Title")
 	@XStreamCDATA
-	private String Title;
+	private String title;
 	
 	@XStreamAlias("Description")
 	@XStreamCDATA
-	private String Description;
+	private String description;
 	
 	@XStreamAlias("PicUrl")
 	@XStreamCDATA
-	private String PicUrl;
+	private String picUrl;
 	
 	@XStreamAlias("Url")
 	@XStreamCDATA
-	private String Url;
+	private String url;
 
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 
 	public String getPicUrl() {
-		return PicUrl;
+		return picUrl;
 	}
 
 	public void setPicUrl(String picUrl) {
-		PicUrl = picUrl;
+		this.picUrl = picUrl;
 	}
 
 	public String getUrl() {
-		return Url;
+		return url;
 	}
 
 	public void setUrl(String url) {
-		Url = url;
+		this.url = url;
 	}
+
 	
 }
