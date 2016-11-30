@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +40,37 @@ import com.xuequ.cmoc.utils.TextUtil;
 @RequestMapping("wechat")
 @Controller
 public class WechatController {
-	Logger logger = Logger.getLogger(WechatController.class);
+	
+	private static Logger logger = LoggerFactory.getLogger(WechatController.class);
+	
+	/**
+	 * 微信令牌校验，用户消息接收
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/token")
+	public void token(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+		boolean isGet = request.getMethod().toLowerCase().equals("get");
+		if(isGet) {
+			// 微信加密签名
+	        String signature = request.getParameter("signature");
+	        // 随机字符串
+	        String echostr = request.getParameter("echostr");
+	        // 时间戳
+	        String timestamp = request.getParameter("timestamp");
+	        // 随机数
+	        String nonce = request.getParameter("nonce");
+	        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
+	        	response.getWriter().print(echostr);
+	        }
+		}else {
+			acceptMessage(request, response);
+		}
+		
+	}
 	
 	@RequestMapping("openid")
 	public @ResponseBody Object getOpenid(HttpServletRequest request) {
@@ -76,31 +107,6 @@ public class WechatController {
 		return "wechat";
 	}
 
-	@RequestMapping(value = "/token")
-	public void token(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-		System.out.println("开始--");
-		System.out.println("请求方法--" + request.getMethod());
-		boolean isGet = request.getMethod().toLowerCase().equals("get");
-		System.out.println("请求结果--" + isGet);
-		if(isGet) {
-			// 微信加密签名
-	        String signature = request.getParameter("signature");
-	        // 随机字符串
-	        String echostr = request.getParameter("echostr");
-	        // 时间戳
-	        String timestamp = request.getParameter("timestamp");
-	        // 随机数
-	        String nonce = request.getParameter("nonce");
-	        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
-	        	response.getWriter().print(echostr);
-	        }
-		}else {
-			acceptMessage(request, response);
-		}
-		
-	}
-	
 	@RequestMapping("/tokens")
 	public @ResponseBody Object accessToken() {
 		WechatModel model = WechatUtils.getWechatModel();
@@ -139,7 +145,7 @@ public class WechatController {
     }
 	
 	public static void respMessage(String xmlMsg, HttpServletResponse response) throws IOException{
-		System.out.println("微信params={}" + xmlMsg);
+		logger.info("--wechat reqMessage, params={}", xmlMsg);
 		// 将POST流转换为XStream对象  
         XStream xs = SerializeXmlUtil.createXstream();  
         xs.processAnnotations(InputMessage.class);  
@@ -200,13 +206,19 @@ public class WechatController {
 		}else {
         	// 语音消息
     		if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
+    			List<ArticleItem> list = new ArrayList<>();
     			ArticleItem item = new ArticleItem();
     	        item.setTitle("战队列表");
     	        item.setDescription("雄赳赳，气昂昂！");
     	        item.setPicUrl("http://mmbiz.qpic.cn/mmbiz_jpg/Fs56wbhf57MaCGuoRp1JJf0d8PtpMiaD1WiclzvfAvP5icoYXFzx58cSBVwCdR7kntwoLKNHV21dAiaOnpRIqjJYTQ/0");
     	        item.setUrl("http://m.xue110.top/live");
-    	        List<ArticleItem> list = new ArrayList<>();
     	        list.add(item);
+    	        ArticleItem item1 = new ArticleItem();
+    	        item1.setTitle("点击我们");
+    	        item1.setDescription("雄赳赳，气昂昂，支持我们！");
+    	        item1.setPicUrl("http://www.xue110.top/images/taoxuequ.jpg");
+    	        item1.setUrl("http://m.xue110.top/live");
+    	        list.add(item1);
     	        outputMsg.setArticles(list);
     	        outputMsg.setArticleCount(list.size());
     	        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);

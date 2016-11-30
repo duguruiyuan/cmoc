@@ -24,6 +24,10 @@ public class WechatConfigure implements Serializable {
 	
 	private String userFefreshToken;
 	
+	private String oauth2Base;
+	
+	private String oauth2Userinfo;
+	
 	private static WechatConfigure configure;
 	
 	public synchronized static WechatConfigure getInstance() {
@@ -47,6 +51,8 @@ public class WechatConfigure implements Serializable {
 			configure.setJsapiTicket(prop.getString("jsapi_ticket"));
 			configure.setUserAccessToken(prop.getString("user_access_token"));
 			configure.setUserFefreshToken(prop.getString("user_refresh_token"));
+			configure.setOauth2Base(prop.getString("oauth2_base"));
+			configure.setOauth2Userinfo(prop.getString("oauth2_userinfo"));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -114,6 +120,22 @@ public class WechatConfigure implements Serializable {
 
 	public void setUserFefreshToken(String userFefreshToken) {
 		this.userFefreshToken = userFefreshToken;
+	}
+
+	public String getOauth2Base() {
+		return oauth2Base;
+	}
+
+	public void setOauth2Base(String oauth2Base) {
+		this.oauth2Base = oauth2Base;
+	}
+
+	public String getOauth2Userinfo() {
+		return oauth2Userinfo;
+	}
+
+	public void setOauth2Userinfo(String oauth2Userinfo) {
+		this.oauth2Userinfo = oauth2Userinfo;
 	}
 
 	public static WechatConfigure getConfigure() {
