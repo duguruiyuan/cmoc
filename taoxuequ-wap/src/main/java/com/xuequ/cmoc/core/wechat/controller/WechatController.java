@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.thoughtworks.xstream.XStream;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.WechatConfigure;
@@ -72,7 +73,7 @@ public class WechatController {
 		
 	}
 	
-	@RequestMapping("openid")
+	@RequestMapping("oauth/access")
 	public @ResponseBody Object getOpenid(HttpServletRequest request) {
 		try{
 			String code = request.getParameter("code");
@@ -86,7 +87,7 @@ public class WechatController {
 		return null;
 	}
 	
-	@RequestMapping("refrese/openid")
+	@RequestMapping("oauth/refrese")
 	public @ResponseBody Object refreseOpenid(HttpServletRequest request) {
 		try{
 			String refresh_token = request.getParameter("refresh_token");

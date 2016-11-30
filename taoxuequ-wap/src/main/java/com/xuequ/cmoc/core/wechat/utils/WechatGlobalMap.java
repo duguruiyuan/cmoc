@@ -12,7 +12,7 @@ public final class WechatGlobalMap {
 	}
 	
 	public static void put(String key, String value, long mills) {
-		WechatGlobalValue newValue = new WechatGlobalValue(key, value, (mills - 120) * 1000 );
+		WechatGlobalValue newValue = new WechatGlobalValue(key, value, (mills - 600) * 1000 );
 		caches.put(key, newValue);
 	}
 	
