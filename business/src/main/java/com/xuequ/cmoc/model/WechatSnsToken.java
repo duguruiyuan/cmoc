@@ -2,6 +2,8 @@ package com.xuequ.cmoc.model;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class WechatSnsToken implements Serializable{
 
 	private static final long serialVersionUID = -1787610152113546479L;
@@ -26,6 +28,7 @@ public class WechatSnsToken implements Serializable{
 	 * 用户授权的作用域，使用逗号（,）分隔
 	 */
 	private String scope;
+	
 	public String getAccess_token() {
 		return access_token;
 	}
@@ -55,6 +58,10 @@ public class WechatSnsToken implements Serializable{
 	}
 	public void setScope(String scope) {
 		this.scope = scope;
+	}
+	@Override
+	public String toString() {
+		return JSONObject.toJSONString(this);
 	}
 	
 	

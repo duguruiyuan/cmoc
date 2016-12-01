@@ -16,9 +16,10 @@
 <body>
 	<h1>欢迎进入透明人注册</h1>
 	<img src="${userInfo.headimgurl }"/>
-	<script src="" type="text/javascript"></script>
+	
 	<script type="text/javascript">
-		setAccessToken("${snsToken}");
+		var snsToken = ${snsToken};
+		setAccessToken(snsToken);
 	</script>
 </body>
 </html>

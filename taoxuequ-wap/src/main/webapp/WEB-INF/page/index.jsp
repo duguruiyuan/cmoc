@@ -169,6 +169,7 @@
 		</div>
 		
 		<script type="text/javascript">
+		window.localStorage.setItem("snsToken",null);
 	mui.init();
 	mui('.footer').on('tap','a',function(){document.location.href=this.href;});
 </script>

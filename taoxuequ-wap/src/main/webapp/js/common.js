@@ -18,22 +18,26 @@ function addDate(date,day){
 }
 
 function getAccessToken(wechat_redirect) {
-	var snsTokenExpire = window.localStorage.getItem("snsTokenExpire");
-	var snsToken = window.localStorage.getItem("snsToken");
+	var snsTokenExpire = window.localStorage.getItem("snsTokenExpire");	
+	var snsToken = JSON.parse(window.localStorage.getItem("snsToken"));
 	var currUrl = window.location.href;
-	if(snsToken && snsTokenExpire) {
+	var start = true;
+	if(snsToken != null && snsTokenExpire != null) {
 		if(snsTokenExpire > new Date().getTime()) {
+			start = false;
 			window.location.href = currUrl + "?type=scope&token=" + snsToken.refresh_token;
-			return;
 		}
 	}
-	currUrl = encodeURIComponent(currUrl);
-	window.location.href = wechat_redirect.replace('{1}', currUrl);
+	if(start){
+		currUrl = encodeURIComponent(currUrl);
+		currUrl = wechat_redirect.replace('{1}', currUrl);
+		window.location.href = currUrl;
+	}
 }
 
 function setAccessToken(snsToken) {
 	window.localStorage.setItem("snsTokenExpire", addDate(new Date(), 7).getTime());
-	window.localStorage.setItem("snsToken", snsToken);
+	window.localStorage.setItem("snsToken",JSON.stringify(snsToken));
 }
 
 //对Date的扩展，将 Date 转化为指定格式的String    

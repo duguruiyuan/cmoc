@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.ui.Model;
@@ -18,7 +20,7 @@ import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.WechatSnsToken;
-import com.xuequ.cmoc.model.WechatUserInfo;
+import com.xuequ.cmoc.model.WechatSnsUserInfo;
 import com.xuequ.cmoc.utils.TextUtil;
 
 /**
@@ -28,6 +30,9 @@ import com.xuequ.cmoc.utils.TextUtil;
 * @date 2016年2月25日 下午2:38:10
 */
 public class BaseController {
+	
+	private Logger logger = LoggerFactory.getLogger(BaseController.class);
+	
 	@Autowired
 	protected HttpSession session;
 
@@ -52,26 +57,29 @@ public class BaseController {
 	
 	public String wechatRedirect(Model model, String viewUrl) {
 		WechatSnsToken snsToken = null;
-		WechatUserInfo userInfo = null;
+		WechatSnsUserInfo userInfo = null;
 		String type = request.getParameter("type");
-		if("scope" == type) {
+		String code = request.getParameter("code");
+		String state = request.getParameter("state");
+		logger.info("--type={},code={},state={}", type, code, state);
+		if("scope".equals(type)) {
 			String refreshToken = request.getParameter("token");
 			snsToken = WechatUtils.getOpenidByRefreshToken(refreshToken);
-			userInfo = WechatUtils.getUserInfo(
+			userInfo = WechatUtils.getSnsUserInfo(
 					snsToken.getAccess_token(), snsToken.getOpenid());
 		}else {
-			String code = request.getParameter("code");
-			String state = request.getParameter("state");
+			code = request.getParameter("code");
+			state = request.getParameter("state");
 			if(StringUtils.isNotBlank(state) && StringUtils.isBlank(code)) {
 				return "noAssess";
 			}
 			if(StringUtils.isNotBlank(code)) {
 				snsToken = WechatUtils.getOpenidByCode(code);
-				userInfo = WechatUtils.getUserInfo(
+				userInfo = WechatUtils.getSnsUserInfo(
 						snsToken.getAccess_token(), snsToken.getOpenid());
 			}else {
 				WechatConfigure configure = WechatConfigure.getInstance();
-				String url = TextUtil.format(configure.getOauth2Base(), 
+				String url = TextUtil.format(configure.getOauth2Userinfo(), 
 						new String[]{configure.getAppid()});
 				model.addAttribute("wechat_redirect", url);
 				return "redir";
