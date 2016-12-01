@@ -11,12 +11,9 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,8 +31,6 @@ import com.xuequ.cmoc.core.wechat.utils.SerializeXmlUtil;
 import com.xuequ.cmoc.core.wechat.utils.SignUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatModel;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
-import com.xuequ.cmoc.utils.HttpClientUtils;
-import com.xuequ.cmoc.utils.TextUtil;
 
 @RequestMapping("wechat")
 @Controller
@@ -54,6 +49,7 @@ public class WechatController {
 	public void token(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
 		boolean isGet = request.getMethod().toLowerCase().equals("get");
+		logger.info("-----isGet={}", isGet);
 		if(isGet) {
 			// 微信加密签名
 	        String signature = request.getParameter("signature");
@@ -63,6 +59,8 @@ public class WechatController {
 	        String timestamp = request.getParameter("timestamp");
 	        // 随机数
 	        String nonce = request.getParameter("nonce");
+	        logger.info("---------signature={}" + signature + "--echostr={}" + echostr + 
+	        		"--timestamp={}"+timestamp + "--nonce={}" + nonce);
 	        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
 	        	response.getWriter().print(echostr);
 	        }
@@ -72,53 +70,17 @@ public class WechatController {
 		
 	}
 	
-	@RequestMapping("openid")
-	public @ResponseBody Object getOpenid(HttpServletRequest request) {
-		try{
-			String code = request.getParameter("code");
-			WechatConfigure configure = WechatConfigure.getInstance();
-			String url = TextUtil.format(configure.getUserAccessToken(), 
-					new String[]{configure.getAppid(), configure.getAppsecret(), code});
-			return HttpClientUtils.doGet(url);
-		}catch(Exception e) {
-			logger.error("获取用户openid错误,{}", e);
-		}
-		return null;
-	}
-	
 	@RequestMapping("refrese/openid")
 	public @ResponseBody Object refreseOpenid(HttpServletRequest request) {
 		try{
-			String refresh_token = request.getParameter("refresh_token");
-			WechatConfigure configure = WechatConfigure.getInstance();
-			String url = TextUtil.format(configure.getUserFefreshToken(), 
-					new String[]{configure.getAppid(), refresh_token});
-			return HttpClientUtils.doGet(url);
+			String fefreshToken = request.getParameter("refresh_token");
+			return WechatUtils.getOpenidByRefreshToken(fefreshToken);
 		}catch(Exception e) {
 			logger.error("刷新获取用户openid错误,{}", e);
 		}
 		return null;
 	}
-	
-	@RequestMapping("redirect/{id}")
-	public String wechat(@PathVariable String id, Model model) {
-		model.addAttribute("shareKey", id);
-		model.addAttribute("appid", WechatConfigure.getInstance().getAppid());
-		return "wechat";
-	}
 
-	@RequestMapping("/tokens")
-	public @ResponseBody Object accessToken() {
-		WechatModel model = WechatUtils.getWechatModel();
-		if(StringUtils.isBlank(model.getAccessToken())) {
-			return new RspResult(StatusEnum.ACCESS_TOKEN_FAIL);
-		}else if(StringUtils.isBlank(model.getJsapiTicket())) {
-			return new RspResult(StatusEnum.JSAPI_TICKET_FAIL);
-		}
-		return new RspResult(StatusEnum.SUCCESS, model);
-	}
-	
-	
 	@RequestMapping("/signature")
 	public @ResponseBody Object signature(WechatModel vo) {
 		WechatModel model = WechatUtils.getWechatModel();
@@ -177,7 +139,7 @@ public class WechatController {
             System.out.println("消息Id：" + inputMsg.getMsgId());  
             outputMsg.setContent("欢迎光临");
             outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-            System.out.println("outMesg={}" + xs.toXML(outputMsg));
+            logger.info("outMesg={}", xs.toXML(outputMsg));
             response.getWriter().write(xs.toXML(outputMsg)); 
         } // 获取并返回多图片消息  
         else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {  
@@ -190,7 +152,7 @@ public class WechatController {
             images.setMediaId(inputMsg.getMediaId());
             outputMsg.setImage(images);
             outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
-            System.out.println("outMesg={}" + xs.toXML(outputMsg));
+            logger.info("outMesg={}", xs.toXML(outputMsg));
             response.getWriter().write(xs.toXML(outputMsg));  
   
         }// 视频消息
@@ -201,7 +163,7 @@ public class WechatController {
 			videoMessage.setDescription("芳草无，贪念何必花一枝");
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VIDEO);
 			outputMsg.setVideo(videoMessage);
-			System.out.println("outMesg={}" + xs.toXML(outputMsg));
+			logger.info("outMesg={}", xs.toXML(outputMsg));
 			response.getWriter().write(xs.toXML(outputMsg));  
 		}else {
         	// 语音消息
@@ -222,7 +184,7 @@ public class WechatController {
     	        outputMsg.setArticles(list);
     	        outputMsg.setArticleCount(list.size());
     	        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
-    	        System.out.println("outMesg={}" + xs.toXML(outputMsg));
+    	        logger.info("outMesg={}", xs.toXML(outputMsg));
                 response.getWriter().write(xs.toXML(outputMsg));  
     		}
     		// 视频消息
@@ -265,8 +227,8 @@ public class WechatController {
     		}
     		outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
             outputMsg.setContent(respContent);
-            System.out.println("outMesg={}" + xs.toXML(outputMsg));
-            response.getWriter().write(xs.toXML(outputMsg));  
+            logger.info("outMesg={}", xs.toXML(outputMsg));
+            response.getWriter().write(xs.toXML(outputMsg));
 		}
 	}
 	

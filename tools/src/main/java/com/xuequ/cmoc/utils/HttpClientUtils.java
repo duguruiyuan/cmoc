@@ -241,7 +241,9 @@ public class HttpClientUtils {
 		HttpClient client = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(url);
 		try {
-			return client.execute(httpGet, new BasicResponseHandler());
+			HttpResponse response = client.execute(httpGet);
+			HttpEntity entity = response.getEntity(); 
+			return EntityUtils.toString(entity, DEFAULT_CHARSET);
 		} catch (Exception e) {
 			//取消请求
 			httpGet.abort();

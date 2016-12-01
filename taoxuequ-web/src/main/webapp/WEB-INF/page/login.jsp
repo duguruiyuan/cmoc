@@ -14,7 +14,6 @@ String basePath = request.getScheme() + "://"
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 		<link rel="icon" href="<%=basePath %>/favicon.ico" type="image/x-icon"/>  
 		<link rel="shortcut icon" href="<%=basePath %>/favicon.ico" type="image/x-icon" />
-		<link href="<%=basePath %>/animated_favicon.gif" rel="icon" type="image/gif" />  
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/login.css"/>
 	</head>

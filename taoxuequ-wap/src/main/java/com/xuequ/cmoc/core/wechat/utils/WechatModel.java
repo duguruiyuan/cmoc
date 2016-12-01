@@ -9,13 +9,21 @@ public class WechatModel implements Serializable {
 	private String accessToken;
 	
 	private String jsapiTicket;
-	
+	/*
+	 * js-sdk接口请求url
+	 */
 	private String url;
-	
+	/*
+	 * 时间戳
+	 */
 	private Long timestamp; 
-	
+	/*
+	 * 微信加密签名
+	 */
 	private String signature;
-	
+	/*
+	 * 随机字符串
+	 */
 	private String nonceStr;
 	
 	private String appid;

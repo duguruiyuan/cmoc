@@ -17,6 +17,8 @@ public class Configuration implements Serializable {
 	
 	private String imgUrl;
 	
+	private String wechatAttention;
+	
 	private static Configuration config;
 	
 	public synchronized static Configuration getInstance() {
@@ -37,6 +39,7 @@ public class Configuration implements Serializable {
 			config.setVersion(prop.getString("version"));
 			prop.load("config.properties");
 			config.setImgUrl(prop.getString(config.getEnv() + "_visited.url"));
+			config.setWechatAttention(prop.getString("wechat_attention"));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -74,4 +77,13 @@ public class Configuration implements Serializable {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
+
+	public String getWechatAttention() {
+		return wechatAttention;
+	}
+
+	public void setWechatAttention(String wechatAttention) {
+		this.wechatAttention = wechatAttention;
+	}
+	
 }

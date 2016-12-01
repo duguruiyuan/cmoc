@@ -6,13 +6,20 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.xuequ.cmoc.common.Configuration;
+import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.model.WechatSnsToken;
+import com.xuequ.cmoc.model.WechatUserInfo;
+import com.xuequ.cmoc.utils.TextUtil;
 
 /**
 * <p>Title: BaseController </p>
@@ -42,5 +49,38 @@ public class BaseController {
 	protected Configuration configInstance() {
 		return Configuration.getInstance();
 	}
+	
+	public String wechatRedirect(Model model, String viewUrl) {
+		WechatSnsToken snsToken = null;
+		WechatUserInfo userInfo = null;
+		String type = request.getParameter("type");
+		if("scope" == type) {
+			String refreshToken = request.getParameter("token");
+			snsToken = WechatUtils.getOpenidByRefreshToken(refreshToken);
+			userInfo = WechatUtils.getUserInfo(
+					snsToken.getAccess_token(), snsToken.getOpenid());
+		}else {
+			String code = request.getParameter("code");
+			String state = request.getParameter("state");
+			if(StringUtils.isNotBlank(state) && StringUtils.isBlank(code)) {
+				return "noAssess";
+			}
+			if(StringUtils.isNotBlank(code)) {
+				snsToken = WechatUtils.getOpenidByCode(code);
+				userInfo = WechatUtils.getUserInfo(
+						snsToken.getAccess_token(), snsToken.getOpenid());
+			}else {
+				WechatConfigure configure = WechatConfigure.getInstance();
+				String url = TextUtil.format(configure.getOauth2Base(), 
+						new String[]{configure.getAppid()});
+				model.addAttribute("wechat_redirect", url);
+				return "redir";
+			}
+		}
+		model.addAttribute("snsToken", snsToken);
+		model.addAttribute("userInfo", userInfo);
+		return viewUrl;
+	}
+	
 	
 }
