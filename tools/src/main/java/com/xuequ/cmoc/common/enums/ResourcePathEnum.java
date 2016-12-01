@@ -1,24 +1,26 @@
 package com.xuequ.cmoc.common.enums;
 
 public enum ResourcePathEnum {
-	IMGE("IMAGE","/imagextra"),
+	IMGE("IMAGE","/imgextra"),
 	FILE("FILE", "/filextra"),
 	VIDEO("VIDEO", "/videoxtra"),;
 	
 	private final String code;
 	
-	private final String desc;
+	private final String value;
 	
-	private ResourcePathEnum(String code, String desc) {
+	private ResourcePathEnum(String code, String value) {
 		this.code = code;
-		this.desc = desc;
+		this.value = value;
 	}
-	
+
 	public String getCode() {
 		return code;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getValue() {
+		return value;
 	}
+	
+	
 }

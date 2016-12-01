@@ -31,6 +31,8 @@ import com.xuequ.cmoc.core.wechat.utils.SerializeXmlUtil;
 import com.xuequ.cmoc.core.wechat.utils.SignUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatModel;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.utils.HttpClientUtils;
+import com.xuequ.cmoc.utils.TextUtil;
 
 @RequestMapping("wechat")
 @Controller
@@ -70,7 +72,21 @@ public class WechatController {
 		
 	}
 	
-	@RequestMapping("refrese/openid")
+	@RequestMapping("oauth/access")
+	public @ResponseBody Object getOpenid(HttpServletRequest request) {
+		try{
+			String code = request.getParameter("code");
+			WechatConfigure configure = WechatConfigure.getInstance();
+			String url = TextUtil.format(configure.getUserAccessToken(), 
+					new String[]{configure.getAppid(), configure.getAppsecret(), code});
+			return HttpClientUtils.doGet(url);
+		}catch(Exception e) {
+			logger.error("获取用户openid错误,{}", e);
+		}
+		return null;
+	}
+	
+	@RequestMapping("oauth/refrese")
 	public @ResponseBody Object refreseOpenid(HttpServletRequest request) {
 		try{
 			String fefreshToken = request.getParameter("refresh_token");

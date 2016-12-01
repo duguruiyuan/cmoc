@@ -12,21 +12,21 @@ public class OutputMessage implements Serializable {
 
 	@XStreamAlias("ToUserName")  
     @XStreamCDATA 
-    private String ToUserName;  
+    private String toUserName;  
   
     @XStreamAlias("FromUserName")  
     @XStreamCDATA  
-    private String FromUserName;  
+    private String fromUserName;  
   
     @XStreamAlias("CreateTime")  
-    private Long CreateTime;  
+    private Long createTime;  
     
     @XStreamAlias("MsgType")
     @XStreamCDATA
-    private String MsgType;
+    private String msgType;
     
     @XStreamAlias("Content")
-	private String Content;
+	private String content;
     
     private ImageMessage Image;
     
@@ -37,48 +37,48 @@ public class OutputMessage implements Serializable {
     private VoiceMessage Voice;
     
     @XStreamAlias("ArticleCount")
-	private Integer ArticleCount;
+	private Integer articleCount;
     
     private List<ArticleItem> Articles;
 
 	public String getToUserName() {
-		return ToUserName;
+		return toUserName;
 	}
 
 	public void setToUserName(String toUserName) {
-		ToUserName = toUserName;
+		this.toUserName = toUserName;
 	}
 
 	public String getFromUserName() {
-		return FromUserName;
+		return fromUserName;
 	}
 
 	public void setFromUserName(String fromUserName) {
-		FromUserName = fromUserName;
+		this.fromUserName = fromUserName;
 	}
 
 	public Long getCreateTime() {
-		return CreateTime;
+		return createTime;
 	}
 
 	public void setCreateTime(Long createTime) {
-		CreateTime = createTime;
+		this.createTime = createTime;
 	}
 
 	public String getMsgType() {
-		return MsgType;
+		return msgType;
 	}
 
 	public void setMsgType(String msgType) {
-		MsgType = msgType;
+		this.msgType = msgType;
 	}
 
 	public String getContent() {
-		return Content;
+		return content;
 	}
 
 	public void setContent(String content) {
-		Content = content;
+		this.content = content;
 	}
 
 	public ImageMessage getImage() {
@@ -97,22 +97,6 @@ public class OutputMessage implements Serializable {
 		Music = music;
 	}
 
-	public Integer getArticleCount() {
-		return ArticleCount;
-	}
-
-	public void setArticleCount(Integer articleCount) {
-		ArticleCount = articleCount;
-	}
-
-	public List<ArticleItem> getArticles() {
-		return Articles;
-	}
-
-	public void setArticles(List<ArticleItem> articles) {
-		Articles = articles;
-	}
-
 	public VideoMessage getVideo() {
 		return Video;
 	}
@@ -129,4 +113,21 @@ public class OutputMessage implements Serializable {
 		Voice = voice;
 	}
 
+	public Integer getArticleCount() {
+		return articleCount;
+	}
+
+	public void setArticleCount(Integer articleCount) {
+		this.articleCount = articleCount;
+	}
+
+	public List<ArticleItem> getArticles() {
+		return Articles;
+	}
+
+	public void setArticles(List<ArticleItem> articles) {
+		Articles = articles;
+	}
+
+	
 }

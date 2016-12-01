@@ -13,11 +13,11 @@ public class VideoMessage extends XStreamSub implements Serializable {
 	@XStreamCDATA
 	private String MediaId;
 	
-	@XStreamAlias("title")
+	@XStreamAlias("Title")
 	@XStreamCDATA
 	private String title;
 	
-	@XStreamAlias("description")
+	@XStreamAlias("Description")
 	@XStreamCDATA
 	private String description;
 

@@ -10,236 +10,233 @@ public class InputMessage implements Serializable {
 	private static final long serialVersionUID = 2373010768339632980L;
 	//开发者微信号
 	@XStreamAlias("ToUserName")  
-    private String ToUserName;  
+    private String toUserName;  
 	//发送方帐号（一个OpenID）
     @XStreamAlias("FromUserName")  
-    private String FromUserName;  
+    private String fromUserName;  
     //消息创建时间 （整型）
     @XStreamAlias("CreateTime")  
-    private Long CreateTime;  
+    private Long createTime;  
     //消息类型
     @XStreamAlias("MsgType")  
-    private String MsgType = "text";  
+    private String msgType = "text";  
     //消息id，64位整型
     @XStreamAlias("MsgId")  
-    private Long MsgId;  
+    private Long msgId;  
     //消息媒体id
     @XStreamAlias("MediaId")
-    private String MediaId;
+    private String mediaId;
     
     // 文本消息
     //文本消息内容
     @XStreamAlias("Content")  
-    private String Content;  
+    private String content;  
     
     // 图片消息  
     //图片链接
     @XStreamAlias("PicUrl")  
-    private String PicUrl;
+    private String picUrl;
     
     // 语音信息  
     //语音格式，如amr，speex等
     @XStreamAlias("Format")  
-    private String Format; 
+    private String format; 
     //语音识别结果，使用UTF8编码
     @XStreamAlias("Recognition")
-    private String Recognition;
+    private String recognition;
     
     //视频消息
     //视频消息缩略图的媒体id
     @XStreamAlias("ThumbMediaId")
-    private String ThumbMediaId;
+    private String thumbMediaId;
     
     // 位置消息  
     //地理位置维度
     @XStreamAlias("Location_X")  
-    private String LocationX;  
+    private String locationX;  
     //地理位置经度
     @XStreamAlias("Location_Y")  
-    private String LocationY;  
+    private String locationY;  
     //地图缩放大小
     @XStreamAlias("Scale")  
-    private Long Scale;  
+    private Long scale;  
     //地理位置信息
     @XStreamAlias("Label")  
-    private String Label;  
+    private String label;  
     
     // 链接消息  
     //消息标题
     @XStreamAlias("Title")  
-    private String Title;  
+    private String title;  
     //	消息描述
     @XStreamAlias("Description")  
-    private String Description;  
+    private String description;  
     //消息链接
     @XStreamAlias("Url")  
-    private String Url;
+    private String url;
     
     // 事件
     //事件类型
     @XStreamAlias("Event")  
-    private String Event;  
+    private String event;  
     //事件KEY值，是一个32位无符号整数
     @XStreamAlias("EventKey")  
-    private String EventKey;  
+    private String eventKey;  
     //二维码的ticket，可用来换取二维码图片
     @XStreamAlias("Ticket")  
-    private String Ticket;
+    private String ticket;
     //地理位置纬度
     @XStreamAlias("Latitude")
-    private String Latitude;
+    private String latitude;
     //地理位置经度
     @XStreamAlias("Longitude")
-    private String Longitude;
+    private String longitude;
     //地理位置精度
     @XStreamAlias("Precision")
-    private String Precision;
+    private String precision;
 	public String getToUserName() {
-		return ToUserName;
+		return toUserName;
 	}
 	public void setToUserName(String toUserName) {
-		ToUserName = toUserName;
+		this.toUserName = toUserName;
 	}
 	public String getFromUserName() {
-		return FromUserName;
+		return fromUserName;
 	}
 	public void setFromUserName(String fromUserName) {
-		FromUserName = fromUserName;
+		this.fromUserName = fromUserName;
 	}
 	public Long getCreateTime() {
-		return CreateTime;
+		return createTime;
 	}
 	public void setCreateTime(Long createTime) {
-		CreateTime = createTime;
+		this.createTime = createTime;
 	}
 	public String getMsgType() {
-		return MsgType;
+		return msgType;
 	}
 	public void setMsgType(String msgType) {
-		MsgType = msgType;
+		this.msgType = msgType;
 	}
 	public Long getMsgId() {
-		return MsgId;
+		return msgId;
 	}
 	public void setMsgId(Long msgId) {
-		MsgId = msgId;
+		this.msgId = msgId;
 	}
 	public String getMediaId() {
-		return MediaId;
+		return mediaId;
 	}
 	public void setMediaId(String mediaId) {
-		MediaId = mediaId;
+		this.mediaId = mediaId;
 	}
 	public String getContent() {
-		return Content;
+		return content;
 	}
 	public void setContent(String content) {
-		Content = content;
+		this.content = content;
 	}
 	public String getPicUrl() {
-		return PicUrl;
+		return picUrl;
 	}
 	public void setPicUrl(String picUrl) {
-		PicUrl = picUrl;
+		this.picUrl = picUrl;
 	}
 	public String getFormat() {
-		return Format;
+		return format;
 	}
 	public void setFormat(String format) {
-		Format = format;
+		this.format = format;
 	}
-	
 	public String getRecognition() {
-		return Recognition;
+		return recognition;
 	}
 	public void setRecognition(String recognition) {
-		Recognition = recognition;
+		this.recognition = recognition;
 	}
 	public String getThumbMediaId() {
-		return ThumbMediaId;
+		return thumbMediaId;
 	}
 	public void setThumbMediaId(String thumbMediaId) {
-		ThumbMediaId = thumbMediaId;
+		this.thumbMediaId = thumbMediaId;
 	}
 	public String getLocationX() {
-		return LocationX;
+		return locationX;
 	}
 	public void setLocationX(String locationX) {
-		LocationX = locationX;
+		this.locationX = locationX;
 	}
 	public String getLocationY() {
-		return LocationY;
+		return locationY;
 	}
 	public void setLocationY(String locationY) {
-		LocationY = locationY;
+		this.locationY = locationY;
 	}
 	public Long getScale() {
-		return Scale;
+		return scale;
 	}
 	public void setScale(Long scale) {
-		Scale = scale;
+		this.scale = scale;
 	}
 	public String getLabel() {
-		return Label;
+		return label;
 	}
 	public void setLabel(String label) {
-		Label = label;
+		this.label = label;
 	}
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 	public String getUrl() {
-		return Url;
+		return url;
 	}
 	public void setUrl(String url) {
-		Url = url;
+		this.url = url;
 	}
 	public String getEvent() {
-		return Event;
+		return event;
 	}
 	public void setEvent(String event) {
-		Event = event;
+		this.event = event;
 	}
 	public String getEventKey() {
-		return EventKey;
+		return eventKey;
 	}
 	public void setEventKey(String eventKey) {
-		EventKey = eventKey;
+		this.eventKey = eventKey;
 	}
 	public String getTicket() {
-		return Ticket;
+		return ticket;
 	}
 	public void setTicket(String ticket) {
-		Ticket = ticket;
+		this.ticket = ticket;
 	}
 	public String getLatitude() {
-		return Latitude;
+		return latitude;
 	}
 	public void setLatitude(String latitude) {
-		Latitude = latitude;
+		this.latitude = latitude;
 	}
 	public String getLongitude() {
-		return Longitude;
+		return longitude;
 	}
 	public void setLongitude(String longitude) {
-		Longitude = longitude;
+		this.longitude = longitude;
 	}
 	public String getPrecision() {
-		return Precision;
+		return precision;
 	}
 	public void setPrecision(String precision) {
-		Precision = precision;
+		this.precision = precision;
 	}
-    
-    
 	
 }

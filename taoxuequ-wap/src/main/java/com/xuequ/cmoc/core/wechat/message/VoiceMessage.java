@@ -10,15 +10,15 @@ public class VoiceMessage extends XStreamSub implements Serializable {
 
 	@XStreamAlias("MediaId")
 	@XStreamCDATA
-	private String MediaId;
+	private String mediaId;
 
 	public String getMediaId() {
-		return MediaId;
+		return mediaId;
 	}
 
 	public void setMediaId(String mediaId) {
-		MediaId = mediaId;
+		this.mediaId = mediaId;
 	}
-	
+
 	
 }

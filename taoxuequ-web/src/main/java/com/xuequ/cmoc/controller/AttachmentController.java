@@ -111,7 +111,8 @@ public class AttachmentController {
 	}
 	
 	public String writeFile(String path, MultipartFile buildInfo) {
-		String relativeAttachmentPath = Const.rootPath + ResourcePathEnum.IMGE + Const.SEPARATOR + path;
+		path = ResourcePathEnum.IMGE.getValue() + Const.SEPARATOR + path;
+		String relativeAttachmentPath = Const.rootPath + path;
         createDir(relativeAttachmentPath);
         //数据库保存的文件路径
         String realFileName = UUID.randomUUID().toString();
