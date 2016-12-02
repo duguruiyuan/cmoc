@@ -69,29 +69,7 @@
 	             	</form>
 	             </div>
 			</div>
-			<div id="uploadActivityImgDialog" style="display: none;height: 'auto';">
-				<div class="col-md-12 p10">
-					<form id="uploadForm" novalidate="novalidate" enctype="multipart/form-data">
-						<div class="form-group col-md-6">
-							<label for="activityName">活动名称</label>								
-							<input class="form-control" name="activityName" id="activityName">
-						</div>
-						<div class="form-group col-md-6">
-							<label for="activityNum">活动期数</label>								
-							<input class="form-control" name="activityNum" id="activityNum">
-						</div>
-						<div class="col-md-12">
-							<label>活动战队、队员图片上传</label>
-							<p style="color: red;">注：上传的战队图片名称命名规则是：战队名称.jpg|png|gif(如: 小虎队.jpg,小虎队.png), 队员图片一样
-								如果活动中有队员姓名一样，队员名称要带上战队名称（如：小虎队-小明.jpg, 小牛队-小明.jpg)
-							</p>
-							<input id="activity-img-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
-							<input type="hidden" name="activityId" id="activityId"/>
-		            		<input type="hidden" name="type" id="type" value="MARINE_AND_MEMBER"/>
-						</div>
-					</form>
-				</div>
-			</div>
+			
 			<div id="confirmDialog" style="display: none;height: 'auto';">
 				<div class="col-md-12 p10">
 				  <form id="addForm" novalidate="novalidate">

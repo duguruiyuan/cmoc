@@ -11,7 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<script src="<%=basePath %>/js/common.js" type="text/javascript"></script>
+<script src="<%=basePath %>/js/common.js?v=${config.version}" type="text/javascript"></script>
 <body>
 	<script type="text/javascript">
 		getAccessToken("${wechat_redirect}");

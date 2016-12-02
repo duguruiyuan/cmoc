@@ -1,33 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xuequ.cmoc.dao.HollowManInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.HollowManInfo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="hm_name" property="hmName" jdbcType="VARCHAR" />
-    <result column="hm_mobile" property="hmMobile" jdbcType="VARCHAR" />
-    <result column="hm_id_type" property="hmIdType" jdbcType="VARCHAR" />
-    <result column="hm_id_card" property="hmIdCard" jdbcType="VARCHAR" />
-    <result column="hm_addr" property="hmAddr" jdbcType="VARCHAR" />
-    <result column="hm_schoole" property="hmSchoole" jdbcType="VARCHAR" />
-    <result column="hm_kim_name" property="hmKimName" jdbcType="VARCHAR" />
-    <result column="hm_kim_mobile" property="hmKimMobile" jdbcType="VARCHAR" />
-    <result column="is_active" property="isActive" jdbcType="INTEGER" />
-    <result column="active" property="active" jdbcType="VARCHAR" />
-    <result column="openid" property="openid" jdbcType="VARCHAR" />
-    <result column="level" property="level" jdbcType="VARCHAR" />
-    <result column="score" property="score" jdbcType="DECIMAL" />
-    <result column="creater" property="creater" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="updater" property="updater" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuequ.cmoc.dao.HollowManInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.HollowManInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="hm_name" jdbcType="VARCHAR" property="hmName" />
+    <result column="hm_mobile" jdbcType="VARCHAR" property="hmMobile" />
+    <result column="id_type" jdbcType="VARCHAR" property="idType" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="schoole" jdbcType="VARCHAR" property="schoole" />
+    <result column="idPhone" jdbcType="VARCHAR" property="idphone" />
+    <result column="kim_name" jdbcType="VARCHAR" property="kimName" />
+    <result column="kim_mobile" jdbcType="VARCHAR" property="kimMobile" />
+    <result column="is_active" jdbcType="INTEGER" property="isActive" />
+    <result column="activeDate" jdbcType="VARCHAR" property="activedate" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, hm_name, hm_mobile, hm_id_type, hm_id_card, hm_addr, hm_schoole, hm_kim_name, 
-    hm_kim_mobile, is_active, active, openid, level, score, creater, create_time, updater, 
-    update_time, is_delete
+  <sql id="Base_Column_List">
+    id, hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, idPhone, 
+    kim_name, kim_mobile, is_active, activeDate, openid, level, score, creater, create_time, 
+    updater, update_time, is_delete
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_hollow_man_info
@@ -35,226 +39,297 @@
   </select>
   
   <select id="selectByNameMobile" resultMap="BaseResultMap" >
-  	select 
+  	SELECT 
     <include refid="Base_Column_List" />
-    from t_hollow_man_info
-    where is_delete = 'N' and hm_name = #{hmName,jdbcType=VARCHAR}
-    and hm_mobile = #{hmMobile,jdbcType=VARCHAR}
+    FROM t_hollow_man_info
+    WHERE is_delete = 'N' AND hm_name = #{hmName,jdbcType=VARCHAR}
+    AND hm_mobile = #{hmMobile,jdbcType=VARCHAR}
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <resultMap id="PageBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.HollowManInfoView">
+  	<result column="take_num" jdbcType="INTEGER" property="takeNum" />
+  </resultMap>
+  
+  <select id="selectByPage" resultMap="PageBaseResultMap">
+  	SELECT h.*,IFNULL(take_num,0) take_num FROM t_hollow_man_info h
+	LEFT JOIN (
+	  SELECT COUNT(1) take_num, hm_id FROM t_activity_hm_sign 
+	  WHERE is_delete = 'N' AND is_effect=1 
+	  GROUP BY hm_id
+	)n ON n.hm_id = h.id
+	<if test="params.hmName != null">
+		hm_name = #{params.hmName,jdbcType=VARCHAR}
+	</if>
+	<if test="params.hmMobile != null">
+		hm_mobile = #{params.hmMobile,jdbcType=VARCHAR}
+	</if>
+	<if test="params.idCard != null">
+		id_card = #{params.idCard,jdbcType=VARCHAR}
+	</if>
+	<if test="params.sex != null">
+		sex = #{params.sex,jdbcType=VARCHAR}
+	</if>
+	<if test="params.isActive != null">
+		is_active = #{params.isActive,jdbcType=INTEGER}
+	</if>
+	order by creater desc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_hollow_man_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.HollowManInfo" >
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.HollowManInfo">
     insert into t_hollow_man_info (id, hm_name, hm_mobile, 
-      hm_id_type, hm_id_card, hm_addr, 
-      hm_schoole, hm_kim_name, hm_kim_mobile, 
-      is_active, active, openid, 
-      level, score, creater, 
-      create_time, updater, update_time, 
-      is_delete)
+      id_type, id_card, addr, 
+      place, sex, grade, 
+      schoole, idPhone, kim_name, 
+      kim_mobile, is_active, activeDate, 
+      openid, level, score, 
+      creater, create_time, updater, 
+      update_time, is_delete)
     values (#{id,jdbcType=INTEGER}, #{hmName,jdbcType=VARCHAR}, #{hmMobile,jdbcType=VARCHAR}, 
-      #{hmIdType,jdbcType=VARCHAR}, #{hmIdCard,jdbcType=VARCHAR}, #{hmAddr,jdbcType=VARCHAR}, 
-      #{hmSchoole,jdbcType=VARCHAR}, #{hmKimName,jdbcType=VARCHAR}, #{hmKimMobile,jdbcType=VARCHAR}, 
-      #{isActive,jdbcType=INTEGER}, #{active,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
-      #{level,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, #{creater,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=VARCHAR})
+      #{idType,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, 
+      #{place,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
+      #{schoole,jdbcType=VARCHAR}, #{idphone,jdbcType=VARCHAR}, #{kimName,jdbcType=VARCHAR}, 
+      #{kimMobile,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}, #{activedate,jdbcType=VARCHAR}, 
+      #{openid,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
+      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.HollowManInfo" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.HollowManInfo">
     insert into t_hollow_man_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="hmName != null" >
+      <if test="hmName != null">
         hm_name,
       </if>
-      <if test="hmMobile != null" >
+      <if test="hmMobile != null">
         hm_mobile,
       </if>
-      <if test="hmIdType != null" >
-        hm_id_type,
+      <if test="idType != null">
+        id_type,
       </if>
-      <if test="hmIdCard != null" >
-        hm_id_card,
+      <if test="idCard != null">
+        id_card,
       </if>
-      <if test="hmAddr != null" >
-        hm_addr,
+      <if test="addr != null">
+        addr,
       </if>
-      <if test="hmSchoole != null" >
-        hm_schoole,
+      <if test="place != null">
+        place,
       </if>
-      <if test="hmKimName != null" >
-        hm_kim_name,
+      <if test="sex != null">
+        sex,
       </if>
-      <if test="hmKimMobile != null" >
-        hm_kim_mobile,
+      <if test="grade != null">
+        grade,
       </if>
-      <if test="isActive != null" >
+      <if test="schoole != null">
+        schoole,
+      </if>
+      <if test="idphone != null">
+        idPhone,
+      </if>
+      <if test="kimName != null">
+        kim_name,
+      </if>
+      <if test="kimMobile != null">
+        kim_mobile,
+      </if>
+      <if test="isActive != null">
         is_active,
       </if>
-      <if test="active != null" >
-        active,
+      <if test="activedate != null">
+        activeDate,
       </if>
-      <if test="openid != null" >
+      <if test="openid != null">
         openid,
       </if>
-      <if test="level != null" >
+      <if test="level != null">
         level,
       </if>
-      <if test="score != null" >
+      <if test="score != null">
         score,
       </if>
-      <if test="creater != null" >
+      <if test="creater != null">
         creater,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="updater != null" >
+      <if test="updater != null">
         updater,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time,
       </if>
-      <if test="isDelete != null" >
+      <if test="isDelete != null">
         is_delete,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="hmName != null" >
+      <if test="hmName != null">
         #{hmName,jdbcType=VARCHAR},
       </if>
-      <if test="hmMobile != null" >
+      <if test="hmMobile != null">
         #{hmMobile,jdbcType=VARCHAR},
       </if>
-      <if test="hmIdType != null" >
-        #{hmIdType,jdbcType=VARCHAR},
+      <if test="idType != null">
+        #{idType,jdbcType=VARCHAR},
       </if>
-      <if test="hmIdCard != null" >
-        #{hmIdCard,jdbcType=VARCHAR},
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
       </if>
-      <if test="hmAddr != null" >
-        #{hmAddr,jdbcType=VARCHAR},
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
       </if>
-      <if test="hmSchoole != null" >
-        #{hmSchoole,jdbcType=VARCHAR},
+      <if test="place != null">
+        #{place,jdbcType=VARCHAR},
       </if>
-      <if test="hmKimName != null" >
-        #{hmKimName,jdbcType=VARCHAR},
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
       </if>
-      <if test="hmKimMobile != null" >
-        #{hmKimMobile,jdbcType=VARCHAR},
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
       </if>
-      <if test="isActive != null" >
+      <if test="schoole != null">
+        #{schoole,jdbcType=VARCHAR},
+      </if>
+      <if test="idphone != null">
+        #{idphone,jdbcType=VARCHAR},
+      </if>
+      <if test="kimName != null">
+        #{kimName,jdbcType=VARCHAR},
+      </if>
+      <if test="kimMobile != null">
+        #{kimMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
         #{isActive,jdbcType=INTEGER},
       </if>
-      <if test="active != null" >
-        #{active,jdbcType=VARCHAR},
+      <if test="activedate != null">
+        #{activedate,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
+      <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="level != null" >
+      <if test="level != null">
         #{level,jdbcType=VARCHAR},
       </if>
-      <if test="score != null" >
+      <if test="score != null">
         #{score,jdbcType=DECIMAL},
       </if>
-      <if test="creater != null" >
+      <if test="creater != null">
         #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updater != null" >
+      <if test="updater != null">
         #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null" >
+      <if test="isDelete != null">
         #{isDelete,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.HollowManInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.HollowManInfo">
     update t_hollow_man_info
-    <set >
-      <if test="hmName != null" >
+    <set>
+      <if test="hmName != null">
         hm_name = #{hmName,jdbcType=VARCHAR},
       </if>
-      <if test="hmMobile != null" >
+      <if test="hmMobile != null">
         hm_mobile = #{hmMobile,jdbcType=VARCHAR},
       </if>
-      <if test="hmIdType != null" >
-        hm_id_type = #{hmIdType,jdbcType=VARCHAR},
+      <if test="idType != null">
+        id_type = #{idType,jdbcType=VARCHAR},
       </if>
-      <if test="hmIdCard != null" >
-        hm_id_card = #{hmIdCard,jdbcType=VARCHAR},
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
       </if>
-      <if test="hmAddr != null" >
-        hm_addr = #{hmAddr,jdbcType=VARCHAR},
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
       </if>
-      <if test="hmSchoole != null" >
-        hm_schoole = #{hmSchoole,jdbcType=VARCHAR},
+      <if test="place != null">
+        place = #{place,jdbcType=VARCHAR},
       </if>
-      <if test="hmKimName != null" >
-        hm_kim_name = #{hmKimName,jdbcType=VARCHAR},
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
       </if>
-      <if test="hmKimMobile != null" >
-        hm_kim_mobile = #{hmKimMobile,jdbcType=VARCHAR},
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
       </if>
-      <if test="isActive != null" >
+      <if test="schoole != null">
+        schoole = #{schoole,jdbcType=VARCHAR},
+      </if>
+      <if test="idphone != null">
+        idPhone = #{idphone,jdbcType=VARCHAR},
+      </if>
+      <if test="kimName != null">
+        kim_name = #{kimName,jdbcType=VARCHAR},
+      </if>
+      <if test="kimMobile != null">
+        kim_mobile = #{kimMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
         is_active = #{isActive,jdbcType=INTEGER},
       </if>
-      <if test="active != null" >
-        active = #{active,jdbcType=VARCHAR},
+      <if test="activedate != null">
+        activeDate = #{activedate,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
+      <if test="openid != null">
         openid = #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="level != null" >
+      <if test="level != null">
         level = #{level,jdbcType=VARCHAR},
       </if>
-      <if test="score != null" >
+      <if test="score != null">
         score = #{score,jdbcType=DECIMAL},
       </if>
-      <if test="creater != null" >
+      <if test="creater != null">
         creater = #{creater,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updater != null" >
+      <if test="updater != null">
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDelete != null" >
+      <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.HollowManInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.HollowManInfo">
     update t_hollow_man_info
     set hm_name = #{hmName,jdbcType=VARCHAR},
       hm_mobile = #{hmMobile,jdbcType=VARCHAR},
-      hm_id_type = #{hmIdType,jdbcType=VARCHAR},
-      hm_id_card = #{hmIdCard,jdbcType=VARCHAR},
-      hm_addr = #{hmAddr,jdbcType=VARCHAR},
-      hm_schoole = #{hmSchoole,jdbcType=VARCHAR},
-      hm_kim_name = #{hmKimName,jdbcType=VARCHAR},
-      hm_kim_mobile = #{hmKimMobile,jdbcType=VARCHAR},
+      id_type = #{idType,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      place = #{place,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      schoole = #{schoole,jdbcType=VARCHAR},
+      idPhone = #{idphone,jdbcType=VARCHAR},
+      kim_name = #{kimName,jdbcType=VARCHAR},
+      kim_mobile = #{kimMobile,jdbcType=VARCHAR},
       is_active = #{isActive,jdbcType=INTEGER},
-      active = #{active,jdbcType=VARCHAR},
+      activeDate = #{activedate,jdbcType=VARCHAR},
       openid = #{openid,jdbcType=VARCHAR},
       level = #{level,jdbcType=VARCHAR},
       score = #{score,jdbcType=DECIMAL},
@@ -265,4 +340,5 @@
       is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

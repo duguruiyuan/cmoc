@@ -155,3 +155,15 @@ function activityTypeFormat(v) {
 	if(v == '2') return "城市体验";
 	return "";
 }
+
+function activeFormat(v) {
+	if(v == 0) return "注册申请中";
+	if(v == 1) return "已激活";
+	return "";
+}
+
+function sexFormat(v) {
+	if(v == 'F') return "帅哥";
+	if(v == 'M') return "美女";
+	return "";
+}

@@ -1,8 +1,12 @@
 package com.xuequ.cmoc.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.xuequ.cmoc.model.HollowManInfo;
+import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.HollowManInfoView;
 
 public interface HollowManInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,4 +23,6 @@ public interface HollowManInfoMapper {
     
     HollowManInfo selectByNameMobile(@Param("hmName")String hmName, 
     		@Param("hmMobile")String hmMobile);
+    
+    List<HollowManInfoView> selectByPage(Page<HollowManInfoView> page);
 }

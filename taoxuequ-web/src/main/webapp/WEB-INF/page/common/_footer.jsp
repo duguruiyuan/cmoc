@@ -1,7 +1,21 @@
+<%@page import="com.xuequ.cmoc.common.Configuration"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
-	String basePath = request.getScheme() + "://" + request.getServerName()
-			+ ":" + request.getServerPort() + request.getContextPath();
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+	String imgUrl = Configuration.getInstance().getImgUrl();
+	if(StringUtils.isBlank(imgUrl)) {
+		Configuration.getInstance().setImgUrl(basePath + "/xuequ/");
+	}
 %>
+<script>
+	var basePath = '<%=basePath %>';
+	var imgUrl = '${config.imgUrl}';
+</script>
 <script src="<%=basePath %>/js/plugin/jquery-2.1.4.min.js"></script>
 <script src="<%=basePath %>/js/plugin/extJquery.js"></script>
 <!-- bootstrap js -->
@@ -25,10 +39,3 @@
 <!--[if lt IE 9]><script src="<%=basePath %>/js/html5.js"></script><![endif]-->
 <script src="<%=basePath %>/js/main.js"></script>
 <script src="<%=basePath %>/js/common.js"></script>
-<script>
-	var basePath = '<%=basePath %>';
-	var imgUrl = '${config.imgUrl}';
-	if(!imgUrl) {
-		imgUrl = basePath + '/xuequ/';
-	}
-</script>

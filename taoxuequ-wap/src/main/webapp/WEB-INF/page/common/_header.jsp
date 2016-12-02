@@ -1,3 +1,5 @@
+<%@page import="com.xuequ.cmoc.common.Configuration"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -5,15 +7,23 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
+	String imgUrl = Configuration.getInstance().getImgUrl();
+	if(StringUtils.isBlank(imgUrl)) {
+		Configuration.getInstance().setImgUrl(basePath + "/xuequ/");
+	}
 %>
+<script>
+	var basePath = '<%=basePath %>';
+	var imgUrl = '${config.imgUrl}';
+</script>
 <link href="<%=basePath %>/css/mui.min.css" rel="stylesheet" />
 <link href="<%=basePath %>/css/mui.picker.css" rel="stylesheet" />
 <link href="<%=basePath %>/css/mui.poppicker.css" rel="stylesheet" />
-<link  href="<%=basePath %>/css/display.css" rel="stylesheet" type="text/css"/>
+<link  href="<%=basePath %>/css/display.css?v=${config.version}" rel="stylesheet" type="text/css"/>
 
 <script src="<%=basePath %>/js/plugins/mui/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.js"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.picker.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%=basePath %>/js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%=basePath %>/js/common.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>

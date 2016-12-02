@@ -32,7 +32,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table tableName="t_activity_info" domainObjectName="ActivityInfo"
+		<table tableName="t_hollow_man_info" domainObjectName="HollowManInfo"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">

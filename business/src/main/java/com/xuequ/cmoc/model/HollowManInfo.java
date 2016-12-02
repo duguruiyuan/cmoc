@@ -11,21 +11,29 @@ public class HollowManInfo implements Serializable {
 
     private String hmMobile;
 
-    private String hmIdType;
+    private String idType;
 
-    private String hmIdCard;
+    private String idCard;
 
-    private String hmAddr;
+    private String addr;
 
-    private String hmSchoole;
+    private String place;
 
-    private String hmKimName;
+    private String sex;
 
-    private String hmKimMobile;
+    private String grade;
+
+    private String schoole;
+
+    private String idphone;
+
+    private String kimName;
+
+    private String kimMobile;
 
     private Integer isActive;
 
-    private String active;
+    private String activedate;
 
     private String openid;
 
@@ -69,52 +77,84 @@ public class HollowManInfo implements Serializable {
         this.hmMobile = hmMobile == null ? null : hmMobile.trim();
     }
 
-    public String getHmIdType() {
-        return hmIdType;
+    public String getIdType() {
+        return idType;
     }
 
-    public void setHmIdType(String hmIdType) {
-        this.hmIdType = hmIdType == null ? null : hmIdType.trim();
+    public void setIdType(String idType) {
+        this.idType = idType == null ? null : idType.trim();
     }
 
-    public String getHmIdCard() {
-        return hmIdCard;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setHmIdCard(String hmIdCard) {
-        this.hmIdCard = hmIdCard == null ? null : hmIdCard.trim();
+    public void setIdCard(String idCard) {
+        this.idCard = idCard == null ? null : idCard.trim();
     }
 
-    public String getHmAddr() {
-        return hmAddr;
+    public String getAddr() {
+        return addr;
     }
 
-    public void setHmAddr(String hmAddr) {
-        this.hmAddr = hmAddr == null ? null : hmAddr.trim();
+    public void setAddr(String addr) {
+        this.addr = addr == null ? null : addr.trim();
     }
 
-    public String getHmSchoole() {
-        return hmSchoole;
+    public String getPlace() {
+        return place;
     }
 
-    public void setHmSchoole(String hmSchoole) {
-        this.hmSchoole = hmSchoole == null ? null : hmSchoole.trim();
+    public void setPlace(String place) {
+        this.place = place == null ? null : place.trim();
     }
 
-    public String getHmKimName() {
-        return hmKimName;
+    public String getSex() {
+        return sex;
     }
 
-    public void setHmKimName(String hmKimName) {
-        this.hmKimName = hmKimName == null ? null : hmKimName.trim();
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
     }
 
-    public String getHmKimMobile() {
-        return hmKimMobile;
+    public String getGrade() {
+        return grade;
     }
 
-    public void setHmKimMobile(String hmKimMobile) {
-        this.hmKimMobile = hmKimMobile == null ? null : hmKimMobile.trim();
+    public void setGrade(String grade) {
+        this.grade = grade == null ? null : grade.trim();
+    }
+
+    public String getSchoole() {
+        return schoole;
+    }
+
+    public void setSchoole(String schoole) {
+        this.schoole = schoole == null ? null : schoole.trim();
+    }
+
+    public String getIdphone() {
+        return idphone;
+    }
+
+    public void setIdphone(String idphone) {
+        this.idphone = idphone == null ? null : idphone.trim();
+    }
+
+    public String getKimName() {
+        return kimName;
+    }
+
+    public void setKimName(String kimName) {
+        this.kimName = kimName == null ? null : kimName.trim();
+    }
+
+    public String getKimMobile() {
+        return kimMobile;
+    }
+
+    public void setKimMobile(String kimMobile) {
+        this.kimMobile = kimMobile == null ? null : kimMobile.trim();
     }
 
     public Integer getIsActive() {
@@ -125,12 +165,12 @@ public class HollowManInfo implements Serializable {
         this.isActive = isActive;
     }
 
-    public String getActive() {
-        return active;
+    public String getActivedate() {
+        return activedate;
     }
 
-    public void setActive(String active) {
-        this.active = active == null ? null : active.trim();
+    public void setActivedate(String activedate) {
+        this.activedate = activedate == null ? null : activedate.trim();
     }
 
     public String getOpenid() {

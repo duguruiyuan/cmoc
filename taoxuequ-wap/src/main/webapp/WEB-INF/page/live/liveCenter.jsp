@@ -153,7 +153,7 @@
 				        
 				        Handlebars.registerHelper("activityImgFormat", function(activityImgUrl) {
 				        	if(activityImgUrl) {
-				        		return "${config.imgUrl}" + activityImgUrl;
+				        		return imgUrl + activityImgUrl;
 				        	}else {
 				        		return "<%=basePath %>/images/slider1.jpg";
 				        	}

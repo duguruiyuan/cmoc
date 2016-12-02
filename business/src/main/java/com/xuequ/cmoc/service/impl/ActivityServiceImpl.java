@@ -163,6 +163,7 @@ public class ActivityServiceImpl implements IActivityService {
 			if(man == null) {
 				man = BeanUtils.copyAs(hmSign, HollowManInfo.class);
 				man.setIsActive(1);
+				man.setActivedate(DateUtil.getDate(new Date()));
 				man.setCreater(user.getUserName());
 				hollowManInfoMapper.insertSelective(man);
 			}
