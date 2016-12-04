@@ -74,6 +74,23 @@
     order by s.id desc
   </select>
   
+  <select id="selectForSign" resultMap="BaseResultMap">
+  	SELECT am.id marine_id, am.marine_name, am.activity_id, am.activity_name,
+  	hm.id hm_id, hm.hm_name
+  	FROM t_activity_hm_sign hs
+	INNER JOIN t_hollow_man_info hm ON hs.hm_id = hm.id
+	INNER JOIN t_activity_marines am ON am.activity_id = hs.id
+	WHERE hs.is_delete = 'N' AND hs.is_effect = 1 
+	AND am.id = #{marineId,jdbcType=INTEGER}
+	AND hm.openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updateBindMarine" parameterType="com.xuequ.cmoc.model.ActivityHmSign">
+  	update t_activity_hm_sign set marine_id = #{marineId,jdbcType=INTEGER}
+  	where hm_id = #{hmId,jdbcType=INTEGER}
+  	and activity_id = #{activityId,jdbcType=INTEGER}
+  </update>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_hm_sign
     where id = #{id,jdbcType=INTEGER}

@@ -78,6 +78,10 @@ public class DateUtil {
 		return null;
 	}
 	
+	public static String dateToStr(Date date, String pattern) {
+		return new SimpleDateFormat(pattern).format(date);
+	}
+	
 	/**
 	 * 两个时间比较
 	 * date1 > date2 = 1

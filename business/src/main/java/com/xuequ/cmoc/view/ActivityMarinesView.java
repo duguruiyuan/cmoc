@@ -13,6 +13,8 @@ public class ActivityMarinesView extends ActivityMarines {
 	private String activityNum;
 	
 	private String activityType;
+	
+	private String marineTeam;
 
 	public String getActivityName() {
 		return activityName;
@@ -44,6 +46,14 @@ public class ActivityMarinesView extends ActivityMarines {
 
 	public void setActivityType(String activityType) {
 		this.activityType = activityType;
+	}
+
+	public String getMarineTeam() {
+		return marineTeam;
+	}
+
+	public void setMarineTeam(String marineTeam) {
+		this.marineTeam = marineTeam;
 	}
 	
 }

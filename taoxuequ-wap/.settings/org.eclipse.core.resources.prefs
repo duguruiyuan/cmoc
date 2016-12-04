@@ -3,6 +3,7 @@ encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/config.properties=UTF-8
 encoding//src/main/resources/global.properties=UTF-8
+encoding//src/main/resources/template.properties=UTF-8
 encoding//src/main/resources/wechat.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/page/course/detail.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/page/index.jsp=UTF-8

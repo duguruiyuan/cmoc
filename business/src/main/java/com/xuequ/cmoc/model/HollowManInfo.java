@@ -25,7 +25,7 @@ public class HollowManInfo implements Serializable {
 
     private String schoole;
 
-    private String idphone;
+    private String idPhoto;
 
     private String kimName;
 
@@ -109,7 +109,15 @@ public class HollowManInfo implements Serializable {
         this.place = place == null ? null : place.trim();
     }
 
-    public String getSex() {
+    public String getIdPhoto() {
+		return idPhoto;
+	}
+
+	public void setIdPhoto(String idPhoto) {
+		this.idPhoto = idPhoto;
+	}
+
+	public String getSex() {
         return sex;
     }
 
@@ -133,13 +141,7 @@ public class HollowManInfo implements Serializable {
         this.schoole = schoole == null ? null : schoole.trim();
     }
 
-    public String getIdphone() {
-        return idphone;
-    }
-
-    public void setIdphone(String idphone) {
-        this.idphone = idphone == null ? null : idphone.trim();
-    }
+    
 
     public String getKimName() {
         return kimName;

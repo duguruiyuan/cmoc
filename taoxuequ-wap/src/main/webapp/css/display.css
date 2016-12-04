@@ -340,7 +340,7 @@
 	position: absolute;
 	bottom: 30px;
 	padding-left: 27px;
-	color: #333;
+	color: #fff;
 	font-weight: bold;
 }
 .marines-banner-title1{
@@ -466,4 +466,186 @@
 }
 .art-content img{
 	max-width: 100%;
+}
+
+/*注册透明人*/
+.regTMHeader{
+	height: 200px;
+	text-align: center;
+	font-weight: bold;
+	color: #96959a;
+	display: -webkit-box;
+	display: box;
+	-webkit-box-align: center;
+	-webkit-box-pack: center;
+}
+.regTMPic{
+	width: 83px;
+	height: 83px;
+	border-radius: 100%;
+}
+.regTMTitle{
+	display: inline-block;
+	
+	margin: 5px 0;
+	
+	font-size: 22px;
+	color: #50b349;
+}
+.regTM-formTitle{
+	margin-left: 15px;
+	font-weight: bold;
+	padding: 10px 0;
+	color: #96959a;
+}
+.mui-input-group .mui-input-row.regMT-headPic{
+	margin-left: 15px;
+	padding-top: 10px;
+	height: 147px;
+}
+.regMT-headPic img{
+	width: 105px;
+	height: 105px;
+}
+#regMT-uploadInput{
+	z-index: 2;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 105px;
+	height: 105px;
+	opacity: .01;
+    filter: alpha(opacity=1);
+    cursor: pointer;
+}
+.regMT-btnWrap{
+	padding: 15px;
+}
+#regMT-btn{
+	padding: 0;
+	width: 100%;
+	height: 55px;
+	font-size: 24px;
+	line-height: 55px;
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+	background: #00bd13;
+	border: 1px #00ab16 solid;
+	border-radius: 8px;
+}
+.regMT-text p{
+	margin: 15px;
+	margin-top: 20px;
+	font-size: 18px;
+	color: #000;
+	font-weight: bold;
+	line-height: 1.5;
+}
+select.regMT-select{
+	z-index: 2;
+	background: none;
+}
+.regMT-select-arrow{
+	position: absolute;
+	right: 0;
+	top: 8px;
+}
+
+/*队伍列表和绑定*/
+.ranksList-title{
+	padding-left: 15px;
+	height: 42px;
+	line-height: 42px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #959595;
+}
+.ranksList{
+	font-weight: bold;
+	font-size: 16px;
+}
+.ranksList>.mui-table-view:first-child{
+	margin-top: 0;
+}
+.ranksList-content{
+	padding-right: 80px;
+	white-space: normal; 
+	color: #171717;
+}
+.ranksList-content .ranksList-people{
+	font-size: 14px;
+	color: #d4d4d4;
+}
+.ranksList-code{
+    position: absolute;
+    top: 50%;
+    right: 35px;
+    display: inline-block;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-decoration: none;
+    color: #959595;
+}
+.bdSearch label{
+	width: auto;
+}
+.bdSearch label~input{
+	float: none;
+	width: 150px;
+}
+.bdSearch button.mui-btn{
+    float: right;
+    margin-top: 2px;
+    margin-right: 10px;
+    width: auto;
+    line-height: 1;
+}
+.ranksList-time{
+	display: inline-block;
+	width: 70px;
+	text-align: center;
+}
+.ranksList-state{
+	color: #d9bb72;
+}
+
+/*弹出二维码*/
+.code{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+}
+.code-inner{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 260px;
+	height: 370px;
+	margin-left: -130px;
+	margin-top: -185px;
+	text-align: center;
+	background: #fff;
+	border-radius: 5px;
+}
+.code-title{
+	height: 80px;
+	line-height: 80px;
+	font-size: 14px;
+}
+.code-pic img{
+	width: 80%;
+}
+.code-btn{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	color: #008200;
+	font-weight: bold;
+	border-top: 1px #ccc solid;
 }

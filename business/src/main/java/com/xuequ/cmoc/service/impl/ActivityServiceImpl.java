@@ -207,4 +207,9 @@ public class ActivityServiceImpl implements IActivityService {
 		return activityInfoMapper.updateActivityImg(activityImg, id);
 	}
 
+	@Override
+	public List<ActivityInfo> selectScheduActivity(ActivityInfo info) {
+		return activityInfoMapper.selectScheduActivity(info);
+	}
+
 }

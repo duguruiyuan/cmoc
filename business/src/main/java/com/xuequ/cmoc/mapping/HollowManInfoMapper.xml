@@ -12,7 +12,7 @@
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="grade" jdbcType="VARCHAR" property="grade" />
     <result column="schoole" jdbcType="VARCHAR" property="schoole" />
-    <result column="idPhone" jdbcType="VARCHAR" property="idphone" />
+    <result column="id_photo" jdbcType="VARCHAR" property="idPhoto" />
     <result column="kim_name" jdbcType="VARCHAR" property="kimName" />
     <result column="kim_mobile" jdbcType="VARCHAR" property="kimMobile" />
     <result column="is_active" jdbcType="INTEGER" property="isActive" />
@@ -27,7 +27,7 @@
     <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, idPhone, 
+    id, hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, id_photo, 
     kim_name, kim_mobile, is_active, activeDate, openid, level, score, creater, create_time, 
     updater, update_time, is_delete
   </sql>
@@ -36,6 +36,18 @@
     <include refid="Base_Column_List" />
     from t_hollow_man_info
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_hollow_man_info
+    where is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectCountByOpenid" resultType="int">
+  	select count(1) from t_hollow_man_info
+    where is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
   </select>
   
   <select id="selectByNameMobile" resultMap="BaseResultMap" >
@@ -83,7 +95,7 @@
     insert into t_hollow_man_info (id, hm_name, hm_mobile, 
       id_type, id_card, addr, 
       place, sex, grade, 
-      schoole, idPhone, kim_name, 
+      schoole, id_photo, kim_name, 
       kim_mobile, is_active, activeDate, 
       openid, level, score, 
       creater, create_time, updater, 
@@ -91,7 +103,7 @@
     values (#{id,jdbcType=INTEGER}, #{hmName,jdbcType=VARCHAR}, #{hmMobile,jdbcType=VARCHAR}, 
       #{idType,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, 
       #{place,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
-      #{schoole,jdbcType=VARCHAR}, #{idphone,jdbcType=VARCHAR}, #{kimName,jdbcType=VARCHAR}, 
+      #{schoole,jdbcType=VARCHAR}, #{idPhoto,jdbcType=VARCHAR}, #{kimName,jdbcType=VARCHAR}, 
       #{kimMobile,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}, #{activedate,jdbcType=VARCHAR}, 
       #{openid,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
       #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, 
@@ -130,8 +142,8 @@
       <if test="schoole != null">
         schoole,
       </if>
-      <if test="idphone != null">
-        idPhone,
+      <if test="idPhoto != null">
+        id_photo,
       </if>
       <if test="kimName != null">
         kim_name,
@@ -201,8 +213,8 @@
       <if test="schoole != null">
         #{schoole,jdbcType=VARCHAR},
       </if>
-      <if test="idphone != null">
-        #{idphone,jdbcType=VARCHAR},
+      <if test="idPhoto != null">
+        #{idPhoto,jdbcType=VARCHAR},
       </if>
       <if test="kimName != null">
         #{kimName,jdbcType=VARCHAR},
@@ -272,8 +284,8 @@
       <if test="schoole != null">
         schoole = #{schoole,jdbcType=VARCHAR},
       </if>
-      <if test="idphone != null">
-        idPhone = #{idphone,jdbcType=VARCHAR},
+      <if test="idPhoto != null">
+        id_photo = #{idPhoto,jdbcType=VARCHAR},
       </if>
       <if test="kimName != null">
         kim_name = #{kimName,jdbcType=VARCHAR},
@@ -325,7 +337,7 @@
       sex = #{sex,jdbcType=VARCHAR},
       grade = #{grade,jdbcType=VARCHAR},
       schoole = #{schoole,jdbcType=VARCHAR},
-      idPhone = #{idphone,jdbcType=VARCHAR},
+      id_photo = #{idPhoto,jdbcType=VARCHAR},
       kim_name = #{kimName,jdbcType=VARCHAR},
       kim_mobile = #{kimMobile,jdbcType=VARCHAR},
       is_active = #{isActive,jdbcType=INTEGER},

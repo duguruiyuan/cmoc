@@ -32,6 +32,10 @@ public class WechatConfigure implements Serializable {
 	
 	private String snsUserInfo;
 	
+	private String qrcodeTicket;
+	
+	private String showQrcode;
+	
 	private static WechatConfigure configure;
 	
 	public synchronized static WechatConfigure getInstance() {
@@ -59,6 +63,8 @@ public class WechatConfigure implements Serializable {
 			configure.setOauth2Userinfo(prop.getString("oauth2_userinfo"));
 			configure.setUserInfo(prop.getString("user_info"));
 			configure.setSnsUserInfo(prop.getString("sns_user_info"));
+			configure.setQrcodeTicket(prop.getString("qrcode_ticket"));
+			configure.setShowQrcode(prop.getString("show_qrcode"));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -158,6 +164,22 @@ public class WechatConfigure implements Serializable {
 
 	public void setSnsUserInfo(String snsUserInfo) {
 		this.snsUserInfo = snsUserInfo;
+	}
+
+	public String getQrcodeTicket() {
+		return qrcodeTicket;
+	}
+
+	public void setQrcodeTicket(String qrcodeTicket) {
+		this.qrcodeTicket = qrcodeTicket;
+	}
+
+	public String getShowQrcode() {
+		return showQrcode;
+	}
+
+	public void setShowQrcode(String showQrcode) {
+		this.showQrcode = showQrcode;
 	}
 
 	public static WechatConfigure getConfigure() {

@@ -25,4 +25,8 @@ public interface HollowManInfoMapper {
     		@Param("hmMobile")String hmMobile);
     
     List<HollowManInfoView> selectByPage(Page<HollowManInfoView> page);
+    
+    HollowManInfo selectByOpenid(String openid);
+    
+    int selectCountByOpenid(String openid);
 }

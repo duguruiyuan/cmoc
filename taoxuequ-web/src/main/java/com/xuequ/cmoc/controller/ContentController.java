@@ -16,4 +16,9 @@ public class ContentController extends BaseController{
 	private String articleEdit() {
 		return "content/articleEdit";
 	}
+	
+	@RequestMapping("keyword")
+	public String index() {
+		return "content/keyword";
+	}
 }

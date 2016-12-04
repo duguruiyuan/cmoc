@@ -17,10 +17,10 @@
 	</appender>
 
 	<logger name="com.xuequ.cmoc">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	<logger name="jdbc.sqltiming">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	<root>
 		<level value="debug" />

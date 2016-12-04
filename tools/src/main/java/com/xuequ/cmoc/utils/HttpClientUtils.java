@@ -19,12 +19,15 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Created by hqm on 14-5-12.
@@ -160,6 +163,33 @@ public class HttpClientUtils {
 				}
 				postMethod.setEntity(new UrlEncodedFormEntity(nvs, charset));
 			}
+			//创建响应处理器处理服务器响应内容
+			HttpResponse response = client.execute(postMethod);
+			HttpEntity entity = response.getEntity(); 
+			String res = EntityUtils.toString(entity, charset);
+			LOG.info(">>httpclient post result:" + res);
+			return res;
+		} catch (IOException e) {
+			postMethod.abort();
+			throw new IOException("httpclint post 请求失败，url=" + url, e);
+		} finally {
+			postMethod.releaseConnection();
+		}
+	}
+	
+	public static String postJson(String url, Object params) throws IOException {
+		return invokePostJson(url, params, null);
+	}
+	private static String invokePostJson(String url, Object params, String charset) throws IOException {
+		if (charset == null || charset.isEmpty()) {
+			charset = DEFAULT_CHARSET;
+		}
+		String paramsJson = JSONObject.toJSONString(params);
+        LOG.info(">>httpclient post send url={},params={}",url, paramsJson);
+		HttpPost postMethod = new HttpPost(url);
+		HttpClient client = new DefaultHttpClient();
+		try {
+			postMethod.setEntity(new StringEntity(paramsJson, charset));
 			//创建响应处理器处理服务器响应内容
 			HttpResponse response = client.execute(postMethod);
 			HttpEntity entity = response.getEntity(); 

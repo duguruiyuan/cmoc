@@ -39,6 +39,14 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectScheduActivity" resultMap="BaseResultMap" parameterType="com.xuequ.cmoc.model.ActivityInfo">
+	  select 
+  	  <include refid="Base_Column_List" />
+      from t_activity_info where is_delete = 'N'
+      and start_date >= date(now())
+	  order by start_date
+  </select>
+  
   <select id="selectListByParam" resultMap="BaseResultMap" parameterType="com.xuequ.cmoc.model.ActivityInfo">
   	select 
   	<include refid="Base_Column_List" />
@@ -55,6 +63,7 @@
     <if test="params.startDate != null">
     	and start_date <![CDATA[ <= ]]> #{params.startDate,jdbcType=TIMESTAMP}
     </if>
+    order by start_date desc
   </select>
   
   <resultMap id="InfoBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityInfoView">

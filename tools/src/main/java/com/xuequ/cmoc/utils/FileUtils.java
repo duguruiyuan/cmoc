@@ -8,12 +8,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.xuequ.cmoc.common.Configuration;
+import com.xuequ.cmoc.common.Const;
+import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 
 /**
  * 文件相关工具类
@@ -206,5 +212,39 @@ public final class FileUtils {
                 || "bmp".equalsIgnoreCase(extName) || "png".equalsIgnoreCase(extName))
             return true;
         return false;
+    }
+    
+    public static String writeFile(String path, String imgName, MultipartFile buildInfo) {
+		path = ResourcePathEnum.IMGE.getValue() + Const.SEPARATOR + path;
+		String relativeAttachmentPath = Const.rootPath + path;
+        createDir(relativeAttachmentPath);
+        //数据库保存的文件路径
+        String realFileName = imgName == null ? UUID.randomUUID().toString() : imgName;
+        String extName = FileUtils.getExtName(buildInfo.getOriginalFilename());
+        realFileName += Const.DOT + extName;
+
+        // 文件保存磁盘的完整路径
+        String attachmentURL = relativeAttachmentPath + Const.SEPARATOR + realFileName;
+        try {
+            OutputStream os = new FileOutputStream(attachmentURL);
+            IOUtils.copy(buildInfo.getInputStream(), os);
+        }
+        catch (Exception e) {
+            throw new ZTRuntimeException(String.format("创建文件路径[%s]出错", relativeAttachmentPath), e);
+        }
+        String dataMemoryURL = path + Const.SEPARATOR + realFileName;
+        if(Configuration.getInstance().getEnv().equals("development")) {
+        	dataMemoryURL = extName + Const.SEPARATOR + dataMemoryURL;
+        	dataMemoryURL = dataMemoryURL.replaceAll(Const.SEPARATOR, Const.REPLACE_SEPARATOR);
+        }
+        return dataMemoryURL;
+	}
+	
+	public static void createDir(String uploadPath) {
+        File file = new File(uploadPath);
+        // 如果该文件目录不存在，则创建一个新的目录
+        if (!file.exists()) {
+            file.mkdirs();
+        }
     }
 }

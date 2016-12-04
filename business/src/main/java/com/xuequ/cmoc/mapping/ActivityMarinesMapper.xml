@@ -10,6 +10,8 @@
     <result column="line_name" property="lineName" jdbcType="VARCHAR" />
     <result column="line_id" property="lineId" jdbcType="INTEGER" />
     <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="votes" property="votes" jdbcType="INTEGER" />
     <result column="reads" property="reads" jdbcType="INTEGER" />
     <result column="score" property="score" jdbcType="INTEGER" />
@@ -22,8 +24,9 @@
     <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, marine_name, marine_img, marine_slogan, marine_prize, line_name, line_id, activity_id, 
-    votes, `reads`, score, creater_user_id, creater, create_time, updater_user_id, updater, 
+    id, marine_name, marine_img, marine_slogan, marine_prize, line_name, 
+    line_id, activity_id, status, comment, votes, `reads`, score, 
+    creater_user_id, creater, create_time, updater_user_id, updater, 
     update_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -43,12 +46,29 @@
   	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
     <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
     <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="marine_team" property="marineTeam" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <select id="selectMarineTeam" resultMap="PageBaseResultMap">
+  	SELECT 
+  	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
+  	m.line_id, activity_id, STATUS, COMMENT, votes, `reads`, score, m.creater, m.create_time,
+	a.activity_name,a.activity_num, a.activity_type, c.marine_team
+	FROM t_activity_marines m
+	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
+	INNER JOIN (
+		SELECT b.`marine_id`, GROUP_CONCAT(b.`child_name`) AS marine_team 
+		FROM t_activity_family b 
+		WHERE IS_DELETE='N' AND b.`activity_id` = #{activityId,jdbcType=INTEGER}
+		GROUP BY b.`marine_id`
+	) c ON m.`id` = c.marine_id
+	WHERE m.is_delete = 'N' AND activity_id = #{activityId,jdbcType=INTEGER}
+  </select>
   
   <select id="selectById" resultMap="PageBaseResultMap" parameterType="java.lang.Integer">
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id, votes, `reads`, score, m.creater, m.create_time,
+  	m.line_id, activity_id, status, comment, votes, `reads`, score, m.creater, m.create_time,
     a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
@@ -58,8 +78,8 @@
   <select id="selectListByPage" resultMap="PageBaseResultMap" >
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id, votes, `reads`, score, m.creater, m.create_time,
-    a.activity_name,a.activity_num, a.activity_type
+  	m.line_id, activity_id,  status, comment, votes, `reads`, score, m.creater, 
+  	m.create_time, a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
 	WHERE a.`is_delete` = 'N'
@@ -84,7 +104,10 @@
     order by m.id desc
   </select>
   
-  
+  <update id="updateBindMarine">
+  	update t_activity_marines set status = 1
+  	where id = #{id,jdbcType=INTEGER}
+  </update>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_marines
@@ -93,14 +116,15 @@
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
     insert into t_activity_marines (id, marine_name, marine_img, 
       marine_slogan, marine_prize, line_name, 
-      line_id, activity_id, votes, 
+      line_id, activity_id, status, comment, votes, 
       reads, score, creater_user_id, 
       creater, create_time, updater_user_id, 
       updater, update_time, is_delete
       )
     values (#{id,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{marineImg,jdbcType=VARCHAR}, 
       #{marineSlogan,jdbcType=VARCHAR}, #{marinePrize,jdbcType=VARCHAR}, #{lineName,jdbcType=VARCHAR}, 
-      #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{votes,jdbcType=INTEGER}, 
+      #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{votes,jdbcType=INTEGER}, 
       #{reads,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, 
       #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, 
       #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}
@@ -132,6 +156,12 @@
       </if>
       <if test="activityId != null" >
         activity_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="comment != null" >
+        comment,
       </if>
       <if test="votes != null" >
         votes,
@@ -189,6 +219,12 @@
       <if test="activityId != null" >
         #{activityId,jdbcType=INTEGER},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
       <if test="votes != null" >
         #{votes,jdbcType=INTEGER},
       </if>
@@ -245,6 +281,12 @@
       <if test="activityId != null" >
         activity_id = #{activityId,jdbcType=INTEGER},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
       <if test="votes != null" >
         votes = #{votes,jdbcType=INTEGER},
       </if>
@@ -287,6 +329,8 @@
       line_name = #{lineName,jdbcType=VARCHAR},
       line_id = #{lineId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
+      status = #{votes,jdbcType=INTEGER},
+      comment = #{reads,jdbcType=VARCHAR},
       votes = #{votes,jdbcType=INTEGER},
       reads = #{reads,jdbcType=INTEGER},
       score = #{score,jdbcType=INTEGER},

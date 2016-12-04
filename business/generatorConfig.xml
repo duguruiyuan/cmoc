@@ -32,11 +32,12 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table tableName="t_hollow_man_info" domainObjectName="HollowManInfo"
+		<table tableName="t_wechat_send_message" domainObjectName="WechatSendMessage"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
 			<property name="useActualColumnNames" value="false" />
 		</table>
+		
 	</context>
 </generatorConfiguration>

@@ -40,9 +40,22 @@ public interface IActivityService {
 	 * @return
 	 */
 	public RspResult addImportActivityNamelist(List<ActivityNamelistVO> list, SysUser user);
-	
+	/**
+	 * 分页查询活动信息
+	 * @auther 胡启萌
+	 * @Date 2016年12月4日
+	 * @param page
+	 * @return
+	 */
 	public List<ActivityInfo> selectListByParam(Page<ActivityInfo> page);
-	
+	/**
+	 * 查询排期的获取
+	 * @auther 胡启萌
+	 * @Date 2016年12月4日
+	 * @param info
+	 * @return
+	 */
+	public List<ActivityInfo> selectScheduActivity(ActivityInfo info);
 	ActivityResourceTypeView selectForUpload1(Integer activityId, String marineName, String childName);
     
     ActivityResourceTypeView selectForUpload(Integer activityId, String name);

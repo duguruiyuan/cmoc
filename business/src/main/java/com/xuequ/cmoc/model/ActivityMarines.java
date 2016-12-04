@@ -19,6 +19,10 @@ public class ActivityMarines implements Serializable {
     private Integer lineId;
 
     private Integer activityId;
+    
+    private Integer status;
+    
+    private String comment;
 
     private Integer votes;
 
@@ -108,7 +112,23 @@ public class ActivityMarines implements Serializable {
         this.activityId = activityId;
     }
 
-    public Integer getVotes() {
+    public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public Integer getVotes() {
         return votes;
     }
 

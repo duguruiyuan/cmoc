@@ -3,7 +3,8 @@ package com.xuequ.cmoc.common.enums;
 public enum ImgTypeEnum {
 	ACTIVITY("ACTIVITY","活动"),
 	MARINE("MARINE", "战队"),
-	MEMBER("MEMBER", "队员");
+	MEMBER("MEMBER", "队员"),
+	ID_PHOTO("IDPHOTO", "证件照");
 	
 	private final String code;
 	

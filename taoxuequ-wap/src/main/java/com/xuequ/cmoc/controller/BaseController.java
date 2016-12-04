@@ -21,6 +21,7 @@ import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.model.WechatSnsUserInfo;
+import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.utils.TextUtil;
 
 /**
@@ -54,8 +55,58 @@ public class BaseController {
 	protected Configuration configInstance() {
 		return Configuration.getInstance();
 	}
-	
+	/**
+	 * 是否关注跳转
+	 * @auther 胡启萌
+	 * @Date 2016年12月3日
+	 * @param model
+	 * @param viewUrl
+	 * @return
+	 */
 	public String wechatRedirect(Model model, String viewUrl) {
+		WechatSnsToken snsToken = null;
+		WechatUserInfo userInfo = null;
+		String type = request.getParameter("type");
+		String code = request.getParameter("code");
+		String state = request.getParameter("state");
+		logger.info("--type={},code={},state={}", type, code, state);
+		if("scope".equals(type)) {
+			String openid = request.getParameter("openid");
+			userInfo = WechatUtils.getUserInfo(WechatUtils.getWechatModel().getAccessToken(), openid);
+		}else {
+			code = request.getParameter("code");
+			state = request.getParameter("state");
+			if(StringUtils.isNotBlank(state) && StringUtils.isBlank(code)) {
+				return "redirect:/" + Configuration.getInstance().getWechatAttention();
+			}
+			if(StringUtils.isNotBlank(code)) {
+				snsToken = WechatUtils.getOpenidByCode(code);
+				userInfo = WechatUtils.getUserInfo(WechatUtils.getWechatModel().getAccessToken(),
+						snsToken.getOpenid());
+			}else {
+				WechatConfigure configure = WechatConfigure.getInstance();
+				String url = TextUtil.format(configure.getOauth2Userinfo(), 
+						new String[]{configure.getAppid()});
+				model.addAttribute("wechat_redirect", url);
+				return "openid.redir";
+			}
+		}
+		if(userInfo != null && userInfo.getSubscribe() == 0) {
+			return "redirect:/" + Configuration.getInstance().getWechatAttention();
+		}
+		model.addAttribute("snsToken", snsToken);
+		model.addAttribute("userInfo", userInfo);
+		return viewUrl;
+	}
+	/**
+	 * 网页授权跳转
+	 * @auther 胡启萌
+	 * @Date 2016年12月3日
+	 * @param model
+	 * @param viewUrl
+	 * @return
+	 */
+	public String wechatWebAuthRedirect(Model model, String viewUrl) {
 		WechatSnsToken snsToken = null;
 		WechatSnsUserInfo userInfo = null;
 		String type = request.getParameter("type");
@@ -71,7 +122,7 @@ public class BaseController {
 			code = request.getParameter("code");
 			state = request.getParameter("state");
 			if(StringUtils.isNotBlank(state) && StringUtils.isBlank(code)) {
-				return "noAssess";
+				return "redirect:/" + Configuration.getInstance().getWechatAttention();
 			}
 			if(StringUtils.isNotBlank(code)) {
 				snsToken = WechatUtils.getOpenidByCode(code);
@@ -82,13 +133,12 @@ public class BaseController {
 				String url = TextUtil.format(configure.getOauth2Userinfo(), 
 						new String[]{configure.getAppid()});
 				model.addAttribute("wechat_redirect", url);
-				return "redir";
+				return "web.redir";
 			}
 		}
 		model.addAttribute("snsToken", snsToken);
 		model.addAttribute("userInfo", userInfo);
 		return viewUrl;
 	}
-	
 	
 }

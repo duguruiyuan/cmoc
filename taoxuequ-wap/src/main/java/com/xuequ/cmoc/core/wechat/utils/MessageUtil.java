@@ -25,7 +25,7 @@ public class MessageUtil {
     // 事件类型：unsubscribe(取消订阅)
     public static final String EVENT_TYPE_UNSUBSCRIBE = "unsubscribe";
     // 事件类型：scan(用户已关注时的扫描带参数二维码)
-    public static final String EVENT_TYPE_SCAN = "scan";
+    public static final String EVENT_TYPE_SCAN = "SCAN";
     // 事件类型：LOCATION(上报地理位置)
     public static final String EVENT_TYPE_LOCATION = "LOCATION";
     // 事件类型：CLICK(自定义菜单)
@@ -43,5 +43,13 @@ public class MessageUtil {
     public static final String RESP_MESSAGE_TYPE_MUSIC = "music";
     // 响应消息类型：图文
     public static final String RESP_MESSAGE_TYPE_NEWS = "news";
+    
+    //临时二维码
+    public static final String QR_SCENE = "QR_SCENE";
+    //永久二维码
+    public static final String QR_LIMIT_SCENE = "QR_LIMIT_SCENE";
+    
+    //绑定战队
+    public static final int BIND_TYPE_MARINE = 1;
     
 }

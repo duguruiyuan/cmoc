@@ -39,6 +39,7 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 		<property name="locations">
 			<list>
 				<value>classpath:config.properties</value>
+				<value>classpath:template.properties</value>
 			</list>
 		</property>
 	</bean>

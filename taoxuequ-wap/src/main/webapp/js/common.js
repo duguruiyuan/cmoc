@@ -18,21 +18,7 @@ function addDate(date,day){
 }
 
 function getAccessToken(wechat_redirect) {
-	var snsTokenExpire = window.localStorage.getItem("snsTokenExpire");	
-	var snsToken = JSON.parse(window.localStorage.getItem("snsToken"));
-	var currUrl = window.location.href;
-	var start = true;
-	if(snsToken != null && snsTokenExpire != null) {
-		if(snsTokenExpire > new Date().getTime()) {
-			start = false;
-			window.location.href = currUrl + "?type=scope&token=" + snsToken.refresh_token;
-		}
-	}
-	if(start){
-		currUrl = encodeURIComponent(currUrl);
-		currUrl = wechat_redirect.replace('{1}', currUrl);
-		window.location.href = currUrl;
-	}
+	
 }
 
 function setAccessToken(snsToken) {

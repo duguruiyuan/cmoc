@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +32,14 @@ import com.xuequ.cmoc.core.wechat.utils.SerializeXmlUtil;
 import com.xuequ.cmoc.core.wechat.utils.SignUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatModel;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.model.WechatSendMessage;
+import com.xuequ.cmoc.service.IActivityMarinesService;
+import com.xuequ.cmoc.service.IKeywordService;
+import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
+import com.xuequ.cmoc.utils.PropertiesUtil;
+import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.utils.TextUtil;
 
 @RequestMapping("wechat")
@@ -39,6 +47,10 @@ import com.xuequ.cmoc.utils.TextUtil;
 public class WechatController {
 	
 	private static Logger logger = LoggerFactory.getLogger(WechatController.class);
+	@Autowired
+	private IActivityMarinesService activityMarinesService;
+	@Autowired
+	private IKeywordService keywordService;
 	
 	/**
 	 * 微信令牌校验，用户消息接收
@@ -122,7 +134,7 @@ public class WechatController {
         respMessage(xmlMsg.toString(), response);
     }
 	
-	public static void respMessage(String xmlMsg, HttpServletResponse response) throws IOException{
+	public void respMessage(String xmlMsg, HttpServletResponse response) throws IOException{
 		logger.info("--wechat reqMessage, params={}", xmlMsg);
 		// 将POST流转换为XStream对象  
         XStream xs = SerializeXmlUtil.createXstream();  
@@ -135,7 +147,7 @@ public class WechatController {
   
         String servername = inputMsg.getToUserName();// 服务端  
         String custermname = inputMsg.getFromUserName();// 客户端  
-        long createTime = inputMsg.getCreateTime();// 接收时间  
+//      long createTime = inputMsg.getCreateTime();// 接收时间  
         Long returnTime = Calendar.getInstance().getTimeInMillis() / 1000;// 返回时间  
   
         // 取得消息类型  
@@ -147,30 +159,13 @@ public class WechatController {
         String respContent = null;
         // 根据消息类型获取对应的消息内容  
         if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {  
-            // 文本消息  
-            System.out.println("开发者微信号：" + inputMsg.getToUserName());  
-            System.out.println("发送方帐号：" + inputMsg.getFromUserName());  
-            System.out.println("消息创建时间：" + inputMsg.getCreateTime() + new Date(createTime * 1000l));  
-            System.out.println("消息内容：" + inputMsg.getContent());  
-            System.out.println("消息Id：" + inputMsg.getMsgId());  
-            outputMsg.setContent("欢迎光临");
-            outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-            logger.info("outMesg={}", xs.toXML(outputMsg));
-            response.getWriter().write(xs.toXML(outputMsg)); 
+        	reqMessageTypeTextOutput(outputMsg, inputMsg);
         } // 获取并返回多图片消息  
         else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {  
-            System.out.println("获取多媒体信息");  
-            System.out.println("多媒体文件id：" + inputMsg.getMediaId());  
-            System.out.println("图片链接：" + inputMsg.getPicUrl());  
-            System.out.println("消息id，64位整型：" + inputMsg.getMsgId());  
-            
             ImageMessage images = new ImageMessage();  
             images.setMediaId(inputMsg.getMediaId());
             outputMsg.setImage(images);
             outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
-            logger.info("outMesg={}", xs.toXML(outputMsg));
-            response.getWriter().write(xs.toXML(outputMsg));  
-  
         }// 视频消息
 		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_SHORTVIDEO)) {
 			VideoMessage videoMessage = new VideoMessage();
@@ -179,29 +174,13 @@ public class WechatController {
 			videoMessage.setDescription("芳草无，贪念何必花一枝");
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VIDEO);
 			outputMsg.setVideo(videoMessage);
-			logger.info("outMesg={}", xs.toXML(outputMsg));
-			response.getWriter().write(xs.toXML(outputMsg));  
 		}else {
         	// 语音消息
     		if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
     			List<ArticleItem> list = new ArrayList<>();
-    			ArticleItem item = new ArticleItem();
-    	        item.setTitle("战队列表");
-    	        item.setDescription("雄赳赳，气昂昂！");
-    	        item.setPicUrl("http://mmbiz.qpic.cn/mmbiz_jpg/Fs56wbhf57MaCGuoRp1JJf0d8PtpMiaD1WiclzvfAvP5icoYXFzx58cSBVwCdR7kntwoLKNHV21dAiaOnpRIqjJYTQ/0");
-    	        item.setUrl("http://m.xue110.top/live");
-    	        list.add(item);
-    	        ArticleItem item1 = new ArticleItem();
-    	        item1.setTitle("点击我们");
-    	        item1.setDescription("雄赳赳，气昂昂，支持我们！");
-    	        item1.setPicUrl("http://www.xue110.top/images/taoxuequ.jpg");
-    	        item1.setUrl("http://m.xue110.top/live");
-    	        list.add(item1);
     	        outputMsg.setArticles(list);
     	        outputMsg.setArticleCount(list.size());
     	        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
-    	        logger.info("outMesg={}", xs.toXML(outputMsg));
-                response.getWriter().write(xs.toXML(outputMsg));  
     		}
     		// 视频消息
     		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
@@ -214,7 +193,6 @@ public class WechatController {
     		// 链接消息
     		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
     			respContent = "您发送的是链接消息！";
-    			
     		}
     		// 事件推送
     		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
@@ -230,7 +208,8 @@ public class WechatController {
     			}
     			// 扫描带参数二维码
     			else if (eventType.equals(MessageUtil.EVENT_TYPE_SCAN)) {
-    				// TODO 处理扫描带参数二维码事件
+    				String eventKey = inputMsg.getEventKey();
+    				eventTypeScanOutPut(outputMsg, eventKey, inputMsg.getFromUserName());
     			}
     			// 上报地理位置
     			else if (eventType.equals(MessageUtil.EVENT_TYPE_LOCATION)) {
@@ -240,11 +219,71 @@ public class WechatController {
     			else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
     				// TODO 处理菜单点击事件
     			}
+    		}else {
+    			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+                outputMsg.setContent(respContent);
     		}
-    		outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-            outputMsg.setContent(respContent);
             logger.info("outMesg={}", xs.toXML(outputMsg));
-            response.getWriter().write(xs.toXML(outputMsg));
+            response.getWriter().write(xs.toXML(outputMsg)); 
+		}
+	}
+	
+	/**
+	 * 文本消息响应
+	 * @auther 胡启萌
+	 * @Date 2016年12月4日
+	 * @param outputMsg
+	 * @param inputMsg
+	 */
+	private void reqMessageTypeTextOutput(OutputMessage outputMsg, InputMessage inputMsg) {
+		List<WechatSendMessage> list = keywordService.selectListByParams(inputMsg.getContent());
+		if(!StringUtil.isNullOrEmpty(list)) {
+			if(MessageUtil.RESP_MESSAGE_TYPE_NEWS.equals(list.get(0).getMsgtype())) {
+				outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+				List<ArticleItem> newsList = new ArrayList<>();
+				for(WechatSendMessage message : list) {
+	    			ArticleItem item = new ArticleItem();
+	    	        item.setTitle(message.getTitle());
+	    	        item.setDescription(message.getDescription());
+	    	        item.setPicUrl(message.getPicurl());
+	    	        item.setUrl(message.getUrl());
+	    	        newsList.add(item);
+				}
+				outputMsg.setArticleCount(newsList.size());
+				outputMsg.setArticles(newsList);
+			}
+		}else {
+			outputMsg.setContent("欢迎光临逃学趣");
+	        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+		}
+	}
+	
+	/**
+	 * 扫描带参数二维码响应
+	 * @auther 胡启萌
+	 * @Date 2016年12月4日
+	 * @param outputMsg
+	 * @param eventKey
+	 * @param openid
+	 */
+	private void eventTypeScanOutPut(OutputMessage outputMsg, String eventKey, String openid) {
+		int type = Integer.parseInt(eventKey.substring(0, eventKey.indexOf("0"))); 
+		if(MessageUtil.BIND_TYPE_MARINE == type) {
+			Integer marineId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length())); 
+			RspResult rspResult = activityMarinesService.updateHmBindMarine(marineId, openid);
+			String content = null;
+			if(StatusEnum.SUCCESS.getCode().equals(rspResult.getCode())) {
+				content = PropertiesUtil.getProperty("hm_regiter_success");
+				ActivityHmSign hmSign = (ActivityHmSign) rspResult.getData();
+				String url = "/manage/marine?mid=" + hmSign.getActivityId() + "&hid=" + hmSign.getHmId();
+				content = TextUtil.format(content, new String[]{hmSign.getActivityName(), hmSign.getHmName(), 
+						hmSign.getMarineName(), String.valueOf(hmSign.getMarineId()), 
+						DateUtil.dateToStr(hmSign.getUpdateTime(), DateUtil.DEFAULT_DATE_FORMAT), url});
+			}else {
+				content = rspResult.getMsg();
+			}
+			outputMsg.setContent(content);
+			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 		}
 	}
 	

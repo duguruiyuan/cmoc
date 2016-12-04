@@ -29,4 +29,8 @@ public interface ActivityMarinesMapper {
     
     int updateMarineImg(@Param("marineImg")String marineImg, 
     		@Param("id")Integer id);
+    
+    int updateBindMarine(Integer id);
+    
+    List<ActivityMarinesView> selectMarineTeam(Integer activityId);
 }

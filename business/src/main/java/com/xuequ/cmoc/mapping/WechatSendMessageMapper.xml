@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.WechatSendMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.WechatSendMessage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="keyId" property="keyid" jdbcType="INTEGER" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="msgType" property="msgtype" jdbcType="VARCHAR" />
+    <result column="mediaId" property="mediaid" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="picUrl" property="picurl" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="musicUrl" property="musicurl" jdbcType="VARCHAR" />
+    <result column="hqMusicUrl" property="hqmusicurl" jdbcType="VARCHAR" />
+    <result column="thumbMediaId" property="thumbmediaid" jdbcType="VARCHAR" />
+    <result column="isDelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, keyId, keyword, msgType, mediaId, content, title, description, picUrl, url, musicUrl, 
+    hqMusicUrl, thumbMediaId, isDelete, creater, createTime, updater, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_wechat_send_message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectListByParams" resultMap="BaseResultMap">
+  	select 
+    m.id, keyId, k.keyword, k.msgType, mediaId, content, title, description, picUrl, url, musicUrl, 
+    hqMusicUrl, thumbMediaId, m.creater, m.createTime
+    from t_wechat_send_message m,t_wechat_keyword k
+    where m.keyId = k.id and m.isDelete = 'N' and k.isDelete = 'N'
+    <if test="keyId != null">
+    	and k.id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="keyword != null">
+    	and k.keyword = #{keyword,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_wechat_send_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.WechatSendMessage" >
+    insert into t_wechat_send_message (id, keyId, keyword, 
+      msgType, mediaId, content, 
+      title, description, picUrl, 
+      url, musicUrl, hqMusicUrl, 
+      thumbMediaId, isDelete, creater, 
+      createTime, updater, updateTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{keyid,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, 
+      #{msgtype,jdbcType=VARCHAR}, #{mediaid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{musicurl,jdbcType=VARCHAR}, #{hqmusicurl,jdbcType=VARCHAR}, 
+      #{thumbmediaid,jdbcType=VARCHAR}, #{isdelete,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.WechatSendMessage" >
+    insert into t_wechat_send_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="keyid != null" >
+        keyId,
+      </if>
+      <if test="keyword != null" >
+        keyword,
+      </if>
+      <if test="msgtype != null" >
+        msgType,
+      </if>
+      <if test="mediaid != null" >
+        mediaId,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="picurl != null" >
+        picUrl,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="musicurl != null" >
+        musicUrl,
+      </if>
+      <if test="hqmusicurl != null" >
+        hqMusicUrl,
+      </if>
+      <if test="thumbmediaid != null" >
+        thumbMediaId,
+      </if>
+      <if test="isdelete != null" >
+        isDelete,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="keyid != null" >
+        #{keyid,jdbcType=INTEGER},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtype != null" >
+        #{msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaid != null" >
+        #{mediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="musicurl != null" >
+        #{musicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="hqmusicurl != null" >
+        #{hqmusicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbmediaid != null" >
+        #{thumbmediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.WechatSendMessage" >
+    update t_wechat_send_message
+    <set >
+      <if test="keyid != null" >
+        keyId = #{keyid,jdbcType=INTEGER},
+      </if>
+      <if test="keyword != null" >
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtype != null" >
+        msgType = #{msgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaid != null" >
+        mediaId = #{mediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        picUrl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="musicurl != null" >
+        musicUrl = #{musicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="hqmusicurl != null" >
+        hqMusicUrl = #{hqmusicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbmediaid != null" >
+        thumbMediaId = #{thumbmediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isDelete = #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.WechatSendMessage" >
+    update t_wechat_send_message
+    set keyId = #{keyid,jdbcType=INTEGER},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      msgType = #{msgtype,jdbcType=VARCHAR},
+      mediaId = #{mediaid,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      picUrl = #{picurl,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      musicUrl = #{musicurl,jdbcType=VARCHAR},
+      hqMusicUrl = #{hqmusicurl,jdbcType=VARCHAR},
+      thumbMediaId = #{thumbmediaid,jdbcType=VARCHAR},
+      isDelete = #{isdelete,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updater = #{updater,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

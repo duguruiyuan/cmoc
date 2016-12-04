@@ -16,7 +16,7 @@ public class WechatUserInfo implements Serializable {
 	/*
 	 * 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息
 	 */
-	private String subscribe;
+	private int subscribe;
 	/*
 	 * 	用户的标识，对当前公众号唯一
 	 */
@@ -67,10 +67,10 @@ public class WechatUserInfo implements Serializable {
 	 */
 	private String groupid;
 	
-	public String getSubscribe() {
+	public int getSubscribe() {
 		return subscribe;
 	}
-	public void setSubscribe(String subscribe) {
+	public void setSubscribe(int subscribe) {
 		this.subscribe = subscribe;
 	}
 	public String getOpenid() {

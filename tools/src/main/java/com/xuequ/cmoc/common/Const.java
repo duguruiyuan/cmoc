@@ -1,5 +1,7 @@
 package com.xuequ.cmoc.common;
 
+import java.util.Map;
+
 import com.xuequ.cmoc.utils.PropertiesUtil;
 
 public final class Const {
@@ -13,4 +15,6 @@ public final class Const {
 	public static final String DOT = ".";
 	
 	public static String rootPath = PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_resource.url");
+
+	public static final String SYS_USER = "admin";
 }

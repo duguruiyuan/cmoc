@@ -27,6 +27,8 @@ public interface ActivityInfoMapper {
 
     List<ActivityInfo> selectListByParam(Page<ActivityInfo> page);
     
+    List<ActivityInfo> selectScheduActivity(ActivityInfo info);
+    
     ActivityResourceTypeView selectForUpload1(@Param("activityId")Integer activityId,
     		@Param("marineName")String marineName, @Param("childName")String childName);
     

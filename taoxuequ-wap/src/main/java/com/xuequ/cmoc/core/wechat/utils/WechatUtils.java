@@ -10,6 +10,10 @@ import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.core.wechat.model.WechatActionInfo;
+import com.xuequ.cmoc.core.wechat.model.WechatQrcodeReq;
+import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
+import com.xuequ.cmoc.core.wechat.model.WechatScene;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.model.WechatSnsUserInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
@@ -185,6 +189,29 @@ public class WechatUtils {
 			return JsonUtils.jsonToObject(jsonObject.toString(), WechatSnsToken.class);
 		} catch (IOException e) {
 			logger.error("--getOpenidByFefreshToken, error={}", e);
+		}
+		return null;
+	}
+	
+	public static WechatQrcodeRsp getQrcode(String qrcodeType, int type, Integer id) throws Exception{
+		WechatModel model = WechatUtils.getWechatModel();
+		String url = TextUtil.format(WechatConfigure.getInstance().getQrcodeTicket(), 
+				model.getAccessToken());
+		WechatQrcodeReq req = new WechatQrcodeReq();
+		WechatActionInfo info = new WechatActionInfo();
+		WechatScene scene = new WechatScene();
+		Long time = DateTypeUtils.getSceneId(type, id);
+		scene.setScene_id(time);
+		info.setScene(scene);
+		req.setAction_info(info);
+		if(MessageUtil.QR_SCENE.equals(qrcodeType)) {
+			req.setExpire_seconds(604800L);
+		}
+		req.setAction_name(qrcodeType);
+		String response = HttpClientUtils.postJson(url, req);
+		JSONObject jsonObject = JSONObject.parseObject(response);
+		if(jsonObject.getString("errcode") == null) {
+			return JsonUtils.jsonToObject(response, WechatQrcodeRsp.class);
 		}
 		return null;
 	}
