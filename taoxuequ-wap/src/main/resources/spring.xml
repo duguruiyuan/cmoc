@@ -36,6 +36,7 @@ http://www.springframework.org/schema/task/spring-task-4.0.xsd"
 	<!-- 应用属性文件读入 -->
 	<bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="ignoreResourceNotFound" value="false" />
+		<property name="fileEncoding" value="UTF-8"/>
 		<property name="locations">
 			<list>
 				<value>classpath:config.properties</value>
