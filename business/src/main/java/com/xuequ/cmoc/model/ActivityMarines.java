@@ -26,9 +26,11 @@ public class ActivityMarines implements Serializable {
 
     private Integer votes;
 
-    private Integer reads;
+    private Integer readnum;
 
     private Integer score;
+    
+    private String qrcodeUrl;
 
     private Integer createrUserId;
 
@@ -135,16 +137,16 @@ public class ActivityMarines implements Serializable {
     public void setVotes(Integer votes) {
         this.votes = votes;
     }
+    
+    public Integer getReadnum() {
+		return readnum;
+	}
 
-    public Integer getReads() {
-        return reads;
-    }
+	public void setReadnum(Integer readnum) {
+		this.readnum = readnum;
+	}
 
-    public void setReads(Integer reads) {
-        this.reads = reads;
-    }
-
-    public Integer getScore() {
+	public Integer getScore() {
         return score;
     }
 
@@ -152,7 +154,15 @@ public class ActivityMarines implements Serializable {
         this.score = score;
     }
 
-    public Integer getCreaterUserId() {
+    public String getQrcodeUrl() {
+		return qrcodeUrl;
+	}
+
+	public void setQrcodeUrl(String qrcodeUrl) {
+		this.qrcodeUrl = qrcodeUrl;
+	}
+
+	public Integer getCreaterUserId() {
         return createrUserId;
     }
 

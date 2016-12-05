@@ -13,7 +13,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>战队列表-陶学趣</title>
+		<title>战队列表[陶学趣]</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />

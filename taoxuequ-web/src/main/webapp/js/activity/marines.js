@@ -88,7 +88,7 @@ function loadData() {
 			align : "center",
 			resizable : true
 		}, {
-			field : 'reads',
+			field : 'readnum',
 			title : '阅读量',
 			align : "center",
 			resizable : true

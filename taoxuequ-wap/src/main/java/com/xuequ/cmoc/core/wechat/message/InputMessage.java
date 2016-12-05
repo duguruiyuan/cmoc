@@ -53,13 +53,13 @@ public class InputMessage implements Serializable {
     // 位置消息  
     //地理位置维度
     @XStreamAlias("Location_X")  
-    private String locationX;  
+    private Float locationX;  
     //地理位置经度
     @XStreamAlias("Location_Y")  
-    private String locationY;  
+    private Float locationY;  
     //地图缩放大小
     @XStreamAlias("Scale")  
-    private Long scale;  
+    private Integer scale;  
     //地理位置信息
     @XStreamAlias("Label")  
     private String label;  
@@ -160,22 +160,22 @@ public class InputMessage implements Serializable {
 	public void setThumbMediaId(String thumbMediaId) {
 		this.thumbMediaId = thumbMediaId;
 	}
-	public String getLocationX() {
+	public Float getLocationX() {
 		return locationX;
 	}
-	public void setLocationX(String locationX) {
+	public void setLocationX(Float locationX) {
 		this.locationX = locationX;
 	}
-	public String getLocationY() {
+	public Float getLocationY() {
 		return locationY;
 	}
-	public void setLocationY(String locationY) {
+	public void setLocationY(Float locationY) {
 		this.locationY = locationY;
 	}
-	public Long getScale() {
+	public Integer getScale() {
 		return scale;
 	}
-	public void setScale(Long scale) {
+	public void setScale(Integer scale) {
 		this.scale = scale;
 	}
 	public String getLabel() {

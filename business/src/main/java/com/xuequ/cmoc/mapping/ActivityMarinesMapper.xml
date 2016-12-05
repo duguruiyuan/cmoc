@@ -13,8 +13,9 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="votes" property="votes" jdbcType="INTEGER" />
-    <result column="reads" property="reads" jdbcType="INTEGER" />
+    <result column="readnum" property="readnum" jdbcType="INTEGER" />
     <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="qrcode_url" property="qrcodeUrl" jdbcType="VARCHAR" />
     <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -25,7 +26,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, marine_name, marine_img, marine_slogan, marine_prize, line_name, 
-    line_id, activity_id, status, comment, votes, `reads`, score, 
+    line_id, activity_id, status, comment, votes, `readnum`, score, qrcode_url,
     creater_user_id, creater, create_time, updater_user_id, updater, 
     update_time, is_delete
   </sql>
@@ -52,7 +53,8 @@
   <select id="selectMarineTeam" resultMap="PageBaseResultMap">
   	SELECT 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id, STATUS, COMMENT, votes, `reads`, score, m.creater, m.create_time,
+  	m.line_id, activity_id, STATUS, COMMENT, votes, `readnum`, score, 
+  	m.qrcode_url, m.creater, m.create_time,
 	a.activity_name,a.activity_num, a.activity_type, c.marine_team
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
@@ -68,7 +70,8 @@
   <select id="selectById" resultMap="PageBaseResultMap" parameterType="java.lang.Integer">
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id, status, comment, votes, `reads`, score, m.creater, m.create_time,
+  	m.line_id, activity_id, status, comment, votes, `readnum`, score, 
+  	m.qrcode_url, m.creater, m.create_time,
     a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
@@ -78,8 +81,8 @@
   <select id="selectListByPage" resultMap="PageBaseResultMap" >
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id,  status, comment, votes, `reads`, score, m.creater, 
-  	m.create_time, a.activity_name,a.activity_num, a.activity_type
+  	m.line_id, activity_id,  status, comment, votes, `readnum`, score, m.qrcode_url,
+  	m.creater, m.create_time, a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
 	WHERE a.`is_delete` = 'N'
@@ -117,15 +120,15 @@
     insert into t_activity_marines (id, marine_name, marine_img, 
       marine_slogan, marine_prize, line_name, 
       line_id, activity_id, status, comment, votes, 
-      reads, score, creater_user_id, 
+      readnum, score, qrcode_url, creater_user_id, 
       creater, create_time, updater_user_id, 
       updater, update_time, is_delete
       )
     values (#{id,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{marineImg,jdbcType=VARCHAR}, 
       #{marineSlogan,jdbcType=VARCHAR}, #{marinePrize,jdbcType=VARCHAR}, #{lineName,jdbcType=VARCHAR}, 
       #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{comment,jdbcType=VARCHAR}, #{votes,jdbcType=INTEGER}, 
-      #{reads,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{votes,jdbcType=INTEGER}, #{readnum,jdbcType=INTEGER}, 
+      #{score,jdbcType=INTEGER}, #{qrcodeUrl,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, 
       #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, 
       #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}
       )
@@ -166,11 +169,14 @@
       <if test="votes != null" >
         votes,
       </if>
-      <if test="reads != null" >
-        reads,
+      <if test="readnum != null" >
+        readnum,
       </if>
       <if test="score != null" >
         score,
+      </if>
+      <if test="qrcodeUrl != null" >
+        qrcode_url,
       </if>
       <if test="createrUserId != null" >
         creater_user_id,
@@ -228,11 +234,14 @@
       <if test="votes != null" >
         #{votes,jdbcType=INTEGER},
       </if>
-      <if test="reads != null" >
-        #{reads,jdbcType=INTEGER},
+      <if test="readnum != null" >
+        #{readnum,jdbcType=INTEGER},
       </if>
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
+      </if>
+      <if test="qrcodeUrl != null" >
+        #{qrcodeUrl,jdbcType=VARCHAR},
       </if>
       <if test="createrUserId != null" >
         #{createrUserId,jdbcType=INTEGER},
@@ -290,11 +299,14 @@
       <if test="votes != null" >
         votes = #{votes,jdbcType=INTEGER},
       </if>
-      <if test="reads != null" >
-        reads = #{reads,jdbcType=INTEGER},
+      <if test="readnum != null" >
+        readnum = #{readnum,jdbcType=INTEGER},
       </if>
       <if test="score != null" >
         score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="qrcodeUrl != null" >
+        qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
       </if>
       <if test="createrUserId != null" >
         creater_user_id = #{createrUserId,jdbcType=INTEGER},
@@ -330,10 +342,11 @@
       line_id = #{lineId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
       status = #{votes,jdbcType=INTEGER},
-      comment = #{reads,jdbcType=VARCHAR},
+      comment = #{readnum,jdbcType=VARCHAR},
       votes = #{votes,jdbcType=INTEGER},
-      reads = #{reads,jdbcType=INTEGER},
+      readnum = #{readnum,jdbcType=INTEGER},
       score = #{score,jdbcType=INTEGER},
+      qrcodeUrl = #{qrcodeUrl,jdbcType=VARCHAR},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

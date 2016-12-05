@@ -11,6 +11,7 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.thoughtworks.xstream.XStream;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.common.enums.WechatReqMsgType;
 import com.xuequ.cmoc.core.wechat.message.ArticleItem;
 import com.xuequ.cmoc.core.wechat.message.ImageMessage;
 import com.xuequ.cmoc.core.wechat.message.InputMessage;
@@ -33,12 +35,17 @@ import com.xuequ.cmoc.core.wechat.utils.SignUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatModel;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.model.WechatSendMessage;
+import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IKeywordService;
+import com.xuequ.cmoc.service.IWechatMessageService;
+import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
+import com.xuequ.cmoc.utils.RequestUtil;
 import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.utils.TextUtil;
 
@@ -47,10 +54,17 @@ import com.xuequ.cmoc.utils.TextUtil;
 public class WechatController {
 	
 	private static Logger logger = LoggerFactory.getLogger(WechatController.class);
+	
+	public static String BASEPATH = null;
+	
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
 	private IKeywordService keywordService;
+	@Autowired
+	private IActivityHmService activityHmService;
+	@Autowired
+	private IWechatMessageService wechatMessageService;
 	
 	/**
 	 * 微信令牌校验，用户消息接收
@@ -62,6 +76,7 @@ public class WechatController {
 	@RequestMapping(value = "/token")
 	public void token(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+		if(StringUtils.isBlank(BASEPATH)) BASEPATH = RequestUtil.getBasePath(request);
 		boolean isGet = request.getMethod().toLowerCase().equals("get");
 		logger.info("-----isGet={}", isGet);
 		if(isGet) {
@@ -147,9 +162,8 @@ public class WechatController {
   
         String servername = inputMsg.getToUserName();// 服务端  
         String custermname = inputMsg.getFromUserName();// 客户端  
-//      long createTime = inputMsg.getCreateTime();// 接收时间  
         Long returnTime = Calendar.getInstance().getTimeInMillis() / 1000;// 返回时间  
-  
+        
         // 取得消息类型  
         String msgType = inputMsg.getMsgType();  
         OutputMessage outputMsg = new OutputMessage();  
@@ -161,41 +175,24 @@ public class WechatController {
         if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {  
         	reqMessageTypeTextOutput(outputMsg, inputMsg);
         } // 获取并返回多图片消息  
-        else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {  
-            ImageMessage images = new ImageMessage();  
-            images.setMediaId(inputMsg.getMediaId());
-            outputMsg.setImage(images);
-            outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_IMAGE);
+        else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
+        	insertWechatReceiveMessage(outputMsg, inputMsg);
         }// 视频消息
 		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_SHORTVIDEO)) {
-			VideoMessage videoMessage = new VideoMessage();
-			videoMessage.setMediaId(inputMsg.getMediaId());
-			videoMessage.setTitle("abc");
-			videoMessage.setDescription("芳草无，贪念何必花一枝");
-			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_VIDEO);
-			outputMsg.setVideo(videoMessage);
-		}else {
-        	// 语音消息
-    		if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
-    			List<ArticleItem> list = new ArrayList<>();
-    	        outputMsg.setArticles(list);
-    	        outputMsg.setArticleCount(list.size());
-    	        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
-    		}
-    		// 视频消息
-    		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
-    			respContent = "您发送的是视频消息！";
-    		}
-    		// 地理位置消息
-    		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
-    			respContent = "您发送的是地理位置消息！";
-    		}
-    		// 链接消息
-    		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
-    			respContent = "您发送的是链接消息！";
-    		}
+			insertWechatReceiveMessage(outputMsg, inputMsg);
+		}
+		else if(msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {// 语音消息
+			insertWechatReceiveMessage(outputMsg, inputMsg);
+		}// 地理位置消息
+		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
+			insertWechatReceiveMessage(outputMsg, inputMsg);
+		}// 链接消息
+		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
+			insertWechatReceiveMessage(outputMsg, inputMsg);
+		}
+		else {
     		// 事件推送
-    		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
+    		if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
     			// 事件类型
     			String eventType = inputMsg.getEvent();
     			// 关注
@@ -223,9 +220,30 @@ public class WechatController {
     			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
                 outputMsg.setContent(respContent);
     		}
-            logger.info("outMesg={}", xs.toXML(outputMsg));
-            response.getWriter().write(xs.toXML(outputMsg)); 
 		}
+        logger.info("outMesg={}", xs.toXML(outputMsg));
+        response.getWriter().write(xs.toXML(outputMsg)); 
+	}
+	
+	private void insertWechatReceiveMessage(OutputMessage outputMsg, 
+			InputMessage inputMsg) {
+		ActivityHmSign hmSign = activityHmService.selectForMessage(inputMsg.getFromUserName());
+    	if(hmSign == null) {
+    		outputMsg.setContent("提示：您不是透明人或近期未参加活动\n\n欢迎使用陶学趣公众号");
+    	}else {
+    		WechatReceiveMessage message = BeanUtils.copyAs(inputMsg, WechatReceiveMessage.class);
+    		if(message != null) {
+    			message.setHmsignid(hmSign.getId());
+    			wechatMessageService.addReceiveMessage(message);
+    			String content = PropertiesUtil.getProperty("hm_send_message");
+    			content = TextUtil.format(content, new String[]{
+    					WechatReqMsgType.getDesc(inputMsg.getMsgType()), hmSign.getHmName(),
+    					BASEPATH + "/live", BASEPATH + "/live/marine/detail/" + hmSign.getMarineId(),
+    					hmSign.getMarineName(), BASEPATH + "/hm/manage/marine?marId=" + hmSign.getMarineId() + "&hmId=" + hmSign.getHmId()});
+    			outputMsg.setContent(content);
+    		}
+    	}
+    	outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 	}
 	
 	/**
@@ -275,7 +293,7 @@ public class WechatController {
 			if(StatusEnum.SUCCESS.getCode().equals(rspResult.getCode())) {
 				content = PropertiesUtil.getProperty("hm_regiter_success");
 				ActivityHmSign hmSign = (ActivityHmSign) rspResult.getData();
-				String url = "/manage/marine?mid=" + hmSign.getActivityId() + "&hid=" + hmSign.getHmId();
+				String url = BASEPATH + "hm/manage/marine?mid=" + hmSign.getActivityId() + "&hid=" + hmSign.getHmId();
 				content = TextUtil.format(content, new String[]{hmSign.getActivityName(), hmSign.getHmName(), 
 						hmSign.getMarineName(), String.valueOf(hmSign.getMarineId()), 
 						DateUtil.dateToStr(hmSign.getUpdateTime(), DateUtil.DEFAULT_DATE_FORMAT), url});

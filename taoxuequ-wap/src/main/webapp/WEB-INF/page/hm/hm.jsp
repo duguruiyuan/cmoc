@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>透明人注册</title>
+<title>透明人注册[陶学趣]</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
 <body>
@@ -100,7 +100,7 @@
 	</div>
 	<script type="text/javascript" src="<%=basePath %>/js/plugins/localResizeIMG/dist/lrz.bundle.js" ></script>
 	<script type="text/javascript">
-		//initSnsToken();
+		initSnsToken();
 		mui.init();
 		
 		$(function(){
@@ -155,8 +155,8 @@
 			})
 		})
 		function initSnsToken() {
-			/* var snsToken = ${snsToken};
-			setAccessToken(snsToken); */
+			var snsToken = ${snsToken};
+			setAccessToken(snsToken);
 		}
 		//上传图片
 		function uploadPic(){

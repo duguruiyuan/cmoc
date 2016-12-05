@@ -12,7 +12,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>战队直播-陶学趣</title>
+		<title>战队直播[陶学趣]</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
@@ -90,7 +90,7 @@
 			    		<li>
 			    			<span class="liveDetail-listNum-title">阅读量</span><br>
 
-			    			<em class="liveDetail-listNum-intro">${marine.reads }</em>
+			    			<em class="liveDetail-listNum-intro">${marine.readnum }</em>
 			    		</li>
 			    		<li>
 			    			<span class="liveDetail-listNum-title">得分</span><br>

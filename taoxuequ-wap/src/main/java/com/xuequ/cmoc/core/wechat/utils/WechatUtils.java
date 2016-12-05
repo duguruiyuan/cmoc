@@ -205,7 +205,7 @@ public class WechatUtils {
 		info.setScene(scene);
 		req.setAction_info(info);
 		if(MessageUtil.QR_SCENE.equals(qrcodeType)) {
-			req.setExpire_seconds(604800L);
+			req.setExpire_seconds(2592000L);
 		}
 		req.setAction_name(qrcodeType);
 		String response = HttpClientUtils.postJson(url, req);

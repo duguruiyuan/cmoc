@@ -8,15 +8,23 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xuequ.cmoc.common.Const;
+import com.xuequ.cmoc.model.HollowManInfo;
+import com.xuequ.cmoc.model.WechatSnsToken;
+import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.utils.MimeTypeUtils;
 
 @Controller
 public class IndexController extends BaseController{
+	
+	@Autowired
+	private IHollowManService hollowManService;
 
 	@RequestMapping(value = {"", "/"})
 	public String index() {
@@ -29,8 +37,21 @@ public class IndexController extends BaseController{
 	}
 	
 	@RequestMapping("my")
-	public String my() {
-		return "my";
+	public String my(Model model) {
+		return "hm/hmMy";
+//		String page = "my";
+//		String redir = wechatRedirect(model, page);
+//		if(redir.equals(page)) {
+//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+//			if(token != null) {
+//				HollowManInfo hm = hollowManService.selectByOpenid(token.getOpenid());
+//				if(hm != null) {
+//					model.addAttribute("hm", hm);
+//					return "hm/hmMy";
+//				}
+//			}
+//		}
+//		return redir;
 	}
 	
 	@RequestMapping("about")

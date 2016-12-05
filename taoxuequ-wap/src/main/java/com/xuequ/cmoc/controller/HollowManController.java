@@ -19,13 +19,11 @@ import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ActivityInfo;
-import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.view.ActivityMarinesView;
-import com.xuequ.cmoc.vo.ActivityQueryVO;
 
 @RequestMapping("hm")
 @Controller
@@ -83,30 +81,38 @@ public class HollowManController extends BaseController {
 	}
 	
 	@RequestMapping("act/{activityId}")
-	public String ActivityQueryVO(Model model, @PathVariable Integer activityId) {
+	public String activityQuery(Model model, @PathVariable Integer activityId) {
 		List<ActivityMarinesView> list = activityMarinesService.selectMarineTeam(activityId);
+		for(ActivityMarinesView view : list) {
+			if(StringUtils.isBlank(list.get(0).getQrcodeUrl())) {
+				try {
+					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_SCENE, 
+							MessageUtil.BIND_TYPE_MARINE, view.getId());
+					if(rsp != null) {
+						view.setQrcodeUrl(rsp.getQrcode());
+						activityMarinesService.updateByPrimaryKeySelective(view);
+					}
+				} catch (Exception e) {
+					logger.error("--activityQuery getQrcode, error={}", e);
+				}
+			}
+		}
 		model.addAttribute("marines", list);
 		return "hm/marineList";
 	}
 	
 	/**
-	 * 透明人绑定战队
+	 * 透明人管理战队
 	 * @auther 胡启萌
 	 * @Date 2016年12月3日
 	 * @param marineId
 	 * @return
 	 */
-	@RequestMapping("bind/marine")
-	public @ResponseBody Object bindMarine(@RequestParam("marineId")Integer marineId) {
-		try {
-			WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_SCENE, MessageUtil.BIND_TYPE_MARINE, marineId);
-			if(rsp != null) {
-				return new RspResult(StatusEnum.SUCCESS, rsp);
-			}
-		} catch (Exception e) {
-			logger.error("--bindMarine, error={}", e);
-		}
-		return new RspResult(StatusEnum.FAIL);
+	@RequestMapping("manage/marine")
+	public String bindMarine() {
+		String marineid = request.getParameter("marId");
+		String hmId = request.getParameter("hmId");
+		return "marine";
 	}
 	
 }

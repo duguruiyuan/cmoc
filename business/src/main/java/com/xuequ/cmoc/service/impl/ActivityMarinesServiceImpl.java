@@ -62,9 +62,6 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 			return new RspResult(StatusEnum.ACTIVITY_NON_SIGN);
 		}
 		int count = activityHmSignMapper.updateBindMarine(hmSign);
-		if(count == 1) {
-			count = activityMarinesMapper.updateBindMarine(marineId);
-		}
 		if(count == 0) throw new ExpirationException(StatusEnum.EXPIRED_DATA.getMsg());
 		return new RspResult(StatusEnum.SUCCESS, hmSign);
 	}
@@ -72,6 +69,11 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 	@Override
 	public List<ActivityMarinesView> selectMarineTeam(Integer activityId) {
 		return activityMarinesMapper.selectMarineTeam(activityId);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(ActivityMarines marines) {
+		return activityMarinesMapper.updateByPrimaryKeySelective(marines);
 	}
 
 }

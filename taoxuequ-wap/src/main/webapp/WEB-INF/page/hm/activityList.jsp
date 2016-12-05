@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>陶学趣 活动排期 绑定队伍</title>
+<title>活动排期 绑定队伍[陶学趣]</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
 <body>

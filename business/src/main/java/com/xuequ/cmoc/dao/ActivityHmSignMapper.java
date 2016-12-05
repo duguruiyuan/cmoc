@@ -34,4 +34,6 @@ public interface ActivityHmSignMapper {
     		@Param("openid")String openid);
     
     int updateBindMarine(ActivityHmSign hmSign);
+    
+    ActivityHmSign selectForMessage(String openid);
 }

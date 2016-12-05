@@ -30,4 +30,6 @@ public interface IActivityMarinesService {
 	 * @return
 	 */
 	List<ActivityMarinesView> selectMarineTeam(Integer activityId);
+	
+	public int updateByPrimaryKeySelective(ActivityMarines marines);
 }
