@@ -91,7 +91,7 @@
   	FROM t_activity_hm_sign hs
 	INNER JOIN t_hollow_man_info hm ON hs.`id` = hs.`hm_id`
 	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id`
-	WHERE hs.`is_delete`='N' AND ai.`start_date` > DATE(NOW()) 
+	WHERE hs.`is_delete`='N' and hs.is_effect = 1 AND NOW() >= ai.`start_date`
 	AND hm.`openid` = #{openid,jdbcType=VARCHAR}
   </select>
   

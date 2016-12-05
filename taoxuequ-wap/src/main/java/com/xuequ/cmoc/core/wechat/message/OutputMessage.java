@@ -26,6 +26,7 @@ public class OutputMessage implements Serializable {
     private String msgType;
     
     @XStreamAlias("Content")
+    @XStreamCDATA
 	private String content;
     
     private ImageMessage Image;
