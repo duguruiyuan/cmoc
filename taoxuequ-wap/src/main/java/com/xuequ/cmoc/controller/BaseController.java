@@ -74,8 +74,6 @@ public class BaseController {
 			String openid = request.getParameter("openid");
 			userInfo = WechatUtils.getUserInfo(WechatUtils.getWechatModel().getAccessToken(), openid);
 		}else {
-			code = request.getParameter("code");
-			state = request.getParameter("state");
 			if(StringUtils.isNotBlank(state) && StringUtils.isBlank(code)) {
 				return "redirect:/" + Configuration.getInstance().getWechatAttention();
 			}

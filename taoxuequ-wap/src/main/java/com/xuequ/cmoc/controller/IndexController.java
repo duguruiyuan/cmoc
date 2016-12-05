@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,20 +39,21 @@ public class IndexController extends BaseController{
 	
 	@RequestMapping("my")
 	public String my(Model model) {
-		return "hm/hmMy";
-//		String page = "my";
-//		String redir = wechatRedirect(model, page);
-//		if(redir.equals(page)) {
-//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-//			if(token != null) {
-//				HollowManInfo hm = hollowManService.selectByOpenid(token.getOpenid());
-//				if(hm != null) {
-//					model.addAttribute("hm", hm);
-//					return "hm/hmMy";
-//				}
-//			}
-//		}
-//		return redir;
+		String page = "my";
+		String redir = wechatRedirect(model, page);
+		if(redir.equals(page)) {
+			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+			String openid = request.getParameter("openid");
+			if(token != null || StringUtils.isNotBlank(openid)) {
+				if(token != null) openid = token.getOpenid();
+				HollowManInfo hm = hollowManService.selectByOpenid(token.getOpenid());
+				if(hm != null) {
+					model.addAttribute("hm", hm);
+					return "hm/hmMy";
+				}
+			}
+		}
+		return redir;
 	}
 	
 	@RequestMapping("about")

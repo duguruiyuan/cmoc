@@ -1,10 +1,12 @@
 package com.xuequ.cmoc.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.dao.ActivityHmSignMapper;
@@ -61,8 +63,13 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 		if(hmSign == null) {
 			return new RspResult(StatusEnum.ACTIVITY_NON_SIGN);
 		}
+		hmSign.setUpdater(Const.SYS_USER);
+		hmSign.setUpdateTime(new Date());
 		int count = activityHmSignMapper.updateBindMarine(hmSign);
-		if(count == 0) throw new ExpirationException(StatusEnum.EXPIRED_DATA.getMsg());
+		if(count <= 0) {
+			throw new ExpirationException(StatusEnum.EXPIRED_DATA.getMsg());
+		}
+		hmSign = activityHmSignMapper.selectForSign(marineId, openid);
 		return new RspResult(StatusEnum.SUCCESS, hmSign);
 	}
 

@@ -67,6 +67,8 @@ public class WechatUserInfo implements Serializable {
 	 */
 	private String groupid;
 	
+	private String[] tagid_list;
+	
 	public int getSubscribe() {
 		return subscribe;
 	}
@@ -147,6 +149,12 @@ public class WechatUserInfo implements Serializable {
 	}
 	public void setGroupid(String groupid) {
 		this.groupid = groupid;
+	}
+	public String[] getTagid_list() {
+		return tagid_list;
+	}
+	public void setTagid_list(String[] tagid_list) {
+		this.tagid_list = tagid_list;
 	}
 	
 }

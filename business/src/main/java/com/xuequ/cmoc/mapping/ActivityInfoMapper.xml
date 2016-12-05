@@ -43,7 +43,7 @@
 	  select 
   	  <include refid="Base_Column_List" />
       from t_activity_info where is_delete = 'N'
-      and start_date >= date(now())
+      and now() between start_date and end_date
 	  order by start_date
   </select>
   

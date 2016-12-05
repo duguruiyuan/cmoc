@@ -74,13 +74,14 @@
     order by s.id desc
   </select>
   
-  <select id="selectForSign" resultMap="BaseResultMap">
-  	SELECT am.id marine_id, am.marine_name, am.activity_id, am.activity_name,
-  	hm.id hm_id, hm.hm_name
-  	FROM t_activity_hm_sign hs
-	INNER JOIN t_hollow_man_info hm ON hs.hm_id = hm.id
-	INNER JOIN t_activity_marines am ON am.activity_id = hs.id
-	WHERE hs.is_delete = 'N' AND hs.is_effect = 1 
+  <select id="selectForSign" resultMap="PageBaseResultMap">
+  	SELECT am.id marine_id, am.marine_name, am.activity_id, 
+  	ai.activity_name, hm.id hm_id, hm.hm_name, hs.update_time
+	FROM t_activity_hm_sign hs 
+	INNER JOIN t_hollow_man_info hm ON hs.hm_id = hm.id 
+	INNER JOIN t_activity_marines am ON am.activity_id = hs.activity_id
+	INNER JOIN t_activity_info ai on ai.id = am.activity_id
+	WHERE hs.is_delete = 'N' AND hs.is_effect = 1
 	AND am.id = #{marineId,jdbcType=INTEGER}
 	AND hm.openid = #{openid,jdbcType=VARCHAR}
   </select>
@@ -95,7 +96,10 @@
   </select>
   
   <update id="updateBindMarine" parameterType="com.xuequ.cmoc.model.ActivityHmSign">
-  	update t_activity_hm_sign set marine_id = #{marineId,jdbcType=INTEGER}
+  	update t_activity_hm_sign set 
+  	marine_id = #{marineId,jdbcType=INTEGER},
+  	updater = #{updater,jdbcType=VARCHAR},
+  	update_time = #{updateTime,jdbcType=TIMESTAMP}
   	where hm_id = #{hmId,jdbcType=INTEGER}
   	and activity_id = #{activityId,jdbcType=INTEGER}
   </update>

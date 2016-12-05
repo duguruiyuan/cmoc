@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.thoughtworks.xstream.XStream;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.WechatConfigure;
@@ -285,23 +286,29 @@ public class WechatController {
 	 * @param openid
 	 */
 	private void eventTypeScanOutPut(OutputMessage outputMsg, String eventKey, String openid) {
-		int type = Integer.parseInt(eventKey.substring(0, eventKey.indexOf("0"))); 
-		if(MessageUtil.BIND_TYPE_MARINE == type) {
-			Integer marineId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length())); 
-			RspResult rspResult = activityMarinesService.updateHmBindMarine(marineId, openid);
-			String content = null;
-			if(StatusEnum.SUCCESS.getCode().equals(rspResult.getCode())) {
-				content = PropertiesUtil.getProperty("hm_regiter_success");
-				ActivityHmSign hmSign = (ActivityHmSign) rspResult.getData();
-				String url = BASEPATH + "hm/manage/marine?mid=" + hmSign.getActivityId() + "&hid=" + hmSign.getHmId();
-				content = TextUtil.format(content, new String[]{hmSign.getActivityName(), hmSign.getHmName(), 
-						hmSign.getMarineName(), String.valueOf(hmSign.getMarineId()), 
-						DateUtil.dateToStr(hmSign.getUpdateTime(), DateUtil.DEFAULT_DATE_FORMAT), url});
-			}else {
-				content = rspResult.getMsg();
+		try {
+			int type = Integer.parseInt(eventKey.substring(0, eventKey.indexOf("0"))); 
+			if(MessageUtil.BIND_TYPE_MARINE == type) {
+				Integer marineId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length())); 
+				RspResult rspResult = activityMarinesService.updateHmBindMarine(marineId, openid);
+				String content = null;
+				if(StatusEnum.SUCCESS.getCode().equals(rspResult.getCode())) {
+					content = PropertiesUtil.getProperty("hm_regiter_success");
+					ActivityHmSign hmSign = (ActivityHmSign) rspResult.getData();
+					String url = BASEPATH + "/hm/manage/marine?mid=" + hmSign.getActivityId() + "&hid=" + hmSign.getHmId();
+					String[] strings = new String[]{hmSign.getActivityName(), hmSign.getHmName(), 
+							hmSign.getMarineName(), String.valueOf(hmSign.getMarineId()), 
+							DateUtil.dateToStr(hmSign.getUpdateTime(), DateUtil.DEFAULT_DATE_FORMAT), url};
+					logger.info("-------------"+JSONObject.toJSONString(strings));
+					content = TextUtil.format(content, strings);
+				}else {
+					content = "提示绑定失败：" + rspResult.getMsg();
+				}
+				outputMsg.setContent(content);
+				outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 			}
-			outputMsg.setContent(content);
-			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+		} catch (Exception e) {
+			logger.error("---eventTypeScanOutPut, error={}", e);
 		}
 	}
 	

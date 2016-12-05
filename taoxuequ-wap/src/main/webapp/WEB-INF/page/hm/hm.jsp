@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -10,12 +11,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <title>透明人注册[陶学趣]</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
 <body>
 	<div class="regTMHeader">
-		<img src="<%=basePath %>/images/slider4.jpg" class="regTMPic"><br>
+		<img src="${userInfo.headimgurl }" class="regTMPic"><br>
 		<span class="regTMTitle">注册透明人</span><br>
 		<span class="regTMName">陶学趣</span>
 	</div>
@@ -33,7 +35,7 @@
 			<div class="mui-input-row">
 			    <label>证件</label>
 			    <input type="hidden" id="idType" name="idType" value="01" />
-			    <input type="hidden" id="openid" name="openid" value="34324324" />
+			    <input type="hidden" id="openid" name="openid" value="${userInfo.openid }" />
 			    <input id="idCard" name="idCard" type="text" placeholder="请输入身份证号">
 			</div>
 			<div class="mui-input-row">
@@ -89,15 +91,16 @@
 			</p>
 		</div>
 	</div>
-	<div class="code" style="display: none;">								
-		<div class="code-inner" style="height: 170px;">									
-			<div class="code-title">[陶学趣]透明人注册</div>									
-			<div class="code-pic">										
-				<p style="color: red;">您已经注册成功</p>								
-			</div>									
-			<div class="code-btn">确定</div>								
-		</div>							
-	</div>
+	<c:if test="${hm != null && hm.isActive == 0 }">
+		<div class="code">								
+			<div class="code-inner" style="height: 170px;">									
+				<div class="code-title">[陶学趣]透明人注册</div>									
+				<div class="code-pic">										
+					<p style="color: red;">您已经注册成功，等待管理员审核中...</p>								
+				</div>									
+			</div>							
+		</div>
+	</c:if>
 	<script type="text/javascript" src="<%=basePath %>/js/plugins/localResizeIMG/dist/lrz.bundle.js" ></script>
 	<script type="text/javascript">
 		initSnsToken();
@@ -155,7 +158,7 @@
 			})
 		})
 		function initSnsToken() {
-			var snsToken = ${snsToken};
+			var snsToken = '${snsToken}';
 			setAccessToken(snsToken);
 		}
 		//上传图片
@@ -193,7 +196,7 @@
 		        		success:function(result){
 		        			result=result||{};
 		        			if(result.code == "000"){
-		        				$("#regMT-uploadPic").attr({"src": imgUrl + result.data, "data-state": "yes"});
+		        				$("#regMT-uploadPic").attr({"src": imgUrl + result.data+"?v=" + new Date().getTime(), "data-state": "yes"});
 		        				$("#idPhoto").val(result.data)
 		        			}else{
 		        				mui.alert(result.msg,'消息提示');

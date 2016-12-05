@@ -17,13 +17,12 @@ function addDate(date,day){
 	return a;
 }
 
-function getAccessToken(wechat_redirect) {
-	
-}
-
 function setAccessToken(snsToken) {
-	window.localStorage.setItem("snsTokenExpire", addDate(new Date(), 7).getTime());
-	window.localStorage.setItem("snsToken",JSON.stringify(snsToken));
+	if(snsToken) {
+		//未关注用户授权有效期7天
+		window.localStorage.setItem("snsTokenExpire", addDate(new Date(), 7).getTime());
+		window.localStorage.setItem("snsToken",snsToken);
+	}
 }
 
 //对Date的扩展，将 Date 转化为指定格式的String    

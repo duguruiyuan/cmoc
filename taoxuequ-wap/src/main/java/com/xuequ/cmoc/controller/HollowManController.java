@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
@@ -20,6 +19,7 @@ import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.HollowManInfo;
+import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IHollowManService;
@@ -41,16 +41,20 @@ public class HollowManController extends BaseController {
 	@RequestMapping(value={"","/"})
 	public String index(Model model) {
 		String page = "hm/hm";
-		return page;
-//		String redir = wechatRedirect(model, page);
-//		if(redir.equals(page)) {
-//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-//			if(token != null) {
-//				HollowManInfo hm = hollowManService.selectByOpenid(token.getOpenid());
-//				model.addAttribute("hm", hm);
-//			}
-//		}
-//		return redir;
+		String redir = wechatRedirect(model, page);
+		if(redir.equals(page)) {
+			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+			String openid = request.getParameter("openid");
+			if(token != null || StringUtils.isNotBlank(openid)) {
+				if(token != null) openid = token.getOpenid();
+				HollowManInfo hm = hollowManService.selectByOpenid(openid);
+				model.addAttribute("hm", hm);
+				if(hm != null && hm.getIsActive() == 1) {
+					return "hm/hmMy";
+				}
+			}
+		}
+		return redir;
 	}
 	
 	/**
@@ -84,7 +88,7 @@ public class HollowManController extends BaseController {
 	public String activityQuery(Model model, @PathVariable Integer activityId) {
 		List<ActivityMarinesView> list = activityMarinesService.selectMarineTeam(activityId);
 		for(ActivityMarinesView view : list) {
-			if(StringUtils.isBlank(list.get(0).getQrcodeUrl())) {
+			if(StringUtils.isBlank(view.getQrcodeUrl())) {
 				try {
 					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_SCENE, 
 							MessageUtil.BIND_TYPE_MARINE, view.getId());

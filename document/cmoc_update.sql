@@ -4,3 +4,4 @@ http://blog.csdn.net/morning99/article/details/43865471
 http://www.cnblogs.com/prefect/p/5703333.html
 http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
 http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html
+流程中，透明人申请带队功能没实现，整套流程串联不起来

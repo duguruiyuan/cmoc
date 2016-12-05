@@ -11,18 +11,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>透明人管理[陶学趣]</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<div class="mui-content">
 			<div class="regTMHeader" style="background-color: #25C26D;">
-				<img src="http://localhost:8060/taoxuequ-wap/images/slider4.jpg" class="regTMPic"><br>
-				<span style="line-height: 20px; color: white;">小明</span><br>
+				<img src="${userInfo.headimgurl }" class="regTMPic"><br>
+				<span style="line-height: 20px; color: white;">${hm.hmName }</span><br>
 			</div>
 		    <ul class="mui-table-view mb10">
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/bind">
+	                <a class="mui-navigate-right" href="<%=basePath%>/hm/act/list">
 	                   绑定队伍
 	                </a>
 	            </li>
@@ -41,8 +42,13 @@
 		</div>
 		
 		<script type="text/javascript">
-				mui.init();
-				mui('.footer').on('tap','a',function(){document.location.href=this.href;});
+			initSnsToken();
+			mui.init();
+			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
+			function initSnsToken() {
+				var snsToken = ${snsToken};
+				setAccessToken(snsToken);
+			}
 		</script>
 </body>
 
