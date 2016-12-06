@@ -118,30 +118,22 @@ public class HollowManController extends BaseController {
 	 */
 	@RequestMapping("manage/marine")
 	public String bindMarine(Model model) {
-		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE";
-		ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(openid);
-		if(marine != null) {
-			List<ActivityFamily> families = activityFamilyService.selectListByMarineId(marine.getId());
-			model.addAttribute("marine", marine);
-			model.addAttribute("families", families);
-		}
 		String page = "hm/marineManage";
-		return page;
-//		String redir = wechatRedirect(model, page);
-//		if(redir.equals(page)) {
-//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-//			String openid = request.getParameter("openid");
-//			if(token != null || StringUtils.isNotBlank(openid)) {
-//				if(token != null) openid = token.getOpenid();
-//				ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(openid);
-//				if(marine != null) {
-//					List<ActivityFamily> families = activityFamilyService.selectListByMarineId(marine.getId());
-//					model.addAttribute("marine", marine);
-//					model.addAttribute("families", families);
-//				}
-//			}
-//		}
-//		return redir;
+		String redir = wechatRedirect(model, page);
+		if(redir.equals(page)) {
+			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+			String openid = request.getParameter("openid");
+			if(token != null || StringUtils.isNotBlank(openid)) {
+				if(token != null) openid = token.getOpenid();
+				ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(openid);
+				if(marine != null) {
+					List<ActivityFamily> families = activityFamilyService.selectListByMarineId(marine.getId());
+					model.addAttribute("marine", marine);
+					model.addAttribute("families", families);
+				}
+			}
+		}
+		return redir;
 	}
 	
 }
