@@ -32,4 +32,10 @@ public interface IActivityMarinesService {
 	List<ActivityMarinesView> selectMarineTeam(Integer activityId);
 	
 	public int updateByPrimaryKeySelective(ActivityMarines marines);
+	/**
+	 * 查询战队信息用于透明人更新战队数据
+	 * @param openid
+	 * @return
+	 */
+	ActivityMarinesView selectMarineByHmOpenid(String openid);
 }

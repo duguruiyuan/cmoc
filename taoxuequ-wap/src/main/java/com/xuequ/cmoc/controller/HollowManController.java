@@ -17,9 +17,11 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.WechatSnsToken;
+import com.xuequ.cmoc.service.IActivityFamilyService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IHollowManService;
@@ -37,6 +39,8 @@ public class HollowManController extends BaseController {
 	private IActivityService activityService;
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
+	@Autowired
+	private IActivityFamilyService activityFamilyService;
 	
 	@RequestMapping(value={"","/"})
 	public String index(Model model) {
@@ -113,10 +117,31 @@ public class HollowManController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("manage/marine")
-	public String bindMarine() {
-		String marineid = request.getParameter("marId");
-		String hmId = request.getParameter("hmId");
-		return "marine";
+	public String bindMarine(Model model) {
+		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE";
+		ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(openid);
+		if(marine != null) {
+			List<ActivityFamily> families = activityFamilyService.selectListByMarineId(marine.getId());
+			model.addAttribute("marine", marine);
+			model.addAttribute("families", families);
+		}
+		String page = "hm/marineManage";
+		return page;
+//		String redir = wechatRedirect(model, page);
+//		if(redir.equals(page)) {
+//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+//			String openid = request.getParameter("openid");
+//			if(token != null || StringUtils.isNotBlank(openid)) {
+//				if(token != null) openid = token.getOpenid();
+//				ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(openid);
+//				if(marine != null) {
+//					List<ActivityFamily> families = activityFamilyService.selectListByMarineId(marine.getId());
+//					model.addAttribute("marine", marine);
+//					model.addAttribute("families", families);
+//				}
+//			}
+//		}
+//		return redir;
 	}
 	
 }

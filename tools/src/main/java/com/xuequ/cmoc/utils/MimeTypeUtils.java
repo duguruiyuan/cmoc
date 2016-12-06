@@ -136,6 +136,7 @@ public final class MimeTypeUtils {
         MIME_TYPE_MAP.put("der", "application/x-x509-ca-cert");
         MIME_TYPE_MAP.put("pko", "application/ynd.ms-pkipko");
         MIME_TYPE_MAP.put("zip", "application/zip");
+        MIME_TYPE_MAP.put("amr", "audio/amr");
         MIME_TYPE_MAP.put("au", "audio/basic");
         MIME_TYPE_MAP.put("snd", "audio/basic");
         MIME_TYPE_MAP.put("mid", "audio/mid");
@@ -187,6 +188,7 @@ public final class MimeTypeUtils {
         MIME_TYPE_MAP.put("htc", "text/x-component");
         MIME_TYPE_MAP.put("etx", "text/x-setext");
         MIME_TYPE_MAP.put("vcf", "text/x-vcard");
+        MIME_TYPE_MAP.put("mp4", "video/mpeg4");
         MIME_TYPE_MAP.put("mp2", "video/mpeg");
         MIME_TYPE_MAP.put("mpa", "video/mpeg");
         MIME_TYPE_MAP.put("mpe", "video/mpeg");

@@ -10,7 +10,6 @@
     <result column="line_name" property="lineName" jdbcType="VARCHAR" />
     <result column="line_id" property="lineId" jdbcType="INTEGER" />
     <result column="activity_id" property="activityId" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="votes" property="votes" jdbcType="INTEGER" />
     <result column="readnum" property="readnum" jdbcType="INTEGER" />
@@ -26,7 +25,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, marine_name, marine_img, marine_slogan, marine_prize, line_name, 
-    line_id, activity_id, status, comment, votes, `readnum`, score, qrcode_url,
+    line_id, activity_id, comment, votes, `readnum`, score, qrcode_url,
     creater_user_id, creater, create_time, updater_user_id, updater, 
     update_time, is_delete
   </sql>
@@ -50,10 +49,23 @@
     <result column="marine_team" property="marineTeam" jdbcType="VARCHAR" />
   </resultMap>
   
+  <select id="selectMarineByHmOpenid" resultMap="PageBaseResultMap">
+  	SELECT DISTINCT am.`id`, am.`marine_name`, am.activity_id, ai.activity_name, am.`marine_img`, 
+	am.`marine_prize`, am.`marine_slogan`, am.`comment`
+	FROM t_activity_hm_sign hs 
+	INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id` 
+	INNER JOIN t_activity_marines am ON am.`id` = hs.`marine_id`
+	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id` 
+	WHERE hs.`is_delete`='N' AND hs.is_effect = 1 
+	AND DATE_ADD(NOW(), INTERVAL 10 HOUR) BETWEEN ai.`start_date` AND ai.`end_date`
+	AND hm.`openid` = 'oqyqUwq_YY84qjFWUtn6Ti4XIROE'
+	ORDER BY ai.`start_date`
+  </select>
+  
   <select id="selectMarineTeam" resultMap="PageBaseResultMap">
   	SELECT 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id, STATUS, COMMENT, votes, `readnum`, score, 
+  	m.line_id, activity_id, COMMENT, votes, `readnum`, score, 
   	m.qrcode_url, m.creater, m.create_time,
 	a.activity_name,a.activity_num, a.activity_type, c.marine_team
 	FROM t_activity_marines m
@@ -70,7 +82,7 @@
   <select id="selectById" resultMap="PageBaseResultMap" parameterType="java.lang.Integer">
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id, status, comment, votes, `readnum`, score, 
+  	m.line_id, activity_id, comment, votes, `readnum`, score, 
   	m.qrcode_url, m.creater, m.create_time,
     a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
@@ -81,7 +93,7 @@
   <select id="selectListByPage" resultMap="PageBaseResultMap" >
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id,  status, comment, votes, `readnum`, score, m.qrcode_url,
+  	m.line_id, activity_id,  comment, votes, `readnum`, score, m.qrcode_url,
   	m.creater, m.create_time, a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
@@ -107,11 +119,6 @@
     order by m.id desc
   </select>
   
-  <update id="updateBindMarine">
-  	update t_activity_marines set status = 1
-  	where id = #{id,jdbcType=INTEGER}
-  </update>
-  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_marines
     where id = #{id,jdbcType=INTEGER}
@@ -119,14 +126,14 @@
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityMarines" >
     insert into t_activity_marines (id, marine_name, marine_img, 
       marine_slogan, marine_prize, line_name, 
-      line_id, activity_id, status, comment, votes, 
+      line_id, activity_id, comment, votes, 
       readnum, score, qrcode_url, creater_user_id, 
       creater, create_time, updater_user_id, 
       updater, update_time, is_delete
       )
     values (#{id,jdbcType=INTEGER}, #{marineName,jdbcType=VARCHAR}, #{marineImg,jdbcType=VARCHAR}, 
       #{marineSlogan,jdbcType=VARCHAR}, #{marinePrize,jdbcType=VARCHAR}, #{lineName,jdbcType=VARCHAR}, 
-      #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, 
       #{comment,jdbcType=VARCHAR}, #{votes,jdbcType=INTEGER}, #{readnum,jdbcType=INTEGER}, 
       #{score,jdbcType=INTEGER}, #{qrcodeUrl,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, 
       #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, 
@@ -159,9 +166,6 @@
       </if>
       <if test="activityId != null" >
         activity_id,
-      </if>
-      <if test="status != null" >
-        status,
       </if>
       <if test="comment != null" >
         comment,
@@ -225,9 +229,6 @@
       <if test="activityId != null" >
         #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
       <if test="comment != null" >
         #{comment,jdbcType=VARCHAR},
       </if>
@@ -290,9 +291,6 @@
       <if test="activityId != null" >
         activity_id = #{activityId,jdbcType=INTEGER},
       </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=VARCHAR},
       </if>
@@ -341,7 +339,6 @@
       line_name = #{lineName,jdbcType=VARCHAR},
       line_id = #{lineId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
-      status = #{votes,jdbcType=INTEGER},
       comment = #{readnum,jdbcType=VARCHAR},
       votes = #{votes,jdbcType=INTEGER},
       readnum = #{readnum,jdbcType=INTEGER},

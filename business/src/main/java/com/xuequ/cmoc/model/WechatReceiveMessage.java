@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class WechatReceiveMessage implements Serializable {
-    private String msgid;
+    private String msgId;
 
-    private Integer hmsignid;
+    private Integer hmSignId;
 
-    private String tousername;
+    private String toUserName;
 
-    private String fromusername;
+    private String fromUserName;
 
-    private String msgtype;
+    private String msgType;
 
-    private String mediaid;
+    private String mediaId;
 
     private String content;
 
@@ -26,82 +26,84 @@ public class WechatReceiveMessage implements Serializable {
 
     private String recognition;
 
-    private String picurl;
+    private String picUrl;
 
     private String url;
 
-    private String musicurl;
+    private String musicUrl;
 
-    private String hqmusicurl;
+    private String hqMusicUrl;
 
-    private String thumbmediaid;
+    private String thumbMediaId;
 
-    private Float locationx;
+    private Float locationX;
 
-    private Float locationy;
+    private Float locationY;
 
     private Integer scale;
 
     private String label;
 
-    private String isdelete;
+    private String sysUrl;
 
-    private Integer createtime;
+    private String isDelete;
 
-    private Date syscreatetime;
+    private Date createTime;
+
+    private Date sysCreateTime;
 
     private String updater;
 
-    private Date updatetime;
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
-    public String getMsgid() {
-        return msgid;
+    public String getMsgId() {
+        return msgId;
     }
 
-    public void setMsgid(String msgid) {
-        this.msgid = msgid == null ? null : msgid.trim();
+    public void setMsgId(String msgId) {
+        this.msgId = msgId == null ? null : msgId.trim();
     }
 
-    public Integer getHmsignid() {
-        return hmsignid;
+    public Integer getHmSignId() {
+        return hmSignId;
     }
 
-    public void setHmsignid(Integer hmsignid) {
-        this.hmsignid = hmsignid;
+    public void setHmSignId(Integer hmSignId) {
+        this.hmSignId = hmSignId;
     }
 
-    public String getTousername() {
-        return tousername;
+    public String getToUserName() {
+        return toUserName;
     }
 
-    public void setTousername(String tousername) {
-        this.tousername = tousername == null ? null : tousername.trim();
+    public void setToUserName(String toUserName) {
+        this.toUserName = toUserName == null ? null : toUserName.trim();
     }
 
-    public String getFromusername() {
-        return fromusername;
+    public String getFromUserName() {
+        return fromUserName;
     }
 
-    public void setFromusername(String fromusername) {
-        this.fromusername = fromusername == null ? null : fromusername.trim();
+    public void setFromUserName(String fromUserName) {
+        this.fromUserName = fromUserName == null ? null : fromUserName.trim();
     }
 
-    public String getMsgtype() {
-        return msgtype;
+    public String getMsgType() {
+        return msgType;
     }
 
-    public void setMsgtype(String msgtype) {
-        this.msgtype = msgtype == null ? null : msgtype.trim();
+    public void setMsgType(String msgType) {
+        this.msgType = msgType == null ? null : msgType.trim();
     }
 
-    public String getMediaid() {
-        return mediaid;
+    public String getMediaId() {
+        return mediaId;
     }
 
-    public void setMediaid(String mediaid) {
-        this.mediaid = mediaid == null ? null : mediaid.trim();
+    public void setMediaId(String mediaId) {
+        this.mediaId = mediaId == null ? null : mediaId.trim();
     }
 
     public String getContent() {
@@ -144,12 +146,12 @@ public class WechatReceiveMessage implements Serializable {
         this.recognition = recognition == null ? null : recognition.trim();
     }
 
-    public String getPicurl() {
-        return picurl;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setPicurl(String picurl) {
-        this.picurl = picurl == null ? null : picurl.trim();
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl == null ? null : picUrl.trim();
     }
 
     public String getUrl() {
@@ -160,44 +162,44 @@ public class WechatReceiveMessage implements Serializable {
         this.url = url == null ? null : url.trim();
     }
 
-    public String getMusicurl() {
-        return musicurl;
+    public String getMusicUrl() {
+        return musicUrl;
     }
 
-    public void setMusicurl(String musicurl) {
-        this.musicurl = musicurl == null ? null : musicurl.trim();
+    public void setMusicUrl(String musicUrl) {
+        this.musicUrl = musicUrl == null ? null : musicUrl.trim();
     }
 
-    public String getHqmusicurl() {
-        return hqmusicurl;
+    public String getHqMusicUrl() {
+        return hqMusicUrl;
     }
 
-    public void setHqmusicurl(String hqmusicurl) {
-        this.hqmusicurl = hqmusicurl == null ? null : hqmusicurl.trim();
+    public void setHqMusicUrl(String hqMusicUrl) {
+        this.hqMusicUrl = hqMusicUrl == null ? null : hqMusicUrl.trim();
     }
 
-    public String getThumbmediaid() {
-        return thumbmediaid;
+    public String getThumbMediaId() {
+        return thumbMediaId;
     }
 
-    public void setThumbmediaid(String thumbmediaid) {
-        this.thumbmediaid = thumbmediaid == null ? null : thumbmediaid.trim();
+    public void setThumbMediaId(String thumbMediaId) {
+        this.thumbMediaId = thumbMediaId == null ? null : thumbMediaId.trim();
     }
 
-    public Float getLocationx() {
-        return locationx;
+    public Float getLocationX() {
+        return locationX;
     }
 
-    public void setLocationx(Float locationx) {
-        this.locationx = locationx;
+    public void setLocationX(Float locationX) {
+        this.locationX = locationX;
     }
 
-    public Float getLocationy() {
-        return locationy;
+    public Float getLocationY() {
+        return locationY;
     }
 
-    public void setLocationy(Float locationy) {
-        this.locationy = locationy;
+    public void setLocationY(Float locationY) {
+        this.locationY = locationY;
     }
 
     public Integer getScale() {
@@ -216,28 +218,36 @@ public class WechatReceiveMessage implements Serializable {
         this.label = label == null ? null : label.trim();
     }
 
-    public String getIsdelete() {
-        return isdelete;
+    public String getSysUrl() {
+        return sysUrl;
     }
 
-    public void setIsdelete(String isdelete) {
-        this.isdelete = isdelete == null ? null : isdelete.trim();
+    public void setSysUrl(String sysUrl) {
+        this.sysUrl = sysUrl == null ? null : sysUrl.trim();
     }
 
-    public Integer getCreatetime() {
-        return createtime;
+    public String getIsDelete() {
+        return isDelete;
     }
 
-    public void setCreatetime(Integer createtime) {
-        this.createtime = createtime;
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
-    public Date getSyscreatetime() {
-        return syscreatetime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setSyscreatetime(Date syscreatetime) {
-        this.syscreatetime = syscreatetime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getSysCreateTime() {
+        return sysCreateTime;
+    }
+
+    public void setSysCreateTime(Date sysCreateTime) {
+        this.sysCreateTime = sysCreateTime;
     }
 
     public String getUpdater() {
@@ -248,11 +258,11 @@ public class WechatReceiveMessage implements Serializable {
         this.updater = updater == null ? null : updater.trim();
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

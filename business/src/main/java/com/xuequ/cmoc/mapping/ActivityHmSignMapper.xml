@@ -86,13 +86,15 @@
 	AND hm.openid = #{openid,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectForMessage" resultMap="BaseResultMap">
-  	SELECT hs.id, hs.activity_id, hs.marine_id, hs.hm_id, hm.hm_name
-  	FROM t_activity_hm_sign hs
-	INNER JOIN t_hollow_man_info hm ON hs.`id` = hs.`hm_id`
-	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id`
-	WHERE hs.`is_delete`='N' and hs.is_effect = 1 AND NOW() >= ai.`start_date`
+  <select id="selectForMessage" resultMap="PageBaseResultMap">
+	SELECT DISTINCT hs.id, hs.activity_id, hs.marine_id, hs.hm_id, hm.hm_name, am.marine_name, ai.activity_name 
+	FROM t_activity_hm_sign hs 
+	INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id` 
+	INNER JOIN t_activity_marines am ON am.`id` = hs.`marine_id`
+	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id` 
+	WHERE hs.`is_delete`='N' AND hs.is_effect = 1 AND NOW() >= ai.`start_date` 
 	AND hm.`openid` = #{openid,jdbcType=VARCHAR}
+	ORDER BY ai.`start_date`
   </select>
   
   <update id="updateBindMarine" parameterType="com.xuequ.cmoc.model.ActivityHmSign">

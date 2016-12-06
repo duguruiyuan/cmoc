@@ -2,87 +2,89 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xuequ.cmoc.dao.WechatReceiveMessageMapper" >
   <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.WechatReceiveMessage" >
-    <id column="msgId" property="msgid" jdbcType="CHAR" />
-    <result column="hmSignId" property="hmsignid" jdbcType="INTEGER" />
-    <result column="toUserName" property="tousername" jdbcType="VARCHAR" />
-    <result column="fromUserName" property="fromusername" jdbcType="VARCHAR" />
-    <result column="msgType" property="msgtype" jdbcType="VARCHAR" />
-    <result column="mediaId" property="mediaid" jdbcType="VARCHAR" />
+    <id column="msg_Id" property="msgId" jdbcType="CHAR" />
+    <result column="hm_Sign_Id" property="hmSignId" jdbcType="INTEGER" />
+    <result column="to_User_Name" property="toUserName" jdbcType="VARCHAR" />
+    <result column="from_User_Name" property="fromUserName" jdbcType="VARCHAR" />
+    <result column="msg_Type" property="msgType" jdbcType="VARCHAR" />
+    <result column="media_Id" property="mediaId" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="format" property="format" jdbcType="VARCHAR" />
     <result column="recognition" property="recognition" jdbcType="VARCHAR" />
-    <result column="picUrl" property="picurl" jdbcType="VARCHAR" />
+    <result column="pic_Url" property="picUrl" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="musicUrl" property="musicurl" jdbcType="VARCHAR" />
-    <result column="hqMusicUrl" property="hqmusicurl" jdbcType="VARCHAR" />
-    <result column="thumbMediaId" property="thumbmediaid" jdbcType="VARCHAR" />
-    <result column="locationX" property="locationx" jdbcType="REAL" />
-    <result column="locationY" property="locationy" jdbcType="REAL" />
+    <result column="music_Url" property="musicUrl" jdbcType="VARCHAR" />
+    <result column="hq_Music_Url" property="hqMusicUrl" jdbcType="VARCHAR" />
+    <result column="thumb_Media_Id" property="thumbMediaId" jdbcType="VARCHAR" />
+    <result column="location_X" property="locationX" jdbcType="REAL" />
+    <result column="location_Y" property="locationY" jdbcType="REAL" />
     <result column="scale" property="scale" jdbcType="INTEGER" />
     <result column="label" property="label" jdbcType="VARCHAR" />
-    <result column="isDelete" property="isdelete" jdbcType="VARCHAR" />
-    <result column="createTime" property="createtime" jdbcType="INTEGER" />
-    <result column="sysCreateTime" property="syscreatetime" jdbcType="TIMESTAMP" />
+    <result column="sys_Url" property="sysUrl" jdbcType="VARCHAR" />
+    <result column="is_Delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="sys_Create_Time" property="sysCreateTime" jdbcType="TIMESTAMP" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
-    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="update_Time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    msgId, hmSignId, toUserName, fromUserName, msgType, mediaId, content, title, description, 
-    format, recognition, picUrl, url, musicUrl, hqMusicUrl, thumbMediaId, locationX, 
-    locationY, scale, label, isDelete, createTime, sysCreateTime, updater, updateTime
+    msg_Id, hm_Sign_Id, to_User_Name, from_User_Name, msg_Type, media_Id, content, title, 
+    description, format, recognition, pic_Url, url, music_Url, hq_Music_Url, thumb_Media_Id, 
+    location_X, location_Y, scale, label, sys_Url, is_Delete, create_Time, sys_Create_Time, 
+    updater, update_Time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from t_wechat_receive_message
-    where msgId = #{msgid,jdbcType=CHAR}
+    where msg_Id = #{msgId,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_wechat_receive_message
-    where msgId = #{msgid,jdbcType=CHAR}
+    where msg_Id = #{msgId,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.WechatReceiveMessage" >
-    insert into t_wechat_receive_message (msgId, hmSignId, toUserName, 
-      fromUserName, msgType, mediaId, 
+    insert into t_wechat_receive_message (msg_Id, hm_Sign_Id, to_User_Name, 
+      from_User_Name, msg_Type, media_Id, 
       content, title, description, 
-      format, recognition, picUrl, 
-      url, musicUrl, hqMusicUrl, 
-      thumbMediaId, locationX, locationY, 
-      scale, label, isDelete, 
-      createTime, sysCreateTime, updater, 
-      updateTime)
-    values (#{msgid,jdbcType=CHAR}, #{hmsignid,jdbcType=INTEGER}, #{tousername,jdbcType=VARCHAR}, 
-      #{fromusername,jdbcType=VARCHAR}, #{msgtype,jdbcType=VARCHAR}, #{mediaid,jdbcType=VARCHAR}, 
+      format, recognition, pic_Url, 
+      url, music_Url, hq_Music_Url, 
+      thumb_Media_Id, location_X, location_Y, 
+      scale, label, sys_Url, 
+      is_Delete, create_Time, sys_Create_Time, 
+      updater, update_Time)
+    values (#{msgId,jdbcType=CHAR}, #{hmSignId,jdbcType=INTEGER}, #{toUserName,jdbcType=VARCHAR}, 
+      #{fromUserName,jdbcType=VARCHAR}, #{msgType,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{format,jdbcType=VARCHAR}, #{recognition,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{musicurl,jdbcType=VARCHAR}, #{hqmusicurl,jdbcType=VARCHAR}, 
-      #{thumbmediaid,jdbcType=VARCHAR}, #{locationx,jdbcType=REAL}, #{locationy,jdbcType=REAL}, 
-      #{scale,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{isdelete,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=INTEGER}, #{syscreatetime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, 
-      #{updatetime,jdbcType=TIMESTAMP})
+      #{format,jdbcType=VARCHAR}, #{recognition,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{musicUrl,jdbcType=VARCHAR}, #{hqMusicUrl,jdbcType=VARCHAR}, 
+      #{thumbMediaId,jdbcType=VARCHAR}, #{locationX,jdbcType=REAL}, #{locationY,jdbcType=REAL}, 
+      #{scale,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{sysUrl,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{sysCreateTime,jdbcType=TIMESTAMP}, 
+      #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.WechatReceiveMessage" >
-    insert into t_wechat_receive_message
+    replace into t_wechat_receive_message
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="msgid != null" >
-        msgId,
+      <if test="msgId != null" >
+        msg_Id,
       </if>
-      <if test="hmsignid != null" >
-        hmSignId,
+      <if test="hmSignId != null" >
+        hm_Sign_Id,
       </if>
-      <if test="tousername != null" >
-        toUserName,
+      <if test="toUserName != null" >
+        to_User_Name,
       </if>
-      <if test="fromusername != null" >
-        fromUserName,
+      <if test="fromUserName != null" >
+        from_User_Name,
       </if>
-      <if test="msgtype != null" >
-        msgType,
+      <if test="msgType != null" >
+        msg_Type,
       </if>
-      <if test="mediaid != null" >
-        mediaId,
+      <if test="mediaId != null" >
+        media_Id,
       </if>
       <if test="content != null" >
         content,
@@ -99,26 +101,26 @@
       <if test="recognition != null" >
         recognition,
       </if>
-      <if test="picurl != null" >
-        picUrl,
+      <if test="picUrl != null" >
+        pic_Url,
       </if>
       <if test="url != null" >
         url,
       </if>
-      <if test="musicurl != null" >
-        musicUrl,
+      <if test="musicUrl != null" >
+        music_Url,
       </if>
-      <if test="hqmusicurl != null" >
-        hqMusicUrl,
+      <if test="hqMusicUrl != null" >
+        hq_Music_Url,
       </if>
-      <if test="thumbmediaid != null" >
-        thumbMediaId,
+      <if test="thumbMediaId != null" >
+        thumb_Media_Id,
       </if>
-      <if test="locationx != null" >
-        locationX,
+      <if test="locationX != null" >
+        location_X,
       </if>
-      <if test="locationy != null" >
-        locationY,
+      <if test="locationY != null" >
+        location_Y,
       </if>
       <if test="scale != null" >
         scale,
@@ -126,40 +128,43 @@
       <if test="label != null" >
         label,
       </if>
-      <if test="isdelete != null" >
-        isDelete,
+      <if test="sysUrl != null" >
+        sys_Url,
       </if>
-      <if test="createtime != null" >
-        createTime,
+      <if test="isDelete != null" >
+        is_Delete,
       </if>
-      <if test="syscreatetime != null" >
-        sysCreateTime,
+      <if test="createTime != null" >
+        create_Time,
+      </if>
+      <if test="sysCreateTime != null" >
+        sys_Create_Time,
       </if>
       <if test="updater != null" >
         updater,
       </if>
-      <if test="updatetime != null" >
-        updateTime,
+      <if test="updateTime != null" >
+        update_Time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="msgid != null" >
-        #{msgid,jdbcType=CHAR},
+      <if test="msgId != null" >
+        #{msgId,jdbcType=CHAR},
       </if>
-      <if test="hmsignid != null" >
-        #{hmsignid,jdbcType=INTEGER},
+      <if test="hmSignId != null" >
+        #{hmSignId,jdbcType=INTEGER},
       </if>
-      <if test="tousername != null" >
-        #{tousername,jdbcType=VARCHAR},
+      <if test="toUserName != null" >
+        #{toUserName,jdbcType=VARCHAR},
       </if>
-      <if test="fromusername != null" >
-        #{fromusername,jdbcType=VARCHAR},
+      <if test="fromUserName != null" >
+        #{fromUserName,jdbcType=VARCHAR},
       </if>
-      <if test="msgtype != null" >
-        #{msgtype,jdbcType=VARCHAR},
+      <if test="msgType != null" >
+        #{msgType,jdbcType=VARCHAR},
       </if>
-      <if test="mediaid != null" >
-        #{mediaid,jdbcType=VARCHAR},
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
@@ -176,26 +181,26 @@
       <if test="recognition != null" >
         #{recognition,jdbcType=VARCHAR},
       </if>
-      <if test="picurl != null" >
-        #{picurl,jdbcType=VARCHAR},
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="musicurl != null" >
-        #{musicurl,jdbcType=VARCHAR},
+      <if test="musicUrl != null" >
+        #{musicUrl,jdbcType=VARCHAR},
       </if>
-      <if test="hqmusicurl != null" >
-        #{hqmusicurl,jdbcType=VARCHAR},
+      <if test="hqMusicUrl != null" >
+        #{hqMusicUrl,jdbcType=VARCHAR},
       </if>
-      <if test="thumbmediaid != null" >
-        #{thumbmediaid,jdbcType=VARCHAR},
+      <if test="thumbMediaId != null" >
+        #{thumbMediaId,jdbcType=VARCHAR},
       </if>
-      <if test="locationx != null" >
-        #{locationx,jdbcType=REAL},
+      <if test="locationX != null" >
+        #{locationX,jdbcType=REAL},
       </if>
-      <if test="locationy != null" >
-        #{locationy,jdbcType=REAL},
+      <if test="locationY != null" >
+        #{locationY,jdbcType=REAL},
       </if>
       <if test="scale != null" >
         #{scale,jdbcType=INTEGER},
@@ -203,40 +208,43 @@
       <if test="label != null" >
         #{label,jdbcType=VARCHAR},
       </if>
-      <if test="isdelete != null" >
-        #{isdelete,jdbcType=VARCHAR},
+      <if test="sysUrl != null" >
+        #{sysUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=INTEGER},
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
       </if>
-      <if test="syscreatetime != null" >
-        #{syscreatetime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysCreateTime != null" >
+        #{sysCreateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updater != null" >
         #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.WechatReceiveMessage" >
     update t_wechat_receive_message
     <set >
-      <if test="hmsignid != null" >
-        hmSignId = #{hmsignid,jdbcType=INTEGER},
+      <if test="hmSignId != null" >
+        hm_Sign_Id = #{hmSignId,jdbcType=INTEGER},
       </if>
-      <if test="tousername != null" >
-        toUserName = #{tousername,jdbcType=VARCHAR},
+      <if test="toUserName != null" >
+        to_User_Name = #{toUserName,jdbcType=VARCHAR},
       </if>
-      <if test="fromusername != null" >
-        fromUserName = #{fromusername,jdbcType=VARCHAR},
+      <if test="fromUserName != null" >
+        from_User_Name = #{fromUserName,jdbcType=VARCHAR},
       </if>
-      <if test="msgtype != null" >
-        msgType = #{msgtype,jdbcType=VARCHAR},
+      <if test="msgType != null" >
+        msg_Type = #{msgType,jdbcType=VARCHAR},
       </if>
-      <if test="mediaid != null" >
-        mediaId = #{mediaid,jdbcType=VARCHAR},
+      <if test="mediaId != null" >
+        media_Id = #{mediaId,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
@@ -253,26 +261,26 @@
       <if test="recognition != null" >
         recognition = #{recognition,jdbcType=VARCHAR},
       </if>
-      <if test="picurl != null" >
-        picUrl = #{picurl,jdbcType=VARCHAR},
+      <if test="picUrl != null" >
+        pic_Url = #{picUrl,jdbcType=VARCHAR},
       </if>
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="musicurl != null" >
-        musicUrl = #{musicurl,jdbcType=VARCHAR},
+      <if test="musicUrl != null" >
+        music_Url = #{musicUrl,jdbcType=VARCHAR},
       </if>
-      <if test="hqmusicurl != null" >
-        hqMusicUrl = #{hqmusicurl,jdbcType=VARCHAR},
+      <if test="hqMusicUrl != null" >
+        hq_Music_Url = #{hqMusicUrl,jdbcType=VARCHAR},
       </if>
-      <if test="thumbmediaid != null" >
-        thumbMediaId = #{thumbmediaid,jdbcType=VARCHAR},
+      <if test="thumbMediaId != null" >
+        thumb_Media_Id = #{thumbMediaId,jdbcType=VARCHAR},
       </if>
-      <if test="locationx != null" >
-        locationX = #{locationx,jdbcType=REAL},
+      <if test="locationX != null" >
+        location_X = #{locationX,jdbcType=REAL},
       </if>
-      <if test="locationy != null" >
-        locationY = #{locationy,jdbcType=REAL},
+      <if test="locationY != null" >
+        location_Y = #{locationY,jdbcType=REAL},
       </if>
       <if test="scale != null" >
         scale = #{scale,jdbcType=INTEGER},
@@ -280,50 +288,54 @@
       <if test="label != null" >
         label = #{label,jdbcType=VARCHAR},
       </if>
-      <if test="isdelete != null" >
-        isDelete = #{isdelete,jdbcType=VARCHAR},
+      <if test="sysUrl != null" >
+        sys_Url = #{sysUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=INTEGER},
+      <if test="isDelete != null" >
+        is_Delete = #{isDelete,jdbcType=VARCHAR},
       </if>
-      <if test="syscreatetime != null" >
-        sysCreateTime = #{syscreatetime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysCreateTime != null" >
+        sys_Create_Time = #{sysCreateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null" >
+        update_Time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where msgId = #{msgid,jdbcType=CHAR}
+    where msg_Id = #{msgId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.WechatReceiveMessage" >
     update t_wechat_receive_message
-    set hmSignId = #{hmsignid,jdbcType=INTEGER},
-      toUserName = #{tousername,jdbcType=VARCHAR},
-      fromUserName = #{fromusername,jdbcType=VARCHAR},
-      msgType = #{msgtype,jdbcType=VARCHAR},
-      mediaId = #{mediaid,jdbcType=VARCHAR},
+    set hm_Sign_Id = #{hmSignId,jdbcType=INTEGER},
+      to_User_Name = #{toUserName,jdbcType=VARCHAR},
+      from_User_Name = #{fromUserName,jdbcType=VARCHAR},
+      msg_Type = #{msgType,jdbcType=VARCHAR},
+      media_Id = #{mediaId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       format = #{format,jdbcType=VARCHAR},
       recognition = #{recognition,jdbcType=VARCHAR},
-      picUrl = #{picurl,jdbcType=VARCHAR},
+      pic_Url = #{picUrl,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
-      musicUrl = #{musicurl,jdbcType=VARCHAR},
-      hqMusicUrl = #{hqmusicurl,jdbcType=VARCHAR},
-      thumbMediaId = #{thumbmediaid,jdbcType=VARCHAR},
-      locationX = #{locationx,jdbcType=REAL},
-      locationY = #{locationy,jdbcType=REAL},
+      music_Url = #{musicUrl,jdbcType=VARCHAR},
+      hq_Music_Url = #{hqMusicUrl,jdbcType=VARCHAR},
+      thumb_Media_Id = #{thumbMediaId,jdbcType=VARCHAR},
+      location_X = #{locationX,jdbcType=REAL},
+      location_Y = #{locationY,jdbcType=REAL},
       scale = #{scale,jdbcType=INTEGER},
       label = #{label,jdbcType=VARCHAR},
-      isDelete = #{isdelete,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=INTEGER},
-      sysCreateTime = #{syscreatetime,jdbcType=TIMESTAMP},
+      sys_Url = #{sysUrl,jdbcType=VARCHAR},
+      is_Delete = #{isDelete,jdbcType=VARCHAR},
+      create_Time = #{createTime,jdbcType=TIMESTAMP},
+      sys_Create_Time = #{sysCreateTime,jdbcType=TIMESTAMP},
       updater = #{updater,jdbcType=VARCHAR},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP}
-    where msgId = #{msgid,jdbcType=CHAR}
+      update_Time = #{updateTime,jdbcType=TIMESTAMP}
+    where msg_Id = #{msgId,jdbcType=CHAR}
   </update>
 </mapper>

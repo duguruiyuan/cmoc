@@ -676,6 +676,7 @@ CREATE TABLE `t_wechat_receive_message` (
   `locationY` float DEFAULT NULL COMMENT '地理位置经度',
   `scale` int(10) DEFAULT NULL COMMENT '地图缩放大小',
   `label` varchar(128) DEFAULT NULL COMMENT '地理位置信息',
+  `sysUrl` varchar(128) DEFAULT NULL COMMENT '系统路径',
   `isDelete` varchar(2) DEFAULT 'N',
   `createTime` int(22) NOT NULL COMMENT '创建时间',
   `sysCreateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '系统创建时间',

@@ -17,4 +17,5 @@ public final class Const {
 	public static String rootPath = PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_resource.url");
 
 	public static final String SYS_USER = "admin";
+	
 }

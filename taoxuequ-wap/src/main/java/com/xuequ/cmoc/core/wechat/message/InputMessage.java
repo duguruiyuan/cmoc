@@ -22,7 +22,7 @@ public class InputMessage implements Serializable {
     private String msgType = "text";  
     //消息id，64位整型
     @XStreamAlias("MsgId")  
-    private Long msgId;  
+    private String msgId;  
     //消息媒体id
     @XStreamAlias("MediaId")
     private String mediaId;
@@ -118,10 +118,10 @@ public class InputMessage implements Serializable {
 	public void setMsgType(String msgType) {
 		this.msgType = msgType;
 	}
-	public Long getMsgId() {
+	public String getMsgId() {
 		return msgId;
 	}
-	public void setMsgId(Long msgId) {
+	public void setMsgId(String msgId) {
 		this.msgId = msgId;
 	}
 	public String getMediaId() {

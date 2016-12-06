@@ -1,6 +1,6 @@
 package com.xuequ.cmoc.core.wechat.utils;
 
-public class MessageUtil {
+public final class MessageUtil {
 
 	// 请求消息类型：文本
     public static final String REQ_MESSAGE_TYPE_TEXT = "text";

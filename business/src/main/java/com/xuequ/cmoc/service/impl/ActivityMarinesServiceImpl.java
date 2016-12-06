@@ -63,6 +63,7 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 		if(hmSign == null) {
 			return new RspResult(StatusEnum.ACTIVITY_NON_SIGN);
 		}
+		hmSign.setMarineId(marineId);
 		hmSign.setUpdater(Const.SYS_USER);
 		hmSign.setUpdateTime(new Date());
 		int count = activityHmSignMapper.updateBindMarine(hmSign);
@@ -81,6 +82,11 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 	@Override
 	public int updateByPrimaryKeySelective(ActivityMarines marines) {
 		return activityMarinesMapper.updateByPrimaryKeySelective(marines);
+	}
+
+	@Override
+	public ActivityMarinesView selectMarineByHmOpenid(String openid) {
+		return activityMarinesMapper.selectMarineByHmOpenid(openid);
 	}
 
 }

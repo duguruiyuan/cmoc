@@ -7,12 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.List;
 import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.lsmp.djep.vectorJep.function.Ele;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -222,7 +224,7 @@ public final class FileUtils {
         String realFileName = imgName == null ? UUID.randomUUID().toString() : imgName;
         String extName = FileUtils.getExtName(buildInfo.getOriginalFilename());
         realFileName += Const.DOT + extName;
-
+        
         // 文件保存磁盘的完整路径
         String attachmentURL = relativeAttachmentPath + Const.SEPARATOR + realFileName;
         try {

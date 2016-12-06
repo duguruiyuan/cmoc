@@ -633,9 +633,8 @@ select.regMT-select{
 }
 .code-title{
 	height: 80px;
-    line-height: 30px;
-    font-size: 14px;
-    padding-top: 15px;
+	line-height: 80px;
+	font-size: 14px;
 }
 .code-pic img{
 	width: 80%;
@@ -649,4 +648,94 @@ select.regMT-select{
 	color: #008200;
 	font-weight: bold;
 	border-top: 1px #ccc solid;
+}
+
+/*队伍管理*/
+.ranksManager-head{
+	position: relative;
+	width: 100%;
+	height: 240px;
+}
+.rankManager-headPic{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width:100%;
+	height: 240px;
+	background: #f0ecf0 url(../images/ranksManager-head.png) no-repeat center center;
+}
+.rankManager-text{
+	position: absolute;
+	top: 30px;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	font-size: 22px;
+	color: #9a989c;
+	font-weight: bold;
+	text-align: center;
+}
+.ranksManager-listHead{
+	padding-left: 15px;
+	height: 40px;
+	line-height: 40px;
+	color: #7a797e;
+	font-weight: bold;
+	background: #fff;
+}
+.ranksManager-list>.mui-table-view:first-child{
+	margin-top: 0;
+}
+.ranksManager-line{
+	
+}
+.ranksManager-img{
+	float: left;
+}
+.ranksManager-img img{
+	width: 90px;
+	height: 90px;
+	vertical-align: middle;
+	border: 1px #f1eff3 solid;
+}
+.ranksManager-name{
+	float: left;
+	margin-left: 13px;
+	height: 95px;
+	line-height: 95px;
+}
+.ranksManager-right{
+    position: absolute;
+    top: 50%;
+    right: 35px;
+    display: inline-block;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-decoration: none;
+    color: #959595;
+}
+.mui-input-group .mui-input-row.textarea-row{
+	height: 200px;
+}
+.textarea-row{
+	height: 200px;
+}
+
+.marine-head{
+    border-bottom: 1px solid #E1DDDD;
+    line-height: 60px;
+    height: 60px;
+    font-size: #fff;
+    font-size: 18px;
+    color: green;
+    padding-left: 15px;
+    padding-right: 30px;
+    background: #D8F6D8;
+    font-weight: bold;
+}
+
+.marine-setting{
+	float:right;
+	color: #3D8B3D;
+	font-weight: normal;
 }
