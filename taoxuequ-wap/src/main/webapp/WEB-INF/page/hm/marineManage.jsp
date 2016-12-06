@@ -17,10 +17,12 @@
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
 <body>
 	<input type="hidden" id="activityId" value="${marine.activityId }" />
-	<div class="ranksManager-head">
+	<div class="ranksManager-head" id="${marine.id }" onclick="wxChooseImage('MARINE', ${marine.id})" >
 		<div class="rankManager-text">点击上传队伍合照</div>
-		<div class="rankManager-headPic" onclick="wxChooseImage('MARINE', ${marineId})" style="z-index: -1;">
-			<c:if test="${marine.id }"></c:if>
+		<div class="rankManager-headPic" style="z-index: -1;">
+			<c:if test="${marine.marineImg != null}">
+				<img src="${config.imgUrl}/${marine.marineImg }"/>
+			</c:if>
 		</div>
 	</div>
 	<div class="marine-head">
@@ -36,7 +38,7 @@
 				    	<div class="ranksManager-img" id="${item.id }" onclick="wxChooseImage('MEMBER',${item.id})">
 				    		<c:choose>
 				    			<c:when test="${item.childImg != null }">
-				    				<img src="${item.childImg }"/>
+				    				<img src="${config.imgUrl}/${item.childImg }"/>
 				    			</c:when>
 				    			<c:otherwise>
 				    				<img src="<%=basePath %>/images/uploadPic-bg.png">
@@ -58,6 +60,7 @@
 		</ul>
 	</div>
 	<script type="text/javascript">
+		initSnsToken();	
 		mui.init();
 		$(function(){
 			var str = '<div class="code">\
@@ -86,8 +89,8 @@
                needResult: 1,
                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-               success: function (data) {
-               		var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+               success: function (res) {
+               		var localIds = res.localIds[0].toString(); // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
                		wxuploadImage(imgType, id, localIds);
                },
                fail: function (res) {
@@ -98,7 +101,7 @@
        }
 		function wxuploadImage(imgType, id, localId) {  
            wx.uploadImage({  
-               localId: e, // 需要上传的图片的本地ID，由chooseImage接口获得  
+               localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得  
                isShowProgressTips: 1, // 默认为1，显示进度提示  
                success: function (res) {  
                    mediaId = res.serverId; // 返回图片的服务器端ID  
@@ -128,6 +131,10 @@
        		}
 		 });
 	   }
+	   function initSnsToken() {
+			var snsToken = '${snsToken}';
+			setAccessToken(snsToken);
+		}
 	</script>
 </body>
 </html>

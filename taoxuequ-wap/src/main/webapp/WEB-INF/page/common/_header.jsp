@@ -21,12 +21,12 @@
 <link href="<%=basePath %>/css/mui.poppicker.css" rel="stylesheet" />
 <link  href="<%=basePath %>/css/display.css?v=${config.version}" rel="stylesheet" type="text/css"/>
 
-<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%=basePath %>/js/plugins/wechat-config.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/mui/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.js"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.picker.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%=basePath %>/js/plugins/wechat-config.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/common.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 

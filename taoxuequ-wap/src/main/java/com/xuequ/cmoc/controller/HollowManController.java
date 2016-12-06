@@ -133,6 +133,7 @@ public class HollowManController extends BaseController {
 				}
 			}
 		}
+		logger.info("-----------"+redir);
 		return redir;
 	}
 	

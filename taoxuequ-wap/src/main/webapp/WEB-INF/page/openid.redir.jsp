@@ -18,8 +18,10 @@
 		var snsToken = JSON.parse(window.localStorage.getItem("snsToken"));
 		var currUrl = window.location.href;
 		if(snsToken != null) {
-			window.location.href = currUrl + "?type=scope&token=" + 
+			var sp = currUrl.indexOf("?") != -1 ? "&" : "?";
+			var reqUrl = currUrl + sp + "type=scope&token=" + 
 			snsToken.refresh_token + "&openid=" + snsToken.openid;
+			window.location.href = reqUrl;
 		} else {
 			currUrl = encodeURIComponent(currUrl);
 			currUrl = wechat_redirect.replace('{1}', currUrl);

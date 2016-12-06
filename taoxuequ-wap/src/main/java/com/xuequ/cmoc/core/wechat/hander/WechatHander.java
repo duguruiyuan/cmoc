@@ -142,7 +142,7 @@ public class WechatHander {
     			content = TextUtil.format(content, new String[]{
     					WechatReqMsgType.getDesc(inputMsg.getMsgType()), hmSign.getHmName(),
     					Constants.BASEPATH + "/live", Constants.BASEPATH + "/live/marine/detail/" + hmSign.getMarineId(),
-    					hmSign.getMarineName(), Constants.BASEPATH + "/hm/manage/marine?marId=" + hmSign.getMarineId() + "&hmId=" + hmSign.getHmId()});
+    					hmSign.getMarineName(), Constants.BASEPATH + "/hm/manage/marine"});
     			outputMsg.setContent(content);
     		}
     	}
@@ -196,7 +196,7 @@ public class WechatHander {
 			if(StatusEnum.SUCCESS.getCode().equals(rspResult.getCode())) {
 				content = PropertiesUtil.getProperty("hm_regiter_success");
 				ActivityHmSign hmSign = (ActivityHmSign) rspResult.getData();
-				String url = Constants.BASEPATH + "/hm/manage/marine?mid=" + hmSign.getActivityId() + "&hid=" + hmSign.getHmId();
+				String url = Constants.BASEPATH + "/hm/manage/marine";
 				String[] strings = new String[]{hmSign.getActivityName(), hmSign.getHmName(), 
 						hmSign.getMarineName(), String.valueOf(hmSign.getMarineId()), 
 						DateUtil.dateToStr(hmSign.getUpdateTime(), DateUtil.DEFAULT_DATE_FORMAT), url};

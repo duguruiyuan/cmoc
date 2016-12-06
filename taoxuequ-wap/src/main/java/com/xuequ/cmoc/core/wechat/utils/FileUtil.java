@@ -37,7 +37,7 @@ public class FileUtil {
 			FileUtils.createDir(relativeAttachmentPath);
 			String mediaId = isThumb ? message.getThumbMediaId() : message.getMediaId();
 			String wechatUrl = TextUtil.format(WechatConfigure.getInstance().getMediaDownload(), 
-					new String[]{"gFGMCC3YQWt8-wenxa4dlf3Lt7_Q1EXe142gYg30C2s03Djq12I0H5kmqR9RmpJy9ITT0h4-IG4KpM45y54Oi1i1x02b4iq3MpV_C9B2jfDMY99_YEYZo-bQay9mfGBKFRLdAIAZLF", mediaId});
+					new String[]{WechatUtils.getAccessToken(), mediaId});
     		URL url = new URL(wechatUrl);
     		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     		conn.setRequestMethod("GET");

@@ -20,6 +20,7 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+			window.localStorage.removeItem("snsToken");
 			mui.init();
 			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
 		</script>
