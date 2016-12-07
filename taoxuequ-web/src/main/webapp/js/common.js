@@ -173,3 +173,67 @@ function clacImgZoomParam( maxWidth, maxHeight, width, height ){
     param.top = Math.round((maxHeight - param.height) / 2);
     return param;
 }
+
+/**
+ * 正数校验
+ */
+var positiveValidate = function(e) {
+	if (!isNaN(e)) {
+		if(e.trim()==""){
+			return false;
+		}
+		if (e.indexOf('0') == 0) {
+			if (e.indexOf('.') == 1) {
+				return true;
+			} else {
+				return false
+			}
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
+};
+
+/**
+ * 百分数校验
+ */
+var percentNumValidate = function(e) {
+	if (!isNaN(e)) {
+		if(e.trim()==""){
+			return false;
+		}
+		if (parseFloat(e)>100||parseFloat(e)<0){
+			return false;
+		}
+		if (e.indexOf('0') == 0) {
+			if (e.indexOf('.') == 1) {
+				return true;
+			} else {
+				return false
+			}
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
+};
+
+/**
+ * 去掉字符中所有空格
+ */
+var excludeSpace = function(e) {
+	return e.replace(/(^\s*)|(\s*$)/g, '');
+};
+
+$(".number").blur(function() {
+	var value = this.value;
+	if(value) {
+		if(!positiveValidate(value)) {
+			mui.alert('请输入正确格式','系统提示');
+			this.value = null;
+		}
+	}
+})

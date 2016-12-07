@@ -18,16 +18,19 @@
 <body>
 	<input type="hidden" id="activityId" value="${marine.activityId }" />
 	<div class="ranksManager-head" id="${marine.id }" onclick="wxChooseImage('MARINE', ${marine.id})" >
-		<div class="rankManager-text">点击上传队伍合照</div>
-		<div class="rankManager-headPic" style="z-index: -1;">
-			<c:if test="${marine.marineImg != null}">
+		<c:choose>
+			<c:when test="${marine.marineImg != null }">
 				<img src="${config.imgUrl}/${marine.marineImg }"/>
-			</c:if>
-		</div>
+			</c:when>
+			<c:otherwise>
+				<div class="rankManager-text">点击上传队伍合照</div>
+				<div class="rankManager-headPic"></div>
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<div class="marine-head">
 		<div style="float:left">编辑队伍信息</div>
-		<div class="marine-setting">未设置</div>
+		<div class="marine-setting editInfo" id="${marine.id }" ed-type="MARINE">编辑</div>
 	</div>
 	<div class="ranksManager-listHead">编辑队员信息</div>
 	<div class="mui-content ranksManager-list">
@@ -47,11 +50,11 @@
 				    	</div>
 				    	<div class="ranksManager-name">${item.childName }</div>
 				    	<c:choose>
-				    		<c:when test="${item.childTitle != null }">
-				    			<div class="ranksManager-right">未设置</div>
+				    		<c:when test="${item.childTitle == null }">
+				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-type="MEMBER">未设置</div>
 				    		</c:when>
 				    		<c:otherwise>
-				    			<div class="ranksManager-right">编辑</div>
+				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-type="MEMBER">编辑</div>
 				    		</c:otherwise>
 				    	</c:choose>
 			    	</a>
@@ -59,27 +62,147 @@
 			</c:forEach>
 		</ul>
 	</div>
+	<div id="memberEdit" class="code" style="display: none;">
+		<div class="mui-content">
+			<div class="regTM-formTitle">编辑队员信息
+				<span class="marine-close" onclick="closeEdit('memberEdit')">
+				 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+				</span>
+			</div>
+			<form id="memberForm" class="mui-input-group">
+				<input type="hidden" id="id" name="id" />
+				<input type="hidden" id="type" name="type" />
+				<div class="mui-input-row">
+				    <label>队员</label>
+				    <input id="childName" type="text" maxlength="11" readonly value="小明">
+				</div>
+				<div class="mui-input-row">
+				    <label>队员头衔</label>
+				    <input id="childTitle" name="childTitle" type="text" placeholder="队员头衔">
+				</div>
+				<div class="mui-input-row textarea-row">
+				    <label>评语</label>
+				    <textarea id="childComment" name="childComment" rows="3" cols="40" placeholder="请填写评语" style="height: 190px;"></textarea>
+					<p style="bottom: -5px;position: absolute;padding-left: 10px;">（可不填）请透明人任务填写评语，不要输入图片表情</p>
+				</div>
+			</form>
+			<div class="regMT-btnWrap">
+				<button type="button" id="member-btn" class="zdy-btn">保存</button>
+			</div>
+		</div>
+	</div>
+	<div id="marineEdit" class="code" style="display: none;">
+		<div class="mui-content">
+			<div class="regTM-formTitle">编辑战队信息
+				<span class="marine-close" onclick="closeEdit('marineEdit')">
+				 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+				</span>
+			</div>
+			<form id="marineForm" class="mui-input-group">
+				<input type="hidden" id="id" name="id" />
+				<input type="hidden" id="type" name="type" />
+				<div class="mui-input-row">
+				    <label>队名</label>
+				    <input id="marineName" name="marineName" type="text" maxlength="11" placeholder="请输入队名">
+				</div>
+				<div class="mui-input-row">
+				    <label>口号</label>
+				    <input id="marineSlogan" name="marineSlogan" type="text" placeholder="请输入口号">
+				</div>
+				<div class="mui-input-row">
+				    <label>得分</label>
+				    <input id="score" name="score" class="number" type="text" placeholder="请输入得分">
+				</div>
+				<div class="mui-input-row">
+				    <label>奖项</label>
+				    <input id="marinePrize" name="marinePrize" type="text" placeholder="请输入奖项">
+				</div>
+				<div class="mui-input-row textarea-row">
+				    <label>评语</label>
+				    <textarea id="comment" name="comment" rows="3" cols="40" placeholder="请填写评语" style="height: 190px;"></textarea>
+					<p style="bottom: -5px;position: absolute;padding-left: 10px;">请透明人任务填写评语，不要输入图片表情</p>
+				</div>
+			</form>
+			<div class="regMT-btnWrap">
+				<button type="button" id="marine-btn" class="zdy-btn">保存</button>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript">
 		initSnsToken();	
 		mui.init();
 		$(function(){
-			var str = '<div class="code">\
-							<div class="code-inner">\
-								<div class="code-title">[穿越部落]长按二维码绑定队伍</div>\
-								<div class="code-pic">\
-									<img src="../images/code.png">\
-								</div>\
-								<div class="code-btn">确定</div>\
-							</div>\
-						</div>';
+			$(".editInfo").on("click", function() {
+				var thiz = $(this);
+				var id = thiz.attr("id");
+				var type = thiz.attr("ed-type");
+				marineEditQuery(id, type);
+			})
 			
-			$(".ranksList").on("click", ".mui-navigate-right", function(){
-				$("body").append(str);
+			$("#member-btn").click(function(){
+				var childTitle = $("#memberForm #childTitle").val();
+				if(!childTitle) {
+					alert("队员头衔不能为空");
+					return;
+				}
+				$.ajax({
+			 		url : "<%=basePath%>/hm/marine/edit/submit",
+			 		type : "post",
+			 		data : $('#memberForm').serialize(),
+			 		dataType : "json",
+			 		async : false,
+			 		success : function(data) {
+			 			if(data.code == '000') {
+			 				$("#memberEdit").attr("style", "display:none");
+			 				mui.alert('队员信息编辑成功','消息提示');
+			 			}else {
+			 				mui.alert(data.msg,'消息提示');
+			 			}
+			 		}, error:function(){
+			 			mui.alert("系统异常，请联系管理员",'消息提示');
+	        		}
+			 	});
 			});
 			
-			$("body").on("click", ".code-btn", function(){
-				$(".code").remove();
-			})
+			$("#marine-btn").click(function(){
+				var childTitle = $("#marineForm #marineName").val();
+				if(!childTitle) {
+					alert("队名不能为空");
+					return;
+				}
+				var childTitle = $("#marineForm #marineSlogan").val();
+				if(!childTitle) {
+					alert("战队口号不能为空");
+					return;
+				}
+				$.ajax({
+			 		url : "<%=basePath%>/hm/marine/edit/submit",
+			 		type : "post",
+			 		data : $('#marineForm').serialize(),
+			 		dataType : "json",
+			 		async : false,
+			 		success : function(data) {
+			 			if(data.code == '000') {
+			 				$("#marineEdit").attr("style", "display:none");
+			 				mui.alert('战队信息编辑成功','消息提示');
+			 			}else {
+			 				mui.alert(data.msg,'消息提示');
+			 			}
+			 		}, error:function(){
+			 			mui.alert("系统异常，请联系管理员",'消息提示');
+	        		}
+			 	});
+			});
+			$(".number").blur(function() {
+				var value = this.value;
+				if(value) {
+					if(!positiveValidate(value)) {
+						mui.alert('请输入正确格式','系统提示');
+						this.value = null;
+						this.focus();
+					}
+				}
+			});
 		})
 		
 		//拍照或从手机相册中选图接口
@@ -131,10 +254,53 @@
        		}
 		 });
 	   }
+	   function marineEditQuery(id, type) {
+		   $.ajax({
+		 		url : "<%=basePath%>/hm/marine/edit/query",
+		 		type : "post",
+		 		data : {
+		 			id: id,
+		 			type: type
+		 		},
+		 		dataType : "json",
+		 		async : false,
+		 		success : function(data) {
+		 			var obj = data.data;
+		 			if(data.code == '000') {
+		 				if(type == 'MARINE') {
+		 					$("#marineEdit").attr("style", "display:block");
+		 					$("#marineForm #id").val(obj.id);
+		 					$("#marineForm #type").val(type);
+		 					$("#marineForm #marineName").val(obj.marineName);
+		 					$("#marineForm #marineSlogan").val(obj.marineSlogan);
+		 					$("#marineForm #score").val(obj.score);
+		 					$("#marineForm #marinePrize").val(obj.marinePrize);
+		 					$("#marineForm #comment").val(obj.comment);
+		 				}else if(type == 'MEMBER') {
+		 					$("#memberEdit").attr("style", "display:block");
+		 					$("#memberForm #id").val(obj.id);
+		 					$("#memberForm #type").val(type);
+		 					$("#memberForm #childName").val(obj.childName);
+		 					$("#memberForm #childTitle").val(obj.childTitle);
+		 					$("#memberForm #childComment").val(obj.childComment);
+		 				}
+		 			}else {
+		 				alert(data.msg);
+		 			}
+		 		}, error:function(){
+		 			mui.alert("系统异常，请联系管理员",'消息提示');
+		 		}
+		 	});
+       	}
+	   
 	   function initSnsToken() {
 			var snsToken = '${snsToken}';
 			setAccessToken(snsToken);
 		}
+	   
+	   function closeEdit(id) {
+		   $("#" + id).attr("style", "display:none");
+	   }
 	</script>
 </body>
 </html>

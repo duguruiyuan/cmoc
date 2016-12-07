@@ -1,5 +1,7 @@
 package com.xuequ.cmoc.view;
 
+import java.sql.Date;
+
 import com.xuequ.cmoc.model.ActivityHmSign;
 
 public class ActivityHmSignView extends ActivityHmSign {
@@ -21,6 +23,8 @@ public class ActivityHmSignView extends ActivityHmSign {
 	private String hmName;
 	
 	private String hmMobile;
+	
+	private Date startDate;
 
 	public String getActivityName() {
 		return activityName;
@@ -84,6 +88,14 @@ public class ActivityHmSignView extends ActivityHmSign {
 
 	public void setHmMobile(String hmMobile) {
 		this.hmMobile = hmMobile;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	
 	

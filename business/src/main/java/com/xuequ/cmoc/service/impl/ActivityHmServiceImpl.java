@@ -27,4 +27,9 @@ public class ActivityHmServiceImpl implements IActivityHmService {
 		return activityHmSignMapper.selectForMessage(openid);
 	}
 
+	@Override
+	public List<ActivityHmSignView> selectWithTeamRecord(String openid) {
+		return activityHmSignMapper.selectWithTeamRecord(openid);
+	}
+
 }

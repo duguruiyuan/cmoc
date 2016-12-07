@@ -36,4 +36,6 @@ public interface ActivityHmSignMapper {
     int updateBindMarine(ActivityHmSign hmSign);
     
     ActivityHmSign selectForMessage(String openid);
+    
+    public List<ActivityHmSignView> selectWithTeamRecord(String openid);
 }

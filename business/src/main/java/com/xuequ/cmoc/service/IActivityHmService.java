@@ -16,4 +16,11 @@ public interface IActivityHmService {
 	 * @return
 	 */
 	ActivityHmSign selectForMessage(String openid);
+	
+	/**
+	 * 查询透明人带队记录
+	 * @param openid
+	 * @return
+	 */
+	List<ActivityHmSignView> selectWithTeamRecord(String openid);
 }

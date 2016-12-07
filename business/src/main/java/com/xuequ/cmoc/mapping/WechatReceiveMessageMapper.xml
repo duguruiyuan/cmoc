@@ -41,6 +41,16 @@
     from t_wechat_receive_message
     where msg_Id = #{msgId,jdbcType=CHAR}
   </select>
+  
+  <select id="selectListByPage" resultMap="BaseResultMap">
+  	SELECT 
+    wm.`msg_Type`, wm.`sys_Url`, wm.`pic_Url`, wm.`create_Time`
+    FROM t_wechat_receive_message wm
+    INNER JOIN t_activity_hm_sign hs ON wm.`hm_Sign_Id` = hs.`id`
+    WHERE wm.`is_Delete` = 'N' AND hs.`marine_id` = #{params.marineId,jdbcType=INTEGER}
+    AND wm.`msg_type` = #{params.msgType,jdbcType=VARCHAR}
+    ORDER BY wm.create_time ${params.order}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_wechat_receive_message
     where msg_Id = #{msgId,jdbcType=CHAR}

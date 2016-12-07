@@ -1,6 +1,9 @@
 package com.xuequ.cmoc.dao;
 
+import java.util.List;
+
 import com.xuequ.cmoc.model.WechatReceiveMessage;
+import com.xuequ.cmoc.page.Page;
 
 public interface WechatReceiveMessageMapper {
     int deleteByPrimaryKey(String msgId);
@@ -14,4 +17,6 @@ public interface WechatReceiveMessageMapper {
     int updateByPrimaryKeySelective(WechatReceiveMessage record);
 
     int updateByPrimaryKey(WechatReceiveMessage record);
+    
+    List<WechatReceiveMessage> selectListByPage(Page<WechatReceiveMessage> page);
 }

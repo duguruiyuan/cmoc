@@ -39,21 +39,27 @@ public class IndexController extends BaseController{
 	
 	@RequestMapping("my")
 	public String my(Model model) {
-		String page = "my";
-		String redir = wechatRedirect(model, page);
-		if(redir.equals(page)) {
-			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-			String openid = request.getParameter("openid");
-			if(token != null || StringUtils.isNotBlank(openid)) {
-				if(token != null) openid = token.getOpenid();
-				HollowManInfo hm = hollowManService.selectByOpenid(token.getOpenid());
-				if(hm != null) {
-					model.addAttribute("hm", hm);
-					return "hm/hmMy";
-				}
-			}
+		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE";
+		HollowManInfo hm = hollowManService.selectByOpenid(openid);
+		if(hm != null) {
+			model.addAttribute("hm", hm);
 		}
-		return redir;
+		return "hm/hmMy";
+//		String page = "my";
+//		String redir = wechatRedirect(model, page);
+//		if(redir.equals(page)) {
+//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+//			String openid = request.getParameter("openid");
+//			if(token != null || StringUtils.isNotBlank(openid)) {
+//				if(token != null) openid = token.getOpenid();
+//				HollowManInfo hm = hollowManService.selectByOpenid(token.getOpenid());
+//				if(hm != null) {
+//					model.addAttribute("hm", hm);
+//					return "hm/hmMy";
+//				}
+//			}
+//		}
+//		return redir;
 	}
 	
 	@RequestMapping("about")

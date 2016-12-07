@@ -41,7 +41,19 @@
     <result column="line_name" property="lineName" jdbcType="VARCHAR" />
     <result column="hm_name" property="hmName" jdbcType="VARCHAR" />
     <result column="hm_mobile" property="hmMobile" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <select id="selectWithTeamRecord" resultMap="PageBaseResultMap">
+  	SELECT hm.`hm_name`, am.`marine_name`, ai.`activity_name`,ai.`activity_num`,ai.`start_date`  
+    FROM t_activity_hm_sign hs
+    INNER JOIN t_activity_marines am ON hs.`marine_id` = am.`id`
+    INNER JOIN t_activity_info ai ON am.`activity_id` = ai.`id`
+    INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id`
+    WHERE hs.`is_effect` = 1 AND hs.`is_delete` = 'N'
+    AND hm.`openid` = #{openid,jdbcType=VARCHAR}
+    order by ai.`start_date` desc
+  </select>
   
   <select id="selectListByPage" resultMap="PageBaseResultMap">
   	SELECT s.id, s.activity_id, s.line_id, s.marine_id, s.hm_id, s.sign_date, s.is_effect, 

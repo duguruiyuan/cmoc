@@ -24,17 +24,17 @@
 		    <ul class="mui-table-view mb10">
 	            <li class="mui-table-view-cell">
 	                <a class="mui-navigate-right" href="<%=basePath%>/hm/act/list">
-	                   绑定队伍
+	                   	<i class="fa fa-link fs20" style="color: green;"></i> 绑定队伍
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
 	                <a class="mui-navigate-right" href="<%=basePath%>/live">
-	                     带队记录
+	                     <i class="fa fa-users fs20" style="color: blue"></i> 带队记录
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
 	                <a class="mui-navigate-right" href="<%=basePath%>/user/points">
-	                     申请带队
+	                     	<i class="fa fa-hand-rock-o" style="color: #C3822C"></i> 申请带队
 	                </a>
 	            </li>
 	            

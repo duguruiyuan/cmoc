@@ -77,15 +77,16 @@
 		    </div>
 		    <div class="bg-white pb10 mb10">
 			    <div class="liveDetail-title">
+			    	<input type="hidden" id="marineId" value="${marine.id }"/>
 			    	<h1>${marine.marineName }</h1>
 			    	<h2>${marine.marineSlogan }</h2>
 			    </div>
 			    <div class="liveDetail-listNum">
 			    	<ul>
 			    		<li>
-			    			<span class="liveDetail-listNum-title">线路</span><br>
+			    			<span class="liveDetail-listNum-title">支持票数</span><br>
 
-			    			<em class="liveDetail-listNum-intro liveDetail-listNum-intro1">三年级2号线</em>
+			    			<em class="liveDetail-listNum-intro">${marine.votes }</em>
 			    		</li>
 			    		<li>
 			    			<span class="liveDetail-listNum-title">阅读量</span><br>
@@ -99,8 +100,9 @@
 			    		</li>
 			    	</ul>
 			    </div>
-			    <div class="liveDetail-award">
-			    	<img src="<%=basePath %>/images/test2.png">
+			    <div class="liveDetail-award" style="position: relative;">
+			    	<img src="<%=basePath%>/images/test2.png"/>
+			    	<p class="marine-prize">${marine.marinePrize }</p>
 			    </div>
 		    </div>
 		    <div class="bg-white mb10 pb10">
@@ -128,56 +130,25 @@
 		    <div class="bg-white mb10">
 			    <div class="liveDetail-list pb10">
 			    	<nav class="liveDetail-list-title mui-bar-tab">
-			    		<a class="mui-tab-item  mui-active" href="#list1">
+			    		<a class="mui-tab-item mui-active" href="#list1" id="panel1">
 			    			<span class="mui-tab-label">图片直播</span>
+			    			<input type="hidden" name="msgType" value="image">
+			    			<input type="hidden" name="pageNo" value="1">
 			    		</a>
-			    		<a class="mui-tab-item" href="#list2">
+			    		<a class="mui-tab-item" href="#list2" id="panel2">
 			    			<span class="mui-tab-label">视频直播</span>
+			    			<input type="hidden" name="msgType" value="shortvideo">
+			    			<input type="hidden" name="pageNo" value="1">
 			    		</a>
 			    	</nav>
 			    	<div class="liveDetail-list-content mt10">
 			    		<div id="list1" class="mui-control-content mui-active">
 				    		<div class="sort">
-				    			<span class="sort-icon sort-icon-active">最新</span>
-				    			<span class="sort-icon">开始</span>
+				    			<span class="sort-icon sort-icon-active" order="desc">最新</span>
+				    			<span class="sort-icon" order="asc">开始</span>
 				    		</div>
 				    		<ul>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
+				    			
 				    		</ul>
 				    		
 			    			<div class="loader">
@@ -187,19 +158,11 @@
 			    		
 			    		<div id="list2" class="mui-control-content">
 				    		<div class="sort">
-				    			<span class="sort-icon sort-icon-active">最新</span>
-				    			<span class="sort-icon">开始</span>
+				    			<span class="sort-icon sort-icon-active" order="desc">最新</span>
+				    			<span class="sort-icon" order="asc">开始</span>
 				    		</div>
 				    		<ul>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
-				    			<li>
-				    				<img src="<%=basePath %>/images/text.png"/>
-				    			</li>
+				    			
 				    		</ul>
 				    		
 			    			<div class="loader">
@@ -230,8 +193,18 @@
 				$(".sort-icon").click(function(){
 					var obj = $(this);
 					obj.addClass("sort-icon-active").siblings().removeClass("sort-icon-active");
+					var params = {
+						marineId: $("#marineId").val(),
+	                   	msgType: $(".liveDetail-list-title .mui-active").find("input[name='msgType']").val(),
+	                   	page: 1,
+	                   	order: $(this).attr("order")	
+					};
+					$(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(1);
+					var listObj = $(this.closest(".mui-control-content"));
+					listObj.removeClass("list-null");
+					loadItem(params, listObj, true);
 				});
-				
+				initVideoItem();
 				$(window).scroll(function(){
 					if($(this).scrollTop() >= picListTop-50){
 						rightfix.show();
@@ -243,28 +216,41 @@
 						return false;
 					}
 				  if ($(window).scrollTop() + $(window).height() + 10 >= $(document).height() && $(window).scrollTop() > 20) {
-	                /* $.ajax({
-	                    type:"GET",
-	                    url:'../test/page9.json',
+	                  var msgType = $(".liveDetail-list-title .mui-active").find("input[name='msgType']").val();
+					  var pageNo = parseInt($(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val()) + 1;
+	                  $.ajax({
+	                    type:"POST",
+	                    url:'<%=basePath%>/live/marine/resource/query',
 	                    dataType:'json',
+	                    data: {
+	                    	marineId: $("#marineId").val(),
+	                    	msgType: msgType,
+	                    	page: pageNo,
+	                    	order: listObj.find(".sort-icon-active").attr("order")
+	                    },
 	                    cache:false,
 	                    beforeSend:function(){
 	                    	listObj.find(".loader").show().html('<p>玩命加载中<span></span><span></span><span></span></p>');
 	                    },
 	                    success:function(data){
 	                    	var str = "";
-	                    	if(data.state=="success"){
-	                    		for(var i = 0,len = data.result.length;i < len;i++){
-	                    			str += ' <li>\
-			                    				<img src="'+data.result[i]+'" style="height:'+picHeight+'px"/>\
-			                    			</li> ';
+	                    	if(data.results.length > 0){
+	                    		$(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(pageNo);
+	                    		for(var i = 0,len = data.results.length;i < len;i++){
+	                    			if(msgType == 'image') {
+	                    				str += ' <li>\
+		                    				<img src="'+data.results[i].sysUrl+'"/>\
+		                    			</li> ';
+	                    			}else if(msgType == 'shortvideo') {
+	                    				str += '<li><video poster="' + data.results[i].picUrl + '" controls="controls" preload="none">'+
+                    					'<source src="' + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
+                    					'<source src="' + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
+                    					'</video></li>';
+	                    			}
 	                    		}
 	                    		listObj.find("ul").append(str);
-	                    		if(data.isLast){
-	                    			listObj.addClass("list-null").find(".loader").html('<p>没有更多了~</p>');
-	                    		}
-	                    	}else{
-	                    		alert(data.msg);
+	                    	}else {
+	                    		listObj.addClass("list-null").find(".loader").html('<p>没有更多了~</p>');
 	                    	}
 	                    },
 	                    error:function(){
@@ -275,11 +261,63 @@
 	                    		listObj.find(".loader").hide();
 	                    	}
 	                    }
-	                }) */
+	                })
 	              }
 	            }).trigger("scroll");
-				
-			})
+				function initImageItem() {
+					var params = {
+						marineId: $("#marineId").val(),
+	                   	msgType: $("#panel1").find("input[name='msgType']").val(),
+	                   	page: $("#panel1").find("input[name='pageNo']").val(),
+	                   	order: $("#list1").find(".sort-icon-active").attr("order")	
+					};
+					loadItem(params, $("#list1"), false);
+				}
+				function initVideoItem() {
+					var params = {
+						marineId: $("#marineId").val(),
+	                   	msgType: $("#panel2").find("input[name='msgType']").val(),
+	                   	page: $("#panel2").find("input[name='pageNo']").val(),
+	                   	order: $("#list2").find(".sort-icon-active").attr("order")		
+					};
+					loadItem(params, $("#list2"), false);
+				}
+				function loadItem(params, listObj, reload) {
+	                $.ajax({
+	                  type:"POST",
+	                  url:'<%=basePath%>/live/marine/resource/query',
+	                  dataType:'json',
+	                  data: params,
+	                  cache:false,
+	                  success:function(data){
+	                  	var str = "";
+	                  	if(data.results.length > 0){
+	                  		for(var i = 0,len = data.results.length;i < len;i++){
+	                  			if(params.msgType == 'image') {
+	                  				str += ' <li>\
+		                    				<img src="'+data.results[i].sysUrl+'"/>\
+		                    			</li> ';
+	                  			}else if(params.msgType == 'shortvideo') {
+	                  				str += '<li><video poster="' + data.results[i].picUrl + '" controls="controls" preload="none">'+
+                					'<source src="' + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
+                					'<source src="' + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
+                					'</video></li>';
+                    			}
+	                  		}
+	                  		if(reload) {
+	                  			listObj.find("ul").html(str);
+	                  		}else {
+	                  			listObj.find("ul").append(str);
+	                  		}
+	                  	}
+	                  },
+	                  error:function(){
+	                  	alert("系统异常，请稍后再试！");
+	                  }
+	              });
+				}
+			});
+			
 		</script>
 	</body>
 

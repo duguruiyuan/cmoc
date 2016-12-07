@@ -158,7 +158,7 @@
 	color: #069dd6;
 }
 .liveDetail-award{
-	margin: 15px;
+	margin: 5px;
 	display: -webkit-box;
 	display: box;
 	-webkit-box-pack:center;
@@ -254,6 +254,11 @@
 }
 .liveDetail-list-content li img{
 	width: 100%;
+	height: 200px;
+}
+.liveDetail-list-content li video{
+	width: 100%;
+	height: 200px;
 }
 .liveDetail-list .rightfix{
 	display: none;
@@ -656,6 +661,13 @@ select.regMT-select{
 	width: 100%;
 	height: 240px;
 }
+.ranksManager-head img{
+	vertical-align: middle;
+    border: 1px #E3DAED solid;
+    padding: 5px;
+    height: 240px;
+    width: 100%;
+}
 .rankManager-headPic{
 	position: absolute;
 	top: 0;
@@ -738,4 +750,38 @@ select.regMT-select{
 	float:right;
 	color: #3D8B3D;
 	font-weight: normal;
+}
+
+.zdy-btn{
+	padding: 0;
+	width: 100%;
+	height: 55px;
+	font-size: 24px;
+	line-height: 55px;
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+	background: #00bd13;
+	border: 1px #00ab16 solid;
+	border-radius: 8px;
+}
+.marine-close {
+	padding-right: 15px;
+    float: right;
+    color: #D87472;
+    font-size: 21px;
+}
+.marine-prize {
+    position: absolute;
+    bottom: 25%;
+    left: -10%;
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+.fs20{
+	font-size: 20px;
 }

@@ -49,3 +49,58 @@ for(var k in o)
 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
 return fmt;   
 } 
+
+/**
+ * 正数校验
+ */
+var positiveValidate = function(e) {
+	if (!isNaN(e)) {
+		if(e.trim()==""){
+			return false;
+		}
+		if(e.trim() == 0) return true;
+		if (e.indexOf('0') == 0) {
+			if (e.indexOf('.') == 1) {
+				return true;
+			} else {
+				return false
+			}
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
+};
+
+/**
+ * 百分数校验
+ */
+var percentNumValidate = function(e) {
+	if (!isNaN(e)) {
+		if(e.trim()==""){
+			return false;
+		}
+		if (parseFloat(e)>100||parseFloat(e)<0){
+			return false;
+		}
+		if (e.indexOf('0') == 0) {
+			if (e.indexOf('.') == 1) {
+				return true;
+			} else {
+				return false
+			}
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
+};
+
+/**
+ * 去掉字符中所有空格
+ */
+var excludeSpace = function(e) {
+	return e.replace(/(^\s*)|(\s*$)/g, '');
+};

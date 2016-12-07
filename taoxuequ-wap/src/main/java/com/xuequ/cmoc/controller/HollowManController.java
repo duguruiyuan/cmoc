@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
+import com.xuequ.cmoc.common.enums.ImgTypeEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.dao.ActivityMarinesMapper;
 import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityInfo;
+import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.service.IActivityFamilyService;
@@ -26,6 +29,7 @@ import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.view.ActivityMarinesView;
+import com.xuequ.cmoc.vo.MarineEditVO;
 
 @RequestMapping("hm")
 @Controller
@@ -133,8 +137,49 @@ public class HollowManController extends BaseController {
 				}
 			}
 		}
-		logger.info("-----------"+redir);
 		return redir;
 	}
 	
+	@RequestMapping("marine/edit/query")
+	public @ResponseBody Object marineEditQuery(Integer id, String type) {
+		try {
+			if(ImgTypeEnum.MARINE.getCode().equals(type)){
+				ActivityMarines marins = activityMarinesService.selectByPrimaryKey(id);
+				return new RspResult(StatusEnum.SUCCESS, marins);
+			}else if(ImgTypeEnum.MEMBER.getCode().equals(type)) {
+				 ActivityFamily family = activityFamilyService.selectByPrimaryKey(id);
+				 return new RspResult(StatusEnum.SUCCESS, family);
+			}
+		} catch (Exception e) {
+			logger.error("--marineEditQuery, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("marine/edit/submit")
+	public @ResponseBody Object marineEditSubmit(MarineEditVO vo) {
+		try {
+			if(ImgTypeEnum.MARINE.getCode().equals(vo.getType())){
+				ActivityMarines marines = new ActivityMarines();
+				marines.setId(vo.getId());
+				marines.setMarineName(vo.getMarineName());
+				marines.setMarinePrize(vo.getMarinePrize());
+				marines.setMarineSlogan(vo.getMarineSlogan());
+				marines.setComment(vo.getComment());
+				marines.setScore(vo.getScore());
+				activityMarinesService.updateByPrimaryKeySelective(marines);
+				return new RspResult(StatusEnum.SUCCESS);
+			}else if(ImgTypeEnum.MEMBER.getCode().equals(vo.getType())) {
+				 ActivityFamily family = new ActivityFamily();
+				 family.setId(vo.getId());
+				 family.setChildComment(vo.getChildComment());
+				 family.setChildTitle(vo.getChildTitle());
+				 activityFamilyService.addAndUpdateFamily(family);
+				 return new RspResult(StatusEnum.SUCCESS);
+			}
+		} catch (Exception e) {
+			logger.error("--marineEditSubmit, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	} 
 }

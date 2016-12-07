@@ -13,7 +13,7 @@ public class GridBase {
 	protected int page = 1;// 当前页
 	protected int rows = 10;// 每页显示记录数
 	protected String sort;// 排序字段
-	protected String order = "asc";// asc/desc
+	protected String order = "desc";// asc/desc
 
 	protected Long id;// 主键
 	
