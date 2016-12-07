@@ -16,6 +16,7 @@
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">用户绑定</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
@@ -74,21 +75,16 @@
 		    </div>
 		    <form class="mui-input-group mt10">
 		        <div class="mui-input-row">
-		            <label>姓名</label>
-		            <input id="name" type="text" class="mui-input-clear" placeholder="名称">
+		            <label>小孩姓名</label>
+		            <input id="childName" name="childName" type="text" class="mui-input-clear" placeholder="小孩姓名">
 		        </div>
-		        <div class="mui-input-row">
+		        <div class="mui-input-row" style="height: 70px;">
 		            <label>手机号</label>
-		            <input id="phone" type="text" class="mui-input-clear" maxlength="11" placeholder="手机号">
-		        </div>
-		        <div class="mui-input-row">
-		            <label>验证码</label>
-		            <input id="validCode" type="text" maxlength="10" placeholder="验证码">
-		            <button type="button" class="mui-btn verificationCode">获取验证码</button>
+		            <input id="parentMobile" name="parentMobile" type="text" class="mui-input-clear" maxlength="11" placeholder="手机号">
+		        	<p style="bottom: -5px;position: absolute;padding-left: 10px;">请填写小朋友报名预留的家长联系电话</p>
 		        </div>
 		        <div class="mui-button-row">
-					<button id="saveBtn" type="button" class="mui-btn mui-btn-green" onclick="return false;">确认</button>&nbsp;&nbsp;
-					<button type="reset" class="mui-btn">取消</button>
+					<button id="saveBtn" type="button" class="bind-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
 				</div>
 		    </form>
 		</div>

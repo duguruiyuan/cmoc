@@ -25,9 +25,11 @@ import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IHollowManService;
+import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityMarinesView;
 import com.xuequ.cmoc.vo.MarineEditVO;
 
@@ -45,6 +47,8 @@ public class HollowManController extends BaseController {
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
 	private IActivityFamilyService activityFamilyService;
+	@Autowired
+	private IActivityHmService activityHmService;
 	
 	@RequestMapping(value={"","/"})
 	public String index(Model model) {
@@ -87,7 +91,7 @@ public class HollowManController extends BaseController {
 	
 	@RequestMapping("act/list")
 	public String activityList(Model model) {
-		List<ActivityInfo> list = activityService.selectScheduActivity(null);
+		List<ActivityInfo> list = activityService.selectBeginingActivity(null);
 		model.addAttribute("activitys", list);
 		return "hm/activityList";
 	}
@@ -182,4 +186,33 @@ public class HollowManController extends BaseController {
 		}
 		return new RspResult(StatusEnum.FAIL);
 	} 
+	
+	@RequestMapping("withteam/{openid}")
+	public String withTeam(Model model, @PathVariable String openid) {
+		List<ActivityHmSignView> records = activityHmService.selectWithTeamRecord(openid);
+		model.addAttribute("records", records);
+		return "hm/widthTeam";
+	}
+	
+	@RequestMapping("act/sign")
+	public String activitySign(Model model) {
+		List<ActivityInfo> list = activityService.selectScheduActivity(null);
+		for(ActivityInfo view : list) {
+			if(StringUtils.isBlank(view.getQrcodeUrl())) {
+				try {
+					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_LIMIT_SCENE, 
+							MessageUtil.ACTIVITY_SIGN, view.getId());
+					if(rsp != null) {
+						view.setQrcodeUrl(rsp.getQrcode());
+						activityService.updateByPrimaryKey(view);
+					}
+				} catch (Exception e) {
+					logger.error("--activityQuery getQrcode, error={}", e);
+				}
+			}
+		}
+		model.addAttribute("activitys", list);
+		return "hm/activitySign";
+	}
+	
 }

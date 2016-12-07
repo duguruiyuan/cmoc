@@ -51,5 +51,7 @@ public final class MessageUtil {
     
     //绑定战队
     public static final int BIND_TYPE_MARINE = 1;
+    //活动申请带队
+    public static final int ACTIVITY_SIGN = 2;
     
 }

@@ -227,7 +227,6 @@
   
   <modules>
   	<module>tools</module>
-  	<module>service</module>
   	<module>taoxuequ-web</module>
   	<module>business</module>
   	<module>taoxuequ-wap</module>

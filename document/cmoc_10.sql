@@ -28,9 +28,8 @@ CREATE TABLE `t_activity_family` (
   `mother_name` varchar(128) DEFAULT NULL COMMENT '妈妈姓名',
   `mother_mobile` varchar(11) DEFAULT NULL COMMENT '妈妈手机号码',
   `mother_age` int(11) DEFAULT NULL COMMENT '妈妈年龄',
-  `other_name` varchar(128) DEFAULT NULL COMMENT '其他联系人姓名',
-  `other_mobile` varchar(11) DEFAULT NULL COMMENT '其他联系人手机号码',
-  `other_age` int(11) DEFAULT NULL COMMENT '其他联系人年龄',
+  `child_idcard` varchar(128) DEFAULT NULL COMMENT '小孩证件号码',
+  `parent_mobile` varchar(11) DEFAULT NULL COMMENT '家长手机号码',
   `child_name` varchar(128) DEFAULT NULL COMMENT '小孩姓名',
   `child_mobile` varchar(11) DEFAULT NULL COMMENT '小孩手机号码',
   `child_age` int(11) DEFAULT NULL COMMENT '小孩年龄',
@@ -47,15 +46,8 @@ CREATE TABLE `t_activity_family` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `is_delete` varchar(2) DEFAULT 'N' COMMENT '是否有效 N有效 Y无效',
   PRIMARY KEY (`id`),
-  KEY `idx_father_name` (`father_name`),
-  KEY `idx_father_mobile` (`mother_mobile`,`father_mobile`),
-  KEY `idx_mother_name` (`mother_name`),
-  KEY `idx_mother_mobile` (`mother_mobile`)
+  KEY `idx_parent_bind` (`parent_mobile`,`child_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='活动报名家庭信息';
-
-/*Data for the table `t_activity_family` */
-
-insert  into `t_activity_family`(`id`,`father_name`,`father_mobile`,`father_age`,`mother_name`,`mother_mobile`,`mother_age`,`other_name`,`other_mobile`,`other_age`,`child_name`,`child_mobile`,`child_age`,`child_img`,`child_title`,`child_comment`,`activity_id`,`marine_id`,`creater_user_id`,`creater`,`create_time`,`updater_user_id`,`updater`,`update_time`,`is_delete`) values (41,'张爸一','13681984141',NULL,'张妈一','13681984031',NULL,NULL,NULL,NULL,'张一',NULL,NULL,NULL,'小队长',NULL,3,15,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(42,'张爸二','13681984142',NULL,'张妈二','13681984032',NULL,NULL,NULL,NULL,'张二',NULL,NULL,NULL,'后勤部长',NULL,3,15,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(43,'张爸三','13681984143',NULL,'张妈三','13681984033',NULL,NULL,NULL,NULL,'张三',NULL,NULL,NULL,'体育委员',NULL,3,15,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(44,'张爸四','13681984144',NULL,'张妈四','13681984034',NULL,NULL,NULL,NULL,'张四',NULL,NULL,NULL,'活动标兵','八百标兵奔北坡',3,15,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(45,'张爸五','13681984145',NULL,'张妈五','13681984035',NULL,NULL,NULL,NULL,'张五',NULL,NULL,NULL,'hello部长',NULL,3,15,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(46,'刘爸一','13681984041',NULL,'张妈一','13681984631',NULL,NULL,NULL,NULL,'刘一',NULL,NULL,NULL,'小队长',NULL,3,16,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(47,'刘爸二','13681984042',NULL,'张妈二','13681984632',NULL,NULL,NULL,NULL,'刘二',NULL,NULL,NULL,'后勤部长',NULL,3,16,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(48,'刘爸三','13681984043',NULL,'张妈三','13681984633',NULL,NULL,NULL,NULL,'刘三',NULL,NULL,NULL,'体育委员',NULL,3,16,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(49,'刘爸四','13681984044',NULL,'张妈四','13681984634',NULL,NULL,NULL,NULL,'刘四',NULL,NULL,NULL,'活动标兵',NULL,3,16,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(50,'刘爸五','13681984045',NULL,'张妈五','13681984635',NULL,NULL,NULL,NULL,'刘五',NULL,NULL,NULL,'活动部长',NULL,3,16,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(51,'马爸一','13681984331',NULL,'马妈一','13681984731',NULL,NULL,NULL,NULL,'马一',NULL,NULL,NULL,'小队长',NULL,3,17,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(52,'马爸二','13681984332',NULL,'马妈二','13681984732',NULL,NULL,NULL,NULL,'马二',NULL,NULL,NULL,'后勤部长',NULL,3,17,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(53,'马爸三','13681984333',NULL,'马妈三','13681984733',NULL,NULL,NULL,NULL,'马三',NULL,NULL,NULL,'体育委员',NULL,3,17,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(54,'马爸四','13681984334',NULL,'马妈四','13681984734',NULL,NULL,NULL,NULL,'马四',NULL,NULL,NULL,'活动标兵',NULL,3,17,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(55,'马爸五','13681984335',NULL,'马妈五','13681984735',NULL,NULL,NULL,NULL,'马五',NULL,NULL,NULL,'活动部长',NULL,3,17,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(56,'黄爸一','13681985331',NULL,'黄妈一','13681984831',NULL,NULL,NULL,NULL,'黄一',NULL,NULL,NULL,'小队长',NULL,3,18,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(57,'黄爸二','13681985332',NULL,'黄妈二','13681984832',NULL,NULL,NULL,NULL,'黄二',NULL,NULL,NULL,'后勤部长',NULL,3,18,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(58,'黄爸三','13681985333',NULL,'黄妈三','13681984833',NULL,NULL,NULL,NULL,'黄三',NULL,NULL,NULL,'体育委员',NULL,3,18,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(59,'黄爸四','13681985334',NULL,'黄妈四','13681984834',NULL,NULL,NULL,NULL,'黄四',NULL,NULL,NULL,'活动标兵',NULL,3,18,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(60,'黄爸五','13681985335',NULL,'黄妈五','13681984835',NULL,NULL,NULL,NULL,'黄五',NULL,NULL,NULL,'活动部长',NULL,3,18,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(61,'青爸一','13681987331',NULL,'青妈一','13681984931',NULL,NULL,NULL,NULL,'青一',NULL,NULL,NULL,'小队长',NULL,3,19,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(62,'青爸二','13681987332',NULL,'青妈二','13681984932',NULL,NULL,NULL,NULL,'青二',NULL,NULL,NULL,'后勤部长',NULL,3,19,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(63,'青爸三','13681987333',NULL,'青妈三','13681984933',NULL,NULL,NULL,NULL,'青三',NULL,NULL,NULL,'体育委员',NULL,3,19,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(64,'青爸四','13681987334',NULL,'青妈四','13681984934',NULL,NULL,NULL,NULL,'青四',NULL,NULL,NULL,'活动标兵',NULL,3,19,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(65,'青爸五','13681987335',NULL,'青妈五','13681984935',NULL,NULL,NULL,NULL,'青五',NULL,NULL,NULL,'活动部长',NULL,3,19,1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N');
 
 /*Table structure for table `t_activity_hm_sign` */
 
@@ -100,6 +92,7 @@ CREATE TABLE `t_activity_info` (
   `line_id` int(11) DEFAULT NULL COMMENT '活动线路id',
   `activity_peoples` int(11) DEFAULT NULL COMMENT '活动满员人数',
   `activity_img_url` varchar(256) DEFAULT NULL COMMENT '活动图片url',
+  `qrcode_url` varchar(256) DEFAULT NULL COMMENT '报名二维码',
   `city` varchar(128) DEFAULT NULL COMMENT '城市',
   `city_id` int(11) DEFAULT NULL COMMENT '城市id',
   `activity_num` varchar(128) DEFAULT NULL COMMENT '活动期数',
@@ -115,11 +108,7 @@ CREATE TABLE `t_activity_info` (
   `updater_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `is_delete` varchar(2) DEFAULT 'N' COMMENT '是否有效 N有效 Y失效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='活动信息';
-
-/*Data for the table `t_activity_info` */
-
-insert  into `t_activity_info`(`id`,`activity_name`,`start_date`,`end_date`,`activity_addr`,`line_name`,`line_id`,`activity_peoples`,`activity_img_url`,`city`,`city_id`,`activity_num`,`activity_desc`,`activity_type`,`year`,`month`,`creater_user_id`,`creater`,`create_time`,`updater_user_id`,`updater`,`updater_time`,`is_delete`) values (3,'上海一日游','2016-12-05 22:02:00','2016-12-09 22:02:00','',NULL,NULL,30,'/imgextra/ACTIVITY/2016/129da015-2785-4761-b152-3f488868c063.jpg','上海',NULL,'上海一日游第1期','','2',2016,12,1,'管理员','2016-12-05 22:02:31',NULL,NULL,NULL,'N');
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='活动信息'
 
 /*Table structure for table `t_activity_marines` */
 

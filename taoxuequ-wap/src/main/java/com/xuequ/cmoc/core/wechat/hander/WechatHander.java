@@ -22,10 +22,13 @@ import com.xuequ.cmoc.core.wechat.message.OutputMessage;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.model.ActivityInfo;
+import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.model.WechatSendMessage;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
+import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IKeywordService;
 import com.xuequ.cmoc.service.IWechatMessageService;
 import com.xuequ.cmoc.utils.BeanUtils;
@@ -45,6 +48,8 @@ public class WechatHander {
 	private IActivityHmService activityHmService;
 	@Autowired
 	private IWechatMessageService wechatMessageService;
+	@Autowired
+	private IActivityService activityService;
 
 	public OutputMessage respMessage(InputMessage inputMsg) throws Exception{
 		String servername = inputMsg.getToUserName();// 服务端  
@@ -189,10 +194,10 @@ public class WechatHander {
 	 */
 	private void eventTypeScanOutPut(OutputMessage outputMsg, String eventKey, String openid) {
 		int type = Integer.parseInt(eventKey.substring(0, eventKey.indexOf("0"))); 
+		String content = null;
 		if(MessageUtil.BIND_TYPE_MARINE == type) {
 			Integer marineId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length())); 
 			RspResult rspResult = activityMarinesService.updateHmBindMarine(marineId, openid);
-			String content = null;
 			if(StatusEnum.SUCCESS.getCode().equals(rspResult.getCode())) {
 				content = PropertiesUtil.getProperty("hm_regiter_success");
 				ActivityHmSign hmSign = (ActivityHmSign) rspResult.getData();
@@ -204,6 +209,35 @@ public class WechatHander {
 			}else {
 				content = "提示绑定失败：" + rspResult.getMsg();
 			}
+		}else if(MessageUtil.ACTIVITY_SIGN == type) {
+			Integer activityId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length()));
+			ActivityInfo activityInfo = activityService.selectByPrimaryKey(activityId);
+			Date currDate = new Date();
+			if(DateUtil.compare(activityInfo.getEndDate(), currDate) != 1) {
+				content = PropertiesUtil.getProperty("sign_activity_end");
+				String url = Constants.BASEPATH + "/live/marine/list/" + activityId;
+				content = TextUtil.format(content, new String[]{url, activityInfo.getActivityName()});
+			}else {
+				if(DateUtil.compare(activityInfo.getStartDate(), currDate) != -1) {
+					content = PropertiesUtil.getProperty("sign_activity_begining");
+					String url = Constants.BASEPATH + "/live/marine/list/" + activityId;
+					content = TextUtil.format(content, new String[]{url, activityInfo.getActivityName()});
+				}else {
+					RspResult result = activityHmService.addSign(activityId, openid);
+					if(StatusEnum.SUCCESS.getCode().equals(result.getCode())) {
+						content = PropertiesUtil.getProperty("sign_activity_succ");
+						content = TextUtil.format(content, new String[]{activityInfo.getActivityName(),
+								DateUtil.dateToStr(currDate, DateUtil.DEFAULT_DATE_FORMAT)});
+					}else {
+						content = PropertiesUtil.getProperty("sign_activity_fail");
+						content = TextUtil.format(content, new String[]{result.getMsg(), 
+								activityInfo.getActivityName(),
+								DateUtil.dateToStr(currDate, DateUtil.DEFAULT_DATE_FORMAT)});
+					}
+				}
+			}
+		}
+		if(StringUtils.isNotBlank(content)) {
 			outputMsg.setContent(content);
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 		}

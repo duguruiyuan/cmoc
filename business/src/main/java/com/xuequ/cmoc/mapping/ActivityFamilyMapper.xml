@@ -9,9 +9,8 @@
     <result column="mother_name" property="motherName" jdbcType="VARCHAR" />
     <result column="mother_mobile" property="motherMobile" jdbcType="VARCHAR" />
     <result column="mother_age" property="motherAge" jdbcType="INTEGER" />
-    <result column="other_name" property="otherName" jdbcType="VARCHAR" />
-    <result column="other_mobile" property="otherMobile" jdbcType="VARCHAR" />
-    <result column="other_age" property="otherAge" jdbcType="INTEGER" />
+    <result column="child_idcard" property="childIdcard" jdbcType="VARCHAR" />
+    <result column="parent_mobile" property="parentMobile" jdbcType="VARCHAR" />
     <result column="child_name" property="childName" jdbcType="VARCHAR" />
     <result column="child_mobile" property="childMobile" jdbcType="VARCHAR" />
     <result column="child_age" property="childAge" jdbcType="INTEGER" />
@@ -30,7 +29,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
-    other_name, other_mobile, other_age, child_name, child_mobile, child_age, child_img, 
+    child_idcard, parent_mobile, child_name, child_mobile, child_age, child_img, 
     child_title, child_comment, activity_id, marine_id, creater_user_id, creater, create_time, 
     updater_user_id, updater, update_time, is_delete
   </sql>
@@ -59,7 +58,7 @@
   <select id="selectById" resultMap="PageBaseResultMap" parameterType="java.lang.Integer">
   	select 
   	f.id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
-    other_name, other_mobile, other_age, child_name, child_mobile, child_age, child_img, 
+    child_idcard, parent_mobile, child_name, child_mobile, child_age, child_img, 
     child_title, child_comment, f.activity_id, f.marine_id, f.creater, 
     f.create_time,a.activity_name,a.activity_num, a.activity_type, m.marine_name
   	from t_activity_family f 
@@ -71,7 +70,7 @@
   <select id="selectListByPage" resultMap="PageBaseResultMap" >
   	select 
   	f.id, father_name, father_mobile, father_age, mother_name, mother_mobile, mother_age, 
-    other_name, other_mobile, other_age, child_name, child_mobile, child_age, child_img, 
+    child_idcard, parent_mobile, child_name, child_mobile, child_age, child_img, 
     child_title, child_comment, f.activity_id, f.marine_id, f.creater, 
     f.create_time,a.activity_name,a.activity_num, a.activity_type, m.marine_name
   	from t_activity_family f 
@@ -105,8 +104,8 @@
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ActivityFamily" >
     insert into t_activity_family (id, father_name, father_mobile, 
       father_age, mother_name, mother_mobile, 
-      mother_age, other_name, other_mobile, 
-      other_age, child_name, child_mobile, 
+      mother_age, child_idcard, parent_mobile, 
+      child_name, child_mobile, 
       child_age, child_img, child_title, 
       child_comment, activity_id, marine_id, 
       creater_user_id, creater, create_time, 
@@ -114,7 +113,7 @@
       is_delete)
     values (#{id,jdbcType=INTEGER}, #{fatherName,jdbcType=VARCHAR}, #{fatherMobile,jdbcType=VARCHAR}, 
       #{fatherAge,jdbcType=INTEGER}, #{motherName,jdbcType=VARCHAR}, #{motherMobile,jdbcType=VARCHAR}, 
-      #{motherAge,jdbcType=INTEGER}, #{otherName,jdbcType=VARCHAR}, #{otherMobile,jdbcType=VARCHAR}, 
+      #{motherAge,jdbcType=INTEGER}, #{childIdcard,jdbcType=VARCHAR}, #{parentMobile,jdbcType=VARCHAR}, 
       #{otherAge,jdbcType=INTEGER}, #{childName,jdbcType=VARCHAR}, #{childMobile,jdbcType=VARCHAR}, 
       #{childAge,jdbcType=INTEGER}, #{childImg,jdbcType=VARCHAR}, #{childTitle,jdbcType=VARCHAR}, 
       #{childComment,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER}, #{marineId,jdbcType=INTEGER}, 
@@ -146,14 +145,11 @@
       <if test="motherAge != null" >
         mother_age,
       </if>
-      <if test="otherName != null" >
-        other_name,
+      <if test="childIdcard != null" >
+        child_idcard,
       </if>
-      <if test="otherMobile != null" >
-        other_mobile,
-      </if>
-      <if test="otherAge != null" >
-        other_age,
+      <if test="parentMobile != null" >
+        parent_mobile,
       </if>
       <if test="childName != null" >
         child_name,
@@ -223,11 +219,11 @@
       <if test="motherAge != null" >
         #{motherAge,jdbcType=INTEGER},
       </if>
-      <if test="otherName != null" >
-        #{otherName,jdbcType=VARCHAR},
+      <if test="childIdcard != null" >
+        #{childIdcard,jdbcType=VARCHAR},
       </if>
-      <if test="otherMobile != null" >
-        #{otherMobile,jdbcType=VARCHAR},
+      <if test="parentMobile != null" >
+        #{parentMobile,jdbcType=VARCHAR},
       </if>
       <if test="otherAge != null" >
         #{otherAge,jdbcType=INTEGER},
@@ -300,14 +296,11 @@
       <if test="motherAge != null" >
         mother_age = #{motherAge,jdbcType=INTEGER},
       </if>
-      <if test="otherName != null" >
-        other_name = #{otherName,jdbcType=VARCHAR},
+      <if test="childIdcard != null" >
+        child_idcard = #{childIdcard,jdbcType=VARCHAR},
       </if>
-      <if test="otherMobile != null" >
-        other_mobile = #{otherMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="otherAge != null" >
-        other_age = #{otherAge,jdbcType=INTEGER},
+      <if test="parentMobile != null" >
+        parent_mobile = #{parentMobile,jdbcType=VARCHAR},
       </if>
       <if test="childName != null" >
         child_name = #{childName,jdbcType=VARCHAR},
@@ -365,9 +358,8 @@
       mother_name = #{motherName,jdbcType=VARCHAR},
       mother_mobile = #{motherMobile,jdbcType=VARCHAR},
       mother_age = #{motherAge,jdbcType=INTEGER},
-      other_name = #{otherName,jdbcType=VARCHAR},
-      other_mobile = #{otherMobile,jdbcType=VARCHAR},
-      other_age = #{otherAge,jdbcType=INTEGER},
+      child_idcard = #{childIdcard,jdbcType=VARCHAR},
+      parent_mobile = #{parentMobile,jdbcType=VARCHAR},
       child_name = #{childName,jdbcType=VARCHAR},
       child_mobile = #{childMobile,jdbcType=VARCHAR},
       child_age = #{childAge,jdbcType=INTEGER},

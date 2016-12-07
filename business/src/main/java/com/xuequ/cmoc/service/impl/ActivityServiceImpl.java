@@ -212,4 +212,14 @@ public class ActivityServiceImpl implements IActivityService {
 		return activityInfoMapper.selectScheduActivity(info);
 	}
 
+	@Override
+	public List<ActivityInfo> selectBeginingActivity(ActivityInfo info) {
+		return activityInfoMapper.selectBeginingActivity(info);
+	}
+
+	@Override
+	public int updateByPrimaryKey(ActivityInfo info) {
+		return activityInfoMapper.updateByPrimaryKey(info);
+	}
+
 }

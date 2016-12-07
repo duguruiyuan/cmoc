@@ -32,6 +32,12 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectCountForSign" resultType="int">
+  	select count(1) from t_activity_hm_sign
+  	where s_delete = 'N' and activity_id = #{activityId,jdbcType=INTEGER}
+  	and hm_id = #{hmId,jdbcType=INTEGER}
+  </select>
+  
   <resultMap id="PageBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityHmSignView" >
   	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
     <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />

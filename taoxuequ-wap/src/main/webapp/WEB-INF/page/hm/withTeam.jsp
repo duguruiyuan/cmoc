@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!doctype html>
 <html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>购买记录[陶学趣]</title>
+		<title>带队记录[陶学趣]</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">购买记录</h1>
+		    <h1 class="mui-title">带队记录</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
@@ -73,26 +74,27 @@
 		    		<thead>
 			    		<tr>
 			    			<th width="90">时间</th>
-			    			<th>内容</th>
-			    			<th width="80">积分</th>
+			    			<th>活动名称</th>
+			    			<th>活动期数</th>
+			    			<th>战队名称</th>
 			    		</tr>
 		    		</thead>
 		    		<tbody>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">4200分</td>
-		    			</tr>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">4200分</td>
-		    			</tr>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">4200分</td>
-		    			</tr>
+		    			<c:choose>
+		    				<c:when test="${records == null || recourds.isEmpty()}">
+		    					<tr><td colspan="4"><p style="padding: 10px 10px;">暂无带队记录</p></td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach var="item" items="${records }">
+		    						<tr>
+					    				<td class="mui-text-center"><fmt:formatDate value='${item.startDate}' pattern='yyyy-MM-dd' /></td>
+					    				<td>${item.activityName }</td>
+					    				<td>${item.activityNum }</td>
+					    				<td>${item.marineName }</td>
+					    			</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 		    		</tbody>
 		    	</table>
 		    </div>

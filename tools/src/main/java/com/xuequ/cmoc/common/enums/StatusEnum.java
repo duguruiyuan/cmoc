@@ -20,6 +20,8 @@ public enum StatusEnum {
 	OPENID_DEFECT("1010", "openid缺失，请联系管理员"),
 	ACTIVITY_NON_SIGN("1011", "您不在此次活动名单中，请下次再来"),
 	EXPIRED_DATA("1012", "数据已失效，请刷新后再试"),
+	HM_NON_ACTIVE("1013", "透明人未激活，不能报名参加活动"),
+	ALREADY_SIGN_ACTIVITY("1014", "你已报名成功"),
 	ACCESS_TOKEN_FAIL("获取access_token失败","001"),
 	JSAPI_TICKET_FAIL("获取jsapi_ticket失败","002"),
 	FAIL("9999", "失败");

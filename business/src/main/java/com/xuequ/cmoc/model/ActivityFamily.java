@@ -18,11 +18,9 @@ public class ActivityFamily implements Serializable {
 
     private Integer motherAge;
 
-    private String otherName;
+    private String childIdcard;
 
-    private String otherMobile;
-
-    private Integer otherAge;
+    private String parentMobile;
 
     private String childName;
 
@@ -116,29 +114,6 @@ public class ActivityFamily implements Serializable {
         this.motherAge = motherAge;
     }
 
-    public String getOtherName() {
-        return otherName;
-    }
-
-    public void setOtherName(String otherName) {
-        this.otherName = otherName == null ? null : otherName.trim();
-    }
-
-    public String getOtherMobile() {
-        return otherMobile;
-    }
-
-    public void setOtherMobile(String otherMobile) {
-        this.otherMobile = otherMobile == null ? null : otherMobile.trim();
-    }
-
-    public Integer getOtherAge() {
-        return otherAge;
-    }
-
-    public void setOtherAge(Integer otherAge) {
-        this.otherAge = otherAge;
-    }
 
     public String getChildName() {
         return childName;

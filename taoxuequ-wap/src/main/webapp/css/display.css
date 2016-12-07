@@ -785,3 +785,16 @@ select.regMT-select{
 .fs20{
 	font-size: 20px;
 }
+.bind-btn {
+    padding: 0;
+    width: 35%;
+    height: 35px;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    background: #00bd13;
+    border: 1px #00ab16 solid;
+    border-radius: 8px;
+}

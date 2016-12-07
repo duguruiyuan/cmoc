@@ -40,11 +40,8 @@ public class IndexController extends BaseController{
 	@RequestMapping("my")
 	public String my(Model model) {
 		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE";
-		HollowManInfo hm = hollowManService.selectByOpenid(openid);
-		if(hm != null) {
-			model.addAttribute("hm", hm);
-		}
-		return "hm/hmMy";
+		model.addAttribute("openid", openid);
+		return "my";
 //		String page = "my";
 //		String redir = wechatRedirect(model, page);
 //		if(redir.equals(page)) {

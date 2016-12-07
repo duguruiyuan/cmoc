@@ -17,6 +17,7 @@
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">实践课堂</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />

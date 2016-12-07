@@ -56,6 +56,15 @@ public interface IActivityService {
 	 * @return
 	 */
 	public List<ActivityInfo> selectScheduActivity(ActivityInfo info);
+	/**
+	 * 查询进行中的活动
+	 * @auther 胡启萌
+	 * @Date 2016年12月7日
+	 * @param info
+	 * @return
+	 */
+	public List<ActivityInfo> selectBeginingActivity(ActivityInfo info);
+	
 	ActivityResourceTypeView selectForUpload1(Integer activityId, String marineName, String childName);
     
     ActivityResourceTypeView selectForUpload(Integer activityId, String name);
@@ -63,4 +72,6 @@ public interface IActivityService {
     public ActivityInfo selectByPrimaryKey(Integer id);
     
     int updateActivityImg(String activityImg, Integer id);
+    
+    int updateByPrimaryKey(ActivityInfo info);
 }

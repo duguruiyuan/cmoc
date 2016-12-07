@@ -38,4 +38,7 @@ public interface ActivityHmSignMapper {
     ActivityHmSign selectForMessage(String openid);
     
     public List<ActivityHmSignView> selectWithTeamRecord(String openid);
+    
+    int selectCountForSign(@Param("activityId")Integer activityId, 
+    		@Param("hmId")Integer hmId);
 }

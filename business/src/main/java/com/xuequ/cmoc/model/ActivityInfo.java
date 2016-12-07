@@ -25,6 +25,8 @@ public class ActivityInfo implements Serializable {
     private Integer activityPeoples;
 
     private String activityImgUrl;
+    
+    private String qrcodeUrl;
 
     private String city;
 
@@ -128,7 +130,15 @@ public class ActivityInfo implements Serializable {
         this.activityImgUrl = activityImgUrl == null ? null : activityImgUrl.trim();
     }
 
-    public String getCity() {
+    public String getQrcodeUrl() {
+		return qrcodeUrl;
+	}
+
+	public void setQrcodeUrl(String qrcodeUrl) {
+		this.qrcodeUrl = qrcodeUrl;
+	}
+
+	public String getCity() {
         return city;
     }
 
