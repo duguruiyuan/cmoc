@@ -95,9 +95,10 @@ public class HollowManManageController extends BaseController{
 	}
 	
 	@ResponseBody Object auditHm(@RequestParam("ids[]") List<Integer> ids, 
-			Integer active) {
+			Integer isActive) {
 		try {
-			
+			RspResult result = hollowManService.updateAuditRegHm(ids, isActive);
+			return result;
 		} catch (Exception e) {
 			logger.error("--auditHm, error={}", e);
 		}

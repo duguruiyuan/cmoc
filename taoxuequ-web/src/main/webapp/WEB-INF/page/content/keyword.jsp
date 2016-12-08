@@ -18,8 +18,8 @@
 					  <form id="searchForm" class="form-search" method="post">
 						<table class="table table-bordered">
 							<tbody>
-								<tr>
-									<td>关键词: <input class="form-control1" type="text" name="keyword" id="keyword"/></td>
+								 <tr>
+									<td colspan="3">关键词: <input class="form-control1" type="text" name="keyword" id="keyword"/></td>
 								 </tr>
 								 <tr>
 									<td colspan="3">

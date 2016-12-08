@@ -57,4 +57,14 @@ public class HollowManServiceImpl implements IHollowManService {
 		return new RspResult(StatusEnum.SUCCESS);
 	}
 
+	@Override
+	public RspResult updateAuditRegHm(List<Integer> ids, Integer isActive) {
+		if(isActive == 1) {
+			int count = hollowManInfoMapper.updateAuditActiveHm(ids);
+		}else {
+			int count = hollowManInfoMapper.updateAuditDeleteHm(ids);
+		}
+		return new RspResult(StatusEnum.SUCCESS);
+	}
+
 }

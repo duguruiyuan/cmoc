@@ -20,7 +20,7 @@
 			<div class="col-md-12" id="content_div">
 				<input type="hidden" id="id" name="id">
    				<script id="editor" type="text/plain" style="width: 414px;height: 600px;">
-						 这里编辑内容
+						 
 				</script>
 			</div>
 		</div>

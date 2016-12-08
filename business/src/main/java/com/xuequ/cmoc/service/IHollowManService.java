@@ -26,4 +26,6 @@ public interface IHollowManService {
 	HollowManInfo selectByOpenid(String openid);
 
 	RspResult addAndUpdateHollowMan(HollowManInfo info, SysUser user);
+	
+	RspResult updateAuditRegHm(List<Integer> ids, Integer isActive);
 }

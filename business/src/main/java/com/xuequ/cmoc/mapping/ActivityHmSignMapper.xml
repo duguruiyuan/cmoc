@@ -81,7 +81,7 @@
     	and ai.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
     </if>
     <if test="params.isEffect != null">
-    	and ai.is_effect #{params.isEffect,jdbcType=VARCHAR}
+    	and hs.is_effect = #{params.isEffect,jdbcType=INTEGER}
     </if>
     <if test="params.startDate != null">
     	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}

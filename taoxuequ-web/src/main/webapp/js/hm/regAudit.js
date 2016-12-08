@@ -22,13 +22,16 @@ function loadData() {
 		nowrap : true,
 		striped : true,
 		rownumbers : true,
-		columns : [ [  {
+		columns : [ [   {
+			field : 'id',
+			checkbox : true
+		},{
 			field : 'action',
 			title : '操作',
 			align : 'center',
 			formatter : function(value, row, index) {
 				var str = $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="auditHm(\'{0}\', 1);">审核通过</button>', row.id);
-				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="auditHm(\'{0}\', 0);">审核不通过</button>', row.id);
+				str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="auditHm(\'{0}\', 0);">审核不通过</button>', row.id);
 				return str;
 			}
 		}, {

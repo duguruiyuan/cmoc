@@ -31,12 +31,6 @@
 											<option value="M">美女</option>
 										</select>
 									</td>
-									<td>状态： 
-										<select class="form-control1" id="isActive" name="isActive">
-											<option value="">全部</option>
-											<option value="0">注册申请中</option>
-											<option value="1">已激活</option>
-										</select>
 								 </tr>
 								 <tr>
 									<td colspan="3">
