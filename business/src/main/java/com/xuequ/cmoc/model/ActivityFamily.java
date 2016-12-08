@@ -250,5 +250,21 @@ public class ActivityFamily implements Serializable {
 	public void setMarineName(String marineName) {
 		this.marineName = marineName;
 	}
+
+	public String getChildIdcard() {
+		return childIdcard;
+	}
+
+	public void setChildIdcard(String childIdcard) {
+		this.childIdcard = childIdcard;
+	}
+
+	public String getParentMobile() {
+		return parentMobile;
+	}
+
+	public void setParentMobile(String parentMobile) {
+		this.parentMobile = parentMobile;
+	}
     
 }

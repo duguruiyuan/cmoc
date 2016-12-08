@@ -41,4 +41,6 @@ public interface ActivityHmSignMapper {
     
     int selectCountForSign(@Param("activityId")Integer activityId, 
     		@Param("hmId")Integer hmId);
+    
+    List<ActivityHmSignView> selectHmSignForAudit(Page<ActivityHmSignView> page);
 }

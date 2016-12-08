@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -73,20 +75,64 @@
 		        <div class="mui-indicator"></div>
 		      </div>
 		    </div>
-		    <form class="mui-input-group mt10">
-		        <div class="mui-input-row">
-		            <label>小孩姓名</label>
-		            <input id="childName" name="childName" type="text" class="mui-input-clear" placeholder="小孩姓名">
-		        </div>
-		        <div class="mui-input-row" style="height: 70px;">
-		            <label>手机号</label>
-		            <input id="parentMobile" name="parentMobile" type="text" class="mui-input-clear" maxlength="11" placeholder="手机号">
-		        	<p style="bottom: -5px;position: absolute;padding-left: 10px;">请填写小朋友报名预留的家长联系电话</p>
-		        </div>
-		        <div class="mui-button-row">
-					<button id="saveBtn" type="button" class="bind-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
-				</div>
-		    </form>
+		    <div>
+		    	<c:choose>
+		    		<c:when test="${isBind }">
+		    			<div class="mui-input-row">
+				            <p style="padding: 15px 0px 0px 20px;">您已绑定</p>
+				        </div>
+				        <div class="mui-input-row">
+				            <div class="tableList mt10">
+						    	<table border="0" cellspacing="0" cellpadding="0">
+						    		<thead>
+							    		<tr>
+							    			<th class="mui-text-center">活动名称</th>
+							    			<th class="mui-text-center">活动时间</th>
+							    			<th class="mui-text-center">战队名称</th>
+							    			<th class="mui-text-center">状态</th>
+							    			<th class="mui-text-center">查看直播</th>
+							    		</tr>
+						    		</thead>
+						    		<tbody>
+						    			<c:forEach var="item" items="${list }">
+						    				<tr>
+							    				<td class="mui-text-center">${item.activityName }</td>
+							    				<td class="mui-text-center"><fmt:formatDate value='${item.startDate}' pattern='yyyy/MM/dd' /></td>
+							    				<td class="mui-text-center">${item.marineName }</td>
+							    				<td class="mui-text-center">
+							    					<c:choose>
+							    						<c:when test="${item.status == 2 }">已结束</c:when>
+							    						<c:when test="${item.status == 1 }">直播中</c:when>
+							    						<c:when test="${item.status == 0 }">未开始</c:when>
+							    					</c:choose>
+							    				</td>
+							    				<td class="mui-text-center"><a href="<%=basePath %>/live/marine/detail/${item.marineId}">查看</a></td>
+							    			</tr>
+						    			</c:forEach>
+						    		</tbody>
+						    	</table>
+						    </div>
+				        </div>
+		    		</c:when>
+		    		<c:otherwise>
+		    			<form id="bindForm" class="mui-input-group">
+			    			<input type="hidden" id="openid" name="openid" value="${openid }"/>
+			    			<div class="mui-input-row">
+					            <label>小孩姓名</label>
+					            <input id="childName" name="childName" type="text" class="mui-input-clear" placeholder="小孩姓名">
+					        </div>
+					        <div class="mui-input-row" style="height: 70px;">
+					            <label>手机号</label>
+					            <input id="mobile" name="mobile" type="text" class="mui-input-clear" maxlength="11" placeholder="手机号">
+					        	<p style="bottom: -5px;position: absolute;padding-left: 10px;">填写小朋友报名预留的家长联系电话</p>
+					        </div>
+					        <div class="mui-button-row">
+								<button id="saveBtn" type="button" class="bind-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
+							</div>
+						</form>
+		    		</c:otherwise>
+		    	</c:choose>
+		    </div>
 		</div>
 		
 		
@@ -138,20 +184,32 @@
 			
 			//确认
 			$("#saveBtn").click(function(){
-				if($("#name").val() == ""){
-					mui.toast('请输入姓名');
+				if($("#childName").val() == ""){
+					mui.toast('请输入小孩姓名');
 					return false;
 				}
 				
-				if(!isMobile($("#phone").val())){
+				if(!isMobile($("#mobile").val())){
 					mui.toast('请输入正确的手机号');
 					return false;
 				}
-				
-				if($("#validCode").val() == ""){
-					mui.toast('请输入验证码');
-					return false;
-				}
+				$.ajax({
+			 		url : "<%=basePath%>/user/parent/bind",
+			 		type : "post",
+			 		data : $('#bindForm').serialize(),
+			 		dataType : "json",
+			 		async : false,
+			 		success : function(data) {
+			 			if(data.code == '000') {
+			 				mui.alert('绑定成功','消息提示');
+			 				window.location.reload();
+			 			}else {
+			 				mui.alert(data.msg,'消息提示');
+			 			}
+			 		}, error:function(){
+			 			mui.alert("系统异常，请联系管理员",'消息提示');
+	        		}
+			 	});
 			})
 		</script>
 	</body>

@@ -32,7 +32,14 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table tableName="t_wechat_receive_message" domainObjectName="WechatReceiveMessage"
+		<table tableName="t_parent_info" domainObjectName="ParentInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		
+		<table tableName="t_buy_record" domainObjectName="BuyRecord"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">

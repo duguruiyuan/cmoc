@@ -9,6 +9,7 @@ import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.ActivityNamelistVO;
+import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
 import com.xuequ.cmoc.view.ActivityResourceTypeView;
 
@@ -74,4 +75,5 @@ public interface IActivityService {
     int updateActivityImg(String activityImg, Integer id);
     
     int updateByPrimaryKey(ActivityInfo info);
+    
 }

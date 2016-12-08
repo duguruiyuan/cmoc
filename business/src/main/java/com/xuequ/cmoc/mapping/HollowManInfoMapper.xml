@@ -16,7 +16,7 @@
     <result column="kim_name" jdbcType="VARCHAR" property="kimName" />
     <result column="kim_mobile" jdbcType="VARCHAR" property="kimMobile" />
     <result column="is_active" jdbcType="INTEGER" property="isActive" />
-    <result column="activeDate" jdbcType="VARCHAR" property="activedate" />
+    <result column="active_date" jdbcType="VARCHAR" property="activeDate" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="level" jdbcType="VARCHAR" property="level" />
     <result column="score" jdbcType="DECIMAL" property="score" />
@@ -28,7 +28,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, id_photo, 
-    kim_name, kim_mobile, is_active, activeDate, openid, level, score, creater, create_time, 
+    kim_name, kim_mobile, is_active, active_date, openid, level, score, creater, create_time, 
     updater, update_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -50,6 +50,22 @@
     where is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
   </select>
   
+  <update id="updateAuditActiveHm">
+  	 update t_hollow_man_info set is_active = 1
+  	 where id in
+  	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  	 	#{item}
+  	 </foreach>
+  </update>
+  
+  <update id="updateAuditDeleteHm">
+  	 update t_hollow_man_info set is_delete = 'Y'
+  	 where id in
+  	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  	 	#{item}
+  	 </foreach>
+  </update>
+  
   <select id="selectByNameMobile" resultMap="BaseResultMap" >
   	SELECT 
     <include refid="Base_Column_List" />
@@ -63,28 +79,31 @@
   </resultMap>
   
   <select id="selectByPage" resultMap="PageBaseResultMap">
-  	SELECT h.*,IFNULL(take_num,0) take_num FROM t_hollow_man_info h
+  	SELECT hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, id_photo, 
+    	kim_name, kim_mobile, is_active, active_date, openid, level, score, creater, create_time,
+    IFNULL(take_num,0) take_num FROM t_hollow_man_info h
 	LEFT JOIN (
 	  SELECT COUNT(1) take_num, hm_id FROM t_activity_hm_sign 
 	  WHERE is_delete = 'N' AND is_effect=1 
 	  GROUP BY hm_id
 	)n ON n.hm_id = h.id
+	where h.is_delete = 'N'
 	<if test="params.hmName != null">
-		hm_name = #{params.hmName,jdbcType=VARCHAR}
+		and hm_name = #{params.hmName,jdbcType=VARCHAR}
 	</if>
 	<if test="params.hmMobile != null">
-		hm_mobile = #{params.hmMobile,jdbcType=VARCHAR}
+		and hm_mobile = #{params.hmMobile,jdbcType=VARCHAR}
 	</if>
 	<if test="params.idCard != null">
-		id_card = #{params.idCard,jdbcType=VARCHAR}
+		and id_card = #{params.idCard,jdbcType=VARCHAR}
 	</if>
 	<if test="params.sex != null">
-		sex = #{params.sex,jdbcType=VARCHAR}
+		and sex = #{params.sex,jdbcType=VARCHAR}
 	</if>
 	<if test="params.isActive != null">
-		is_active = #{params.isActive,jdbcType=INTEGER}
+		and is_active = #{params.isActive,jdbcType=INTEGER}
 	</if>
-	order by creater desc
+	ORDER BY take_num DESC, create_time
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -96,7 +115,7 @@
       id_type, id_card, addr, 
       place, sex, grade, 
       schoole, id_photo, kim_name, 
-      kim_mobile, is_active, activeDate, 
+      kim_mobile, is_active, active_date, 
       openid, level, score, 
       creater, create_time, updater, 
       update_time, is_delete)
@@ -104,7 +123,7 @@
       #{idType,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, 
       #{place,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
       #{schoole,jdbcType=VARCHAR}, #{idPhoto,jdbcType=VARCHAR}, #{kimName,jdbcType=VARCHAR}, 
-      #{kimMobile,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}, #{activedate,jdbcType=VARCHAR}, 
+      #{kimMobile,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}, #{activeDate,jdbcType=VARCHAR}, 
       #{openid,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
       #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
@@ -154,8 +173,8 @@
       <if test="isActive != null">
         is_active,
       </if>
-      <if test="activedate != null">
-        activeDate,
+      <if test="activeDate != null">
+        active_date,
       </if>
       <if test="openid != null">
         openid,
@@ -225,8 +244,8 @@
       <if test="isActive != null">
         #{isActive,jdbcType=INTEGER},
       </if>
-      <if test="activedate != null">
-        #{activedate,jdbcType=VARCHAR},
+      <if test="activeDate != null">
+        #{activeDate,jdbcType=VARCHAR},
       </if>
       <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
@@ -296,8 +315,8 @@
       <if test="isActive != null">
         is_active = #{isActive,jdbcType=INTEGER},
       </if>
-      <if test="activedate != null">
-        activeDate = #{activedate,jdbcType=VARCHAR},
+      <if test="activeDate != null">
+        active_date = #{activeDate,jdbcType=VARCHAR},
       </if>
       <if test="openid != null">
         openid = #{openid,jdbcType=VARCHAR},
@@ -341,7 +360,7 @@
       kim_name = #{kimName,jdbcType=VARCHAR},
       kim_mobile = #{kimMobile,jdbcType=VARCHAR},
       is_active = #{isActive,jdbcType=INTEGER},
-      activeDate = #{activedate,jdbcType=VARCHAR},
+      active_date = #{activeDate,jdbcType=VARCHAR},
       openid = #{openid,jdbcType=VARCHAR},
       level = #{level,jdbcType=VARCHAR},
       score = #{score,jdbcType=DECIMAL},

@@ -29,4 +29,7 @@ public interface ActivityFamilyMapper {
     
     int updateFamilyImg(@Param("childImg")String childImg, @Param("id")Integer id);
     
+    int selectHasChild(@Param("childName")String childName, 
+    		@Param("parentMobile")String parentMobile);
+    
 }

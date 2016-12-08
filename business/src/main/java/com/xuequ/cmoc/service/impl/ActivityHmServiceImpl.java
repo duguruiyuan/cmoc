@@ -62,4 +62,9 @@ public class ActivityHmServiceImpl implements IActivityHmService {
 		return new RspResult(StatusEnum.SUCCESS);
 	}
 
+	@Override
+	public List<ActivityHmSignView> selectHmSignForAudit(Page<ActivityHmSignView> page) {
+		return activityHmSignMapper.selectHmSignForAudit(page);
+	}
+
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html>
 
@@ -68,31 +70,28 @@
 		        <div class="mui-indicator"></div>
 		      </div>
 		    </div>
-		    <div class="tableList mt10">
+		    <div class="tableList">
 		    	<table border="0" cellspacing="0" cellpadding="0">
 		    		<thead>
 			    		<tr>
-			    			<th width="90">时间</th>
-			    			<th>内容</th>
-			    			<th width="80">积分</th>
+			    			<th class="mui-text-center">时间</th>
+			    			<th class="mui-text-center">项目名称</th>
+			    			<th class="mui-text-center">金额</th>
 			    		</tr>
 		    		</thead>
 		    		<tbody>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">4200分</td>
-		    			</tr>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">4200分</td>
-		    			</tr>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">4200分</td>
-		    			</tr>
+		    			<c:choose>
+				    		<c:when test="${list == null || list.isEmpty }">
+				    			<tr><td colspan="3"><p style="padding: 10px 10px;">暂无购买记录</p></td></tr>
+				    		</c:when>
+				    		<c:otherwise>
+				    			<tr>
+				    				<td class="mui-text-center">2015/09/01</td>
+				    				<td class="mui-text-center">北京7天夏令营</td>
+				    				<td class="mui-text-center">420</td>
+				    			</tr>
+				    		</c:otherwise>
+				    	</c:choose>
 		    		</tbody>
 		    	</table>
 		    </div>

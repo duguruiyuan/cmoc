@@ -162,6 +162,12 @@ function activeFormat(v) {
 	return "";
 }
 
+function effectFormat(v) {
+	if(v == 0) return "报名申请中";
+	if(v == 1) return "已生效";
+	return "";
+}
+
 function sexFormat(v) {
 	if(v == 'F') return "帅哥";
 	if(v == 'M') return "美女";

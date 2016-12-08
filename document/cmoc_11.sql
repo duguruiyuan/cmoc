@@ -46,8 +46,13 @@ CREATE TABLE `t_activity_family` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `is_delete` varchar(2) DEFAULT 'N' COMMENT '是否有效 N有效 Y无效',
   PRIMARY KEY (`id`),
-  KEY `idx_parent_bind` (`parent_mobile`,`child_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='活动报名家庭信息';
+  KEY `idx_parent_mobile` (`parent_mobile`),
+  KEY `idx_child_name` (`child_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8 COMMENT='活动报名家庭信息';
+
+/*Data for the table `t_activity_family` */
+
+insert  into `t_activity_family`(`id`,`father_name`,`father_mobile`,`father_age`,`mother_name`,`mother_mobile`,`mother_age`,`child_idcard`,`parent_mobile`,`child_name`,`child_mobile`,`child_age`,`child_img`,`child_title`,`child_comment`,`activity_id`,`marine_id`,`creater_user_id`,`creater`,`create_time`,`updater_user_id`,`updater`,`update_time`,`is_delete`) values (66,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274911','13500000000','张虎一',NULL,NULL,NULL,NULL,NULL,5,23,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(67,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274912','13500000001','张虎二',NULL,NULL,NULL,NULL,NULL,5,23,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(68,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274913','13500000002','张虎三',NULL,NULL,NULL,NULL,NULL,5,23,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(69,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274914','13500000003','张虎四',NULL,NULL,NULL,NULL,NULL,5,23,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(70,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274915','13500000004','张虎五',NULL,NULL,NULL,NULL,NULL,5,23,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(71,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274916','13510000000','刘一',NULL,NULL,NULL,NULL,NULL,5,24,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(72,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274917','13510000001','刘二',NULL,NULL,NULL,NULL,NULL,5,24,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(73,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274918','13510000002','刘三',NULL,NULL,NULL,NULL,NULL,5,24,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(74,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274919','13510000003','刘四',NULL,NULL,NULL,NULL,NULL,5,24,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(75,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275911','13510000004','刘五',NULL,NULL,NULL,NULL,NULL,5,24,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(76,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275912','13520000000','马一',NULL,NULL,NULL,NULL,NULL,5,25,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(77,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275913','13520000001','马二',NULL,NULL,NULL,NULL,NULL,5,25,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(78,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275914','13520000002','马三',NULL,NULL,NULL,NULL,NULL,5,25,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(79,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275915','13520000003','马四',NULL,NULL,NULL,NULL,NULL,5,25,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(80,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275916','13520000004','马五',NULL,NULL,NULL,NULL,NULL,5,25,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(81,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274911','13500000000','张虎一',NULL,NULL,NULL,NULL,NULL,6,26,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(82,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274912','13500000001','张虎二',NULL,NULL,NULL,NULL,NULL,6,26,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(83,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274913','13500000002','张虎三',NULL,NULL,NULL,NULL,NULL,6,26,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(84,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274914','13500000003','张虎四',NULL,NULL,NULL,NULL,NULL,6,26,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(85,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274915','13500000004','张虎五',NULL,NULL,NULL,NULL,NULL,6,26,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(86,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274916','13510000000','刘一',NULL,NULL,NULL,NULL,NULL,6,27,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(87,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274917','13510000001','刘二',NULL,NULL,NULL,NULL,NULL,6,27,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(88,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274918','13510000002','刘三',NULL,NULL,NULL,NULL,NULL,6,27,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(89,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906274919','13510000003','刘四',NULL,NULL,NULL,NULL,NULL,6,27,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(90,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275911','13510000004','刘五',NULL,NULL,NULL,NULL,NULL,6,27,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(91,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275912','13520000000','马一',NULL,NULL,NULL,NULL,NULL,6,28,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(92,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275913','13520000001','马二',NULL,NULL,NULL,NULL,NULL,6,28,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(93,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275914','13520000002','马三',NULL,NULL,NULL,NULL,NULL,6,28,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(94,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275915','13520000003','马四',NULL,NULL,NULL,NULL,NULL,6,28,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(95,NULL,NULL,NULL,NULL,NULL,NULL,'429004200906275916','13520000004','马五',NULL,NULL,NULL,NULL,NULL,6,28,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N');
 
 /*Table structure for table `t_activity_hm_sign` */
 
@@ -108,7 +113,11 @@ CREATE TABLE `t_activity_info` (
   `updater_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `is_delete` varchar(2) DEFAULT 'N' COMMENT '是否有效 N有效 Y失效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='活动信息';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='活动信息';
+
+/*Data for the table `t_activity_info` */
+
+insert  into `t_activity_info`(`id`,`activity_name`,`start_date`,`end_date`,`activity_addr`,`line_name`,`line_id`,`activity_peoples`,`activity_img_url`,`qrcode_url`,`city`,`city_id`,`activity_num`,`activity_desc`,`activity_type`,`year`,`month`,`creater_user_id`,`creater`,`create_time`,`updater_user_id`,`updater`,`updater_time`,`is_delete`) values (5,'上海一日游','2016-12-08 12:47:00','2016-12-10 12:47:00','',NULL,NULL,20,'png____imgextra__ACTIVITY__2016__ada7cc5f-b3d2-4ccc-8820-7fe65389e74c.png',NULL,'上海',NULL,'第1期','','1',2016,12,1,'管理员','2016-12-08 12:48:36',NULL,NULL,NULL,'N'),(6,'武汉一日游','2016-12-10 13:21:00','2016-12-12 13:21:00','',NULL,NULL,34,'',NULL,'甘肃',NULL,'第1期','','1',2016,12,1,'管理员','2016-12-08 13:21:58',NULL,NULL,NULL,'N');
 
 /*Table structure for table `t_activity_marines` */
 
@@ -137,11 +146,11 @@ CREATE TABLE `t_activity_marines` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `is_delete` varchar(2) DEFAULT 'N' COMMENT '是否有效 N有效 Y失效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='活动战队信息';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='活动战队信息';
 
 /*Data for the table `t_activity_marines` */
 
-insert  into `t_activity_marines`(`id`,`marine_name`,`marine_img`,`marine_slogan`,`marine_prize`,`line_name`,`line_id`,`activity_id`,`status`,`comment`,`votes`,`readnum`,`score`,`qrcode_url`,`creater_user_id`,`creater`,`create_time`,`updater_user_id`,`updater`,`update_time`,`is_delete`) values (15,'小虎队','https://img.alicdn.com/imgextra/i1/883737303/TB2c9S4c9KI.eBjy1zcXXXIOpXa-883737303.jpg','最强、最强','最佳人气奖',NULL,NULL,3,0,'小朋友们表现的很好',0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQEo8TwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyTzl2TjhHSEdlazIxam5rSmhvMTAAAgTXh0VYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(16,'小牛队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGz8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAybW5pQThHSEdlazIxaEJwSjFvMTkAAgRljEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(17,'小马队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQE28DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyc1ZvZDl1SEdlazIxaENwSmhvMTcAAgRmjEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(18,'小黄人队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFd8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAycWgxXzliSEdlazIxaENwSmhvMVYAAgRmjEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(19,'小蜻蜓队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGU8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyOW9DZTlaSEdlazIxaENwSjFvMXcAAgRmjEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N');
+insert  into `t_activity_marines`(`id`,`marine_name`,`marine_img`,`marine_slogan`,`marine_prize`,`line_name`,`line_id`,`activity_id`,`status`,`comment`,`votes`,`readnum`,`score`,`qrcode_url`,`creater_user_id`,`creater`,`create_time`,`updater_user_id`,`updater`,`update_time`,`is_delete`) values (15,'小虎队','https://img.alicdn.com/imgextra/i1/883737303/TB2c9S4c9KI.eBjy1zcXXXIOpXa-883737303.jpg','最强、最强','最佳人气奖',NULL,NULL,3,0,'小朋友们表现的很好',0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQEo8TwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyTzl2TjhHSEdlazIxam5rSmhvMTAAAgTXh0VYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(16,'小牛队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGz8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAybW5pQThHSEdlazIxaEJwSjFvMTkAAgRljEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(17,'小马队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQE28DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyc1ZvZDl1SEdlazIxaENwSmhvMTcAAgRmjEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(18,'小黄人队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFd8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAycWgxXzliSEdlazIxaENwSmhvMVYAAgRmjEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(19,'小蜻蜓队',NULL,NULL,NULL,NULL,NULL,3,0,NULL,0,0,0,'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGU8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyOW9DZTlaSEdlazIxaENwSjFvMXcAAgRmjEVYAwQAjScA',1,'管理员','2016-12-05 22:03:20',NULL,NULL,NULL,'N'),(23,'小虎队',NULL,NULL,NULL,NULL,NULL,5,0,NULL,0,0,0,NULL,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(24,'小牛队',NULL,NULL,NULL,NULL,NULL,5,0,NULL,0,0,0,NULL,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(25,'小马队',NULL,NULL,NULL,NULL,NULL,5,0,NULL,0,0,0,NULL,1,'管理员','2016-12-08 13:03:39',NULL,NULL,NULL,'N'),(26,'小虎队',NULL,NULL,NULL,NULL,NULL,6,0,NULL,0,0,0,NULL,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(27,'小牛队',NULL,NULL,NULL,NULL,NULL,6,0,NULL,0,0,0,NULL,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N'),(28,'小马队',NULL,NULL,NULL,NULL,NULL,6,0,NULL,0,0,0,NULL,1,'管理员','2016-12-08 13:24:04',NULL,NULL,NULL,'N');
 
 /*Table structure for table `t_activity_marines_support` */
 
@@ -197,11 +206,11 @@ CREATE TABLE `t_activity_teacher` (
   `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `updater` varchar(128) DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='活动参与老师';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='活动参与老师';
 
 /*Data for the table `t_activity_teacher` */
 
-insert  into `t_activity_teacher`(`id`,`name`,`mobile`,`activity_id`,`marine_id`,`is_delete`,`creater_user_id`,`create_time`,`creater`,`updater_user_id`,`update_time`,`updater`) values (9,'张师一','13681981231',3,15,'N',1,'2016-12-05 22:03:20','管理员',NULL,'0000-00-00 00:00:00',NULL),(10,'李师二','13681981232',3,15,'N',1,'2016-12-05 22:03:20','管理员',NULL,'0000-00-00 00:00:00',NULL);
+insert  into `t_activity_teacher`(`id`,`name`,`mobile`,`activity_id`,`marine_id`,`is_delete`,`creater_user_id`,`create_time`,`creater`,`updater_user_id`,`update_time`,`updater`) values (9,'张师一','13681981231',3,15,'N',1,'2016-12-05 22:03:20','管理员',NULL,'0000-00-00 00:00:00',NULL),(10,'李师二','13681981232',3,15,'N',1,'2016-12-05 22:03:20','管理员',NULL,'0000-00-00 00:00:00',NULL),(13,'李老师','13710000000',5,23,'N',1,'2016-12-08 13:03:39','管理员',NULL,'0000-00-00 00:00:00',NULL),(14,'王老师','13710000001',5,23,'N',1,'2016-12-08 13:03:39','管理员',NULL,'0000-00-00 00:00:00',NULL),(15,'李老师','13710000000',6,26,'N',1,'2016-12-08 13:24:04','管理员',NULL,'0000-00-00 00:00:00',NULL),(16,'王老师','13710000001',6,26,'N',1,'2016-12-08 13:24:04','管理员',NULL,'0000-00-00 00:00:00',NULL);
 
 /*Table structure for table `t_buy_record` */
 
@@ -209,6 +218,7 @@ DROP TABLE IF EXISTS `t_buy_record`;
 
 CREATE TABLE `t_buy_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(128) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL COMMENT '产品id',
   `product_name` varchar(128) DEFAULT NULL COMMENT '产品名称',
   `product_type` varchar(2) DEFAULT NULL COMMENT '商品类型 1活动 2课程 3小商品',
@@ -217,6 +227,7 @@ CREATE TABLE `t_buy_record` (
   `exchangePoints` int(11) DEFAULT NULL COMMENT '积分兑换点',
   `give_points` int(11) DEFAULT NULL COMMENT '赠送积点',
   `buy_type` varchar(2) DEFAULT '1' COMMENT '购买类型 1现金 2积分',
+  `is_delete` varchar(2) DEFAULT 'N',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购买记录';
@@ -269,7 +280,7 @@ CREATE TABLE `t_hollow_man_info` (
   `kim_name` varchar(128) DEFAULT NULL COMMENT '透明人亲属姓名',
   `kim_mobile` varchar(11) DEFAULT NULL COMMENT '透明人亲属手机号码',
   `is_active` int(2) DEFAULT '0' COMMENT '是否激活 0未激活 1已激活',
-  `activeDate` varchar(8) DEFAULT NULL COMMENT '激活日期',
+  `active_date` varchar(8) DEFAULT NULL COMMENT '激活日期',
   `openid` varchar(64) DEFAULT NULL COMMENT '用户的标识，对当前公众号唯一',
   `level` varchar(4) DEFAULT NULL COMMENT '级别',
   `score` decimal(8,2) DEFAULT NULL COMMENT '评分',
@@ -281,11 +292,11 @@ CREATE TABLE `t_hollow_man_info` (
   PRIMARY KEY (`id`),
   KEY `idx_hm_name` (`hm_name`),
   KEY `idx_hm_mobile` (`hm_mobile`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='透明人信息';
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='透明人信息';
 
 /*Data for the table `t_hollow_man_info` */
 
-insert  into `t_hollow_man_info`(`id`,`hm_name`,`hm_mobile`,`id_type`,`id_card`,`addr`,`place`,`sex`,`grade`,`schoole`,`id_photo`,`kim_name`,`kim_mobile`,`is_active`,`activeDate`,`openid`,`level`,`score`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`) values (21,'张透一','13681984634',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(22,'张透二','13681984635',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(23,'刘透一','13681984632',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(24,'刘透二','13681984633',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(25,'马透一','13681984739',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(26,'马透二','13681984738',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(27,'黄透一','13681984836',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(28,'黄透二','13681984837',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(29,'青透一','13681984936',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(30,'青透二','13681984937',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(31,'胡启萌','13681984045','01','429004199006274911',NULL,'','F','大四','','/imgextra/IDPHOTO/oqyqUwq_YY84qjFWUtn6Ti4XIROE.jpg',NULL,NULL,1,NULL,'oqyqUwq_YY84qjFWUtn6Ti4XIROE',NULL,NULL,'admin','2016-12-05 22:42:57',NULL,NULL,'N');
+insert  into `t_hollow_man_info`(`id`,`hm_name`,`hm_mobile`,`id_type`,`id_card`,`addr`,`place`,`sex`,`grade`,`schoole`,`id_photo`,`kim_name`,`kim_mobile`,`is_active`,`active_date`,`openid`,`level`,`score`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`) values (21,'张透一','13681984634',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(22,'张透二','13681984635',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(23,'刘透一','13681984632',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(24,'刘透二','13681984633',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(25,'马透一','13681984739',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(26,'马透二','13681984738',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(27,'黄透一','13681984836',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(28,'黄透二','13681984837',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(29,'青透一','13681984936',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(30,'青透二','13681984937',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'20161205',NULL,NULL,NULL,'管理员','2016-12-05 22:03:20',NULL,NULL,'N'),(31,'胡启萌','13681984045','01','429004199006274911',NULL,'','F','大四','','/imgextra/IDPHOTO/oqyqUwq_YY84qjFWUtn6Ti4XIROE.jpg',NULL,NULL,1,NULL,'oqyqUwq_YY84qjFWUtn6Ti4XIROE',NULL,NULL,'admin','2016-12-05 22:42:57',NULL,NULL,'N'),(32,'测试一','13601940452','01','429004166009271411',NULL,NULL,'F','大三',NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'admin','2016-12-08 16:19:41',NULL,NULL,'N'),(33,'测试二','13601940453','01','429004166009271412',NULL,NULL,'F','大三',NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'admin','2016-12-08 16:20:08',NULL,NULL,'N'),(34,'测试三','13601940454','01','429004166009271413',NULL,NULL,'F','大三',NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'admin','2016-12-08 16:20:43',NULL,NULL,'N');
 
 /*Table structure for table `t_parent_info` */
 
@@ -294,18 +305,21 @@ DROP TABLE IF EXISTS `t_parent_info`;
 CREATE TABLE `t_parent_info` (
   `id` int(22) NOT NULL AUTO_INCREMENT,
   `relation` varchar(4) DEFAULT NULL COMMENT '关系',
-  `name` varchar(128) DEFAULT NULL,
-  `mobile` varchar(11) DEFAULT NULL COMMENT '手机号码',
-  `nickname` varchar(128) DEFAULT NULL COMMENT '昵称',
-  `openid` varchar(128) DEFAULT NULL COMMENT '用户的标识，对当前公众号唯一',
+  `child_name` varchar(128) NOT NULL COMMENT '小孩姓名',
+  `mobile` varchar(11) NOT NULL COMMENT '家长联系电话',
+  `parent_name` varchar(128) DEFAULT NULL COMMENT '家长电话',
+  `openid` varchar(128) NOT NULL COMMENT '用户的标识，对当前公众号唯一',
   `sex` int(2) DEFAULT NULL COMMENT '用户的性别，值为1时是男性，值为2时是女性，值为0时是未知',
   `city` varchar(32) DEFAULT NULL COMMENT '城市',
+  `is_delete` varchar(2) DEFAULT 'N',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   PRIMARY KEY (`id`),
   KEY `idx_mobile` (`mobile`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='家长信息';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='家长信息';
 
 /*Data for the table `t_parent_info` */
+
+insert  into `t_parent_info`(`id`,`relation`,`child_name`,`mobile`,`parent_name`,`openid`,`sex`,`city`,`is_delete`,`create_time`) values (1,NULL,'刘三','13510000002',NULL,'oqyqUwq_YY84qjFWUtn6Ti4XIROE',NULL,NULL,'N','2016-12-08 13:05:41');
 
 /*Table structure for table `t_sys_resource` */
 
@@ -331,7 +345,7 @@ CREATE TABLE `t_sys_resource` (
 
 /*Data for the table `t_sys_resource` */
 
-insert  into `t_sys_resource`(`ID_RESOURCE`,`RESOURCE_NAME`,`RESOURCE_URL`,`RESOURCE_TYPE`,`RESOURCE_CODE`,`PARENT_RESOURCE_ID`,`WEIGHT`,`CREATOR`,`LAST_UPDATOR`,`CREATE_TIME`,`LAST_UPDATE_TIME`,`IS_DELETE`,`IS_QUICK_MENU`,`IS_SYSTEM_CONF_MENU`) values (10,'子帐户与权限管理',NULL,'M','authority_manage',0,10,'admin',NULL,'2015-09-21 16:20:53',NULL,'N','N',''),(20,'站内管理',NULL,'M','content_manage',0,20,'admin',NULL,'2015-09-17 11:08:23',NULL,'N','N',''),(30,'活动管理',NULL,'M','activity_manage',0,30,'admin',NULL,'2015-09-21 16:26:32',NULL,'N','N',''),(40,'课程管理',NULL,'M','course_manage',0,40,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(50,'家长管理',NULL,'M','family_manage',0,50,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(60,'透明人管理',NULL,'M','hollow_man_manage',0,60,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(70,'评论管理',NULL,'M','comment_manage',0,70,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(100,'财房管理',NULL,'M','money_manage',0,100,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(1010,'角色管理','/power/role','M','role_manage',10,10,'admin',NULL,'2016-11-13 11:39:07',NULL,'N',NULL,''),(1015,'用户管理','/power/user','M','user_manage',10,20,'admin',NULL,'2016-11-13 11:43:16',NULL,'N',NULL,''),(1020,'菜单管理','/power/menu','M','menu_manage',10,30,'admin',NULL,'2016-11-13 19:35:02',NULL,'N',NULL,''),(2010,'图组管理','/content/img/group','M','content_img_group',20,10,'admin',NULL,'2016-11-13 21:00:51',NULL,'N',NULL,''),(2020,'站内文章编辑','/content/article/edit','M','content_article_edit',20,20,'admin',NULL,'2016-11-25 09:27:14',NULL,'N',NULL,NULL),(2030,'关键词管理','/content/keyword','M','content_keyword',20,30,'admin',NULL,'2016-12-03 15:03:28',NULL,'N',NULL,NULL),(3010,'活动管理','/activity/manage','M','activity_manage',30,10,'admin',NULL,'2016-11-13 12:04:08',NULL,'N',NULL,''),(3020,'名单管理','/activity/namelist','M','activity_namelist',30,30,'admin',NULL,'2016-11-20 02:22:34',NULL,'N',NULL,''),(3030,'战队管理','/activity/marines','M','activity_marines',30,20,'admin',NULL,'2016-11-20 02:23:40',NULL,'N','N',''),(3035,'活动透明人查询','/activity/hm','M','activity_hm',30,35,'admin',NULL,'2016-11-24 21:01:46',NULL,'N',NULL,''),(3040,'透明人资源管理','/activity/hm/resource','M','hollow_man_activity_resource',30,40,'admin',NULL,'2016-11-13 19:40:39',NULL,'N',NULL,''),(3050,'活动老师查询','/activity/teacher','M','activity_teacher',30,50,NULL,NULL,'2016-11-24 21:55:15',NULL,'N',NULL,''),(5010,'家长绑定查询','/parent/bind/query','M','parent_bind_query',50,10,'admin',NULL,'2016-11-13 19:37:24',NULL,'N',NULL,''),(5020,'家长购买记录','/parent/buy/record','M','parent_buy_record',50,20,'admin',NULL,'2016-11-13 19:38:18',NULL,'N',NULL,''),(6010,'透明人查询','/hm/query','M','hollow_man_query',60,10,'admin',NULL,'2016-11-13 19:39:47',NULL,'N',NULL,'');
+insert  into `t_sys_resource`(`ID_RESOURCE`,`RESOURCE_NAME`,`RESOURCE_URL`,`RESOURCE_TYPE`,`RESOURCE_CODE`,`PARENT_RESOURCE_ID`,`WEIGHT`,`CREATOR`,`LAST_UPDATOR`,`CREATE_TIME`,`LAST_UPDATE_TIME`,`IS_DELETE`,`IS_QUICK_MENU`,`IS_SYSTEM_CONF_MENU`) values (10,'子帐户与权限管理',NULL,'M','authority_manage',0,10,'admin',NULL,'2015-09-21 16:20:53',NULL,'N','N',''),(20,'站内管理',NULL,'M','content_manage',0,20,'admin',NULL,'2015-09-17 11:08:23',NULL,'N','N',''),(30,'活动管理',NULL,'M','activity_manage',0,30,'admin',NULL,'2015-09-21 16:26:32',NULL,'N','N',''),(40,'课程管理',NULL,'M','course_manage',0,40,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(50,'家长管理',NULL,'M','family_manage',0,50,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(60,'透明人管理',NULL,'M','hollow_man_manage',0,60,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(70,'评论管理',NULL,'M','comment_manage',0,70,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(100,'财房管理',NULL,'M','money_manage',0,100,'admin',NULL,'2015-09-25 17:14:01',NULL,'N','N',''),(1010,'角色管理','/power/role','M','role_manage',10,10,'admin',NULL,'2016-11-13 11:39:07',NULL,'N',NULL,''),(1015,'用户管理','/power/user','M','user_manage',10,20,'admin',NULL,'2016-11-13 11:43:16',NULL,'N',NULL,''),(1020,'菜单管理','/power/menu','M','menu_manage',10,30,'admin',NULL,'2016-11-13 19:35:02',NULL,'N',NULL,''),(2010,'图组管理','/content/img/group','M','content_img_group',20,10,'admin',NULL,'2016-11-13 21:00:51',NULL,'N',NULL,''),(2020,'站内文章编辑','/content/article/edit','M','content_article_edit',20,20,'admin',NULL,'2016-11-25 09:27:14',NULL,'N',NULL,NULL),(2030,'关键词管理','/content/keyword','M','content_keyword',20,30,'admin',NULL,'2016-12-03 15:03:28',NULL,'N',NULL,NULL),(3010,'活动管理','/activity/manage','M','activity_manage',30,10,'admin',NULL,'2016-11-13 12:04:08',NULL,'N',NULL,''),(3020,'名单管理','/activity/namelist','M','activity_namelist',30,30,'admin',NULL,'2016-11-20 02:22:34',NULL,'N',NULL,''),(3030,'战队管理','/activity/marines','M','activity_marines',30,20,'admin',NULL,'2016-11-20 02:23:40',NULL,'N','N',''),(3035,'活动透明人查询','/activity/hm','M','activity_hm',30,35,'admin',NULL,'2016-11-24 21:01:46',NULL,'N',NULL,''),(3040,'透明人资源管理','/activity/hm/resource','M','hollow_man_activity_resource',30,40,'admin',NULL,'2016-11-13 19:40:39',NULL,'N',NULL,''),(3050,'活动老师查询','/activity/teacher','M','activity_teacher',30,50,NULL,NULL,'2016-11-24 21:55:15',NULL,'N',NULL,''),(3060,'透明人活动报名审核','/activity/hmsign/audit','M','hollow_man_sign_audit',30,60,'admin',NULL,'2016-12-08 14:07:45',NULL,'N',NULL,NULL),(5010,'家长绑定查询','/parent/bind/query','M','parent_bind_query',50,10,'admin',NULL,'2016-11-13 19:37:24',NULL,'N',NULL,''),(5020,'家长购买记录','/parent/buy/record','M','parent_buy_record',50,20,'admin',NULL,'2016-11-13 19:38:18',NULL,'N',NULL,''),(6010,'透明人查询','/hm/query','M','hollow_man_query',60,10,'admin',NULL,'2016-11-13 19:39:47',NULL,'N',NULL,''),(6020,'透明人注册审核','/hm/register/audit','M','hollow_man_register_query',60,20,'admin',NULL,'2016-12-08 14:09:45',NULL,'N',NULL,NULL);
 
 /*Table structure for table `t_sys_resource_role_rel` */
 

@@ -19,20 +19,24 @@
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<td>活动编号: <input class="form-control1" type="text" name="activityId" id="activityId"/></td>
-									<td>活动名称： <input class="form-control1" type="text" name="activityName" id="activityName"/></td>
-									<td>活动类型： 
-										<select class="form-control1" name="activityType" id="activityType">
-											<option value="">全部</option>
-											<option value="1">亲子活动</option>
-											<option value="2">城市体验</option>
-										</select>
-									</td>
+									<td>姓名: <input class="form-control1" type="text" name="hmName" id="hmName"/></td>
+									<td>手机号码： <input class="form-control1" type="text" name="hmMobile" id="hmMobile"/></td>
+									<td>证件号码： <input class="form-control1" type="text" name="idCard" id="idCard"/></td>
 								 </tr>
 								 <tr>
-								 	<td>战队名称: <input class="form-control1" type="text" name="marineName" id="marineName"/></td>
-									<td colspan="2">活动时间： <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
-										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
+									<td>性别: 
+										<select class="form-control1" id="sex" name="sex">
+											<option value="">全部</option>
+											<option value="F">帅哥</option>
+											<option value="M">美女</option>
+										</select>
+									</td>
+									<td>状态： 
+										<select class="form-control1" id="isActive" name="isActive">
+											<option value="">全部</option>
+											<option value="0">注册申请中</option>
+											<option value="1">已激活</option>
+										</select>
 								 </tr>
 								 <tr>
 									<td colspan="3">
@@ -46,13 +50,13 @@
 					</div>
 					<!--end 搜索栏  -->
 				</div>
-				<div style="height: 330px;">
+				<div style="height: 380px;">
 					<table id="dataGrid"></table>
 				</div>
 			</div>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
-	<script type="text/javascript" src="<%=basePath%>/js/activity/activityHm.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/hm/regAudit.js"></script>
 </body>
 </html>

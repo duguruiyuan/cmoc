@@ -33,4 +33,11 @@ public interface IActivityHmService {
 	 * @return
 	 */
 	RspResult addSign(Integer activityId, String openid);
+	
+	/**
+     * 查询活动报名透明人
+     * @param page
+     * @return
+     */
+    List<ActivityHmSignView> selectHmSignForAudit(Page<ActivityHmSignView> page);
 }

@@ -51,6 +51,14 @@ public class ActivityNamelistVO implements Serializable{
 	 * 透明人手机号码
 	 */
 	private String hmMobile;
+	/*
+	 * 小孩证件号
+	 */
+	private String childIdcard;
+	/*
+	 * 家长联系电话
+	 */
+	private String parentMobile;
 	
 	
 	public Integer getActivityId() {
@@ -125,7 +133,17 @@ public class ActivityNamelistVO implements Serializable{
 	public void setHmMobile(String hmMobile) {
 		this.hmMobile = hmMobile;
 	}
-	
-	
+	public String getChildIdcard() {
+		return childIdcard;
+	}
+	public void setChildIdcard(String childIdcard) {
+		this.childIdcard = childIdcard;
+	}
+	public String getParentMobile() {
+		return parentMobile;
+	}
+	public void setParentMobile(String parentMobile) {
+		this.parentMobile = parentMobile;
+	}
 
 }

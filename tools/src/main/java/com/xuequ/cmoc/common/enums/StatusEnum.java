@@ -22,6 +22,7 @@ public enum StatusEnum {
 	EXPIRED_DATA("1012", "数据已失效，请刷新后再试"),
 	HM_NON_ACTIVE("1013", "透明人未激活，不能报名参加活动"),
 	ALREADY_SIGN_ACTIVITY("1014", "你已报名成功"),
+	PARENT_BIND_ERROR("1015", "绑定失败！确认信息是否正确"),
 	ACCESS_TOKEN_FAIL("获取access_token失败","001"),
 	JSAPI_TICKET_FAIL("获取jsapi_ticket失败","002"),
 	FAIL("9999", "失败");

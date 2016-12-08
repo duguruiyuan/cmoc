@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.paic.clearing.mapper.BuyRecordMapper" >
+<mapper namespace="com.xuequ.cmoc.dao.BuyRecordMapper" >
   <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.BuyRecord" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
     <result column="product_id" property="productId" jdbcType="INTEGER" />
     <result column="product_name" property="productName" jdbcType="VARCHAR" />
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
@@ -11,11 +12,12 @@
     <result column="exchangePoints" property="exchangepoints" jdbcType="INTEGER" />
     <result column="give_points" property="givePoints" jdbcType="INTEGER" />
     <result column="buy_type" property="buyType" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, product_id, product_name, product_type, mobile, amount, exchangePoints, give_points, 
-    buy_type, create_time
+    id, openid, product_id, product_name, product_type, mobile, amount, exchangePoints, 
+    give_points, buy_type, is_delete, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,20 +30,25 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.BuyRecord" >
-    insert into t_buy_record (id, product_id, product_name, 
-      product_type, mobile, amount, 
-      exchangePoints, give_points, buy_type, 
-      create_time)
-    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
-      #{productType,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
-      #{exchangepoints,jdbcType=INTEGER}, #{givePoints,jdbcType=INTEGER}, #{buyType,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into t_buy_record (id, openid, product_id, 
+      product_name, product_type, mobile, 
+      amount, exchangePoints, give_points, 
+      buy_type, is_delete, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
+      #{productName,jdbcType=VARCHAR}, #{productType,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{exchangepoints,jdbcType=INTEGER}, #{givePoints,jdbcType=INTEGER}, 
+      #{buyType,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.BuyRecord" >
     insert into t_buy_record
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="openid != null" >
+        openid,
       </if>
       <if test="productId != null" >
         product_id,
@@ -67,6 +74,9 @@
       <if test="buyType != null" >
         buy_type,
       </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -74,6 +84,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
       </if>
       <if test="productId != null" >
         #{productId,jdbcType=INTEGER},
@@ -99,6 +112,9 @@
       <if test="buyType != null" >
         #{buyType,jdbcType=VARCHAR},
       </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -107,6 +123,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.BuyRecord" >
     update t_buy_record
     <set >
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
       <if test="productId != null" >
         product_id = #{productId,jdbcType=INTEGER},
       </if>
@@ -131,6 +150,9 @@
       <if test="buyType != null" >
         buy_type = #{buyType,jdbcType=VARCHAR},
       </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -139,7 +161,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.BuyRecord" >
     update t_buy_record
-    set product_id = #{productId,jdbcType=INTEGER},
+    set openid = #{openid,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER},
       product_name = #{productName,jdbcType=VARCHAR},
       product_type = #{productType,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
@@ -147,6 +170,7 @@
       exchangePoints = #{exchangepoints,jdbcType=INTEGER},
       give_points = #{givePoints,jdbcType=INTEGER},
       buy_type = #{buyType,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

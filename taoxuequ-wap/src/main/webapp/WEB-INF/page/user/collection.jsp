@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -74,37 +75,19 @@
 		        <div class="mui-indicator"></div>
 		      </div>
 		    </div>
-		    <ul class="mui-table-view mt10 mb10">
-	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right">
-	                    课程报名：中学MYP跨学科（课程描述）
-	                </a>
-	            </li>
-	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right">
-	                     课程报名：中学MYP跨学科（课程描述）
-	                </a>
-	            </li>
-	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right">
-	                     课程报名：中学MYP跨学科（课程描述）
-	                </a>
-	            </li>
-	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right">
-	                     课程报名：中学MYP跨学科（课程描述）
-	                </a>
-	            </li>
-	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right">
-	                     课程报名：中学MYP跨学科（课程描述）
-	                </a>
-	            </li>
-	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right">
-	                     课程报名：中学MYP跨学科（课程描述）
-	                </a>
-	            </li>
+		    <ul class="mui-table-view mb10">
+		    	<c:choose>
+		    		<c:when test="${list == null || list.isEmpty }">
+		    			<p style="padding: 10px 10px;">暂无收藏记录</p>
+		    		</c:when>
+		    		<c:otherwise>
+		    			<li class="mui-table-view-cell">
+			                <a class="mui-navigate-right">
+			                    课程报名：中学MYP跨学科（课程描述）
+			                </a>
+			            </li>
+		    		</c:otherwise>
+		    	</c:choose>
 	        </ul>
 		</div>
 		

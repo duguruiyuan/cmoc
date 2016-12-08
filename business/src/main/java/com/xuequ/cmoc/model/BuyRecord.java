@@ -7,6 +7,8 @@ import java.util.Date;
 public class BuyRecord implements Serializable {
     private Integer id;
 
+    private String openid;
+
     private Integer productId;
 
     private String productName;
@@ -23,6 +25,8 @@ public class BuyRecord implements Serializable {
 
     private String buyType;
 
+    private String isDelete;
+
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
@@ -33,6 +37,14 @@ public class BuyRecord implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
     }
 
     public Integer getProductId() {
@@ -97,6 +109,14 @@ public class BuyRecord implements Serializable {
 
     public void setBuyType(String buyType) {
         this.buyType = buyType == null ? null : buyType.trim();
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
     public Date getCreateTime() {

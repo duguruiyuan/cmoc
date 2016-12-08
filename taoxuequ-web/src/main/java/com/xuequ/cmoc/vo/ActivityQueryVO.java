@@ -23,6 +23,8 @@ public class ActivityQueryVO extends GridBase implements Serializable{
 	private String startDate;
 	
 	private String endDate;
+	
+	private Integer isEffect;
 
 	
 	public Integer getActivityId() {
@@ -79,6 +81,14 @@ public class ActivityQueryVO extends GridBase implements Serializable{
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public Integer getIsEffect() {
+		return isEffect;
+	}
+
+	public void setIsEffect(Integer isEffect) {
+		this.isEffect = isEffect;
 	}
 	
 	

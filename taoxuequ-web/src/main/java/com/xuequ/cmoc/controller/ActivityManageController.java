@@ -93,6 +93,11 @@ public class ActivityManageController extends BaseController{
 		return "activity/hm";
 	}
 	
+	@RequestMapping("hmsign/audit")
+	public String hmSignAudit() {
+		return "activity/hmSignAudit";
+	}
+	
 	@RequestMapping("teacher")
 	public String activityTeacher() {
 		return "activity/teacher";
@@ -242,15 +247,10 @@ public class ActivityManageController extends BaseController{
             			String val = CellUtil.getCellValue(cell);
             			if(j == 0) namelistVO.setMarineName(val.trim());
             			else if(j == 1) namelistVO.setChildName(val.trim());
-            			else if(j == 2) namelistVO.setFatherName(val.trim());
-            			else if(j == 3) namelistVO.setFatherMobile(val.trim());
-            			else if(j == 4) namelistVO.setMotherName(val.trim()); 
-            			else if(j == 5) namelistVO.setMotherMobile(val.trim());
-            			else if(j == 6) namelistVO.setChildTitle(val.trim());
-            			else if(j == 7) namelistVO.setTeatherName(val.trim());
-            			else if(j == 8) namelistVO.setTeacherMobile(val.trim());
-            			else if(j == 9) namelistVO.setHmName(val.trim());
-            			else if(j == 10) namelistVO.setHmMobile(val.trim());
+            			else if(j == 2) namelistVO.setChildIdcard(val.trim());
+            			else if(j == 3) namelistVO.setParentMobile(val.trim());
+            			else if(j == 4) namelistVO.setTeatherName(val.trim());
+            			else if(j == 5) namelistVO.setTeacherMobile(val.trim());
             		}
             	}
             	list.add(namelistVO);
@@ -303,6 +303,27 @@ public class ActivityManageController extends BaseController{
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<ActivityHmSignView> list = activityHmService.selectListByPage(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
+	}
+	
+	@RequestMapping("/json/hmSignAudit/query")
+	public @ResponseBody Object hmSignAuditQuery(ActivityQueryVO vo) {
+		Page<ActivityHmSignView> page = new Page<ActivityHmSignView>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("activityId", vo.getActivityId());
+		paramMap.put("marineName", vo.getMarineName());
+		paramMap.put("activityType", vo.getActivityType());
+		paramMap.put("activityName", vo.getActivityName());
+		paramMap.put("startDate", vo.getStartDate());
+		paramMap.put("endDate", vo.getEndDate());
+		paramMap.put("isEffect", vo.getIsEffect());
+		Grid grid = new Grid();
+		page.setParams(paramMap);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<ActivityHmSignView> list = activityHmService.selectHmSignForAudit(page);
 		grid.setRows(list);
 		grid.setTotal(page.getTotalRecord());
 		return grid;

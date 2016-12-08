@@ -42,13 +42,10 @@
 		</div>
 		
 		<script type="text/javascript">
-			initSnsToken();
 			mui.init();
 			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-			function initSnsToken() {
-				var snsToken = '${snsToken}';
-				setAccessToken(snsToken);
-			}
+			var snsToken = '${snsToken}';
+			setAccessToken(snsToken);
 		</script>
 </body>
 

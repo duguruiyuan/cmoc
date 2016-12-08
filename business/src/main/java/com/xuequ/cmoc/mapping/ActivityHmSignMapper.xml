@@ -48,17 +48,48 @@
     <result column="hm_name" property="hmName" jdbcType="VARCHAR" />
     <result column="hm_mobile" property="hmMobile" jdbcType="VARCHAR" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    
+    <result column="place" property="place" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="schoole" property="schoole" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="VARCHAR" />
   </resultMap>
   
-  <select id="selectWithTeamRecord" resultMap="PageBaseResultMap">
-  	SELECT hm.`hm_name`, am.`marine_name`, ai.`activity_name`,ai.`activity_num`,ai.`start_date`  
-    FROM t_activity_hm_sign hs
-    INNER JOIN t_activity_marines am ON hs.`marine_id` = am.`id`
-    INNER JOIN t_activity_info ai ON am.`activity_id` = ai.`id`
-    INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id`
-    WHERE hs.`is_effect` = 1 AND hs.`is_delete` = 'N'
-    AND hm.`openid` = #{openid,jdbcType=VARCHAR}
-    order by ai.`start_date` desc
+  <select id="selectHmSignForAudit" resultMap="PageBaseResultMap">
+  	SELECT hs.id, hm_name, hm_mobile, place, sex, grade, schoole,
+    	level, h.score, IFNULL(take_num,0) take_num, hs.`is_effect`,
+    	hs.`effect_date`, hs.`create_time` sign_date,
+    	ai.`activity_name`,hs.`activity_id`,ai.`activity_num`
+    	FROM t_activity_hm_sign hs
+	INNER JOIN t_hollow_man_info h ON hs.`hm_id` = h.`id`
+	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id`
+	LEFT JOIN (
+	  SELECT COUNT(1) take_num, hm_id FROM t_activity_hm_sign 
+	  WHERE is_delete = 'N' AND is_effect=1 
+	  GROUP BY hm_id
+	)n ON n.hm_id = h.id
+	where hs.is_delete = 'N'
+	<if test="params.activityId != null">
+    	and hs.activity_id = #{params.activityId,jdbcType=INTEGER}
+    </if>
+    <if test="params.activityType != null">
+    	and ai.activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityName != null">
+    	and ai.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.isEffect != null">
+    	and ai.is_effect #{params.isEffect,jdbcType=VARCHAR}
+    </if>
+    <if test="params.startDate != null">
+    	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="params.endDate != null">
+    	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+    </if>
+	ORDER BY take_num DESC, hs.`create_time`
   </select>
   
   <select id="selectListByPage" resultMap="PageBaseResultMap">
@@ -90,6 +121,17 @@
     	and DATE_FORMAT(i.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
     </if>
     order by s.id desc
+  </select>
+  
+  <select id="selectWithTeamRecord" resultMap="PageBaseResultMap">
+  	SELECT hm.`hm_name`, am.`marine_name`, ai.`activity_name`,ai.`activity_num`,ai.`start_date`  
+    FROM t_activity_hm_sign hs
+    INNER JOIN t_activity_marines am ON hs.`marine_id` = am.`id`
+    INNER JOIN t_activity_info ai ON am.`activity_id` = ai.`id`
+    INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id`
+    WHERE hs.`is_effect` = 1 AND hs.`is_delete` = 'N'
+    AND hm.`openid` = #{openid,jdbcType=VARCHAR}
+    order by ai.`start_date` desc
   </select>
   
   <select id="selectForSign" resultMap="PageBaseResultMap">

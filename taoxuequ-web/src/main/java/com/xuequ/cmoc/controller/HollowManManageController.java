@@ -4,11 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuequ.cmoc.common.RspResult;
+import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.page.Page;
@@ -26,6 +31,8 @@ import com.xuequ.cmoc.vo.HollowManQueryVO;
 @Controller
 public class HollowManManageController extends BaseController{
 	
+	private Logger logger = LoggerFactory.getLogger(HollowManManageController.class);
+	
 	@Autowired
 	private IHollowManService hollowManService;
 
@@ -38,6 +45,11 @@ public class HollowManManageController extends BaseController{
 	@RequestMapping("query")
 	public String query() {
 		return "hm/hmQuery";
+	}
+	
+	@RequestMapping("register/audit")
+	public String registerAudit() {
+		return "hm/regAudit";
 	}
 	
 
@@ -65,6 +77,31 @@ public class HollowManManageController extends BaseController{
 		grid.setRows(list);
 		grid.setTotal(page.getTotalRecord());
 		return grid;
+	}
+	
+	@RequestMapping("json/reg/query")
+	@ResponseBody Object jsonRegQuery(HollowManQueryVO vo) {
+		Grid grid = new Grid();
+		Page<HollowManInfoView> page = new Page<HollowManInfoView>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("isActive", 0);
+		page.setParams(paramMap);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<HollowManInfoView> list = hollowManService.selectByPage(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
+	}
+	
+	@ResponseBody Object auditHm(@RequestParam("ids[]") List<Integer> ids, 
+			Integer active) {
+		try {
+			
+		} catch (Exception e) {
+			logger.error("--auditHm, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 	/**

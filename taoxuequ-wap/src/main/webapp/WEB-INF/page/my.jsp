@@ -15,43 +15,34 @@
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
-		<header class="mui-bar mui-bar-nav">
-		    <h1 class="mui-title">个人中心</h1>
-		</header>
 		<div class="mui-content">
-		    <div id="slider" class="mui-slider">
-		      <div class="mui-slider-group mui-slider-loop">
-		        <div class="mui-slider-item mui-slider-item-duplicate">
-		          <a href="#">
-		            <img src="<%=basePath %>/images/slider4.jpg" width="400" height="200">
-		            <p class="mui-slider-title">文字说明4</p>
-		          </a>
-		        </div>
-		      </div>
-		    </div>
-		    <ul class="mui-table-view mt10 mb10">
+		    <div class="regTMHeader" style="background-color: #25C26D;">
+				<img src="${userInfo.headimgurl }" class="regTMPic"><br>
+				<span style="line-height: 20px; color: white;">${userInfo.nickname }</span><br>
+			</div>
+		    <ul class="mui-table-view mb10">
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/bind">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/bind?id=${userInfo.openid}">
 	                   用户绑定
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/live">
+	                <a class="mui-navigate-right" href="<%=basePath%>/live?id=openid">
 	                     直播中心
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/points">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/points?id=${userInfo.openid}">
 	                     学习积分
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/buyRecord">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/buyRecord?id=${userInfo.openid}">
 	                     购买记录
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/collection">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/collection?id=${userInfo.openid}">
 	                     个人收藏
 	                </a>
 	            </li>
@@ -64,8 +55,10 @@
 		</div>
 		
 		<script type="text/javascript">
-				mui.init();
-				mui('.footer').on('tap','a',function(){document.location.href=this.href;});
+			mui.init();
+			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
+			var snsToken = '${snsToken}';
+			setAccessToken(snsToken);
 		</script>
 </body>
 

@@ -30,7 +30,13 @@
 									</td>
 								 </tr>
 								 <tr>
-								 	<td>战队名称: <input class="form-control1" type="text" name="marineName" id="marineName"/></td>
+									<td>报名状态： 
+										<select class="form-control1" name="isEffect" id="isEffect">
+											<option value="">全部</option>
+											<option value="0">报名申请中</option>
+											<option value="1">已生效</option>
+										</select>
+									</td>
 									<td colspan="2">活动时间： <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
 										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
 								 </tr>
@@ -53,6 +59,6 @@
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
-	<script type="text/javascript" src="<%=basePath%>/js/activity/activityHm.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/activity/hmSignAudit.js"></script>
 </body>
 </html>

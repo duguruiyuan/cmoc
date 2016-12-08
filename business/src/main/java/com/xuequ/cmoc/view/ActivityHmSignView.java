@@ -25,7 +25,17 @@ public class ActivityHmSignView extends ActivityHmSign {
 	private String hmMobile;
 	
 	private Date startDate;
-
+	
+	private String place;
+	
+	private String sex;
+	
+	private String grade;
+	
+	private String schoole;
+	
+	private String level;
+	
 	public String getActivityName() {
 		return activityName;
 	}
@@ -96,6 +106,46 @@ public class ActivityHmSignView extends ActivityHmSign {
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getSchoole() {
+		return schoole;
+	}
+
+	public void setSchoole(String schoole) {
+		this.schoole = schoole;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	
 	

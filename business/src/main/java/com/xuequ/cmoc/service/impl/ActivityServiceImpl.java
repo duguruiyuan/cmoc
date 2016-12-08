@@ -28,6 +28,7 @@ import com.xuequ.cmoc.reqVo.ActivityNamelistVO;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.DateUtil;
+import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
 import com.xuequ.cmoc.view.ActivityResourceTypeView;
 
@@ -163,7 +164,7 @@ public class ActivityServiceImpl implements IActivityService {
 			if(man == null) {
 				man = BeanUtils.copyAs(hmSign, HollowManInfo.class);
 				man.setIsActive(1);
-				man.setActivedate(DateUtil.getDate(new Date()));
+				man.setActiveDate(DateUtil.getDate(new Date()));
 				man.setCreater(user.getUserName());
 				hollowManInfoMapper.insertSelective(man);
 			}

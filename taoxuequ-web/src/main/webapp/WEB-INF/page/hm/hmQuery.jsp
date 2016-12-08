@@ -19,8 +19,8 @@
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<td>姓名: <input class="form-control1" type="text" name="name" id="name"/></td>
-									<td>手机号码： <input class="form-control1" type="text" name="mobile" id="mobile"/></td>
+									<td>姓名: <input class="form-control1" type="text" name="hmName" id="hmName"/></td>
+									<td>手机号码： <input class="form-control1" type="text" name="hmMobile" id="hmMobile"/></td>
 									<td>证件号码： <input class="form-control1" type="text" name="idCard" id="idCard"/></td>
 								 </tr>
 								 <tr>
@@ -57,6 +57,6 @@
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
-	<script type="text/javascript" src="<%=basePath%>/js/activity/hm.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/hm/hm.js"></script>
 </body>
 </html>

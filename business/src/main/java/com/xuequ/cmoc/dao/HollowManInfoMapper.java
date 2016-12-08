@@ -29,4 +29,8 @@ public interface HollowManInfoMapper {
     HollowManInfo selectByOpenid(String openid);
     
     int selectCountByOpenid(String openid);
+    
+    int updateAuditDeleteHm(List<Integer> list);
+    
+    int updateAuditActiveHm(List<Integer> list);
 }

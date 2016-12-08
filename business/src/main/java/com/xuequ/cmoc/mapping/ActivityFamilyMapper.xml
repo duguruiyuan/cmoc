@@ -40,6 +40,12 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectHasChild" resultType="int">
+  	select count(1) from t_activity_family
+  	where is_delete = 'N' and child_name = #{childName,jdbcType=VARCHAR}
+  	and parent_mobile = #{parentMobile,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectListByMarineId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -114,7 +120,7 @@
     values (#{id,jdbcType=INTEGER}, #{fatherName,jdbcType=VARCHAR}, #{fatherMobile,jdbcType=VARCHAR}, 
       #{fatherAge,jdbcType=INTEGER}, #{motherName,jdbcType=VARCHAR}, #{motherMobile,jdbcType=VARCHAR}, 
       #{motherAge,jdbcType=INTEGER}, #{childIdcard,jdbcType=VARCHAR}, #{parentMobile,jdbcType=VARCHAR}, 
-      #{otherAge,jdbcType=INTEGER}, #{childName,jdbcType=VARCHAR}, #{childMobile,jdbcType=VARCHAR}, 
+      #{childName,jdbcType=VARCHAR}, #{childMobile,jdbcType=VARCHAR}, 
       #{childAge,jdbcType=INTEGER}, #{childImg,jdbcType=VARCHAR}, #{childTitle,jdbcType=VARCHAR}, 
       #{childComment,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER}, #{marineId,jdbcType=INTEGER}, 
       #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
@@ -224,9 +230,6 @@
       </if>
       <if test="parentMobile != null" >
         #{parentMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="otherAge != null" >
-        #{otherAge,jdbcType=INTEGER},
       </if>
       <if test="childName != null" >
         #{childName,jdbcType=VARCHAR},

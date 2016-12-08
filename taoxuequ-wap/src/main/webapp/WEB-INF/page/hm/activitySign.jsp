@@ -31,7 +31,7 @@
 				    <a class="mui-navigate-right" qrcode-url="${item.qrcodeUrl }" >
 				    	<div class="ranksList-content">
 				    		<span>${item.activityName }</span>
-				    		&nbsp;<span><fmt:formatDate value='${item.startDate}' pattern='yyyy年MM月dd日' /> </span>&nbsp;
+				    		&nbsp;<span><fmt:formatDate value='${item.startDate}' pattern='yyyy/MM/dd' /> </span>&nbsp;
 				    	</div>
 				    	<div class="ranksList-code">申请带队</div>
 			    	</a>

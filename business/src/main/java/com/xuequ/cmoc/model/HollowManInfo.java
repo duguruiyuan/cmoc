@@ -33,7 +33,7 @@ public class HollowManInfo implements Serializable {
 
     private Integer isActive;
 
-    private String activedate;
+    private String activeDate;
 
     private String openid;
 
@@ -167,15 +167,15 @@ public class HollowManInfo implements Serializable {
         this.isActive = isActive;
     }
 
-    public String getActivedate() {
-        return activedate;
-    }
+    public String getActiveDate() {
+		return activeDate;
+	}
 
-    public void setActivedate(String activedate) {
-        this.activedate = activedate == null ? null : activedate.trim();
-    }
+	public void setActiveDate(String activeDate) {
+		this.activeDate = activeDate;
+	}
 
-    public String getOpenid() {
+	public String getOpenid() {
         return openid;
     }
 

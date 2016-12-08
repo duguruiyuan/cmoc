@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -20,43 +22,46 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">学习积分</h1>
 		</header>
-		<jsp:include page="/WEB-INF/page/common/head.jsp" />
+		
 		<div class="mui-content">
-		    <div class="tableList mt10">
-		    	<table border="0" cellspacing="0" cellpadding="0">
+			<div style="height: 234px; position: relative;">
+				<img src="<%=basePath %>/images/slider1.jpg" width="100%">
+				<p class="point-tip">您目前有 0 积分</p>
+			</div>
+		    <div class="tableList">
+		   		<table border="0" cellspacing="0" cellpadding="0">
 		    		<thead>
 			    		<tr>
-			    			<th width="90">时间</th>
-			    			<th>项目名称</th>
-			    			<th width="40">金额</th>
-			    			<th width="80">积分兑换</th>
+			    			<th class="mui-text-center">时间</th>
+			    			<th class="mui-text-center">项目名称</th>
+			    			<th class="mui-text-center">金额</th>
+			    			<th class="mui-text-center">积分兑换</th>
 			    		</tr>
 		    		</thead>
 		    		<tbody>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">420</td>
-		    				<td class="mui-text-center">
-		    					<button type="button" class="mui-btn mui-btn-primary">兑换</button>
-		    				</td>
-		    			</tr>
-		    			<tr>
-		    				<td class="mui-text-center">2015/09/01</td>
-		    				<td>北京7天夏令营</td>
-		    				<td class="mui-text-center">420</td>
-		    				<td class="mui-text-center">
-		    					<button type="button" class="mui-btn mui-btn-primary">兑换</button>
-		    				</td>
-		    			</tr>
+		    			<c:choose>
+				    		<c:when test="${list == null || list.isEmpty }">
+				    			<tr><td colspan="4"><p style="padding: 10px 10px;">暂无可兑换课程，敬请期待...</p></td></tr>
+				    		</c:when>
+				    		<c:otherwise>
+				    			<tr>
+				    				<td class="mui-text-center">2015/09/01</td>
+				    				<td class="mui-text-center">北京7天夏令营</td>
+				    				<td class="mui-text-center">420</td>
+				    				<td class="mui-text-center">
+				    					<button type="button" class="mui-btn mui-btn-primary">兑换</button>
+				    				</td>
+				    			</tr>
+				    		</c:otherwise>
+				    	</c:choose>
 		    		</tbody>
-		    	</table>
 		    </div>
 		</div>
+		
 		<script type="text/javascript">
 			mui.init();
 			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
 		</script>
-	</body>
+</body>
 
 </html>

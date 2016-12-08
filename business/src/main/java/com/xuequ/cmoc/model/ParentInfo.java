@@ -8,17 +8,19 @@ public class ParentInfo implements Serializable {
 
     private String relation;
 
-    private String name;
+    private String childName;
 
     private String mobile;
 
-    private String nickname;
+    private String parentName;
 
     private String openid;
 
     private Integer sex;
 
     private String city;
+
+    private String isDelete;
 
     private Date createTime;
 
@@ -40,12 +42,12 @@ public class ParentInfo implements Serializable {
         this.relation = relation == null ? null : relation.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getChildName() {
+        return childName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setChildName(String childName) {
+        this.childName = childName == null ? null : childName.trim();
     }
 
     public String getMobile() {
@@ -56,12 +58,12 @@ public class ParentInfo implements Serializable {
         this.mobile = mobile == null ? null : mobile.trim();
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getParentName() {
+        return parentName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
+    public void setParentName(String parentName) {
+        this.parentName = parentName == null ? null : parentName.trim();
     }
 
     public String getOpenid() {
@@ -86,6 +88,14 @@ public class ParentInfo implements Serializable {
 
     public void setCity(String city) {
         this.city = city == null ? null : city.trim();
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
     public Date getCreateTime() {
