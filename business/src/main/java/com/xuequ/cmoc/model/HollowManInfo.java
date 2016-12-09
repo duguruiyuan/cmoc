@@ -50,6 +50,8 @@ public class HollowManInfo implements Serializable {
     private Date updateTime;
 
     private String isDelete;
+    
+    private String reason;
 
     private static final long serialVersionUID = 1L;
 
@@ -238,4 +240,14 @@ public class HollowManInfo implements Serializable {
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
     }
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason == null ? null : reason.trim();
+	}
+    
+    
 }

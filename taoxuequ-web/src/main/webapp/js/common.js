@@ -237,3 +237,83 @@ $(".number").blur(function() {
 		}
 	}
 })
+
+function getNullString(v){
+	return (v == undefined || v == null) ? "" : v;
+}
+
+function getTakeRecord(hmId){
+	var thirdHtml;
+	thirdHtml=takeList(hmId);
+	
+	$("#takeNumDiolog").html(thirdHtml);
+	thirdAcctDialog = $('#takeNumDiolog').dialog({
+		title : "资产列表",
+		modal : true,
+		width : 1250,
+		height : 400,
+		top : 200,
+		draggable : true,
+		//resizable : true,
+		//buttons : '#btns',
+		onClose : function() {
+			$('#takeNumDiolog').empty();
+		}
+	}).show();
+}
+
+function takeList(hmId){
+	var html="<table class='table table-condensed'><thead><tr>"
+					+"<th style='text-align: center;'>透明人编号</th>"
+					+"<th style='text-align: center;'>透明人姓名</th>"
+					+"<th style='text-align: center;'>透明人电话</th>"
+					+"<th style='text-align: center;'>活动名称</th>"
+					+"<th style='text-align: center;'>活动期数</th>"
+					+"<th style='text-align: center;'>活动时间</th>"
+					+"<th style='text-align: center;'>活动类型</th>"
+					+"<th style='text-align: center;'>图片数</th>"
+					+"<th style='text-align: center;'>视频数</th>"	
+				+"</tr></thead><tbody>";
+	$.ajax({
+		url : basePath + "/hm/json/takeList",
+	    type : 'post',
+	    data : {
+	    	hmId : hmId
+	    },
+	    dataType : 'json',
+	    async:false,
+		cache:false,  
+	    success : function(data){
+	    	if(data.code == '000'){
+    			if(data.data !=null){
+	    			var dataHtml=buildAssetData(data.data);
+	    			html=html+dataHtml;
+    			}else{
+    				dataExceptionFlag=true;
+    			}
+    		}else{
+    			$.messager.alert('系统提示', data.msg,'warning');
+    		}
+	    }
+	});
+	html=html+"</tbody></table>";
+	return html;
+}
+
+function buildAssetData(obj){
+	var dataHtml="";
+	$.each(obj, function(n,v) {
+		dataHtml += "<tr>"
+			+"<td remark='透明人编号' style='text-align: center;'>"+getNullString(v.hmId)+"</td>"
+			+"<td remark='透明人姓名' style='text-align: center;'>"+getNullString(v.hmName)+"</td>"
+			+"<td remark='透明人电话' style='text-align: center;'>"+getNullString(v.hmMobile)+"</td>"
+			+"<td remark='活动名称' style='text-align: center;'>"+getNullString(v.activityName)+"</td>"
+			+"<td remark='活动期数' style='text-align: center;'>"+getNullString(v.activityNum)+"</td>"
+			+"<td remark='活动时间' style='text-align: center;'>"+getTime(v.startDate, "yyyy/MM/dd")+"</td>"	
+			+"<td remark='活动类型' style='text-align: center;'>"+activityTypeFormat(v.activityType)+"</td>"
+			+"<td remark='图片数' style='text-align: center;'>"+Number((v.imageNum == null || v.imageNum == "") ? 0 : v.imageNum)+"</td>"
+			+"<td remark='视频数' style='text-align: center;'>"+Number((v.videoNum == null || v.videoNum == "") ? 0 : v.videoNum)+"</td>"
+		+"</tr>";
+	});	
+	return dataHtml;
+}

@@ -41,9 +41,14 @@
 										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
 								 </tr>
 								 <tr>
+									<td>透明人姓名: <input class="form-control1" type="text" name="hmName" id="hmName"/></td>
+									<td>透明人电话: <input class="form-control1" type="text" name="hmMobile" id="hmMobile"/></td>
+								 </tr>
+								 <tr>
 									<td colspan="3">
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
-										<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
+										<button type="button" style="height: 28px;" class="btn btn-default" onclick="closeFormPanel('searchForm')">清空</button>
+										<button type="button" style="height: 29px;" class="btn btn-danger btn-xs" onclick="auditDialog()">批量审核</button>
 									</td>
 								</tr>
 							</tbody>
@@ -58,6 +63,28 @@
 			</div>
 		</div>
 	</div>
+	<div id="auditDelDiolog" style="display: none;">
+		<form id="auditDelForm">
+			<div class="col-md-12">
+				<div class="col-md-3 col-md-control">审核结果：</div>
+				<div class="col-md-9">
+					<input type="radio" name="isEffect" value="1" class="form-control1"/>通过
+					<input type="radio" name="isEffect" value="0" class="form-control1"/>不通过
+				</div>
+			</div>
+			<div class="col-md-12 hide" id="reason">
+				<div class="col-md-3 col-md-control" >原因：</div>
+				<div class="col-md-9">
+					<input class="easyui-textbox" name="reason" data-options="multiline:true" style="width:300px;height:100px">
+				</div>
+			</div>
+		</form>
+		<div id="btns" style="display: none;">
+			<center><a href="#" class="btn btn-success" onclick="batchAudit()">提交</a>
+			<a href="#" class="btn btn-warning" onclick="closeFormPanel('auditDelForm')">取消</a></center>
+		</div>
+	</div>
+	<div id="takeNumDiolog" style="display: none;"></div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/hmSignAudit.js"></script>
 </body>

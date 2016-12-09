@@ -32,14 +32,21 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table tableName="t_parent_info" domainObjectName="ParentInfo"
+		<table tableName="t_course_info" domainObjectName="CourseInfo"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
 			<property name="useActualColumnNames" value="false" />
 		</table>
 		
-		<table tableName="t_buy_record" domainObjectName="BuyRecord"
+		<table tableName="t_course_buyer_info" domainObjectName="CourseBuyerInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		
+		<table tableName="t_product_order" domainObjectName="ProductOrder"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">

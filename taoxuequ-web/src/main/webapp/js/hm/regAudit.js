@@ -1,8 +1,17 @@
 var hmRegQueryUrl = basePath + "/hm/json/reg/query";
+var hmAuditUrl = basePath + "/hm/json/audit";
 
 var dataGrid;
+var confirmDialog;
 $(function() {
 	loadData();
+	$("input[name='isActive']").on("change", function() {
+		if(this.value == 0) {
+			$("#reason").removeClass('hide').addClass("show");
+		}else {
+			$("#reason").removeClass('show').addClass("hide");
+		}
+	})
 });
 
 function loadData() {
@@ -30,8 +39,8 @@ function loadData() {
 			title : '操作',
 			align : 'center',
 			formatter : function(value, row, index) {
-				var str = $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="auditHm(\'{0}\', 1);">审核通过</button>', row.id);
-				str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="auditHm(\'{0}\', 0);">审核不通过</button>', row.id);
+				var str = $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="auditOk(\'{0}\');">审核通过</button>', row.id);
+				str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="auditDel(\'{0}\');">审核不通过</button>', row.id);
 				return str;
 			}
 		}, {
@@ -110,13 +119,14 @@ function search(formId){
 
 function closeFormPanel(formId){
 	cleanFormPanel(formId);
-	$('#confirmDialog').dialog("close");
+	confirmDialog.dialog("close");
 }
 
 /**
  * 清空表单
  */
 var cleanFormPanel=function(formId){
+	initAuditDialog(0);
 	$("#" + formId)[0].reset();
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
@@ -130,7 +140,99 @@ var cancelSelect = function(){
 	}
 }
 
-
 function returnBack(){
 	window.location.reload();
+}
+
+var auditOk = function(id) {
+	$.messager.confirm('系统提示', '确定审核通过吗？', function(r) {
+		if (r) {
+			var ids=new Array();
+			ids.push(id);
+			submitAudit(ids, 1, null);
+		}
+	});
+}
+
+var auditDel = function(id) {
+	initAuditDialog(1);
+	auditDialog(id);
+}
+
+var initAuditDialog = function(type) {
+	if(type == 0) {
+		$("#reason").removeClass('show').addClass("hide");
+		$("input[type='radio']:checked").attr("checked",false);
+		$("input[type='radio']").attr("disabled", false);
+	}else {
+		$("#reason").removeClass('hide').addClass("show");
+		$("input[type='radio']").attr("disabled", true);
+		$("input[type='radio']").eq(1).attr("checked","checked");
+	}
+}
+
+var batchAudit = function() {
+	var isActive = $("#auditDelForm").find("input[type='radio']:checked").val();
+	var reason = $("#auditDelForm").find("input[name='reason']").val().trim();
+	if(isActive == null) return;
+	if(isActive == 0 && reason.length == 0) {
+		$.messager.alert('系统提示', '请输入审核不通过原因', 'warn');
+		return;
+	}
+	$.messager.confirm('系统提示', '确定提交审核吗吗？', function(r) {
+		if (r) {
+			var rows = dataGrid.datagrid('getSelections');
+			var ids=new Array();
+			for(var i=0;i<rows.length;i++){
+				ids.push(rows[i].id);
+			}
+			submitAudit(ids,isActive,reason);
+		}
+	});
+}
+
+var auditDialog = function(data){
+	var rows = dataGrid.datagrid('getSelections');
+	if (rows.length == 0 && data == null) {
+		$.messager.alert('系统提示', '请选择数据再进行操作', 'warning');
+		return;
+	} else {
+		confirmDialog = $('#auditDelDiolog').dialog({
+			title : "透明人注册审核",
+			modal : true,
+			width : 600,
+			top : 100,
+			draggable : true,
+			resizable : true,
+			buttons : '#btns',
+			onClose : function() {
+				cleanFormPanel("auditDelForm");
+			}
+		}).show();
+	}
+}
+
+function submitAudit(ids, isActive, reason){
+	$.ajax({
+		url : hmAuditUrl,
+		type : 'POST',
+		dataType:"json",
+		data : {
+			ids: ids,
+			isActive: isActive,
+			reason: reason
+		},
+		error : function() {
+			$.messager.alert('系统提示', '审核失败', 'error');
+		},
+		success : function(data) {
+			if (data.code == '000') {
+				$.messager.alert('系统提示','审核成功', 'info');
+				loadData();
+				closeFormPanel("auditDelForm");
+			} else {
+				$.messager.alert('系统提示',data.msg, 'warning');
+			}
+		}
+	});
 }

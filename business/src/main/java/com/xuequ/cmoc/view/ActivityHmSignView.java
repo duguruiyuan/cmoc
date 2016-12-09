@@ -36,6 +36,8 @@ public class ActivityHmSignView extends ActivityHmSign {
 	
 	private String level;
 	
+	private Integer takeNum;
+	
 	public String getActivityName() {
 		return activityName;
 	}
@@ -146,6 +148,14 @@ public class ActivityHmSignView extends ActivityHmSign {
 
 	public void setLevel(String level) {
 		this.level = level;
+	}
+
+	public Integer getTakeNum() {
+		return takeNum;
+	}
+
+	public void setTakeNum(Integer takeNum) {
+		this.takeNum = takeNum;
 	}
 	
 	

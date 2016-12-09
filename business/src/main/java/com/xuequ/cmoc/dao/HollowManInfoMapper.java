@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.HollowManInfoView;
+import com.xuequ.cmoc.view.HollowManTakeView;
 
 public interface HollowManInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -30,7 +31,9 @@ public interface HollowManInfoMapper {
     
     int selectCountByOpenid(String openid);
     
-    int updateAuditDeleteHm(List<Integer> list);
+    int updateAuditDeleteHm(@Param("list")List<Integer> list, @Param("reason")String reason);
     
-    int updateAuditActiveHm(List<Integer> list);
+    int updateAuditActiveHm(@Param("list")List<Integer> ids, @Param("reason")String reason);
+    
+    List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId);
 }

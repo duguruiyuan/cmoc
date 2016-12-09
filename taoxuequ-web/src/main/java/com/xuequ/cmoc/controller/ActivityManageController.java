@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -311,16 +312,8 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("/json/hmSignAudit/query")
 	public @ResponseBody Object hmSignAuditQuery(ActivityQueryVO vo) {
 		Page<ActivityHmSignView> page = new Page<ActivityHmSignView>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("activityId", vo.getActivityId());
-		paramMap.put("marineName", vo.getMarineName());
-		paramMap.put("activityType", vo.getActivityType());
-		paramMap.put("activityName", vo.getActivityName());
-		paramMap.put("startDate", vo.getStartDate());
-		paramMap.put("endDate", vo.getEndDate());
-		paramMap.put("isEffect", vo.getIsEffect());
 		Grid grid = new Grid();
-		page.setParams(paramMap);
+		page.setParams(vo);
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<ActivityHmSignView> list = activityHmService.selectHmSignForAudit(page);
@@ -347,5 +340,18 @@ public class ActivityManageController extends BaseController{
 		grid.setRows(list);
 		grid.setTotal(page.getTotalRecord());
 		return grid;
+	}
+	
+	@RequestMapping("json/hmSignAudit")
+	@ResponseBody Object auditHm(@RequestParam("ids[]")List<Integer> ids, 
+			Integer isEffect, String reason) {
+		try {
+			reason = StringUtils.isBlank(reason) ? null : reason;
+			RspResult result = activityHmService.updateAuditHmSign(ids, isEffect, reason);
+			return result;
+		} catch (Exception e) {
+			logger.error("--auditHm, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 }

@@ -46,6 +46,8 @@ public class ActivityHmSign implements Serializable {
     private String hmName;
     
     private String hmMobile;
+    
+    private String reason;
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -214,6 +216,14 @@ public class ActivityHmSign implements Serializable {
 
 	public void setHmMobile(String hmMobile) {
 		this.hmMobile = hmMobile;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
     
 }

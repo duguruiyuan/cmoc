@@ -7,6 +7,7 @@ import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.HollowManInfoView;
+import com.xuequ.cmoc.view.HollowManTakeView;
 
 public interface IHollowManService {
 	
@@ -24,8 +25,25 @@ public interface IHollowManService {
 	 * @return
 	 */
 	HollowManInfo selectByOpenid(String openid);
-
+	/**
+	 * 新增或修改同名信息
+	 * @param info
+	 * @param user
+	 * @return
+	 */
 	RspResult addAndUpdateHollowMan(HollowManInfo info, SysUser user);
-	
-	RspResult updateAuditRegHm(List<Integer> ids, Integer isActive);
+	/**
+	 * 审核注册透明人
+	 * @param ids
+	 * @param isActive
+	 * @param reason
+	 * @return
+	 */
+	RspResult updateAuditRegHm(List<Integer> ids, Integer isActive, String reason);
+	/**
+	 * 根据透明编号查询带看记录
+	 * @param hmId
+	 * @return
+	 */
+	List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId);
 }

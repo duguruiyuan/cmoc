@@ -180,6 +180,9 @@ function showMenu(obj, menuIds){//一级菜单
 			$.each(obj[i].subMenuList,function(i, v) {
 				var checked = menuIds.indexOf("," + v.idResource + ",") != -1 ? "checked" : "";
 				str += "<td class='w250 pl20'><input type='checkbox' onclick='boxcheck(this)' id='" + v.idResource + "' name='menuIds' value='" + v.idResource + "' parent_id='" + v.parentResourceId + "'" + checked + "/>&nbsp;" + v.resourceName +"</td>";
+				if((i + 1) % 4 == 0) {
+					str += "</tr><tr class='f16 lh40'>";
+				}
 			});
 		}
 		str += "</tr>";

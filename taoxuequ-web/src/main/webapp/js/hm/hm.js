@@ -27,7 +27,10 @@ function loadData() {
 			title : '操作',
 			align : 'center',
 			formatter : function(value, row, index) {
-				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">带队记录</button>', row.id);
+				var str = "";
+				if(row.takeNum > 0) {
+					str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="getTakeRecord(\'{0}\');">带队记录</button>', row.id);
+				}
 				return str;
 			}
 		}, {

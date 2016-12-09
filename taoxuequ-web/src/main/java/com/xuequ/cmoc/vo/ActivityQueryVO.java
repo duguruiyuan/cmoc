@@ -25,7 +25,10 @@ public class ActivityQueryVO extends GridBase implements Serializable{
 	private String endDate;
 	
 	private Integer isEffect;
+	
+	private String hmName;
 
+	private String hmMobile;
 	
 	public Integer getActivityId() {
 		return activityId;
@@ -89,6 +92,22 @@ public class ActivityQueryVO extends GridBase implements Serializable{
 
 	public void setIsEffect(Integer isEffect) {
 		this.isEffect = isEffect;
+	}
+
+	public String getHmName() {
+		return StringUtils.isNotBlank(hmName) ? hmName : null;
+	}
+
+	public void setHmName(String hmName) {
+		this.hmName = hmName;
+	}
+
+	public String getHmMobile() {
+		return StringUtils.isNotBlank(hmMobile) ? hmMobile : null;
+	}
+
+	public void setHmMobile(String hmMobile) {
+		this.hmMobile = hmMobile;
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.view.HollowManInfoView;
+import com.xuequ.cmoc.view.HollowManTakeView;
 import com.xuequ.cmoc.vo.HollowManQueryVO;
 
 /**
@@ -83,9 +85,8 @@ public class HollowManManageController extends BaseController{
 	@ResponseBody Object jsonRegQuery(HollowManQueryVO vo) {
 		Grid grid = new Grid();
 		Page<HollowManInfoView> page = new Page<HollowManInfoView>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("isActive", 0);
-		page.setParams(paramMap);
+		vo.setIsActive(0);
+		page.setParams(vo);
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<HollowManInfoView> list = hollowManService.selectByPage(page);
@@ -94,10 +95,12 @@ public class HollowManManageController extends BaseController{
 		return grid;
 	}
 	
-	@ResponseBody Object auditHm(@RequestParam("ids[]") List<Integer> ids, 
-			Integer isActive) {
+	@RequestMapping("json/audit")
+	@ResponseBody Object auditHm(@RequestParam("ids[]")List<Integer> ids, 
+			Integer isActive, String reason) {
 		try {
-			RspResult result = hollowManService.updateAuditRegHm(ids, isActive);
+			reason = StringUtils.isBlank(reason) ? null : reason;
+			RspResult result = hollowManService.updateAuditRegHm(ids, isActive, reason);
 			return result;
 		} catch (Exception e) {
 			logger.error("--auditHm, error={}", e);
@@ -126,6 +129,17 @@ public class HollowManManageController extends BaseController{
 	@RequestMapping("resource/json/query")
 	@ResponseBody Object resourceJsonQuery(HollowManInfo info) {
 		return null;
+	}
+	
+	@RequestMapping("json/takeList")
+	@ResponseBody Object takeList(Integer hmId) {
+		try {
+			List<HollowManTakeView> list = hollowManService.selectHmTakeListByHmId(hmId);
+			return new RspResult(StatusEnum.SUCCESS, list);
+		} catch (Exception e) {
+			logger.error("--takeList, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 }

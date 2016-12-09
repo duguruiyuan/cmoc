@@ -40,4 +40,6 @@ public interface IActivityHmService {
      * @return
      */
     List<ActivityHmSignView> selectHmSignForAudit(Page<ActivityHmSignView> page);
+    
+    RspResult updateAuditHmSign(List<Integer> list, Integer isEffect, String reason);
 }

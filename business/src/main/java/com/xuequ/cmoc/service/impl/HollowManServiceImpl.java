@@ -15,6 +15,7 @@ import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.view.HollowManInfoView;
+import com.xuequ.cmoc.view.HollowManTakeView;
 
 @Service("hollowManService")
 public class HollowManServiceImpl implements IHollowManService {
@@ -58,13 +59,18 @@ public class HollowManServiceImpl implements IHollowManService {
 	}
 
 	@Override
-	public RspResult updateAuditRegHm(List<Integer> ids, Integer isActive) {
+	public RspResult updateAuditRegHm(List<Integer> ids, Integer isActive, String reason) {
 		if(isActive == 1) {
-			int count = hollowManInfoMapper.updateAuditActiveHm(ids);
+			int count = hollowManInfoMapper.updateAuditActiveHm(ids, reason);
 		}else {
-			int count = hollowManInfoMapper.updateAuditDeleteHm(ids);
+			int count = hollowManInfoMapper.updateAuditDeleteHm(ids, reason);
 		}
 		return new RspResult(StatusEnum.SUCCESS);
+	}
+
+	@Override
+	public List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId) {
+		return hollowManInfoMapper.selectHmTakeListByHmId(hmId);
 	}
 
 }

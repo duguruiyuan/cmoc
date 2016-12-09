@@ -36,6 +36,7 @@
 									<td colspan="3">
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
+										<button type="button" style="height: 29px;" class="btn btn-danger btn-xs" onclick="auditDialog()">批量审核</button>
 									</td>
 								</tr>
 							</tbody>
@@ -48,6 +49,27 @@
 					<table id="dataGrid"></table>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div id="auditDelDiolog" style="display: none;">
+		<form id="auditDelForm">
+			<div class="col-md-12">
+				<div class="col-md-3 col-md-control">审核结果：</div>
+				<div class="col-md-9">
+					<input type="radio" name="isActive" value="1" class="form-control1"/>通过
+					<input type="radio" name="isActive" value="0" class="form-control1"/>不通过
+				</div>
+			</div>
+			<div class="col-md-12 hide" id="reason">
+				<div class="col-md-3 col-md-control" >原因：</div>
+				<div class="col-md-9">
+					<input class="easyui-textbox" name="reason" data-options="multiline:true" style="width:300px;height:100px">
+				</div>
+			</div>
+		</form>
+		<div id="btns" style="display: none;">
+			<center><a href="#" class="btn btn-success" onclick="batchAudit()">提交</a>
+			<a href="#" class="btn btn-warning" onclick="closeFormPanel('auditDelForm')">取消</a></center>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>

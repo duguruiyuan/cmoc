@@ -56,6 +56,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="takeNumDiolog" style="display: none;"></div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/hm/hm.js"></script>
 </body>

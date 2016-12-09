@@ -19,11 +19,12 @@
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, activity_id, line_id, marine_id, hm_id, sign_date, is_effect, effect_date, score, 
     judge, creater_user_id, creater, create_time, updater_user_id, updater, update_time, 
-    is_delete
+    is_delete,reason
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -55,10 +56,11 @@
     <result column="schoole" property="schoole" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="VARCHAR" />
+    <result column="take_num" property="takeNum" jdbcType="INTEGER" />
   </resultMap>
   
   <select id="selectHmSignForAudit" resultMap="PageBaseResultMap">
-  	SELECT hs.id, hm_name, hm_mobile, place, sex, grade, schoole,
+  	SELECT hs.id, hs.hm_id, hm_name, hm_mobile, place, sex, grade, schoole,
     	level, h.score, IFNULL(take_num,0) take_num, hs.`is_effect`,
     	hs.`effect_date`, hs.`create_time` sign_date,
     	ai.`activity_name`,hs.`activity_id`,ai.`activity_num`
@@ -80,6 +82,12 @@
     <if test="params.activityName != null">
     	and ai.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
     </if>
+    <if test="params.hmName != null">
+    	and h.hm_name = #{params.hmName,jdbcType=VARCHAR}
+    </if>
+    <if test="params.hmMobile != null">
+    	and h.hm_mobile = #{params.hmMobile,jdbcType=VARCHAR}
+    </if>
     <if test="params.isEffect != null">
     	and hs.is_effect = #{params.isEffect,jdbcType=INTEGER}
     </if>
@@ -89,7 +97,7 @@
     <if test="params.endDate != null">
     	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
     </if>
-	ORDER BY take_num DESC, hs.`create_time`
+	ORDER BY hs.is_effect, take_num DESC, hs.`create_time`
   </select>
   
   <select id="selectListByPage" resultMap="PageBaseResultMap">
@@ -166,6 +174,22 @@
   	and activity_id = #{activityId,jdbcType=INTEGER}
   </update>
   
+  <update id="updateAuditEffectHmSign">
+  	 update t_activity_hm_sign set is_effect = 1
+  	 where id in
+  	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  	 	#{item}
+  	 </foreach>
+  </update>
+  
+  <update id="updateAuditDeleteHmSign">
+  	 update t_activity_hm_sign set is_delete = 'Y', reason = #{reason,jdbcType=VARCHAR}
+  	 where id in
+  	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  	 	#{item}
+  	 </foreach>
+  </update>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_activity_hm_sign
     where id = #{id,jdbcType=INTEGER}
@@ -176,13 +200,13 @@
       is_effect, effect_date, score, 
       judge, creater_user_id, creater, 
       create_time, updater_user_id, updater, 
-      update_time, is_delete)
+      update_time, is_delete, reason)
     values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{lineId,jdbcType=INTEGER}, 
       #{marineId,jdbcType=INTEGER}, #{hmId,jdbcType=INTEGER}, #{signDate,jdbcType=VARCHAR}, 
       #{isEffect,jdbcType=INTEGER}, #{effectDate,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
       #{judge,jdbcType=VARCHAR}, #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityHmSign" >
     insert into t_activity_hm_sign
@@ -238,6 +262,9 @@
       <if test="isDelete != null" >
         is_delete,
       </if>
+      <if test="reason != null" >
+        reason,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -290,6 +317,9 @@
       </if>
       <if test="isDelete != null" >
         #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -344,6 +374,9 @@
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
+      <if test="reason != null">
+      	reason = ${reason,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -364,7 +397,8 @@
       updater_user_id = #{updaterUserId,jdbcType=INTEGER},
       updater = #{updater,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=VARCHAR}
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      reason = ${reason,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

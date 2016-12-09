@@ -25,11 +25,12 @@
     <result column="updater" jdbcType="VARCHAR" property="updater" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
   </resultMap>
   <sql id="Base_Column_List">
     id, hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, id_photo, 
     kim_name, kim_mobile, is_active, active_date, openid, level, score, creater, create_time, 
-    updater, update_time, is_delete
+    updater, update_time, is_delete, reason
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -59,7 +60,7 @@
   </update>
   
   <update id="updateAuditDeleteHm">
-  	 update t_hollow_man_info set is_delete = 'Y'
+  	 update t_hollow_man_info set is_delete = 'Y', reason = #{reason,jdbcType=VARCHAR}
   	 where id in
   	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
   	 	#{item}
@@ -79,7 +80,7 @@
   </resultMap>
   
   <select id="selectByPage" resultMap="PageBaseResultMap">
-  	SELECT hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, id_photo, 
+  	SELECT id, hm_name, hm_mobile, id_type, id_card, addr, place, sex, grade, schoole, id_photo, 
     	kim_name, kim_mobile, is_active, active_date, openid, level, score, creater, create_time,
     IFNULL(take_num,0) take_num FROM t_hollow_man_info h
 	LEFT JOIN (
@@ -106,6 +107,36 @@
 	ORDER BY take_num DESC, create_time
   </select>
   
+  <resultMap id="TakeBaseResult" type="com.xuequ.cmoc.view.HollowManTakeView">
+    <result column="hm_id" jdbcType="INTEGER" property="hmId" />
+    <result column="hm_name" jdbcType="VARCHAR" property="hmName" />
+    <result column="hm_mobile" jdbcType="VARCHAR" property="hmMobile" />
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="activity_num" jdbcType="VARCHAR" property="activityNum" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="activity_type" jdbcType="VARCHAR" property="activityType" />
+    <result column="image_num" jdbcType="INTEGER" property="imageNum" />
+    <result column="video_num" jdbcType="INTEGER" property="videoNum" />
+  </resultMap>
+  <select id="selectHmTakeListByHmId" resultMap="TakeBaseResult">
+  	 SELECT hs.`hm_id`, hm.hm_name, hm.hm_mobile,ai.`activity_name`,ai.`activity_num`,ai.`start_date`,
+		ai.`activity_type`, nu.image_num, nu2.video_num
+	 FROM t_activity_hm_sign hs
+	 INNER JOIN t_activity_info ai ON hs.`activity_id` = ai.`id`
+	 INNER JOIN t_hollow_man_info hm ON hs.`hm_id` = hm.id
+	 LEFT JOIN (
+	   SELECT COUNT(1) image_num, hm_sign_id FROM t_wechat_receive_message
+	   WHERE is_delete = 'N' AND msg_type = 'image'
+	   GROUP BY hm_Sign_Id
+	 ) nu ON nu.hm_sign_id = hs.`id`
+	 LEFT JOIN (
+	   SELECT COUNT(1) video_num, hm_sign_id FROM t_wechat_receive_message
+	   WHERE is_delete = 'N' AND msg_Type = 'shortvideo'
+	   GROUP BY hm_Sign_Id
+	 ) nu2 ON nu2.hm_sign_id = hs.`id`
+	 WHERE hs.hm_id = #{hmId,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_hollow_man_info
     where id = #{id,jdbcType=INTEGER}
@@ -118,7 +149,7 @@
       kim_mobile, is_active, active_date, 
       openid, level, score, 
       creater, create_time, updater, 
-      update_time, is_delete)
+      update_time, is_delete, reason)
     values (#{id,jdbcType=INTEGER}, #{hmName,jdbcType=VARCHAR}, #{hmMobile,jdbcType=VARCHAR}, 
       #{idType,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, 
       #{place,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
@@ -126,7 +157,7 @@
       #{kimMobile,jdbcType=VARCHAR}, #{isActive,jdbcType=INTEGER}, #{activeDate,jdbcType=VARCHAR}, 
       #{openid,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
       #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.HollowManInfo">
     insert into t_hollow_man_info
@@ -200,6 +231,9 @@
       <if test="isDelete != null">
         is_delete,
       </if>
+      <if test="reason != null">
+        reason,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -270,6 +304,9 @@
       </if>
       <if test="isDelete != null">
         #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -342,6 +379,9 @@
       <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -368,7 +408,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       updater = #{updater,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=VARCHAR}
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
