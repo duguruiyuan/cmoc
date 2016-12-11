@@ -6,9 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONObject;
-import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.core.wechat.model.WechatActionInfo;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeReq;
@@ -19,7 +17,6 @@ import com.xuequ.cmoc.model.WechatSnsUserInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.JsonUtils;
-import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.utils.TextUtil;
 
 /**

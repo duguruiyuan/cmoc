@@ -38,7 +38,15 @@
     from t_hollow_man_info
     where id = #{id,jdbcType=INTEGER}
   </select>
-  
+  <select id="selectListByIds" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_hollow_man_info
+    where id in 
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+    	#{item}
+    </foreach>
+  </select>
   <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />

@@ -15,7 +15,7 @@ public class ProductOrder implements Serializable {
 
     private String productType;
 
-    private BigDecimal amount;
+    private BigDecimal resAmount;
 
     private BigDecimal totalAmount;
 
@@ -71,15 +71,15 @@ public class ProductOrder implements Serializable {
         this.productType = productType == null ? null : productType.trim();
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
+    public BigDecimal getResAmount() {
+		return resAmount;
+	}
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
+	public void setResAmount(BigDecimal resAmount) {
+		this.resAmount = resAmount;
+	}
 
-    public BigDecimal getTotalAmount() {
+	public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 

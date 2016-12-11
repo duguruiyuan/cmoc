@@ -597,3 +597,22 @@ span.error {
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
+.pr{
+	position: relative;
+}
+.regMT-headPic img{
+	width: 100%;
+	height: 150px;
+}
+#regMT-uploadInput{
+	z-index: 2;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 150px;
+	opacity: .01;
+    filter: alpha(opacity=1);
+    cursor: pointer;
+}

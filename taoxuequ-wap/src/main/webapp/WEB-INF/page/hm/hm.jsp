@@ -67,11 +67,10 @@
 			<div class="mui-input-row">
 			    <label>上传照片</label>
 			</div>
-			<div class="mui-input-row regMT-headPic">
+			<div class="mui-input-row regMT-headPic" onclick="wxChooseImage()">
 				<div class="pr">
-					<input type="hidden" id="idPhoto" name="idPhoto" />
 			    	<img src="<%=basePath %>/images/regTM.png" id="regMT-uploadPic" data-state="no">
-					<input type="file" name="regMT-uploadInput" id="regMT-uploadInput" accept="image/png,image/jpeg" value="">
+					<input type="hidden" id="idPhoto" name="idPhoto">
 				</div>
 			</div>
 		</form>
@@ -107,7 +106,6 @@
 		mui.init();
 		
 		$(function(){
-			uploadPic();
 			$("#regMT-btn").click(function(){
 				var arr = ["hmName","hmMobile","idCard"];
 				for(var i = 0, len = arr.length; i < len; i++){
@@ -161,67 +159,57 @@
 			var snsToken = '${snsToken}';
 			setAccessToken(snsToken);
 		}
-		//上传图片
-		function uploadPic(){
-			//上传按钮
-			document.querySelector('input[type=file]').addEventListener('change', function () {
-				var that=this;
-				var imgWrapObj;
-				lrz(that.files[0],{
-					width:1024
-				})
-		    	//rst格式
-		    	//rst.origin:图片信息，如大小、日期等
-		    	//rst.base64:生成后的图片base64，后端可以处理此字符串为图片
-		    	//rst.base64Len:生成后的图片的大小，后端可以通过此值来校验是否传输完整
-		        .then(function (rst) {
-		        	var fileName = rst.origin.name;
-		        	var extName = fileName.substring(fileName.lastIndexOf("."), fileName.length)
-		        	if(!(".jpg|.png|.bmp|.jpeg".toUpperCase().indexOf(extName)==-1)){
-		        		alert("只允许上传jpg、png、bmp、jpeg格式的图片");
-		        		return false;
-		        	}
-		        	extName = extName.substring(1, extName.length);
-		        	$.ajax({
-		        		type:"post",
-		        		url: "<%=basePath%>/attachment/idPhoto/upload",
-		        		data: {
-		        			extName: extName,
-		        			openid: $("#openid").val(),
-		        			imgdata: rst.base64
-		        		},
-		        		async: false,
-		        		cache: false,
-		        		dataType:"json",
-		        		success:function(result){
-		        			result=result||{};
-		        			if(result.code == "000"){
-		        				$("#regMT-uploadPic").attr({"src": imgUrl + result.data+"?v=" + new Date().getTime(), "data-state": "yes"});
-		        				$("#idPhoto").val(result.data)
-		        			}else{
-		        				mui.alert(result.msg,'消息提示');
-		        			}
-		        		},
-		        		error:function(){
-		        			alert("网络错误！");
-		        		},
-		        		beforeSend:function(){
-		        		},
-		        		complete:function(){
-		        			
-		        		}
-		        	})
-		        })
-		        .catch(function (err) {
-		        	alert("图片处理失败");
-		        })
-		        .always(function () {
-		            // 不管是成功失败，都会执行
-		        });
-			})
-		}
 
-		
+		//拍照或从手机相册中选图接口
+	       function wxChooseImage() {
+	           wx.chooseImage({
+	               count: 1,
+	               needResult: 1,
+	               sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+	               sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+	               success: function (res) {
+	               		var localIds = res.localIds[0].toString(); // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+	               		wxuploadImage(localIds);
+	               },
+	               fail: function (res) {
+	                   alterShowMessage("操作提示", JSON.stringify(res), "1", "确定", "", "", "");
+	               }
+
+	           });
+	       }
+			function wxuploadImage(localId) {  
+	           wx.uploadImage({  
+	               localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得  
+	               isShowProgressTips: 1, // 默认为1，显示进度提示  
+	               success: function (res) {  
+	                   mediaId = res.serverId; // 返回图片的服务器端ID  
+	                   $("#regMT-uploadPic").attr({"src": localId, "data-state": "yes"});
+	                   wechatMediaDownload(mediaId);
+	               },  
+	               fail: function (error) {  
+	                   alert(Json.stringify(error));  
+	               }  
+	           });  
+	       }  
+		   function wechatMediaDownload(mediaId) {
+			   $.ajax({
+			 		url : "<%=basePath%>/attachment/idPhoto/upload",
+			 		type : "post",
+			 		data : {
+			 			mediaId: mediaId
+			 		},
+			 		dataType : "json",
+			 		async : false,
+			 		success : function(data) {
+			 			if(result.code == "000"){
+	        				$("#idPhoto").val(result.data);
+			 			}
+			 		}, error:function(){
+			 			mui.alert("系统异常，请联系管理员",'消息提示');
+	       		}
+			 });
+		   }
+		   
 		function idCardNo(value){
 		  //验证身份证号方法
 		  var area = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "xinjiang", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外" }

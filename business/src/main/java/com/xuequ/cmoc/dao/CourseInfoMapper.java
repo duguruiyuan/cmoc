@@ -2,8 +2,11 @@ package com.xuequ.cmoc.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.CourseListView;
 
 public interface CourseInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,4 +25,11 @@ public interface CourseInfoMapper {
     
     List<CourseInfo> selectListByPage(Page<CourseInfo> page);
     
+    int updateShelves(@Param("shelves")Integer shelves, @Param("id")Integer id);
+    
+    int delCourse(Integer id);
+    
+    List<CourseListView> selectShelvesList();
+    
+    CourseListView selectDetailById(Integer id);
 }

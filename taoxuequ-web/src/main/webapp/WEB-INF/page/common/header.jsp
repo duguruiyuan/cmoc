@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>  
-<header id="top" class="clearfix">
+<div id="top" class="clearfix">
 	<a href="<%=basePath %>/auth/main"><img class="logoIns" /></a>
 	<div class="header-right">
 		<a href="javascript:void(0)" onclick="addFavorite();" role="button" data-toggle="modal"><i class="fa fa-star-half-empty" style="color:#fff;"></i> 收藏系统</a>
@@ -18,7 +18,7 @@
 		<ul>
 		</ul>
 	</nav>
-</header>
+</div>
 <div id="updatePwdDialog" style="display: none;height: 'auto';">
 	<div class="col-md-12">
 	  <form id="updatePwdForm" novalidate="novalidate">

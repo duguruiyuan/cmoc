@@ -13,6 +13,8 @@ public class CourseBuyerInfo implements Serializable {
     private String wechatNum;
 
     private String openid;
+    
+    private String headImg;
 
     private String creater;
 
@@ -60,7 +62,15 @@ public class CourseBuyerInfo implements Serializable {
         this.openid = openid == null ? null : openid.trim();
     }
 
-    public String getCreater() {
+    public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
+
+	public String getCreater() {
         return creater;
     }
 

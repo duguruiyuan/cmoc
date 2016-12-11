@@ -27,6 +27,7 @@
 <script src="<%=basePath %>/js/plugins/mui/mui.js"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.picker.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%=basePath %>/js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/wechat-config.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>

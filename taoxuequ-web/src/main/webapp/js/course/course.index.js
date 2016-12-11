@@ -1,4 +1,5 @@
 var courseListUrl = basePath + "/course/json/list/query";
+var editShelvesUrl = basePath + "/course/json/edit/shelves";
 
 var dataGrid;
 var confirmDialog;
@@ -28,18 +29,35 @@ function loadData() {
 			title : '操作',
 			align : 'center',
 			formatter : function(value, row, index) {
-				return value;
+				var str = "";
+				if(row.shelves == 0) {
+					str += $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="auditShelves(\'{0}\',1);">审核上架</button>', row.id);
+					str += $.formatString('<button  type="button" class="btn btn-danger btn-xs" style="margin:4px 4px;" onclick="auditShelves(\'{0}\',-1);">删除</button>', row.id);
+				}else if(row.shelves == 1) {
+					str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="auditShelves(\'{0}\', 2);">下架</button>', row.id);
+				}else if(row.shelves == 2) {
+					str += $.formatString('<button  type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="auditShelves(\'{0}\', 1);">上架</button>', row.id);
+				}
+				str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="editCourse(\'{0}\');">编辑</button>', row.id);
+				return str;
 			}
 		}, {
 			field : 'shelves',
 			title : '上下架状态',
 			align : "center",
-			resizable : true
+			resizable : true,
+			formatter : function(value) {
+				return shelvesFormat(value);
+			}
 		}, {
 			field : 'name',
 			title : '课程名称',
 			align : "center",
-			resizable : true
+			width : 150,
+			resizable : true,
+			formatter : function(value) {
+				return "<span title='" + value + "'>" + value + "</span>";
+			}
 		}, {
 			field : 'courseNum',
 			title : '课程期数',
@@ -49,7 +67,10 @@ function loadData() {
 			field : 'courseType',
 			title : '课程类型',
 			align : "center",
-			resizable : true
+			resizable : true,
+			formatter : function(value) {
+				return activityTypeFormat(value);
+			}
 		}, {
 			field : 'city',
 			title : '城市',
@@ -77,13 +98,15 @@ function loadData() {
 				return getTime(value, "yyyy-MM-dd hh:mm");
 			}
 		}, {
-			field : 'unitPrice',
+			field : 'totalPrice',
 			title : '价格',
 			align : "center",
-			resizable : true,
-			formatter: function(v) {
-				return sexFormat(v);
-			}
+			resizable : true
+		}, {
+			field : 'resAmount',
+			title : '预约金',
+			align : "center",
+			resizable : true
 		}, {
 			field : 'coursePeoples',
 			title : '课程开团人数',
@@ -93,7 +116,11 @@ function loadData() {
 			field : 'courseDesc',
 			title : '课程简述',
 			align : "center",
-			resizable : true
+			width : 200,
+			resizable : true,
+			formatter : function(value) {
+				return "<span title='" + value + "'>" + value + "</span>";
+			}
 		}, {
 			field : 'createTime',
 			title : '创建时间',
@@ -158,31 +185,37 @@ var auditDialog = function(data){
 	}
 }
 
-function submitAudit(ids, isEffect, reason){
-	$.ajax({
-		url : hmSignAuditUrl,
-		type : 'POST',
-		dataType:"json",
-		data : {
-			ids: ids,
-			isEffect: isEffect,
-			reason: reason
-		},
-		error : function() {
-			$.messager.alert('系统提示', '审核失败', 'error');
-		},
-		success : function(data) {
-			if (data.code == '000') {
-				$.messager.alert('系统提示','审核成功', 'info');
-				loadData();
-				closeFormPanel("auditDelForm");
-			} else {
-				$.messager.alert('系统提示',data.msg, 'warning');
-			}
+function auditShelves(id, type) {
+	var tip = "";
+	if(type == -1) tip = "删除";
+	if(type == 1) tip = "上架";
+	if(type == 2) tip = "下架";
+	$.messager.confirm('系统提示', '确定'+tip+'吗？', function(r) {
+		if (r) {
+			$.ajax({
+				url : editShelvesUrl,
+				type : 'POST',
+				dataType:"json",
+				data : {
+					id: id,
+					shelves: type
+				},
+				error : function() {
+					$.messager.alert('系统提示', '提交失败', 'error');
+				},
+				success : function(data) {
+					if (data.code == '000') {
+						$.messager.alert('系统提示','提交成功', 'info');
+						loadData();
+					} else {
+						$.messager.alert('系统提示',data.msg, 'warning');
+					}
+				}
+			});
 		}
 	});
 }
 
-function addCourse() {
-	window.location.href=basePath + "/course/json/edit";
+function editCourse(id) {
+	window.location.href=basePath + "/course/json/edit" + (id != null ? "?id=" + id : "");
 }

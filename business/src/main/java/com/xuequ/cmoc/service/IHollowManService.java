@@ -39,11 +39,13 @@ public interface IHollowManService {
 	 * @param reason
 	 * @return
 	 */
-	RspResult updateAuditRegHm(List<Integer> ids, Integer isActive, String reason);
+	int updateAuditRegHm(List<Integer> ids, Integer isActive, String reason);
 	/**
 	 * 根据透明编号查询带看记录
 	 * @param hmId
 	 * @return
 	 */
 	List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId);
+	
+	List<HollowManInfo> selectListByIds(List<Integer> ids);
 }

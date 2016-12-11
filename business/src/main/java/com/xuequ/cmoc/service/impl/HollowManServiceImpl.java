@@ -59,18 +59,21 @@ public class HollowManServiceImpl implements IHollowManService {
 	}
 
 	@Override
-	public RspResult updateAuditRegHm(List<Integer> ids, Integer isActive, String reason) {
+	public int updateAuditRegHm(List<Integer> ids, Integer isActive, String reason) {
 		if(isActive == 1) {
-			int count = hollowManInfoMapper.updateAuditActiveHm(ids, reason);
-		}else {
-			int count = hollowManInfoMapper.updateAuditDeleteHm(ids, reason);
+			return hollowManInfoMapper.updateAuditActiveHm(ids, reason);
 		}
-		return new RspResult(StatusEnum.SUCCESS);
+		return hollowManInfoMapper.updateAuditDeleteHm(ids, reason);
 	}
 
 	@Override
 	public List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId) {
 		return hollowManInfoMapper.selectHmTakeListByHmId(hmId);
+	}
+
+	@Override
+	public List<HollowManInfo> selectListByIds(List<Integer> ids) {
+		return hollowManInfoMapper.selectListByIds(ids);
 	}
 
 }

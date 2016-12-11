@@ -39,9 +39,9 @@ public class IndexController extends BaseController{
 	
 	@RequestMapping("my")
 	public String my(Model model) {
-		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE";
+		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE1";
 		model.addAttribute("openid", openid);
-		return "my";
+		return "hm/hm";
 //		String page = "my";
 //		String redir = wechatRedirect(model, page);
 //		if(redir.equals(page)) {

@@ -6,12 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.druid.sql.dialect.sqlserver.visitor.MSSQLServerExportParameterVisitor;
+import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.common.enums.WechatReqMsgType;
@@ -23,7 +21,6 @@ import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ActivityInfo;
-import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.model.WechatSendMessage;
 import com.xuequ.cmoc.service.IActivityHmService;
@@ -131,11 +128,12 @@ public class WechatHander {
     					WechatReqMsgType.VIDEO.getCode().equals(fileType) ||
     					WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType) ||
     					WechatReqMsgType.VOICE.getCode().equals(fileType)) {
-    				String sysUrl = FileUtil.downloadWechatFile(hmSign.getActivityId(), message, false);
+    				String path = DateUtil.getYear(new Date()) + Const.SEPARATOR + hmSign.getActivityId();
+    				String sysUrl = FileUtil.downloadWechatFile(path, message, false);
     				message.setSysUrl(sysUrl);
     				if(WechatReqMsgType.VIDEO.getCode().equals(fileType) || 
     						WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType)) {
-    					String picUrl = FileUtil.downloadWechatFile(hmSign.getActivityId(), message, true);
+    					String picUrl = FileUtil.downloadWechatFile(path, message, true);
     					message.setPicUrl(picUrl);
     				}
     			}

@@ -2,22 +2,24 @@ package com.xuequ.cmoc.controller;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.CourseInfo;
+import com.xuequ.cmoc.model.Grid;
+import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.vo.CourseQueryVO;
+import com.xuequ.cmoc.vo.CourseSubmitVO;
 
 @RequestMapping("course")
 @Controller
@@ -41,9 +43,24 @@ public class CourseManageController extends BaseController{
 			page.setPageSize(vo.getRows());
 			page.setParams(vo);
 			List<CourseInfo> list = courseService.selectListByPage(page);
-			return new RspResult(StatusEnum.SUCCESS, list);
+			Grid grid = new Grid();
+			grid.setRows(list);
+			grid.setTotal(page.getTotalRecord());
+			return grid;
 		} catch (Exception e) {
 			logger.error("--jsonListQuery, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/addUpdate")
+	@ResponseBody Object addUpdate(CourseSubmitVO vo) {
+		try {
+			SysUser user = (SysUser) session.getAttribute(Constants.APP_USER);
+			courseService.addAndUpdateCourse(vo, user);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--addUpdate, error={}", e);
 		}
 		return new RspResult(StatusEnum.FAIL);
 	}
@@ -51,9 +68,23 @@ public class CourseManageController extends BaseController{
 	@RequestMapping("json/edit")
 	public String edit(Model model) {
 		String courseId = request.getParameter("id");
-		if(StringUtils.isNotBlank(courseId)) {
-			model.addAttribute("course", courseService.selectByPrimaryKey(Integer.parseInt(courseId)));
-		}
+		model.addAttribute("courseId", courseId);
 		return "course/edit";
+	}
+	
+	@RequestMapping("json/detail/query")
+	@ResponseBody Object courseDetail(Integer courseId) {
+		return courseService.selectByPrimaryKey(courseId);
+	}
+	
+	@RequestMapping("json/edit/shelves")
+	@ResponseBody Object editShelves(Integer shelves, Integer id) {
+		try {
+			courseService.updateShelves(shelves, id);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--editShelves, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 }

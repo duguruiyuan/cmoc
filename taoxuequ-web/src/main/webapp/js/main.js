@@ -150,6 +150,7 @@ fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).subs
 return fmt;   
 }  
 
+
 function activityTypeFormat(v) {
 	if(v == '1') return "亲子活动";
 	if(v == '2') return "城市体验";
@@ -172,4 +173,10 @@ function sexFormat(v) {
 	if(v == 'F') return "帅哥";
 	if(v == 'M') return "美女";
 	return "";
+}
+
+function shelvesFormat(v) {
+	if(v == 0) return "<span style='color:#f3450f'>待审核</span>";
+	if(v == 1) return "已上架";
+	if(v == 2) return "<span style='color:#0f4dde'>已下架</span>";
 }

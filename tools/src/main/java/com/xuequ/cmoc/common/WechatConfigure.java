@@ -38,6 +38,8 @@ public class WechatConfigure implements Serializable {
 	
 	private String mediaDownload;
 	
+	private String templateMsg;
+	
 	private static WechatConfigure configure;
 	
 	public synchronized static WechatConfigure getInstance() {
@@ -68,6 +70,7 @@ public class WechatConfigure implements Serializable {
 			configure.setQrcodeTicket(prop.getString("qrcode_ticket"));
 			configure.setShowQrcode(prop.getString("show_qrcode"));
 			configure.setMediaDownload(prop.getString("media_download"));
+			configure.setTemplateMsg(prop.getString("template_msg"));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -193,11 +196,19 @@ public class WechatConfigure implements Serializable {
 		this.mediaDownload = mediaDownload;
 	}
 
-	public static WechatConfigure getConfigure() {
+	public String getTemplateMsg() {
+		return templateMsg;
+	}
+
+	public void setTemplateMsg(String templateMsg) {
+		this.templateMsg = templateMsg;
+	}
+
+	public WechatConfigure getConfigure() {
 		return configure;
 	}
 
-	public static void setConfigure(WechatConfigure configure) {
+	public void setConfigure(WechatConfigure configure) {
 		WechatConfigure.configure = configure;
 	}
 	

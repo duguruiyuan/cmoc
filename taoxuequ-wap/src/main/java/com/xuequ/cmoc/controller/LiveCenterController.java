@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.support.logging.Log;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.WechatReceiveMessage;

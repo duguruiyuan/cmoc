@@ -11,7 +11,7 @@
     <result column="addr" property="addr" jdbcType="VARCHAR" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
-    <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="res_amount" property="resAmount" jdbcType="DECIMAL" />
     <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
     <result column="activity_price" property="activityPrice" jdbcType="DECIMAL" />
     <result column="course_peoples" property="coursePeoples" jdbcType="INTEGER" />
@@ -29,7 +29,7 @@
     <result column="course_details" property="courseDetails" jdbcType="LONGVARBINARY" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, course_num, course_type, city, city_id, addr, start_date, end_date, unit_price, 
+    id, name, course_num, course_type, city, city_id, addr, start_date, end_date, res_amount, 
     total_price, activity_price, course_peoples, course_desc, shelves, creater_id, creater, 
     create_time, updater_id, updater, update_time, course_img
   </sql>
@@ -45,10 +45,56 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <resultMap id="ListResultMap" type="com.xuequ.cmoc.view.CourseListView" extends="BaseResultMap" >
+  	<result column="peoples" property="peoples" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectShelvesList" resultMap="ListResultMap">
+  	SELECT
+	<include refid="Base_Column_List" />, IFNULL(bu.peoples,0) peoples
+	FROM t_course_info ci
+	LEFT JOIN (
+	   SELECT COUNT(1) peoples, product_id 
+	   FROM t_product_order WHERE product_type='COURSE' 
+	   GROUP BY product_id
+	) bu ON ci.`id` = bu.product_id 
+	WHERE is_delete = 'N' AND shelves = 1
+  </select>
+  
+  <resultMap id="DetailResultMap" type="com.xuequ.cmoc.view.CourseListView" extends="ResultMapWithBLOBs" >
+  	<result column="peoples" property="peoples" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectDetailById" resultMap="DetailResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />, IFNULL(bu.peoples,0) peoples
+    from t_course_info ci
+    LEFT JOIN (
+	   SELECT COUNT(1) peoples, product_id 
+	   FROM t_product_order 
+	   WHERE product_type='COURSE' and id = #{id,jdbcType=INTEGER}
+	   GROUP BY product_id
+	) bu ON ci.`id` = bu.product_id 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectListByPage" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
   	from t_course_info
+  	where is_delete = 'N'
+  	<if test="params.id != null">
+  		and id = #{params.id,jdbcType=INTEGER}
+  	</if>
+  	<if test="params.name != null">
+  		and name = #{params.name,jdbcType=VARCHAR}
+  	</if>
+  	<if test="params.courseType != null">
+  		and course_type = #{params.courseType,jdbcType=VARCHAR}
+  	</if>
+  	<if test="params.shelves != null">
+  		and shelves = #{params.shelves,jdbcType=INTEGER}
+  	</if>
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -59,7 +105,7 @@
     insert into t_course_info (id, name, course_num, 
       course_type, city, city_id, 
       addr, start_date, end_date, 
-      unit_price, total_price, activity_price, 
+      res_amount, total_price, activity_price, 
       course_peoples, course_desc, shelves, 
       creater_id, creater, create_time, 
       updater_id, updater, update_time, 
@@ -67,7 +113,7 @@
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{courseNum,jdbcType=VARCHAR}, 
       #{courseType,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
       #{addr,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
-      #{unitPrice,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{activityPrice,jdbcType=DECIMAL}, 
+      #{resAmount,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{activityPrice,jdbcType=DECIMAL}, 
       #{coursePeoples,jdbcType=INTEGER}, #{courseDesc,jdbcType=VARCHAR}, #{shelves,jdbcType=INTEGER}, 
       #{createrId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updaterId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
@@ -103,8 +149,8 @@
       <if test="endDate != null" >
         end_date,
       </if>
-      <if test="unitPrice != null" >
-        unit_price,
+      <if test="resAmount != null" >
+        res_amount,
       </if>
       <if test="totalPrice != null" >
         total_price,
@@ -142,7 +188,7 @@
       <if test="courseDetails != null" >
         course_details,
       </if>
-      <if test="coureImg != null" >
+      <if test="courseImg != null" >
         course_img,
       </if>
     </trim>
@@ -174,8 +220,8 @@
       <if test="endDate != null" >
         #{endDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="unitPrice != null" >
-        #{unitPrice,jdbcType=DECIMAL},
+      <if test="resAmount != null" >
+        #{resAmount,jdbcType=DECIMAL},
       </if>
       <if test="totalPrice != null" >
         #{totalPrice,jdbcType=DECIMAL},
@@ -245,8 +291,8 @@
       <if test="endDate != null" >
         end_date = #{endDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="unitPrice != null" >
-        unit_price = #{unitPrice,jdbcType=DECIMAL},
+      <if test="resAmount != null" >
+        res_amount = #{resAmount,jdbcType=DECIMAL},
       </if>
       <if test="totalPrice != null" >
         total_price = #{totalPrice,jdbcType=DECIMAL},
@@ -292,27 +338,77 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xuequ.cmoc.model.CourseInfo" >
     update t_course_info
-    set name = #{name,jdbcType=VARCHAR},
-      course_num = #{courseNum,jdbcType=VARCHAR},
-      course_type = #{courseType,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      city_id = #{cityId,jdbcType=INTEGER},
-      addr = #{addr,jdbcType=VARCHAR},
-      start_date = #{startDate,jdbcType=TIMESTAMP},
-      end_date = #{endDate,jdbcType=TIMESTAMP},
-      unit_price = #{unitPrice,jdbcType=DECIMAL},
-      total_price = #{totalPrice,jdbcType=DECIMAL},
-      activity_price = #{activityPrice,jdbcType=DECIMAL},
-      course_peoples = #{coursePeoples,jdbcType=INTEGER},
-      course_desc = #{courseDesc,jdbcType=VARCHAR},
-      shelves = #{shelves,jdbcType=INTEGER},
-      creater_id = #{createrId,jdbcType=INTEGER},
-      creater = #{creater,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      updater_id = #{updaterId,jdbcType=INTEGER},
-      updater = #{updater,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      course_details = #{courseDetails,jdbcType=LONGVARBINARY}
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNum != null" >
+        course_num = #{courseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="courseType != null" >
+        course_type = #{courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resAmount != null" >
+        res_amount = #{resAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="activityPrice != null" >
+        activity_price = #{activityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="coursePeoples != null" >
+        course_peoples = #{coursePeoples,jdbcType=INTEGER},
+      </if>
+      <if test="courseDesc != null" >
+        course_desc = #{courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="shelves != null" >
+        shelves = #{shelves,jdbcType=INTEGER},
+      </if>
+      <if test="createrId != null" >
+        creater_id = #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="courseDetails != null" >
+        course_details = #{courseDetails,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="courseImg != null" >
+        course_img = #{courseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="courseDetails != null" >
+        course_details = #{courseDetails,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.CourseInfo" >
@@ -325,7 +421,7 @@
       addr = #{addr,jdbcType=VARCHAR},
       start_date = #{startDate,jdbcType=TIMESTAMP},
       end_date = #{endDate,jdbcType=TIMESTAMP},
-      unit_price = #{unitPrice,jdbcType=DECIMAL},
+      res_amount = #{resAmount,jdbcType=DECIMAL},
       total_price = #{totalPrice,jdbcType=DECIMAL},
       activity_price = #{activityPrice,jdbcType=DECIMAL},
       course_peoples = #{coursePeoples,jdbcType=INTEGER},
@@ -338,5 +434,14 @@
       updater = #{updater,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="delCourse">
+  	update t_course_info set is_delete = 'Y' where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateShelves">
+  	update t_course_info set shelves = #{shelves,jdbcType=INTEGER}
+  	where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

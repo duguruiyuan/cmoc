@@ -4,7 +4,9 @@ public enum ImgTypeEnum {
 	ACTIVITY("ACTIVITY","活动"),
 	MARINE("MARINE", "战队"),
 	MEMBER("MEMBER", "队员"),
-	ID_PHOTO("IDPHOTO", "证件照");
+	ID_PHOTO("IDPHOTO", "证件照"),
+	COURSE("COURSE", "课程"),
+	HEAD_IMG("HEADIMG", "头像");
 	
 	private final String code;
 	

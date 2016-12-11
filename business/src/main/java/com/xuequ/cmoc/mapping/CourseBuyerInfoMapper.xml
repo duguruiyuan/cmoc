@@ -7,11 +7,12 @@
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="wechat_num" property="wechatNum" jdbcType="VARCHAR" />
     <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, mobile, wechat_num, openid, creater, create_time
+    id, name, mobile, wechat_num, openid, head_img, creater, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -19,19 +20,52 @@
     from t_course_buyer_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <resultMap id="BuyerBaseResultMap" type="com.xuequ.cmoc.view.CourseBuyerView" >
+    <result column="res_amount" property="resAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="selectCourseBuyerByPage" resultMap="BuyerBaseResultMap">
+  	SELECT bi.id, bi.name, bi.mobile, bi.wechat_num, bi.openid, 
+  		bi.head_img, po.amount res_amount
+  	FROM t_course_buyer_info bi
+	INNER JOIN t_product_order po ON po.`cust_id` = bi.`id`
+	WHERE po.`product_type`='COURSE' AND po.`product_id` = #{params.productId,jdbcType=INTEGER}
+	order by po.create_time desc 
+  </select>
+  <select id="selectByOpenid" resultMap="BaseResultMap">
+  	select 
+    DISTINCT <include refid="Base_Column_List" />
+    from t_course_buyer_info
+    where openid = #{openid,jdbcType=VARCHAR}
+    order by create_time desc
+  </select>
+  
+  <resultMap id="OrderBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.CourseBuyerView" >
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectRemindOrder" resultMap="OrderBaseResultMap">
+  	SELECT bi.id, name, mobile, wechat_num, openid, po.`order_no`,po.`product_type` 
+  	FROM t_course_buyer_info bi
+	INNER JOIN t_product_order po ON bi.`id` = po.cust_id
+	WHERE po.`order_status`='001' AND 
+	bi.`mobile` = #{mobile,jdbcType=VARCHAR} 
+	AND bi.`openid` = #{openid,jdbcType=VARCHAR}
+	AND po.`product_id`= #{courseId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_course_buyer_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.CourseBuyerInfo" >
     insert into t_course_buyer_info (id, name, mobile, 
-      wechat_num, openid, creater, 
+      wechat_num, openid, head_img, creater, 
       create_time)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{wechatNum,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{wechatNum,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.CourseBuyerInfo" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.CourseBuyerInfo" >
     insert into t_course_buyer_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -48,6 +82,9 @@
       </if>
       <if test="openid != null" >
         openid,
+      </if>
+      <if test="headImg != null" >
+        head_img,
       </if>
       <if test="creater != null" >
         creater,
@@ -72,6 +109,9 @@
       <if test="openid != null" >
         #{openid,jdbcType=VARCHAR},
       </if>
+      <if test="headImg != null" >
+        #{headImg,jdbcType=VARCHAR},
+      </if>
       <if test="creater != null" >
         #{creater,jdbcType=VARCHAR},
       </if>
@@ -95,6 +135,9 @@
       <if test="openid != null" >
         openid = #{openid,jdbcType=VARCHAR},
       </if>
+      <if test="headImg != null" >
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
       <if test="creater != null" >
         creater = #{creater,jdbcType=VARCHAR},
       </if>
@@ -110,6 +153,7 @@
       mobile = #{mobile,jdbcType=VARCHAR},
       wechat_num = #{wechatNum,jdbcType=VARCHAR},
       openid = #{openid,jdbcType=VARCHAR},
+      head_img = #{headImg,jdbcType=VARCHAR},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

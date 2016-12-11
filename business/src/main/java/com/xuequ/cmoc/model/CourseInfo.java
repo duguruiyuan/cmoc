@@ -23,7 +23,7 @@ public class CourseInfo implements Serializable {
 
     private Date endDate;
 
-    private BigDecimal unitPrice;
+    private BigDecimal resAmount;
 
     private BigDecimal totalPrice;
 
@@ -125,15 +125,15 @@ public class CourseInfo implements Serializable {
         this.endDate = endDate;
     }
 
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
+    public BigDecimal getResAmount() {
+		return resAmount;
+	}
 
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
+	public void setResAmount(BigDecimal resAmount) {
+		this.resAmount = resAmount;
+	}
 
-    public BigDecimal getTotalPrice() {
+	public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 

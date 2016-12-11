@@ -36,4 +36,6 @@ public interface HollowManInfoMapper {
     int updateAuditActiveHm(@Param("list")List<Integer> ids, @Param("reason")String reason);
     
     List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId);
+    
+    List<HollowManInfo> selectListByIds(List<Integer> ids);
 }

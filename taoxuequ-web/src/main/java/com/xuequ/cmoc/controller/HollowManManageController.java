@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IHollowManService;
+import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.view.HollowManInfoView;
 import com.xuequ.cmoc.view.HollowManTakeView;
 import com.xuequ.cmoc.vo.HollowManQueryVO;
@@ -100,8 +102,18 @@ public class HollowManManageController extends BaseController{
 			Integer isActive, String reason) {
 		try {
 			reason = StringUtils.isBlank(reason) ? null : reason;
-			RspResult result = hollowManService.updateAuditRegHm(ids, isActive, reason);
-			return result;
+			int count = hollowManService.updateAuditRegHm(ids, isActive, reason);
+			if(count > 0 && isActive == 1) {
+				String str = "";
+				for(Integer integer : ids) 
+					str += integer + ",";
+				AuditReqVO vo = new AuditReqVO();
+				vo.setIds(str);
+				vo.setStatus(isActive);
+				String result = HttpClientUtils.postJson("http://localhost:8080/taoxuequ-wap/wechatmsg/hm/reg", vo);
+				System.out.println(result);
+			}
+			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("--auditHm, error={}", e);
 		}

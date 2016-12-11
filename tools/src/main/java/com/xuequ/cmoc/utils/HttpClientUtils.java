@@ -180,16 +180,28 @@ public class HttpClientUtils {
 	public static String postJson(String url, Object params) throws IOException {
 		return invokePostJson(url, params, null);
 	}
+	
+	public static String postStringJosn(String url, String paramsJson) throws IOException {
+		return invokePostJson(url, paramsJson, null);
+	}
+	
 	private static String invokePostJson(String url, Object params, String charset) throws IOException {
+		String paramsJson = JSONObject.toJSONString(params);
+        return invokePostJson(url, paramsJson, charset);
+	}
+	
+	private static String invokePostJson(String url, String paramsJson, String charset) throws IOException  {
 		if (charset == null || charset.isEmpty()) {
 			charset = DEFAULT_CHARSET;
 		}
-		String paramsJson = JSONObject.toJSONString(params);
-        LOG.info(">>httpclient post send url={},params={}",url, paramsJson);
+		LOG.info(">>httpclient post send url={},params={}",url, paramsJson);
 		HttpPost postMethod = new HttpPost(url);
 		HttpClient client = new DefaultHttpClient();
 		try {
-			postMethod.setEntity(new StringEntity(paramsJson, charset));
+			StringEntity stringEntity = new StringEntity(paramsJson, charset);
+			stringEntity.setContentEncoding(charset);
+			stringEntity.setContentType("application/json");
+			postMethod.setEntity(stringEntity);
 			//创建响应处理器处理服务器响应内容
 			HttpResponse response = client.execute(postMethod);
 			HttpEntity entity = response.getEntity(); 

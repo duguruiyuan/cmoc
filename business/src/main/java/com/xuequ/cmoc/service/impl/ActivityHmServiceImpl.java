@@ -68,13 +68,11 @@ public class ActivityHmServiceImpl implements IActivityHmService {
 	}
 
 	@Override
-	public RspResult updateAuditHmSign(List<Integer> list, Integer isEffect, String reason) {
+	public int updateAuditHmSign(List<Integer> list, Integer isEffect, String reason) {
 		if(isEffect == 1) {
-			int count = activityHmSignMapper.updateAuditEffectHmSign(list, reason);
-		}else {
-			int count = activityHmSignMapper.updateAuditDeleteHmSign(list, reason);
+			return activityHmSignMapper.updateAuditEffectHmSign(list, reason);
 		}
-		return new RspResult(StatusEnum.SUCCESS);
+		return activityHmSignMapper.updateAuditDeleteHmSign(list, reason);
 	}
 
 }

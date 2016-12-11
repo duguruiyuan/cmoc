@@ -1,5 +1,6 @@
 package com.xuequ.cmoc.utils;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.Const;
+import com.xuequ.cmoc.common.enums.MimeTypeEnum;
 import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 
 /**
@@ -214,6 +217,39 @@ public final class FileUtils {
                 || "bmp".equalsIgnoreCase(extName) || "png".equalsIgnoreCase(extName))
             return true;
         return false;
+    }
+    
+    public static String writeFile(String soursePath, String mkdir, String id){
+    	try {
+    		String resourceType = ResourcePathEnum.IMGE.getValue() + mkdir;
+    		String relativeAttachmentPath = Const.rootPath + resourceType;
+    		createDir(relativeAttachmentPath);
+    		URL url = new URL(soursePath);
+    		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    		conn.setRequestMethod("GET");
+    		conn.setDoInput(true);
+    		String contentType = conn.getHeaderField("Content-Type");
+    		if(contentType.indexOf(";") != -1) {
+    			contentType = contentType.substring(0, contentType.indexOf(";"));
+    		}
+    		String extName = MimeTypeEnum.getKey(contentType);
+    		String realFileName = id + Const.DOT + extName;
+    		// 文件保存磁盘的完整路径
+            String attachmentURL = relativeAttachmentPath + Const.SEPARATOR + realFileName;
+            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());  
+            FileOutputStream fos = new FileOutputStream(new File(attachmentURL));  
+            byte[] buf = new byte[8096];  
+            int size = 0;  
+            while ((size = bis.read(buf)) != -1)  
+                fos.write(buf, 0, size);  
+            fos.close();  
+            bis.close();  
+            conn.disconnect(); 
+    		return resourceType + Const.SEPARATOR + realFileName;
+		} catch (Exception e) {
+			LOG.error("创建文件路径出错, error={}", e);
+		}
+		return null;
     }
     
     public static String writeFile(String path, String imgName, MultipartFile buildInfo) {

@@ -27,6 +27,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityMarines;
+import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
@@ -37,6 +38,7 @@ import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IActivityTeacherService;
 import com.xuequ.cmoc.utils.CellUtil;
+import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.view.ActivityFamilyView;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
@@ -347,8 +349,17 @@ public class ActivityManageController extends BaseController{
 			Integer isEffect, String reason) {
 		try {
 			reason = StringUtils.isBlank(reason) ? null : reason;
-			RspResult result = activityHmService.updateAuditHmSign(ids, isEffect, reason);
-			return result;
+			int count = activityHmService.updateAuditHmSign(ids, isEffect, reason);
+			if(count > 0) {
+				String str = "";
+				for(Integer integer : ids) 
+					str += integer + ",";
+				AuditReqVO vo = new AuditReqVO();
+				vo.setIds(str);
+				vo.setStatus(isEffect);
+				HttpClientUtils.postJson("http://localhost:8080/taoxuequ-wap/wechatmsg/hm/reg", vo);
+				return new RspResult(StatusEnum.SUCCESS);
+			}
 		} catch (Exception e) {
 			logger.error("--auditHm, error={}", e);
 		}

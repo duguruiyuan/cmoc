@@ -23,6 +23,8 @@ public enum StatusEnum {
 	HM_NON_ACTIVE("1013", "透明人未激活，不能报名参加活动"),
 	ALREADY_SIGN_ACTIVITY("1014", "你已报名成功"),
 	PARENT_BIND_ERROR("1015", "绑定失败！确认信息是否正确"),
+	ORDER_WARN("1016", "订单存在安全风险，请稍后重试"),
+	PARAM_FAIL("1017", "参数错误"),
 	ACCESS_TOKEN_FAIL("获取access_token失败","001"),
 	JSAPI_TICKET_FAIL("获取jsapi_ticket失败","002"),
 	FAIL("9999", "失败");
