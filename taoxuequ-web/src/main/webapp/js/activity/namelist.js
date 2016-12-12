@@ -5,6 +5,7 @@ var queryByIdUrl = basePath + "/activity/json/namelist/queryById";
 var dataGrid;
 $(function() {
 	loadData();
+	initActivityType();
 });
 window.onload = uploadInit("file-upload", basePath + '/attachment/activity/upload/img');
 function loadData() {

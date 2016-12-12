@@ -3,6 +3,7 @@ var activityQueryUrl = basePath + "/activity/json/hm/query";
 var dataGrid;
 $(function() {
 	loadData();
+	initActivityType();
 });
 
 function loadData() {

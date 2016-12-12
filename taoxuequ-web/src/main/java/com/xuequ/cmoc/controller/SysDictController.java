@@ -17,11 +17,13 @@ import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.Grid;
+import com.xuequ.cmoc.model.GridBase;
 import com.xuequ.cmoc.model.SysDictData;
 import com.xuequ.cmoc.model.SysDictType;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.service.ISysDictService;
 import com.xuequ.cmoc.vo.ActivitySubmitVO;
+import com.xuequ.cmoc.vo.DictQueryVO;
 
 @RequestMapping("content/dict")
 @Controller
@@ -58,9 +60,9 @@ public class SysDictController extends BaseController {
 	}
 	
 	@RequestMapping("json/dictData")
-	@ResponseBody Object dictData(Integer dictTypeId) {
+	@ResponseBody Object dictData(DictQueryVO vo) {
 		Grid grid = new Grid();
-		List<SysDictData> list = sysDictService.selectListByDictTypeId(dictTypeId);
+		List<SysDictData> list = sysDictService.selectListByDictTypeId(vo.getDictTypeId());
 		grid.setTotal(list.size());
 		grid.setRows(list);
 		return grid;
@@ -91,7 +93,7 @@ public class SysDictController extends BaseController {
 	@RequestMapping("json/dictDate/addUpdate")
 	@ResponseBody Object dictDataAddUpdate(SysDictData dictData) {
 		try {
-			SysUser user = (SysUser) session.getAttribute(Const.SYS_USER);
+			SysUser user = (SysUser) session.getAttribute(Constants.APP_USER);
 			if(dictData.getId() != null) {
 				dictData.setUpdater(user.getUserName());
 				dictData.setUpdateUserId(user.getIdUser());
@@ -108,6 +110,21 @@ public class SysDictController extends BaseController {
 			logger.error("--dictTypeActive, error={}", e);
 		}
 		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/dictData/compent")
+	@ResponseBody Object dictDataCompent(String dictCode) {
+		List<SysDictData> list = sysDictService.selectListByDictCode(dictCode);
+		StringBuffer sb = new StringBuffer();
+		for(SysDictData dictData : list) {
+			sb.append("<option value=\"" + dictData.getDictDataKey() + "\">" + dictData.getDictDataValue() + "</option>");
+		}
+		return sb.toString();
+	}
+	
+	@RequestMapping("json/init/dictData")
+	@ResponseBody Object initDictData(){
+		return sysDictService.selectResource();
 	}
 	
 }

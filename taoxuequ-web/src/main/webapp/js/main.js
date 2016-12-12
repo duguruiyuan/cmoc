@@ -180,3 +180,22 @@ function shelvesFormat(v) {
 	if(v == 1) return "已上架";
 	if(v == 2) return "<span style='color:#0f4dde'>已下架</span>";
 }
+
+function initActivityType() {
+	$.ajax({
+		url : basePath + "/content/dict/json/dictData/compent",
+		type : 'POST',
+		data : {
+			dictCode : "activity_type"
+		},
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		success : function(data) {
+			$(".activityType").each(function(index,item) {
+				$(item).append(data);
+			});
+		}
+	});
+}

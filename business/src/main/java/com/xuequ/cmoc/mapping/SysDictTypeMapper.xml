@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="dict_type_name" jdbcType="VARCHAR" property="dictTypeName" />
     <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
-    <result column="is_activie" jdbcType="INTEGER" property="isActivie" />
+    <result column="is_active" jdbcType="INTEGER" property="isActive" />
     <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
     <result column="creater" jdbcType="VARCHAR" property="creater" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -14,7 +14,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, dict_type_name, dict_code, is_activie, create_user_id, creater, create_time, 
+    id, dict_type_name, dict_code, is_active, create_user_id, creater, create_time, 
     update_user_id, updater, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -30,22 +30,23 @@
   </select>
   <select id="selectActiveAll" resultMap="BaseResultMap">
   	select id, dict_type_name, dict_code
-    from t_sys_dict_type where is_activie = 1
+    from t_sys_dict_type where is_active = 1
   </select>
   <select id="selectCountByDictCode" resultType="int">
   	select count(1) from t_sys_dict_type where dict_code = #{dictCode,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_sys_dict_type
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.SysDictType">
     insert into t_sys_dict_type (id, dict_type_name, dict_code, 
-      is_activie, create_user_id, creater, 
+      is_active, create_user_id, creater, 
       create_time, update_user_id, updater, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{dictTypeName,jdbcType=VARCHAR}, #{dictCode,jdbcType=INTEGER}, 
-      #{isActivie,jdbcType=INTEGER}, #{createUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
+      #{isActive,jdbcType=INTEGER}, #{createUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -61,8 +62,8 @@
       <if test="dictCode != null">
         dict_code,
       </if>
-      <if test="isActivie != null">
-        is_activie,
+      <if test="isActive != null">
+        is_active,
       </if>
       <if test="createUserId != null">
         create_user_id,
@@ -93,8 +94,8 @@
       <if test="dictCode != null">
         #{dictCode,jdbcType=INTEGER},
       </if>
-      <if test="isActivie != null">
-        #{isActivie,jdbcType=INTEGER},
+      <if test="isActive != null">
+        #{isActive,jdbcType=INTEGER},
       </if>
       <if test="createUserId != null">
         #{createUserId,jdbcType=INTEGER},
@@ -125,8 +126,8 @@
       <if test="dictCode != null">
         dict_code = #{dictCode,jdbcType=VARCHAR},
       </if>
-      <if test="isActivie != null">
-        is_activie = #{isActivie,jdbcType=INTEGER},
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=INTEGER},
       </if>
       <if test="createUserId != null">
         create_user_id = #{createUserId,jdbcType=INTEGER},
@@ -153,7 +154,7 @@
     update t_sys_dict_type
     set dict_type_name = #{dictTypeName,jdbcType=VARCHAR},
       dict_code = #{dictCode,jdbcType=VARCHAR},
-      is_activie = #{isActivie,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=INTEGER},
       create_user_id = #{createUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

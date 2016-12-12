@@ -22,4 +22,5 @@ public interface SysDictTypeMapper {
     List<SysDictType> selectActiveAll();
     
     int selectCountByDictCode(String dictCode);
+    
 }

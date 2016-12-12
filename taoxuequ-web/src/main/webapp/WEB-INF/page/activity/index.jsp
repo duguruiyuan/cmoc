@@ -21,10 +21,8 @@
 								<tr>
 									<td>活动名称： <input class="form-control1" type="text" name="activityName" id="activityName"/></td>
 									<td>活动类型： 
-										<select class="form-control1" name="activityType" id="activityType">
+										<select class="form-control1 activityType" name="activityType" id="activityType">
 											<option value="">全部</option>
-											<option value="1">亲子活动</option>
-											<option value="2">城市体验</option>
 										</select>
 									</td>
 								 </tr>
@@ -84,10 +82,8 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label for="activityType">活动类型</label>								
-							<select class="form-control" name="activityType" id="activityType">
+							<select class="form-control activityType" name="activityType" id="activityType">
 								<option value="">请选择</option>
-								<option value="1">亲子活动</option>	
-								<option value="2">城市体验</option>
 							</select>
 						</div>
 						<div class="form-group col-md-6">

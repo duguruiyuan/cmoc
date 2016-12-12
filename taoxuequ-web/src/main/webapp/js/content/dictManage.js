@@ -1,5 +1,4 @@
 var dictTypeAllUrl = basePath + '/content/dict/json/dictType/all';
-var dictDataUrl = basePath+"/content/dict/json/dictData";
 var addUpdateDictTypeUrl = basePath + "/content/dict/json/dictType/addUpdate";
 var addUpdateDictDataUrl = basePath + "/content/dict/json/dictDate/addUpdate";
 var dictTypeByIdUrl = basePath + "/content/dict/json/dictType/id";
@@ -30,7 +29,7 @@ function initDictType(){
             data.forEach(function(item,index){
                 html += '<li' + (index == 0? ' class="dict-cur"' : '') + '><a href="javascript:void(0)" id="' + item.id + '" onclick="linkDictDate(this)" class="tdictType_link">'+item.dictTypeName+'</a></li>'
             });
-            $("#dataTypeAllMenu").append(html);
+            $("#dataTypeAllMenu").html(html);
         }
     });
 
@@ -55,20 +54,20 @@ function initDictData(id){
         striped : true,
         toolbar:'#toolbar',
         queryParams : {
-            "dictTypeId": $("#dictTypeId").val()
+            "dictTypeId": id
         },
         columns : [ [{
 	        	field : 'action',
 	        	title : '操作',
 	        	align : 'center',
 	        	formatter : function(value, row, index) {
-	        		if(row.isActive == 1) {
-	        			return $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">禁用</button>', row.id);
-	        		}else {
-	        			return $.formatString('<button type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="uploadNamelist({0});">启用</button>', index);
-	        		}
+	        		return $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateDictData(\'{0}\');">编辑</button>', row.id);
 	        	}
 			}, {
+            	field : 'id',
+            	align : 'center',
+            	title : '<b>编号</b>'
+            }, {
 				field : 'isActive',
 				align : 'center',
 				title : '<b>状态</b>',
@@ -79,14 +78,6 @@ function initDictData(id){
                         return "禁用";
                     }
                 }
-            }, {
-            	field : 'id',
-            	align : 'center',
-            	title : '<b>编号</b>'
-            }, {
-            	field : 'id',
-            	align : 'center',
-            	title : '<b>编号</b>'
             }, {
             	field : 'dictDataKey',
             	align : 'center',
@@ -100,7 +91,7 @@ function initDictData(id){
             	align : 'center',
             	title : '<b>创建人</b>'
             }, {
-            	field : 'create_time',
+            	field : 'createTime',
             	align : 'center',
             	title : '<b>创建时间</b>', 
             	formatter : function(value) {
@@ -119,12 +110,40 @@ var cleanFormPanel=function(formId){
 }
 
 function addDictType(){
+	cleanFormPanel("addDictTypeForm");
+	$("#addDictTypeForm #dictCode").attr("readonly", false);
     $('#addDictType').dialog('open').dialog('center').dialog('setTitle','新增字典类别');
 }
 
-function updateDictType(id) {
+function addDictData(){
+	cleanFormPanel("addDictDataForm");
+	$("#addDictDataForm #dictTypeId").val($(".dict-cur >a")[0].id);
+    $('#addDictData').dialog('open').dialog('center').dialog('setTitle','新增字典类别');
+}
+
+function updateDictType() {
 	$.ajax({
  		url : dictTypeByIdUrl,
+ 		type : "post",
+ 		data : {
+ 			id : $(".dict-cur >a")[0].id
+ 		},
+ 		dataType : "json",
+ 		async : false,
+ 		success : function(data) {
+			addDictType();
+			$("#addDictTypeForm #id").val(data.id);
+			$("#addDictTypeForm #dictCode").val(data.dictCode);
+			$("#addDictTypeForm #dictTypeName").val(data.dictTypeName);
+			$("#addDictTypeForm #isActive").val(data.isActive);
+			$("#addDictTypeForm #dictCode").attr("readonly", true);
+ 		}
+ 	});
+}
+
+function updateDictData(id) {
+	$.ajax({
+ 		url : dictDataByIdUrl,
  		type : "post",
  		data : {
  			id : id
@@ -132,11 +151,12 @@ function updateDictType(id) {
  		dataType : "json",
  		async : false,
  		success : function(data) {
- 			$("#addDictTypeForm #id").val(data.id);
-			$("#addDictTypeForm #dictCode").val(data.dictCode);
-			$("#addDictTypeForm #dictTypeName").val(data.dictTypeName);
-			$("#addDictTypeForm #isActive").val(data.isActive);
-			submitDictType();
+			addDictData();
+			$("#addDictDataForm #id").val(data.id);
+			$("#addDictDataForm #dictTypeId").val(data.dictTypeId);
+			$("#addDictDataForm #dictDataKey").val(data.dictDataKey);
+			$("#addDictDataForm #dictDataValue").val(data.dictDataValue);
+			$("#addDictDataForm #isActive").val(data.isActive);
  		}
  	});
 }
@@ -146,13 +166,23 @@ function submitDictType() {
 	var dictCode = $("#dictCode").val();
 	if(dictTypeName.length == 0) {
 		$.messager.alert('系统提示', '类别编码不能为空', 'error');
-		dictTypeName.focus();
 		return;
 	}else if(dictCode.length == 0) {
 		$.messager.alert('系统提示', '类别名称不能为空', 'error');
-		dictCode.focus();
 		return;
 	}
+	if(!$('#addDictTypeForm #id').val()) {
+		$.messager.confirm('系统提示', '确认编码，提交以后编码不能更新了！', function(r) {
+			if (r){
+				commitDictType();
+			}
+		});
+	}else {
+		commitDictType();
+	}
+}
+
+function commitDictType(){
 	$.ajax({
 		url : addUpdateDictTypeUrl,
 		type : 'POST',
@@ -175,11 +205,40 @@ function submitDictType() {
 	});
 }
 
+function submitDictData() {
+	var dictDataValue = $("#dictDataValue").val();
+	if(dictDataValue.length == 0) {
+		$.messager.alert('系统提示', '名称不能为空', 'error');
+		$("#dictDataValue").focus();
+		return;
+	}
+	$.ajax({
+		url : addUpdateDictDataUrl,
+		type : 'POST',
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		data : $('#addDictDataForm').serialize(),
+		success : function(data) {
+			$.messager.progress('close');
+			if (data.code == '000') {
+				$.messager.alert('系统提示', $("#addDictDataForm #id").val() == '' ? '字典类别新增成功' : '字典类别修改成功', 'info');
+				initDictType();
+				cleanFormPanel("addDictDataForm");
+				$('#addDictData').dialog('close')
+			} else {
+				$.messager.alert('系统提示', $("#addDictDataForm #id").val() == '' ? '字典类别新增失败' : '字典类别修改失败', 'warning');
+			}
+		}
+	});
+}
+
 function linkDictDate(thiz) {
 	var lic = $(thiz.closest('li'));
 	if(!lic.hasClass('dict-cur')) {
-		lic.siblings().removeClass("dict-cur").addClass("dict-cur");
 		initDictData(thiz.id);
+		lic.addClass("dict-cur").siblings().removeClass("dict-cur");
 	}
 }
 
@@ -193,13 +252,13 @@ $("#dictCode").on("blur", function() {
  		url : dictCodeExistsUrl,
  		type : "post",
  		data : {
- 			dictCode : this.val()
+ 			dictCode : this.value
  		},
  		dataType : "json",
  		async : false,
  		success : function(data) {
- 			$.messager.alert('系统提示', '输入的编码已存在，请重新输入', 'warning');
- 			$("input[name='dictCode']").focus();
+ 			if(data>0)
+ 			 $.messager.alert('系统提示', '输入的编码已存在，请重新输入', 'warning');
  		}
  	});
 });

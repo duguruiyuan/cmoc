@@ -9,7 +9,7 @@ public class SysDictType {
 
     private String dictCode;
 
-    private Integer isActivie;
+    private Integer isActive;
 
     private Integer createUserId;
 
@@ -48,15 +48,15 @@ public class SysDictType {
 		this.dictCode = dictCode;
 	}
 
-	public Integer getIsActivie() {
-        return isActivie;
-    }
+    public Integer getIsActive() {
+		return isActive;
+	}
 
-    public void setIsActivie(Integer isActivie) {
-        this.isActivie = isActivie;
-    }
+	public void setIsActive(Integer isActive) {
+		this.isActive = isActive;
+	}
 
-    public Integer getCreateUserId() {
+	public Integer getCreateUserId() {
         return createUserId;
     }
 

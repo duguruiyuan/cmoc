@@ -1,6 +1,9 @@
 package com.xuequ.cmoc.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +72,28 @@ public class SysDictServiceImpl implements ISysDictService {
 	@Override
 	public int selectCountByDictCode(String dictCode) {
 		return sysDictTypeMapper.selectCountByDictCode(dictCode);
+	}
+
+	@Override
+	public List<SysDictData> selectListByDictCode(String dictCode) {
+		return sysDictDataMapper.selectListByDictCode(dictCode);
+	}
+
+	@Override
+	public Map<String, List<SysDictData>> selectResource() {
+		List<SysDictType> dictTypeList = sysDictTypeMapper.selectActiveAll();
+		List<SysDictData> dictDataList = sysDictDataMapper.selectActiveAll();
+		Map<String, List<SysDictData>> map = new HashMap<>();
+		for(SysDictType dictType : dictTypeList) {
+			List<SysDictData> temp = new ArrayList<>();
+			for(SysDictData dictData : dictDataList) {
+				if(dictData.getDictTypeId() == dictType.getId()) {
+					temp.add(dictData);
+				}
+			}
+			map.put(dictType.getDictCode(), temp);
+		}
+		return map;
 	}
 
 }

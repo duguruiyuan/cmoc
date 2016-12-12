@@ -5,6 +5,7 @@ var dataGrid;
 var confirmDialog;
 $(function() {
 	loadData();
+	initActivityType();
 	$("input[name='isEffect']").on("change", function() {
 		if(this.value == 0) {
 			$("#reason").removeClass('hide').addClass("show");

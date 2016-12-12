@@ -3,6 +3,7 @@ package com.xuequ.cmoc.dao;
 import java.util.List;
 
 import com.xuequ.cmoc.model.SysDictData;
+import com.xuequ.cmoc.model.SysDictType;
 
 public interface SysDictDataMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,4 +23,6 @@ public interface SysDictDataMapper {
     List<SysDictData> selectActiveAll();
     
     int selectCountByDictTypeId(Integer dictTypeId);
+    
+    List<SysDictData> selectListByDictCode(String dictCode);
 }

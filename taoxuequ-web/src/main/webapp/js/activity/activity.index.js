@@ -5,9 +5,7 @@ var queryByIdUrl = basePath + "/activity/json/queryById";
 var dataGrid;
 $(function() {
 	loadData();
-	$(".abc").on("click",function() {
-		alert(aaa);
-	})
+	initActivityType();
 });
 window.onload = initLoad();
 function initLoad(){

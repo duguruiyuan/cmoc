@@ -36,6 +36,12 @@
   <select id="selectCountByDictTypeId" resultType="int">
   	select count(1) from t_sys_dict_data where dict_type_id = #{dictTypeId,jdbcType=INTEGER}
   </select>
+  <select id="selectListByDictCode" resultMap="BaseResultMap">
+  	select dict_type_id, dict_data_key, dict_data_value
+    from t_sys_dict_type dt, t_sys_dict_data dd
+    where dd.dict_type_id = dt.id and dd.is_active = 1
+    and dt.dict_code=#{dictCode,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_sys_dict_data
     where id = #{id,jdbcType=INTEGER}
