@@ -324,6 +324,7 @@ function validator() {
 				date:true
 			},
 			activityAddr : {
+				required : true,
 				maxlength : 100
 			},
 			activityDesc : {

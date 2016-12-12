@@ -31,6 +31,27 @@ function loadData() {
 		nowrap : true,
 		striped : true,
 		rownumbers : true,
+		queryParams : {
+			"isEffect" : 0
+		},
+        onSelect : function (rowIndex, rowData){
+			var oldValue = parseInt($('#checkedNum').html());
+			$('#checkedNum').html(oldValue + 1);
+		},
+		onUnselect : function (rowIndex, rowData){
+			var oldValue = parseInt($('#checkedNum').html());
+			$('#checkedNum').html(oldValue - 1);
+		},
+		onSelectAll : function (rows){
+			var oldValue = parseInt($('#checkedNum').html());
+			oldValue += rows.length;
+			$('#checkedNum').html(oldValue);
+		},
+		onUnselectAll : function (rows){
+			var oldValue = parseInt($('#checkedNum').html());
+			oldValue -= rows.length;
+			$('#checkedNum').html(oldValue);
+		},
 		columns : [ [  {
 			field : 'id',
 			checkbox : true

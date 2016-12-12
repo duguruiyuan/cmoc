@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
@@ -39,6 +40,7 @@ import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IActivityTeacherService;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
+import com.xuequ.cmoc.utils.PropertiesUtil;
 import com.xuequ.cmoc.view.ActivityFamilyView;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
@@ -357,7 +359,7 @@ public class ActivityManageController extends BaseController{
 				AuditReqVO vo = new AuditReqVO();
 				vo.setIds(str);
 				vo.setStatus(isEffect);
-				HttpClientUtils.postJson("http://localhost:8080/taoxuequ-wap/wechatmsg/hm/reg", vo);
+				HttpClientUtils.postJson(PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_hmSignMsg"), vo);
 				return new RspResult(StatusEnum.SUCCESS);
 			}
 		} catch (Exception e) {

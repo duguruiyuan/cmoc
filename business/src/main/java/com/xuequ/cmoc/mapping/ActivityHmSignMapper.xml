@@ -49,6 +49,9 @@
     <result column="hm_name" property="hmName" jdbcType="VARCHAR" />
     <result column="hm_mobile" property="hmMobile" jdbcType="VARCHAR" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="activity_addr" property="activityAddr" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
     
     <result column="place" property="place" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
@@ -163,6 +166,18 @@
 	WHERE hs.`is_delete`='N' AND hs.is_effect = 1 AND NOW() >= ai.`start_date` 
 	AND hm.`openid` = #{openid,jdbcType=VARCHAR}
 	ORDER BY ai.`start_date`
+  </select>
+  
+  <select id="selectListByIds" resultMap="PageBaseResultMap">
+  	SELECT hs.activity_id, ai.activity_name, ai.activity_num, ai.activity_addr,
+  	ai.start_date, ai.end_date, hm.id hm_id, hm.hm_name, hm.hm_mobile, hm.openid
+	FROM t_activity_hm_sign hs 
+	INNER JOIN t_hollow_man_info hm ON hs.hm_id = hm.id 
+	INNER JOIN t_activity_info ai ON ai.id = hs.activity_id
+	where hs.id in 
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+    	#{item}
+    </foreach>
   </select>
   
   <update id="updateBindMarine" parameterType="com.xuequ.cmoc.model.ActivityHmSign">

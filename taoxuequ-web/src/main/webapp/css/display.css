@@ -616,3 +616,9 @@ span.error {
     filter: alpha(opacity=1);
     cursor: pointer;
 }
+.dict-cur{
+	background-color: #F2AD4C;
+}
+.dict-cur a{
+	color: #211A1A;
+}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 
@@ -42,4 +43,6 @@ public interface IActivityHmService {
     List<ActivityHmSignView> selectHmSignForAudit(Page<ActivityHmSignView> page);
     
     int updateAuditHmSign(List<Integer> list, Integer isEffect, String reason);
+    
+    List<ActivityHmSignView> selectListByIds(List<Integer> ids);
 }

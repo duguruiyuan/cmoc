@@ -16,6 +16,7 @@
 					<!--begin 搜索栏 -->
 					<div class="span12" id="body_div">
 					  <form id="searchForm" class="form-search" method="post">
+					  	<input type="hidden" id="isEffect" name="isEffect" value="0"/>
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
@@ -30,19 +31,12 @@
 									</td>
 								 </tr>
 								 <tr>
-									<td>报名状态： 
-										<select class="form-control1" name="isEffect" id="isEffect">
-											<option value="">全部</option>
-											<option value="0">报名申请中</option>
-											<option value="1">已生效</option>
-										</select>
-									</td>
-									<td colspan="2">活动时间： <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
-										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
-								 </tr>
-								 <tr>
 									<td>透明人姓名: <input class="form-control1" type="text" name="hmName" id="hmName"/></td>
 									<td>透明人电话: <input class="form-control1" type="text" name="hmMobile" id="hmMobile"/></td>
+								 </tr>
+								 <tr>
+									<td colspan="3">活动时间： <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
+										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
 								 </tr>
 								 <tr>
 									<td colspan="3">
@@ -60,6 +54,11 @@
 				<div style="height: 330px;">
 					<table id="dataGrid"></table>
 				</div>
+				<table class="table table-condensed" style="margin: 5px 0;">
+					<tr>
+						<td class="success" style="text-align: right; font-weight: bold; color: red;">已选中数量：<span id="checkedNum">0</span></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>

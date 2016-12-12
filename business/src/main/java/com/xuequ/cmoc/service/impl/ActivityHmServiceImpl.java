@@ -75,4 +75,9 @@ public class ActivityHmServiceImpl implements IActivityHmService {
 		return activityHmSignMapper.updateAuditDeleteHmSign(list, reason);
 	}
 
+	@Override
+	public List<ActivityHmSignView> selectListByIds(List<Integer> ids) {
+		return activityHmSignMapper.selectListByIds(ids);
+	}
+
 }

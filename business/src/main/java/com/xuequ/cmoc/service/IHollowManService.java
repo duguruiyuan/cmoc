@@ -6,6 +6,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.HollowManInfoView;
 import com.xuequ.cmoc.view.HollowManTakeView;
 

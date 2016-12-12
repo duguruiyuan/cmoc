@@ -26,6 +26,10 @@ public class ActivityHmSignView extends ActivityHmSign {
 	
 	private Date startDate;
 	
+	private Date endDate;
+	
+	private String activityAddr;
+	
 	private String place;
 	
 	private String sex;
@@ -37,6 +41,8 @@ public class ActivityHmSignView extends ActivityHmSign {
 	private String level;
 	
 	private Integer takeNum;
+	
+	private String openid;
 	
 	public String getActivityName() {
 		return activityName;
@@ -110,6 +116,22 @@ public class ActivityHmSignView extends ActivityHmSign {
 		this.startDate = startDate;
 	}
 
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getActivityAddr() {
+		return activityAddr;
+	}
+
+	public void setActivityAddr(String activityAddr) {
+		this.activityAddr = activityAddr;
+	}
+
 	public String getPlace() {
 		return place;
 	}
@@ -156,6 +178,14 @@ public class ActivityHmSignView extends ActivityHmSign {
 
 	public void setTakeNum(Integer takeNum) {
 		this.takeNum = takeNum;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 	
 	
