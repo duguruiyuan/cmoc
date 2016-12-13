@@ -7,7 +7,7 @@ import java.util.Date;
 public class CourseInfo implements Serializable {
     private Integer id;
 
-    private String name;
+    private String courseName;
 
     private String courseNum;
 
@@ -61,15 +61,15 @@ public class CourseInfo implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getCourseName() {
+		return courseName;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
 
-    public String getCourseNum() {
+	public String getCourseNum() {
         return courseNum;
     }
 

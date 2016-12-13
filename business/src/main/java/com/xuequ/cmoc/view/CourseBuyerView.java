@@ -10,12 +10,18 @@ public class CourseBuyerView extends CourseBuyerInfo {
 
 	private BigDecimal resAmount;
 	
-	private Integer courseId;
+	private Integer productId;
 	
 	private String orderNo;
 	
 	private String productType;
-
+	
+	private String courseName;
+	
+	private String courseType;
+	
+	private BigDecimal totalAmount;
+	
 	public BigDecimal getResAmount() {
 		return resAmount;
 	}
@@ -24,12 +30,12 @@ public class CourseBuyerView extends CourseBuyerInfo {
 		this.resAmount = resAmount;
 	}
 
-	public Integer getCourseId() {
-		return courseId;
+	public Integer getProductId() {
+		return productId;
 	}
 
-	public void setCourseId(Integer courseId) {
-		this.courseId = courseId;
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
 	public String getOrderNo() {
@@ -46,6 +52,30 @@ public class CourseBuyerView extends CourseBuyerInfo {
 
 	public void setProductType(String productType) {
 		this.productType = productType;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getCourseType() {
+		return courseType;
+	}
+
+	public void setCourseType(String courseType) {
+		this.courseType = courseType;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 	
 	

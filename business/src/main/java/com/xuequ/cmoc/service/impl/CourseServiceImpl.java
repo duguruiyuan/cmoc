@@ -1,6 +1,5 @@
 package com.xuequ.cmoc.service.impl;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -11,18 +10,16 @@ import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.enums.ProductTypeEnum;
 import com.xuequ.cmoc.dao.CourseBuyerInfoMapper;
 import com.xuequ.cmoc.dao.CourseInfoMapper;
+import com.xuequ.cmoc.dao.ProductOrderMapper;
 import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
+import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.ICourseService;
-import com.xuequ.cmoc.utils.BeanUtils;
-import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseListView;
-import com.xuequ.cmoc.model.ProductOrder;
-import com.xuequ.cmoc.dao.ProductOrderMapper;
 
 @Service("courseService")
 public class CourseServiceImpl implements ICourseService {
@@ -91,9 +88,9 @@ public class CourseServiceImpl implements ICourseService {
 	@Override
 	public CourseBuyerView addUPdateOrder(CourseBuyerView info) {
 		CourseBuyerView buyerInfo = courseBuyerInfoMapper.selectRemindOrder(info.getMobile(), 
-				info.getOpenid(), info.getCourseId());
+				info.getOpenid(), info.getProductId());
 		if(buyerInfo == null) {
-			CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getCourseId());
+			CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
 			info.setCreater(Const.SYS_USER);
 			info.setCreateTime(new Date());
 			courseBuyerInfoMapper.insertSelective(info);
@@ -113,6 +110,11 @@ public class CourseServiceImpl implements ICourseService {
 			return buyerInfo;
 		}
 		return info;
+	}
+
+	@Override
+	public List<CourseBuyerView> selectBuyRecordByPage(Page<CourseBuyerView> page) {
+		return courseBuyerInfoMapper.selectBuyRecordByPage(page);
 	}
 
 }

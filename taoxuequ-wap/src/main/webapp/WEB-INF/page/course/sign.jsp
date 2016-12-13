@@ -29,7 +29,7 @@
 	<div class="mui-content">
 		<form id="courseSignForm" class="mui-input-group">
 			<input type="hidden" id="openid" name="openid" value="${snsToken.openid }"/>
-			<input type="hidden" id="courseId" name="courseId" value="${course.id }"/>
+			<input type="hidden" id="productId" name="productId" value="${course.id }"/>
 			<div class="mui-input-row">
 			    <label><span style="color:red;">*</span> 姓名</label>
 			    <input id="name" name="name" type="text" placeholder="请输入姓名">

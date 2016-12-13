@@ -3,7 +3,7 @@
 <mapper namespace="com.xuequ.cmoc.dao.CourseInfoMapper" >
   <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.CourseInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
     <result column="course_num" property="courseNum" jdbcType="VARCHAR" />
     <result column="course_type" property="courseType" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
@@ -29,7 +29,7 @@
     <result column="course_details" property="courseDetails" jdbcType="LONGVARBINARY" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, course_num, course_type, city, city_id, addr, start_date, end_date, res_amount, 
+    id, course_name, course_num, course_type, city, city_id, addr, start_date, end_date, res_amount, 
     total_price, activity_price, course_peoples, course_desc, shelves, creater_id, creater, 
     create_time, updater_id, updater, update_time, course_img
   </sql>
@@ -86,8 +86,8 @@
   	<if test="params.id != null">
   		and id = #{params.id,jdbcType=INTEGER}
   	</if>
-  	<if test="params.name != null">
-  		and name = #{params.name,jdbcType=VARCHAR}
+  	<if test="params.courseName != null">
+  		and course_name = #{params.courseName,jdbcType=VARCHAR}
   	</if>
   	<if test="params.courseType != null">
   		and course_type = #{params.courseType,jdbcType=VARCHAR}
@@ -105,7 +105,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.CourseInfo" >
-    insert into t_course_info (id, name, course_num, 
+    insert into t_course_info (id, course_name, course_num, 
       course_type, city, city_id, 
       addr, start_date, end_date, 
       res_amount, total_price, activity_price, 
@@ -113,7 +113,7 @@
       creater_id, creater, create_time, 
       updater_id, updater, update_time, 
       course_details)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{courseNum,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR}, #{courseNum,jdbcType=VARCHAR}, 
       #{courseType,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
       #{addr,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
       #{resAmount,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{activityPrice,jdbcType=DECIMAL}, 
@@ -128,8 +128,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="courseName != null" >
+        course_name,
       </if>
       <if test="courseNum != null" >
         course_num,
@@ -199,8 +199,8 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="courseName != null" >
+        #{courseName,jdbcType=VARCHAR},
       </if>
       <if test="courseNum != null" >
         #{courseNum,jdbcType=VARCHAR},
@@ -270,8 +270,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.CourseInfo" >
     update t_course_info
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="courseName != null" >
+        course_name = #{course_name,jdbcType=VARCHAR},
       </if>
       <if test="courseNum != null" >
         course_num = #{courseNum,jdbcType=VARCHAR},
@@ -342,8 +342,8 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xuequ.cmoc.model.CourseInfo" >
     update t_course_info
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="courseName != null" >
+        course_name = #{courseName,jdbcType=VARCHAR},
       </if>
       <if test="courseNum != null" >
         course_num = #{courseNum,jdbcType=VARCHAR},
@@ -416,7 +416,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.CourseInfo" >
     update t_course_info
-    set name = #{name,jdbcType=VARCHAR},
+    set course_name = #{courseName,jdbcType=VARCHAR},
       course_num = #{courseNum,jdbcType=VARCHAR},
       course_type = #{courseType,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},

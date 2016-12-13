@@ -23,6 +23,8 @@ public interface CourseBuyerInfoMapper {
     
     List<CourseBuyerView> selectCourseBuyerByPage(Page<CourseBuyerView> page);
     
+    List<CourseBuyerView> selectBuyRecordByPage(Page<CourseBuyerView> page);
+    
     CourseBuyerInfo selectByOpenid(String openid);
     
     CourseBuyerView selectRemindOrder(@Param("mobile")String mobile, 

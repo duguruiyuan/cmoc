@@ -57,7 +57,7 @@ function loadData() {
 				return shelvesFormat(value);
 			}
 		}, {
-			field : 'name',
+			field : 'courseName',
 			title : '课程名称',
 			align : "center",
 			width : 200,

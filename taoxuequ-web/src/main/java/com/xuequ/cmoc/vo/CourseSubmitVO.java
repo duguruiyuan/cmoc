@@ -9,7 +9,7 @@ public class CourseSubmitVO extends CourseInfo {
 
 	private static final long serialVersionUID = 1L;
 	
-private String strStartDate;
+	private String strStartDate;
 	
 	private String strEndDate;
 

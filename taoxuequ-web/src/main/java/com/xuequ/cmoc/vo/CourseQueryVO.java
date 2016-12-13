@@ -7,7 +7,7 @@ import com.xuequ.cmoc.utils.StringUtil;
 
 public class CourseQueryVO extends GridBase{
 
-	private String name;
+	private String courseName;
 	
 	private Integer shelves;
 	
@@ -15,12 +15,12 @@ public class CourseQueryVO extends GridBase{
 	
 	private String city;
 	
-	public String getName() {
-		return StringUtils.isNotBlank(name) ? name : null;
+	public String getCourseName() {
+		return StringUtils.isNotBlank(courseName) ? courseName : null;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
 	public Integer getShelves() {

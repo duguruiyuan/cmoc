@@ -37,6 +37,14 @@ public interface ICourseService {
 	 */
 	List<CourseBuyerView> selectCourseBuyerByPage(Page<CourseBuyerView> page);
 	/**
+	 * 分页查询课程购买记录
+	 * @auther 胡启萌
+	 * @Date 2016年12月13日
+	 * @param page
+	 * @return
+	 */
+	List<CourseBuyerView> selectBuyRecordByPage(Page<CourseBuyerView> page);
+	/**
 	 * 根据openid查询课程购买人信息
 	 * @auther 胡启萌
 	 * @Date 2016年12月10日

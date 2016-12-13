@@ -61,7 +61,7 @@ public class CourseController extends BaseController {
 			page.setResults(list);
 			return page;
 		} catch (Exception e) {
-			logger.error("--marineImageQuery, error={}", e);
+			logger.error("--courseBuyer, error={}", e);
 		}
 		return null;
 	}

@@ -98,6 +98,11 @@ public class ActivityManageController extends BaseController{
 		return "activity/hm";
 	}
 	
+	@RequestMapping("hm/resource")
+	public String hmResource() {
+		return "activity/hmResource";
+	}
+	
 	@RequestMapping("hmsign/audit")
 	public String hmSignAudit() {
 		return "activity/hmSignAudit";

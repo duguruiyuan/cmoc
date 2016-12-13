@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.model.BuyRecord;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.ICourseService;
+import com.xuequ.cmoc.view.CourseBuyerView;
+import com.xuequ.cmoc.vo.BuyerQueryVO;
 import com.xuequ.cmoc.vo.CourseQueryVO;
 import com.xuequ.cmoc.vo.CourseSubmitVO;
 
@@ -33,6 +36,29 @@ public class CourseManageController extends BaseController{
 	@RequestMapping("manage")
 	public String manage() {
 		return "course/manage";
+	}
+	
+	@RequestMapping("buy/record")
+	public String buyRecord(){
+		return "course/buyRecord";
+	}
+	
+	@RequestMapping("json/buyRecord/list")
+	@ResponseBody Object buyRecordList(BuyerQueryVO vo) {
+		try {
+			Page<CourseBuyerView> page = new Page<>();
+			page.setPageNo(vo.getPage());
+			page.setPageSize(vo.getRows());
+			page.setParams(vo);
+			List<CourseBuyerView> list = courseService.selectBuyRecordByPage(page);
+			Grid grid = new Grid();
+			grid.setRows(list);
+			grid.setTotal(page.getTotalRecord());
+			return grid;
+		} catch (Exception e) {
+			logger.error("--buyRecordList, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 	@RequestMapping("json/list/query")

@@ -20,7 +20,7 @@
 							<tbody>
 								<tr>
 									<td>课程编号: <input class="form-control1" type="text" name="id" id="id"/></td>
-									<td>课程名称： <input class="form-control1" type="text" name="name" id="name"/></td>
+									<td>课程名称： <input class="form-control1" type="text" name="courseName" id="courseName"/></td>
 									<td>课程状态： 
 										<select class="form-control1" name="shelves" id="shelves">
 											<option value="">全部</option>
