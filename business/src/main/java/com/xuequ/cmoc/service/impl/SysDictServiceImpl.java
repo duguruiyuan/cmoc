@@ -80,18 +80,18 @@ public class SysDictServiceImpl implements ISysDictService {
 	}
 
 	@Override
-	public Map<String, List<SysDictData>> selectResource() {
-		List<SysDictType> dictTypeList = sysDictTypeMapper.selectActiveAll();
-		List<SysDictData> dictDataList = sysDictDataMapper.selectActiveAll();
-		Map<String, List<SysDictData>> map = new HashMap<>();
+	public Map<String, Map<Integer, String>> selectResource() {
+		List<SysDictType> dictTypeList = sysDictTypeMapper.selectDictTypeAll();
+		List<SysDictData> dictDataList = sysDictDataMapper.selectDictDataAll();
+		Map<String, Map<Integer, String>> map = new HashMap<>();
 		for(SysDictType dictType : dictTypeList) {
-			List<SysDictData> temp = new ArrayList<>();
+			Map<Integer, String> map2 = new HashMap<>();
 			for(SysDictData dictData : dictDataList) {
 				if(dictData.getDictTypeId() == dictType.getId()) {
-					temp.add(dictData);
+					map2.put(dictData.getDictDataKey(), dictData.getDictDataValue());
 				}
 			}
-			map.put(dictType.getDictCode(), temp);
+			map.put(dictType.getDictCode(), map2);
 		}
 		return map;
 	}

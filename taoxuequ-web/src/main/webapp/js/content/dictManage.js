@@ -24,11 +24,19 @@ function initDictType(){
             $.messager.alert('系统提示', data.msg, 'error');
         },
         success: function (data) {
-        	initDictData(data[0].id);
+        	var currId = $("#dataTypeAllMenu").find("li.dict-cur").find('a').attr("id");
             var html = '';
             data.forEach(function(item,index){
-                html += '<li' + (index == 0? ' class="dict-cur"' : '') + '><a href="javascript:void(0)" id="' + item.id + '" onclick="linkDictDate(this)" class="tdictType_link">'+item.dictTypeName+'</a></li>'
+            	var clasz="";
+            	if(!currId && index == 0){
+            		clasz="class=\"dict-cur\"";
+            		currId = item.id;
+            	}else {
+            		if(item.id == currId) clasz="class=\"dict-cur\"";
+            	}
+                html += '<li ' + clasz + '><a href="javascript:void(0)" id="' + item.id + '" onclick="linkDictDate(this)" class="tdictType_link">'+item.dictTypeName+'</a></li>'
             });
+            initDictData(currId);
             $("#dataTypeAllMenu").html(html);
         }
     });
@@ -106,12 +114,12 @@ function initDictData(id){
  * 清空表单
  */
 var cleanFormPanel=function(formId){
-	$("#" + formId)[0].reset();
+	$('#' + formId).form('clear');
 }
 
 function addDictType(){
 	cleanFormPanel("addDictTypeForm");
-	$("#addDictTypeForm #dictCode").attr("readonly", false);
+	$("#addDictTypeForm #dictCode").attr("disabled", false);
     $('#addDictType').dialog('open').dialog('center').dialog('setTitle','新增字典类别');
 }
 
@@ -136,7 +144,7 @@ function updateDictType() {
 			$("#addDictTypeForm #dictCode").val(data.dictCode);
 			$("#addDictTypeForm #dictTypeName").val(data.dictTypeName);
 			$("#addDictTypeForm #isActive").val(data.isActive);
-			$("#addDictTypeForm #dictCode").attr("readonly", true);
+			$("#addDictTypeForm #dictCode").attr("disabled", true);
  		}
  	});
 }

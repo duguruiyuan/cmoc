@@ -17,7 +17,7 @@
 	                  style="width:20%;">
 	                  <a href="javascript:void(0)" class="easyui-linkbutton"  plain="true" onclick="addDictType()"><i class="fa fa-plus"></i> 新增</a>
 	                  <a href="javascript:void(0)" class="easyui-linkbutton"  plain="true" onclick="updateDictType()"><i class="fa fa-edit"></i> 编辑</a>
-	                  <ul id="dataTypeAllMenu" class="nav nav-list"></ul>
+	                  <ul id="dataTypeAllMenu"></ul>
 	                </div>
 	                <div data-options="region:'center'">
 	                    <table id="dataGrid" class="easyui-datagrid"></table>
@@ -51,7 +51,7 @@
 	                <td class="text-right" >是否启用</td>
 	                <td>
 	                    <select name="isActive" id="isActive" class="form-control">
-	                        <option value="1">启用</option>
+	                        <option value="1" selected>启用</option>
 	                        <option value="0">禁用</option>
 	                    </select>
 	                </td>

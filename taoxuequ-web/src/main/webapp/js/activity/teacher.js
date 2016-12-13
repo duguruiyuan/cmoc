@@ -44,7 +44,7 @@ function loadData() {
 			align : "center",
 			resizable : true,
 			formatter: function(v) {
-				return activityTypeFormat(v);
+				return dictDataFormat('activity_type', v);
 			}
 		}, {
 			field : 'name',
@@ -86,7 +86,7 @@ function closeFormPanel(formId){
  * 清空表单
  */
 var cleanFormPanel=function(formId){
-	$("#" + formId)[0].reset();
+	$('#' + formId).form('clear');
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
 	$("label").find("span").remove();

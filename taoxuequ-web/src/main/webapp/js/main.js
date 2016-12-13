@@ -9,7 +9,8 @@ $(function(){
 		}else {
 			obj.parent("div").addClass("collapsed");
 		}
-	})
+	});
+	initAllDictData(false);
 })
 
 function logout() {
@@ -151,9 +152,17 @@ return fmt;
 }  
 
 
-function activityTypeFormat(v) {
-	if(v == '1') return "亲子活动";
-	if(v == '2') return "城市体验";
+function dictDataFormat(code, v) {
+	if(v) {
+		var dictDataMap = JSON.parse(window.localStorage.getItem("dictDataMap"));
+		var list = dictDataMap[code];
+		if(!list || (list && !list[v])) {
+			initAllDictData(true);
+			dictDataMap = JSON.parse(window.localStorage.getItem("dictDataMap"));
+			return dictDataMap[code][v];
+		}
+		return list[v];
+	}
 	return "";
 }
 
@@ -196,6 +205,59 @@ function initActivityType() {
 			$(".activityType").each(function(index,item) {
 				$(item).append(data);
 			});
+		}
+	});
+}
+
+function initCourseType() {
+	$.ajax({
+		url : basePath + "/content/dict/json/dictData/compent",
+		type : 'POST',
+		data : {
+			dictCode : "course_type"
+		},
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		success : function(data) {
+			$(".courseType").each(function(index,item) {
+				$(item).append(data);
+			});
+		}
+	});
+}
+
+function initCity() {
+	$.ajax({
+		url : basePath + "/content/dict/json/dictData/compent",
+		type : 'POST',
+		data : {
+			dictCode : "city"
+		},
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		success : function(data) {
+			$(".city").each(function(index,item) {
+				$(item).append(data);
+			});
+		}
+	});
+}
+
+function initAllDictData(reload) {
+	if(window.localStorage.getItem("dictDataMap") != null && !reload) return;
+	$.ajax({
+		url : basePath + "/content/dict/json/init/dictData",
+		type : 'POST',
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		success : function(data) {
+			window.localStorage.setItem("dictDataMap", JSON.stringify(data));
 		}
 	});
 }

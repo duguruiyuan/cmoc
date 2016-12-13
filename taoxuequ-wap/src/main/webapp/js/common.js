@@ -1,8 +1,3 @@
-function activityTypeFormat(v) {
-	if(v == '1') return "亲子活动";
-	if(v == '2') return "城市体验";
-	return "";
-}
 
 function getTime(v, format) {
 	if(v) return (new Date(v)).Format(format);

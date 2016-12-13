@@ -31,6 +31,18 @@
 									</td>
 								 </tr>
 								 <tr>
+									<td>城&nbsp;  市： 
+										<select class="form-control1 city" name="city" id="city">
+											<option value="">全部</option>
+										</select>
+									</td>
+									<td>课程类型： 
+										<select class="form-control1 courseType" name="courseType" id="courseType">
+											<option value="">全部</option>
+										</select>
+									</td>
+								 </tr>
+								 <tr>
 									<td colspan="3">
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="closeFormPanel('searchForm')">清空</button>

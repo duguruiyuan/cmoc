@@ -7,22 +7,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.Grid;
-import com.xuequ.cmoc.model.GridBase;
 import com.xuequ.cmoc.model.SysDictData;
 import com.xuequ.cmoc.model.SysDictType;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.service.ISysDictService;
-import com.xuequ.cmoc.vo.ActivitySubmitVO;
 import com.xuequ.cmoc.vo.DictQueryVO;
 
 @RequestMapping("content/dict")
@@ -112,6 +107,11 @@ public class SysDictController extends BaseController {
 		return new RspResult(StatusEnum.FAIL);
 	}
 	
+	@RequestMapping("json/dictData/dictCode")
+	@ResponseBody Object dictDataDictCode(String dictCode) {
+		return sysDictService.selectListByDictCode(dictCode);
+	}
+	
 	@RequestMapping("json/dictData/compent")
 	@ResponseBody Object dictDataCompent(String dictCode) {
 		List<SysDictData> list = sysDictService.selectListByDictCode(dictCode);
@@ -123,7 +123,7 @@ public class SysDictController extends BaseController {
 	}
 	
 	@RequestMapping("json/init/dictData")
-	@ResponseBody Object initDictData(){
+	@ResponseBody Object initDictData(String dictCode){
 		return sysDictService.selectResource();
 	}
 	

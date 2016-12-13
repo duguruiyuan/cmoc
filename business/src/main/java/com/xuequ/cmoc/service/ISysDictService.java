@@ -30,5 +30,5 @@ public interface ISysDictService {
     
     List<SysDictData> selectListByDictCode(String dictCode);
     
-    Map<String, List<SysDictData>> selectResource();
+    Map<String, Map<Integer, String>> selectResource();
 }

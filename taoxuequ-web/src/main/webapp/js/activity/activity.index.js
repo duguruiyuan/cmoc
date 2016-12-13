@@ -6,6 +6,7 @@ var dataGrid;
 $(function() {
 	loadData();
 	initActivityType();
+	initCity();
 });
 window.onload = initLoad();
 function initLoad(){
@@ -77,7 +78,7 @@ function loadData() {
 			align : "center",
 			resizable : true,
 			formatter: function(v) {
-				return activityTypeFormat(v);
+				return dictDataFormat('activity_type',v);
 			}
 		}, {
 			field : 'activityPeoples',
@@ -114,7 +115,10 @@ function loadData() {
 			field : 'city',
 			title : '活动城市',
 			align : "center",
-			resizable : true
+			resizable : true,
+			formatter: function(v) {
+				return dictDataFormat('city',v);
+			}
 		}, {
 			field : 'activityDesc',
 			title : '活动描述',
@@ -155,7 +159,7 @@ function search(formId){
 }
 
 function closeFormPanel(formId){
-	cleanFormPanel(formId);
+	$('#' + formId).form('clear');
 	$('#confirmDialog').dialog("close");
 }
 
@@ -163,7 +167,7 @@ function closeFormPanel(formId){
  * 清空表单
  */
 var cleanFormPanel=function(formId){
-	$("#" + formId)[0].reset();
+	$('#' + formId).form('clear');
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
 	$("label").find("span").remove();
@@ -193,6 +197,7 @@ function updateActivity(id) {
  			$("#addForm #id").val(data.id);
 			$("#addForm #activityName").val(data.activityName);
 			$("#addForm #activityNum").val(data.activityNum);
+			$("#addForm #activityImgUrl").val(data.activityImgUrl);
 			$("#addForm #activityPeoples").val(data.activityPeoples);
 			$("#addForm #city").val(data.city);
 			$("#addForm #activityType").val(data.activityType);

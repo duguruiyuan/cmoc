@@ -25,4 +25,6 @@ public interface SysDictDataMapper {
     int selectCountByDictTypeId(Integer dictTypeId);
     
     List<SysDictData> selectListByDictCode(String dictCode);
+    
+    List<SysDictData> selectDictDataAll();
 }

@@ -310,7 +310,7 @@ function buildAssetData(obj){
 			+"<td remark='活动名称' style='text-align: center;'>"+getNullString(v.activityName)+"</td>"
 			+"<td remark='活动期数' style='text-align: center;'>"+getNullString(v.activityNum)+"</td>"
 			+"<td remark='活动时间' style='text-align: center;'>"+getTime(v.startDate, "yyyy/MM/dd")+"</td>"	
-			+"<td remark='活动类型' style='text-align: center;'>"+activityTypeFormat(v.activityType)+"</td>"
+			+"<td remark='活动类型' style='text-align: center;'>"+dictDataFormat('activity_type', v.activityType)+"</td>"
 			+"<td remark='图片数' style='text-align: center;'>"+Number((v.imageNum == null || v.imageNum == "") ? 0 : v.imageNum)+"</td>"
 			+"<td remark='视频数' style='text-align: center;'>"+Number((v.videoNum == null || v.videoNum == "") ? 0 : v.videoNum)+"</td>"
 		+"</tr>";

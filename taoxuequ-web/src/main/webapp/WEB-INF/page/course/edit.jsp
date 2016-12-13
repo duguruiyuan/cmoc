@@ -23,15 +23,15 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label for="courseType">课程类型</label>								
-							<select class="form-control" name="courseType" id="courseType">
+							<select class="form-control courseType" name="courseType" id="courseType">
 								<option value="">请选择</option>
-								<option value="1">亲子活动</option>	
-								<option value="2">城市体验</option>
 							</select>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="city">城市</label>								
-							<input class="form-control" name="city" id="city">
+							<select class="form-control city" name="city" id="city">
+								<option value="">请选择</option>
+							</select>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="addr">地址</label>								
@@ -93,7 +93,6 @@
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath %>/js/jquery.base64.js" ></script>
-	<script type="text/javascript" src="<%=basePath %>/js/plugin/localResizeIMG/dist/lrz.bundle.js" ></script>
 	<script type="text/javascript" charset="utf-8" src="<%=basePath %>/js/plugin/Ueditor-1.4.3.3/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="<%=basePath %>/js/plugin/Ueditor-1.4.3.3/ueditor.all.min.js"> </script>
 	<script type="text/javascript" charset="utf-8" src="<%=basePath %>/js/plugin/Ueditor-1.4.3.3/lang/zh-cn/zh-cn.js"></script>
@@ -102,10 +101,12 @@
 		$(function(){
 			uploadPic();
 	        ue = getUeditor();
-	        initDate();
+	        initData();
+	        initCity();
+	        initCourseType();
 	        validator();
 		})
-		function initDate() {
+		function initData() {
 			var courseId = '${courseId}';
 			if(courseId.length == 0) return;
 			$.ajax({

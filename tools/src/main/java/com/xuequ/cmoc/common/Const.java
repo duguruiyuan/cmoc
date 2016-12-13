@@ -1,7 +1,5 @@
 package com.xuequ.cmoc.common;
 
-import java.util.Map;
-
 import com.xuequ.cmoc.utils.PropertiesUtil;
 
 public final class Const {

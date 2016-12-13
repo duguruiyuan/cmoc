@@ -39,3 +39,5 @@
 <!--[if lt IE 9]><script src="<%=basePath %>/js/html5.js"></script><![endif]-->
 <script src="<%=basePath %>/js/main.js"></script>
 <script src="<%=basePath %>/js/common.js"></script>
+
+<script type="text/javascript" src="<%=basePath %>/js/plugin/localResizeIMG/dist/lrz.bundle.js" ></script>

@@ -92,6 +92,9 @@
   	<if test="params.courseType != null">
   		and course_type = #{params.courseType,jdbcType=VARCHAR}
   	</if>
+  	<if test="params.city != null">
+  		and city = #{params.city,jdbcType=VARCHAR}
+  	</if>
   	<if test="params.shelves != null">
   		and shelves = #{params.shelves,jdbcType=INTEGER}
   	</if>

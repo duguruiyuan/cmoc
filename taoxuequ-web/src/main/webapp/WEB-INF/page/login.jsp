@@ -84,5 +84,4 @@ String basePath = request.getScheme() + "://"
 		};
 	</script>
 	<script src="<%=basePath %>/js/login.js"></script>
-	<script src="<%=basePath %>/js/common.js"></script>
 </html>

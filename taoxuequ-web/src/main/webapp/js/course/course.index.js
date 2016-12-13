@@ -5,6 +5,8 @@ var dataGrid;
 var confirmDialog;
 $(function() {
 	loadData();
+	initCity();
+	initCourseType();
 });
 
 function loadData() {
@@ -42,6 +44,11 @@ function loadData() {
 				return str;
 			}
 		}, {
+			field : 'id',
+			title : '编号',
+			align : "center",
+			resizable : true
+		}, {
 			field : 'shelves',
 			title : '上下架状态',
 			align : "center",
@@ -53,7 +60,7 @@ function loadData() {
 			field : 'name',
 			title : '课程名称',
 			align : "center",
-			width : 150,
+			width : 200,
 			resizable : true,
 			formatter : function(value) {
 				return "<span title='" + value + "'>" + value + "</span>";
@@ -69,13 +76,16 @@ function loadData() {
 			align : "center",
 			resizable : true,
 			formatter : function(value) {
-				return activityTypeFormat(value);
+				return dictDataFormat('course_type', value);
 			}
 		}, {
 			field : 'city',
 			title : '城市',
 			align : "center",
-			resizable : true
+			resizable : true,
+			formatter: function(v) {
+				return dictDataFormat('city',v);
+			}
 		},{
 			field : 'addr',
 			title : '地址',
@@ -99,7 +109,12 @@ function loadData() {
 			}
 		}, {
 			field : 'totalPrice',
-			title : '价格',
+			title : '总价',
+			align : "center",
+			resizable : true
+		}, {
+			field : 'activityPrice',
+			title : '优惠价',
 			align : "center",
 			resizable : true
 		}, {
@@ -146,7 +161,7 @@ function closeFormPanel(formId){
  * 清空表单
  */
 var cleanFormPanel=function(formId){
-	$("#" + formId)[0].reset();
+	$('#' + formId).form('clear');
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
 	$("label").find("span").remove();
@@ -171,7 +186,7 @@ var auditDialog = function(data){
 		return;
 	} else {
 		confirmDialog = $('#auditDelDiolog').dialog({
-			title : "透明人报名审核",
+			title : "课程审核",
 			modal : true,
 			width : 600,
 			top : 100,

@@ -33,6 +33,10 @@
   	select dict_type_id, dict_data_key, dict_data_value
   	from t_sys_dict_data where is_active = 1
   </select>
+  <select id="selectDictDataAll" resultMap="BaseResultMap">
+  	select dict_type_id, dict_data_key, dict_data_value
+  	from t_sys_dict_data
+  </select>
   <select id="selectCountByDictTypeId" resultType="int">
   	select count(1) from t_sys_dict_data where dict_type_id = #{dictTypeId,jdbcType=INTEGER}
   </select>

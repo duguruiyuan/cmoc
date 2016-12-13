@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +42,6 @@ public class BaseController {
 	protected Configuration configInstance() {
 		return Configuration.getInstance();
 	}
+	
 	
 }

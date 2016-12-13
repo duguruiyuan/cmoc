@@ -12,7 +12,9 @@ public class CourseQueryVO extends GridBase{
 	private Integer shelves;
 	
 	private String courseType;
-
+	
+	private String city;
+	
 	public String getName() {
 		return StringUtils.isNotBlank(name) ? name : null;
 	}
@@ -35,6 +37,14 @@ public class CourseQueryVO extends GridBase{
 
 	public void setCourseType(String courseType) {
 		this.courseType = courseType;
+	}
+
+	public String getCity() {
+		return StringUtils.isNotBlank(city) ? city : null;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 	
 	

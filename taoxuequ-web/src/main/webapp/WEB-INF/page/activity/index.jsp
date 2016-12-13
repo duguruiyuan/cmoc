@@ -92,7 +92,9 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label for="city">活动城市</label>								
-							<input class="form-control" name="city" id="city">
+							<select class="form-control city" name="city" id="city">
+								<option value="">请选择</option>
+							</select>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="strStartDate">活动开始时间</label>								
