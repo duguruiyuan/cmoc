@@ -21,6 +21,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.ImgTypeEnum;
 import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.service.IActivityFamilyService;
@@ -51,8 +52,8 @@ public class AttachmentController {
 			ActivityMarines marines = activityMarinesService.selectByPrimaryKey(vo.getResourceId());
 			resultUrl = imgUpload(marines.getActivityId(), vo.getResourceId(), 2, buildInfo);
 		}else if(ImgTypeEnum.MEMBER.getCode().equals(vo.getType())) {
-			ActivityFamily family = activityFamilyService.selectByPrimaryKey(vo.getResourceId());
-			resultUrl = imgUpload(family.getActivityId(), vo.getResourceId(), 3, buildInfo);
+			ActivityChild child = activityFamilyService.selectByPrimaryKey(vo.getResourceId());
+			resultUrl = imgUpload(child.getActivityId(), vo.getResourceId(), 3, buildInfo);
 		}else if(ImgTypeEnum.ACTIVITY.getCode().equals(vo.getType())) {
 			resultUrl = imgUpload(null, vo.getResourceId(), 1, buildInfo);
 		}else if(ImgTypeEnum.COURSE.getCode().equals(vo.getType())) {

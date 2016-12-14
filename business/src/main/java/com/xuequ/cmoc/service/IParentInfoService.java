@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.view.ChildActRecordView;
 
 public interface IParentInfoService {
@@ -14,5 +15,5 @@ public interface IParentInfoService {
 	
 	List<ChildActRecordView> selectChildActRecord(String openid);
 
-	RspResult addParentBind(ParentInfo parentInfo);
+	RspResult addParentBind(ParentInfoVO parentInfo);
 }

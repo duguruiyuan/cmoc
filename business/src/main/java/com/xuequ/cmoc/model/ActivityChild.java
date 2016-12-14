@@ -31,6 +31,8 @@ public class ActivityChild implements Serializable {
     private Date updateTime;
 
     private String isDelete;
+    
+    private String marineName;
 
     private static final long serialVersionUID = 1L;
 
@@ -145,4 +147,13 @@ public class ActivityChild implements Serializable {
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
     }
+
+	public String getMarineName() {
+		return marineName;
+	}
+
+	public void setMarineName(String marineName) {
+		this.marineName = marineName;
+	}
+    
 }

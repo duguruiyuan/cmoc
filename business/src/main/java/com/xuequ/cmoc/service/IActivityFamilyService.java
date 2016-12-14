@@ -3,6 +3,7 @@ package com.xuequ.cmoc.service;
 import java.util.List;
 
 import com.xuequ.cmoc.model.ActivityChild;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.ActivityChildView;
 import com.xuequ.cmoc.view.ActivityFamilyView;
@@ -20,7 +21,9 @@ public interface IActivityFamilyService {
 	
 	public int updateFamilyImg(String imgUrl, Integer id);
 	
-	public int addAndUpdateFamily(ActivityChild child);
+	public int addAndUpdateSignChild(ChildSignInfo child);
 	
 	ActivityChildView selectById(Integer id);
+	
+	ActivityChild selectByPrimaryKey(Integer id);
 }

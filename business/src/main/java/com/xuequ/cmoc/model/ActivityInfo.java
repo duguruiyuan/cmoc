@@ -42,6 +42,8 @@ public class ActivityInfo implements Serializable {
 
     private Integer month;
 
+    private Integer productId;
+    
     private Integer createrUserId;
 
     private String creater;
@@ -194,7 +196,15 @@ public class ActivityInfo implements Serializable {
         this.month = month;
     }
 
-    public Integer getCreaterUserId() {
+    public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	public Integer getCreaterUserId() {
         return createrUserId;
     }
 

@@ -29,6 +29,7 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.AuditReqVO;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
@@ -295,9 +296,9 @@ public class ActivityManageController extends BaseController{
 	}
 		
 	@RequestMapping("json/namelist/addUpdate")
-	public @ResponseBody Object familyAddUpdate(ActivityFamily vo) {
+	public @ResponseBody Object familyAddUpdate(ChildSignInfo vo) {
 		try {
-			activityFamilyService.addAndUpdateFamily(vo);
+			activityFamilyService.addAndUpdateSignChild(vo);
 			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("--familyAddUpdate, error={}", e);

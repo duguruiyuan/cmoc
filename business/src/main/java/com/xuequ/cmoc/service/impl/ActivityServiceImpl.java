@@ -11,25 +11,24 @@ import org.springframework.stereotype.Service;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.dao.ActivityChildMapper;
-import com.xuequ.cmoc.dao.ActivityFamilyMapper;
 import com.xuequ.cmoc.dao.ActivityHmSignMapper;
 import com.xuequ.cmoc.dao.ActivityInfoMapper;
 import com.xuequ.cmoc.dao.ActivityMarinesMapper;
 import com.xuequ.cmoc.dao.ActivityTeacherMapper;
+import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.HollowManInfoMapper;
-import com.xuequ.cmoc.model.ActivityFamily;
-import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.dao.SysCommonMapper;
+import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.ActivityTeacher;
-import com.xuequ.cmoc.model.HollowManInfo;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.ActivityNamelistVO;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.DateUtil;
-import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
 import com.xuequ.cmoc.view.ActivityResourceTypeView;
 
@@ -43,11 +42,11 @@ public class ActivityServiceImpl implements IActivityService {
 	@Autowired
 	private ActivityTeacherMapper activityTeacherMapper;
 	@Autowired
-	private ActivityHmSignMapper activityHmSignMapper;
-	@Autowired
 	private ActivityChildMapper activityChildMapper;
 	@Autowired
-	private HollowManInfoMapper hollowManInfoMapper;
+	private ChildSignInfoMapper childSignInfoMapper;
+	@Autowired
+	private SysCommonMapper sysCommonMapper;
 	
 	@Override
 	public List<ActivityInfoView> selectListByPage(Page<ActivityInfoView> page) {
@@ -89,35 +88,19 @@ public class ActivityServiceImpl implements IActivityService {
 				DateUtil.compare(new Date(), activityInfo.getEndDate()) >= 0) {
 			return new RspResult(StatusEnum.ACTIVITY_OVER);
 		}
-		List<ActivityFamily> familyList = new ArrayList<>();
-		List<ActivityHmSign> hmSignList = new ArrayList<>();
+		List<ChildSignInfo> onlineSignList = new ArrayList<>();
+		List<ActivityChild> childList = new ArrayList<>();
 		List<ActivityTeacher> teacherList = new ArrayList<>();
 		List<ActivityMarines> marinesList = new ArrayList<>();
 		for(ActivityNamelistVO vo : list) {
 			if(StringUtils.isNotBlank(vo.getTeacherMobile())) {
 				ActivityTeacher teacher = new ActivityTeacher();
 				teacher.setActivityId(activityInfo.getId());
-				teacher.setActivityName(activityInfo.getActivityName());
-				teacher.setMarineName(vo.getMarineName());
 				teacher.setName(vo.getTeatherName());
 				teacher.setMobile(vo.getTeacherMobile());
 				teacher.setCreater(user.getUserName());
 				teacher.setCreaterUserId(user.getIdUser());
 				teacherList.add(teacher);
-			}
-			if(StringUtils.isNotBlank(vo.getHmMobile())) {
-				ActivityHmSign hmSign = new ActivityHmSign();
-				hmSign.setActivityId(activityInfo.getId());
-				hmSign.setActivityName(activityInfo.getActivityName());
-				hmSign.setMarineName(vo.getMarineName());
-				hmSign.setHmMobile(vo.getHmMobile());
-				hmSign.setHmName(vo.getHmName());
-				hmSign.setSignDate(DateUtil.getDate(new Date()));
-				hmSign.setIsEffect(1);
-				hmSign.setEffectDate(DateUtil.getDate(new Date()));
-				hmSign.setCreater(user.getUserName());
-				hmSign.setCreaterUserId(user.getIdUser());
-				hmSignList.add(hmSign);
 			}
 			boolean isNew = true;
 			for(ActivityMarines marines : marinesList) {
@@ -135,12 +118,34 @@ public class ActivityServiceImpl implements IActivityService {
 				marines.setCreaterUserId(user.getIdUser());
 				marinesList.add(marines);
 			}
-			ActivityFamily family = BeanUtils.copyAs(vo, ActivityFamily.class);
-			family.setActivityId(activityInfo.getId());
-			family.setActivityName(activityInfo.getActivityName());
-			family.setCreater(user.getUserName());
-			family.setCreaterUserId(user.getIdUser());
-			familyList.add(family);
+			ChildSignInfo childSign = BeanUtils.copyAs(vo, ChildSignInfo.class);
+			childSign.setProductId(activityInfo.getProductId());
+			boolean isSchool = true;
+			for(ChildSignInfo info : onlineSignList) {
+				if(info.getChildIdcard().equals(vo.getChildIdcard()) |
+						info.getEmerMobile().equals(vo.getEmerMobile())) {
+					isSchool = false;
+					childSign.setId(info.getId());
+					break;
+				}
+			}
+			if(isSchool) {
+				childSign.setStatus("002");
+				childSign.setSignResource("ONLINE");
+				String familyNo = childSignInfoMapper.selectFamilyNo(childSign);
+				if(StringUtils.isBlank(familyNo)) {
+					familyNo = sysCommonMapper.selectFamilyNoSeq();
+				}
+				childSign.setFamilyNo(familyNo);
+				childSignInfoMapper.insertSelective(childSign);
+			}
+			ActivityChild child = new ActivityChild();
+			child.setActivityId(activityInfo.getId());
+			child.setMarineName(vo.getMarineName());
+			child.setCreater(user.getUserName());
+			child.setCreaterUserId(user.getIdUser());
+			child.setChildId(childSign.getId());
+			childList.add(child);
 		}
 		for(ActivityMarines marines : marinesList) {
 			activityMarinesMapper.insertSelective(marines);
@@ -154,28 +159,10 @@ public class ActivityServiceImpl implements IActivityService {
 			}
 			activityTeacherMapper.insertSelective(teacher);
 		}
-		for(ActivityHmSign hmSign : hmSignList) {
+		for(ActivityChild child : childList) {
 			for(ActivityMarines marines : marinesList) {
-				if(marines.getMarineName().equals(hmSign.getMarineName())) {
-					hmSign.setMarineId(marines.getId());
-					break;
-				}
-			}
-			HollowManInfo man = hollowManInfoMapper.selectByNameMobile(hmSign.getHmName(), hmSign.getHmMobile());
-			if(man == null) {
-				man = BeanUtils.copyAs(hmSign, HollowManInfo.class);
-				man.setIsActive(1);
-				man.setActiveDate(DateUtil.getDate(new Date()));
-				man.setCreater(user.getUserName());
-				hollowManInfoMapper.insertSelective(man);
-			}
-			hmSign.setHmId(man.getId());
-			activityHmSignMapper.insertSelective(hmSign);
-		}
-		for(ActivityFamily family : familyList) {
-			for(ActivityMarines marines : marinesList) {
-				if(marines.getMarineName().equals(family.getMarineName())) {
-					family.setMarineId(marines.getId());
+				if(marines.getMarineName().equals(child.getMarineName())) {
+					child.setMarineId(marines.getId());
 					break;
 				}
 			}

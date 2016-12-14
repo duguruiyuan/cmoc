@@ -1,5 +1,7 @@
 package com.xuequ.cmoc.dao;
 
+import java.util.List;
+
 import com.xuequ.cmoc.model.ChildSignInfo;
 
 public interface ChildSignInfoMapper {
@@ -14,4 +16,10 @@ public interface ChildSignInfoMapper {
     int updateByPrimaryKeySelective(ChildSignInfo record);
 
     int updateByPrimaryKey(ChildSignInfo record);
+    
+    int selectHasChild(String childName, String emerMobile);
+    
+    List<ChildSignInfo> selectEffectListByProductId(Integer productId);
+    
+    String selectFamilyNo(ChildSignInfo record);
 }

@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
-import com.xuequ.cmoc.dao.ActivityFamilyMapper;
+import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.ParentInfoMapper;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.view.ChildActRecordView;
 
@@ -19,7 +20,7 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 	@Autowired
 	private ParentInfoMapper parentInfoMapper;
 	@Autowired
-	private ActivityFamilyMapper activityFamilyMapper;
+	private ChildSignInfoMapper childSignInfoMapper;
 	
 	@Override
 	public ParentInfo selectByOpenid(String openid) {
@@ -37,8 +38,8 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 	}
 
 	@Override
-	public RspResult addParentBind(ParentInfo parentInfo) {
-		int count = activityFamilyMapper.selectHasChild(parentInfo.getChildName(), parentInfo.getMobile());
+	public RspResult addParentBind(ParentInfoVO parentInfo) {
+		int count = childSignInfoMapper.selectHasChild(parentInfo.getChildName(), parentInfo.getSignMobile());
 		if(count == 0) {
 			return new RspResult(StatusEnum.PARENT_BIND_ERROR);
 		}

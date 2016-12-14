@@ -26,13 +26,19 @@ public class ChildSignInfo implements Serializable {
 
     private String city;
 
-    private String productId;
+    private Integer productId;
+    
+    private String signResource;
 
-    private String parentId;
+    private Integer parentId;
 
     private String familyNo;
 
     private Date createTime;
+    
+    private Integer isEffect;
+    
+    private String status;
 
     private static final long serialVersionUID = 1L;
 
@@ -124,23 +130,31 @@ public class ChildSignInfo implements Serializable {
         this.city = city == null ? null : city.trim();
     }
 
-    public String getProductId() {
-        return productId;
-    }
+    public String getSignResource() {
+		return signResource;
+	}
 
-    public void setProductId(String productId) {
-        this.productId = productId == null ? null : productId.trim();
-    }
+	public void setSignResource(String signResource) {
+		this.signResource = signResource;
+	}
 
-    public String getParentId() {
-        return parentId;
-    }
+    public Integer getProductId() {
+		return productId;
+	}
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId == null ? null : parentId.trim();
-    }
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 
-    public String getFamilyNo() {
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getFamilyNo() {
         return familyNo;
     }
 
@@ -155,4 +169,21 @@ public class ChildSignInfo implements Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public Integer getIsEffect() {
+		return isEffect;
+	}
+
+	public void setIsEffect(Integer isEffect) {
+		this.isEffect = isEffect;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.view.ChildActRecordView;
 
@@ -45,7 +46,7 @@ public class UserController extends BaseController{
 	}
 	
 	@RequestMapping("parent/bind")
-	public @ResponseBody Object parentBind(ParentInfo vo) {
+	public @ResponseBody Object parentBind(ParentInfoVO vo) {
 		try {
 			RspResult result = parentInfoService.addParentBind(vo);
 			return result;

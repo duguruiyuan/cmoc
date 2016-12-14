@@ -24,6 +24,41 @@
     from t_parent_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM t_parent_info
+    WHERE is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectCountByOpenid" resultType="int">
+  	SELECT count(1) FROM t_parent_info
+    WHERE is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  
+  <resultMap id="ChildActResultMap" type="com.xuequ.cmoc.view.ChildActRecordView" >
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
+    <result column="marine_id" property="marineId" jdbcType="INTEGER" />
+    <result column="child_name" property="childName" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="selectChildActRecord" resultMap="ChildActResultMap" parameterType="java.lang.String">
+  	SELECT ai.`activity_name`, ai.`activity_num`, ai.`start_date`, ai.end_date,
+  	ai.id activity_id, am.`marine_name`, am.id marine_id, cs.`child_name` 
+  	FROM t_parent_info pa
+	INNER JOIN t_activity_child ac ON ac.family_no = pa.family_no
+	INNER JOIN t_child_sign_info cs ON ac.chil_id = cs.id
+	INNER JOIN t_activity_marines am ON am.`id` = af.`marine_id`
+	INNER JOIN t_activity_info ai ON ai.`id` = am.`activity_id`
+	WHERE af.`is_delete` = 'N' AND ai.`is_delete`='N'
+	AND pa.`openid` = #{openid,jdbcType=VARCHAR}
+	order by start_date desc
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_parent_info
     where id = #{id,jdbcType=INTEGER}

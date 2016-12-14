@@ -19,6 +19,7 @@
     <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
     <result column="year" property="year" jdbcType="INTEGER" />
     <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
     <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -30,7 +31,7 @@
   <sql id="Base_Column_List" >
     id, activity_name, start_date, end_date, activity_addr, line_name, line_id, activity_peoples, 
     activity_img_url, qrcode_url, city, city_id, activity_num, activity_desc, activity_type, year, 
-    month, creater_user_id, creater, create_time, updater_user_id, updater, updater_time, 
+    month, product_id, creater_user_id, creater, create_time, updater_user_id, updater, updater_time, 
     is_delete
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -110,7 +111,7 @@
       line_id, activity_peoples, activity_img_url, 
       city, city_id, activity_num, 
       activity_desc, activity_type, year, 
-      month, creater_user_id, creater, 
+      month, product_id, creater_user_id, creater, 
       create_time, updater_user_id, updater, 
       updater_time, is_delete)
     values (#{id,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, 
@@ -118,7 +119,7 @@
       #{lineId,jdbcType=INTEGER}, #{activityPeoples,jdbcType=INTEGER}, #{activityImgUrl,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, #{activityNum,jdbcType=VARCHAR}, 
       #{activityDesc,jdbcType=VARCHAR}, #{activityType,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
-      #{month,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
+      #{month,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, 
       #{updaterTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR})
   </insert>
@@ -172,6 +173,9 @@
       </if>
       <if test="month != null" >
         month,
+      </if>
+      <if test="productId != null" >
+        product_id,
       </if>
       <if test="createrUserId != null" >
         creater_user_id,
@@ -244,6 +248,9 @@
       <if test="month != null" >
         #{month,jdbcType=INTEGER},
       </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
       <if test="createrUserId != null" >
         #{createrUserId,jdbcType=INTEGER},
       </if>
@@ -315,6 +322,9 @@
       <if test="month != null" >
         month = #{month,jdbcType=INTEGER},
       </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
       <if test="createrUserId != null" >
         creater_user_id = #{createrUserId,jdbcType=INTEGER},
       </if>
@@ -357,6 +367,7 @@
       activity_type = #{activityType,jdbcType=VARCHAR},
       year = #{year,jdbcType=INTEGER},
       month = #{month,jdbcType=INTEGER},
+      product_id = #{month,jdbcType=INTEGER},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

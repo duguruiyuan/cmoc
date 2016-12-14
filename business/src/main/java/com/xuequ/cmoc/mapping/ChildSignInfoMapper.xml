@@ -13,14 +13,18 @@
     <result column="emer_name" property="emerName" jdbcType="VARCHAR" />
     <result column="emer_mobile" property="emerMobile" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="product_id" property="productId" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="sign_resource" property="signResource" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="family_no" property="familyNo" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_effect" property="isEffect" jdbcType="Integer" />
+  	<result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, child_idcard, child_name, child_mobile, child_age, child_sex, is_disease, disease_desc, 
-    emer_name, emer_mobile, city, product_id, parent_id, family_no, create_time
+    emer_name, emer_mobile, city, product_id, sign_resource, parent_id, family_no, create_time,
+    is_effect, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -36,21 +40,22 @@
   	and emer_mobile = #{emerMobile,jdbcType=VARCHAR}
   </select>
   
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
-    insert into t_child_sign_info (id, child_idcard, child_name, 
-      child_mobile, child_age, child_sex, 
-      is_disease, disease_desc, emer_name, 
-      emer_mobile, city, product_id, 
-      parent_id, family_no, create_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{childIdcard,jdbcType=VARCHAR}, #{childName,jdbcType=VARCHAR}, 
-      #{childMobile,jdbcType=VARCHAR}, #{childAge,jdbcType=INTEGER}, #{childSex,jdbcType=VARCHAR}, 
-      #{isDisease,jdbcType=VARCHAR}, #{diseaseDesc,jdbcType=VARCHAR}, #{emerName,jdbcType=VARCHAR}, 
-      #{emerMobile,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
-      #{parentId,jdbcType=VARCHAR}, #{familyNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
+  <select id="selectEffectListByProductId" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_child_sign_info
+    where is_effect = 1 and status = '001' and 
+    product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectFamilyNo" parameterType="com.xuequ.cmoc.model.ChildSignInfo">
+  	select family_no from t_child_sign_info
+    where is_effect = 1 and 
+    (child_idcard = #{childIdcard,jdbcType=VARCHAR} or emer_mobile = #{emerMobile,jdbcType=VARCHAR}) 
+    limit 1
+  </select>
+  
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
     insert into t_child_sign_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -89,6 +94,9 @@
       <if test="productId != null" >
         product_id,
       </if>
+      <if test="signResource != null" >
+        sign_resource,
+      </if>
       <if test="parentId != null" >
         parent_id,
       </if>
@@ -97,6 +105,12 @@
       </if>
       <if test="createTime != null" >
         create_time,
+      </if>
+      <if test="isEffect != null" >
+        is_effect,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -134,7 +148,10 @@
         #{city,jdbcType=VARCHAR},
       </if>
       <if test="productId != null" >
-        #{productId,jdbcType=VARCHAR},
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="signResource != null" >
+        #{signResource,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=VARCHAR},
@@ -144,6 +161,12 @@
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isEffect != null" >
+         #{is_effect,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -181,7 +204,10 @@
         city = #{city,jdbcType=VARCHAR},
       </if>
       <if test="productId != null" >
-        product_id = #{productId,jdbcType=VARCHAR},
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="signResource != null" >
+        sign_resource = #{signResource,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=VARCHAR},
@@ -191,6 +217,12 @@
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isEffect != null" >
+        is_effect = #{isEffect,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -207,10 +239,13 @@
       emer_name = #{emerName,jdbcType=VARCHAR},
       emer_mobile = #{emerMobile,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
-      product_id = #{productId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER},
+      sign_resource = #{signResource,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=VARCHAR},
       family_no = #{familyNo,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_effect = #{isEffect,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
