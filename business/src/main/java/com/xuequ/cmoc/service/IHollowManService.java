@@ -49,4 +49,10 @@ public interface IHollowManService {
 	List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId);
 	
 	List<HollowManInfo> selectListByIds(List<Integer> ids);
+	/**
+	 * 分页查询透明人带看记录
+	 * @param page
+	 * @return
+	 */
+	List<HollowManTakeView> selectHmTakeListByPage(Page<HollowManTakeView> page);
 }

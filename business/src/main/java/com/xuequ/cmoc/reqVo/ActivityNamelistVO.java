@@ -2,6 +2,8 @@ package com.xuequ.cmoc.reqVo;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 public class ActivityNamelistVO implements Serializable{
 
 	private static final long serialVersionUID = -8038815443583061801L;
@@ -16,25 +18,25 @@ public class ActivityNamelistVO implements Serializable{
 	 */
 	private String childName;
 	/*
-	 * 爸爸姓名	
+	 * 小孩证件号
 	 */
-	private String fatherName;
+	private String childIdcard;
 	/*
-	 * 爸爸手机号码	
+	 * 小孩性别
 	 */
-	private String fatherMobile;
+	private String childSex;
 	/*
-	 * 妈妈姓名	
+	 * 小孩年龄
 	 */
-	private String motherName;
+	private Integer childAge;
 	/*
-	 * 妈妈手机号码	
+	 * 紧急联系人姓名
 	 */
-	private String motherMobile;
+	private String emerName;
 	/*
-	 * 小孩头衔	
+	 * 紧急联系号码
 	 */
-	private String childTitle;
+	private String emerMobile;
 	/*
 	 * 老师姓名	
 	 */
@@ -43,24 +45,6 @@ public class ActivityNamelistVO implements Serializable{
 	 * 老师手机号码	
 	 */
 	private String teacherMobile;
-	/*
-	 * 透明人姓名	
-	 */
-	private String hmName;
-	/*
-	 * 透明人手机号码
-	 */
-	private String hmMobile;
-	/*
-	 * 小孩证件号
-	 */
-	private String childIdcard;
-	/*
-	 * 家长联系电话
-	 */
-	private String parentMobile;
-	
-	
 	public Integer getActivityId() {
 		return activityId;
 	}
@@ -79,35 +63,42 @@ public class ActivityNamelistVO implements Serializable{
 	public void setChildName(String childName) {
 		this.childName = childName;
 	}
-	public String getFatherName() {
-		return fatherName;
+	public String getChildIdcard() {
+		return childIdcard;
 	}
-	public void setFatherName(String fatherName) {
-		this.fatherName = fatherName;
+	public void setChildIdcard(String childIdcard) {
+		this.childIdcard = childIdcard;
 	}
-	public String getFatherMobile() {
-		return fatherMobile;
+	public String getChildSex() {
+		if(StringUtils.isNotBlank(childSex)) {
+			if("男".equals(childSex)) {
+				return "F";
+			}else{
+				return "M";
+			}
+		}
+		return null;
 	}
-	public void setFatherMobile(String fatherMobile) {
-		this.fatherMobile = fatherMobile;
+	public void setChildSex(String childSex) {
+		this.childSex = childSex;
 	}
-	public String getMotherName() {
-		return motherName;
+	public Integer getChildAge() {
+		return childAge;
 	}
-	public void setMotherName(String motherName) {
-		this.motherName = motherName;
+	public void setChildAge(Integer childAge) {
+		this.childAge = childAge;
 	}
-	public String getMotherMobile() {
-		return motherMobile;
+	public String getEmerName() {
+		return emerName;
 	}
-	public void setMotherMobile(String motherMobile) {
-		this.motherMobile = motherMobile;
+	public void setEmerName(String emerName) {
+		this.emerName = emerName;
 	}
-	public String getChildTitle() {
-		return childTitle;
+	public String getEmerMobile() {
+		return emerMobile;
 	}
-	public void setChildTitle(String childTitle) {
-		this.childTitle = childTitle;
+	public void setEmerMobile(String emerMobile) {
+		this.emerMobile = emerMobile;
 	}
 	public String getTeatherName() {
 		return teatherName;
@@ -121,29 +112,5 @@ public class ActivityNamelistVO implements Serializable{
 	public void setTeacherMobile(String teacherMobile) {
 		this.teacherMobile = teacherMobile;
 	}
-	public String getHmName() {
-		return hmName;
-	}
-	public void setHmName(String hmName) {
-		this.hmName = hmName;
-	}
-	public String getHmMobile() {
-		return hmMobile;
-	}
-	public void setHmMobile(String hmMobile) {
-		this.hmMobile = hmMobile;
-	}
-	public String getChildIdcard() {
-		return childIdcard;
-	}
-	public void setChildIdcard(String childIdcard) {
-		this.childIdcard = childIdcard;
-	}
-	public String getParentMobile() {
-		return parentMobile;
-	}
-	public void setParentMobile(String parentMobile) {
-		this.parentMobile = parentMobile;
-	}
-
+	
 }

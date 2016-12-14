@@ -119,6 +119,7 @@
     <result column="hm_id" jdbcType="INTEGER" property="hmId" />
     <result column="hm_name" jdbcType="VARCHAR" property="hmName" />
     <result column="hm_mobile" jdbcType="VARCHAR" property="hmMobile" />
+    <result column="activity_id" jdbcType="INTEGER" property="activityId" />
     <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
     <result column="activity_num" jdbcType="VARCHAR" property="activityNum" />
     <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
@@ -128,7 +129,7 @@
   </resultMap>
   <select id="selectHmTakeListByHmId" resultMap="TakeBaseResult">
   	 SELECT hs.`hm_id`, hm.hm_name, hm.hm_mobile,ai.`activity_name`,ai.`activity_num`,ai.`start_date`,
-		ai.`activity_type`, nu.image_num, nu2.video_num
+		ai.`activity_type`, ai.id activity_id, nu.image_num, nu2.video_num
 	 FROM t_activity_hm_sign hs
 	 INNER JOIN t_activity_info ai ON hs.`activity_id` = ai.`id`
 	 INNER JOIN t_hollow_man_info hm ON hs.`hm_id` = hm.id
@@ -142,7 +143,48 @@
 	   WHERE is_delete = 'N' AND msg_Type = 'shortvideo'
 	   GROUP BY hm_Sign_Id
 	 ) nu2 ON nu2.hm_sign_id = hs.`id`
-	 WHERE hs.hm_id = #{hmId,jdbcType=INTEGER}
+	 WHERE hs.is_effect = 1 and hs.hm_id = #{hmId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectHmTakeListByPage" resultMap="TakeBaseResult">
+  	SELECT hs.`hm_id`, hm.hm_name, hm.hm_mobile,ai.`activity_name`,ai.`activity_num`,ai.`start_date`,
+		ai.`activity_type`, ai.id activity_id, nu.image_num, nu2.video_num
+	 FROM t_activity_hm_sign hs
+	 INNER JOIN t_activity_info ai ON hs.`activity_id` = ai.`id`
+	 INNER JOIN t_hollow_man_info hm ON hs.`hm_id` = hm.id
+	 LEFT JOIN (
+	   SELECT COUNT(1) image_num, hm_sign_id FROM t_wechat_receive_message
+	   WHERE is_delete = 'N' AND msg_type = 'image'
+	   GROUP BY hm_Sign_Id
+	 ) nu ON nu.hm_sign_id = hs.`id`
+	 LEFT JOIN (
+	   SELECT COUNT(1) video_num, hm_sign_id FROM t_wechat_receive_message
+	   WHERE is_delete = 'N' AND msg_Type = 'shortvideo'
+	   GROUP BY hm_Sign_Id
+	 ) nu2 ON nu2.hm_sign_id = hs.`id`
+	 WHERE hs.is_effect = 1
+	 <if test="params.hmName != null">
+	 	and hm.hm_name = #{params.hmName,jdbcType=VARCHAR}
+	 </if>
+	 <if test="params.hmMobile != null">
+	 	and hm.hm_mobile = #{params.hmMobile,jdbcType=VARCHAR}
+	 </if>
+	 <if test="params.activityId != null">
+	 	and ai.id = #{params.activityId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="params.activityName != null">
+	 	and ai.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+	 </if>
+	 <if test="params.activityType != null">
+	 	and ai.activity_type = #{params.activityType,jdbcType=INTEGER}
+	 </if>
+	 <if test="params.startDate != null">
+		and DATE_FORMAT(ai.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+	 </if>
+	 <if test="params.endDate != null">
+		and DATE_FORMAT(ai.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+	 </if>
+	 order by ai.`start_date` desc
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

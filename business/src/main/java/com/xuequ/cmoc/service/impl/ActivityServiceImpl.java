@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.dao.ActivityChildMapper;
 import com.xuequ.cmoc.dao.ActivityFamilyMapper;
 import com.xuequ.cmoc.dao.ActivityHmSignMapper;
 import com.xuequ.cmoc.dao.ActivityInfoMapper;
@@ -44,7 +45,7 @@ public class ActivityServiceImpl implements IActivityService {
 	@Autowired
 	private ActivityHmSignMapper activityHmSignMapper;
 	@Autowired
-	private ActivityFamilyMapper activityFamilyMapper;
+	private ActivityChildMapper activityChildMapper;
 	@Autowired
 	private HollowManInfoMapper hollowManInfoMapper;
 	
@@ -178,7 +179,7 @@ public class ActivityServiceImpl implements IActivityService {
 					break;
 				}
 			}
-			activityFamilyMapper.insertSelective(family);
+			activityChildMapper.insertSelective(child);
 		}
 		return new RspResult(StatusEnum.SUCCESS);
 	}

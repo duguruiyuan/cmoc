@@ -40,6 +40,12 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectHasChild" resultType="int">
+  	select count(1) from t_activity_family
+  	where is_delete = 'N' and child_name = #{childName,jdbcType=VARCHAR}
+  	and parent_mobile = #{parentMobile,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectListByMarineId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

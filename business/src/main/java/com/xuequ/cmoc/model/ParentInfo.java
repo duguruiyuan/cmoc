@@ -8,17 +8,19 @@ public class ParentInfo implements Serializable {
 
     private String relation;
 
-    private String childName;
-
-    private String mobile;
+    private String parentMobile;
 
     private String parentName;
 
     private String openid;
 
-    private Integer sex;
-
     private String city;
+
+    private Integer points;
+
+    private String headImg;
+
+    private String familyNo;
 
     private String isDelete;
 
@@ -42,20 +44,12 @@ public class ParentInfo implements Serializable {
         this.relation = relation == null ? null : relation.trim();
     }
 
-    public String getChildName() {
-        return childName;
+    public String getParentMobile() {
+        return parentMobile;
     }
 
-    public void setChildName(String childName) {
-        this.childName = childName == null ? null : childName.trim();
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
+    public void setParentMobile(String parentMobile) {
+        this.parentMobile = parentMobile == null ? null : parentMobile.trim();
     }
 
     public String getParentName() {
@@ -74,20 +68,36 @@ public class ParentInfo implements Serializable {
         this.openid = openid == null ? null : openid.trim();
     }
 
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
     public String getCity() {
         return city;
     }
 
     public void setCity(String city) {
         this.city = city == null ? null : city.trim();
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg == null ? null : headImg.trim();
+    }
+
+    public String getFamilyNo() {
+        return familyNo;
+    }
+
+    public void setFamilyNo(String familyNo) {
+        this.familyNo = familyNo == null ? null : familyNo.trim();
     }
 
     public String getIsDelete() {

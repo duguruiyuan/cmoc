@@ -21,6 +21,8 @@ public class HollowManTakeView implements Serializable {
 	
 	private String activityType;
 	
+	private Integer activityId;
+	
 	private Integer imageNum;
 	
 	private Integer videoNum;
@@ -79,6 +81,14 @@ public class HollowManTakeView implements Serializable {
 
 	public void setActivityType(String activityType) {
 		this.activityType = activityType;
+	}
+
+	public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
 	}
 
 	public Integer getImageNum() {

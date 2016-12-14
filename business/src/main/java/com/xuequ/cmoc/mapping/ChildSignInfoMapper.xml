@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.ChildSignInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ChildSignInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="child_idcard" property="childIdcard" jdbcType="VARCHAR" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="child_mobile" property="childMobile" jdbcType="VARCHAR" />
+    <result column="child_age" property="childAge" jdbcType="INTEGER" />
+    <result column="child_sex" property="childSex" jdbcType="VARCHAR" />
+    <result column="is_disease" property="isDisease" jdbcType="VARCHAR" />
+    <result column="disease_desc" property="diseaseDesc" jdbcType="VARCHAR" />
+    <result column="emer_name" property="emerName" jdbcType="VARCHAR" />
+    <result column="emer_mobile" property="emerMobile" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="family_no" property="familyNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, child_idcard, child_name, child_mobile, child_age, child_sex, is_disease, disease_desc, 
+    emer_name, emer_mobile, city, product_id, parent_id, family_no, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_child_sign_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据小孩姓名和紧急联系电话判断用户是否可以进行绑定 -->
+  <select id="selectHasChild" resultType="int">
+  	select count(1) from t_child_sign_info
+  	where child_name = #{childName, jdbcType=VARCHAR}
+  	and emer_mobile = #{emerMobile,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
+    insert into t_child_sign_info (id, child_idcard, child_name, 
+      child_mobile, child_age, child_sex, 
+      is_disease, disease_desc, emer_name, 
+      emer_mobile, city, product_id, 
+      parent_id, family_no, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{childIdcard,jdbcType=VARCHAR}, #{childName,jdbcType=VARCHAR}, 
+      #{childMobile,jdbcType=VARCHAR}, #{childAge,jdbcType=INTEGER}, #{childSex,jdbcType=VARCHAR}, 
+      #{isDisease,jdbcType=VARCHAR}, #{diseaseDesc,jdbcType=VARCHAR}, #{emerName,jdbcType=VARCHAR}, 
+      #{emerMobile,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{familyNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
+    insert into t_child_sign_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="childIdcard != null" >
+        child_idcard,
+      </if>
+      <if test="childName != null" >
+        child_name,
+      </if>
+      <if test="childMobile != null" >
+        child_mobile,
+      </if>
+      <if test="childAge != null" >
+        child_age,
+      </if>
+      <if test="childSex != null" >
+        child_sex,
+      </if>
+      <if test="isDisease != null" >
+        is_disease,
+      </if>
+      <if test="diseaseDesc != null" >
+        disease_desc,
+      </if>
+      <if test="emerName != null" >
+        emer_name,
+      </if>
+      <if test="emerMobile != null" >
+        emer_mobile,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="familyNo != null" >
+        family_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="childIdcard != null" >
+        #{childIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="childName != null" >
+        #{childName,jdbcType=VARCHAR},
+      </if>
+      <if test="childMobile != null" >
+        #{childMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="childAge != null" >
+        #{childAge,jdbcType=INTEGER},
+      </if>
+      <if test="childSex != null" >
+        #{childSex,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisease != null" >
+        #{isDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseDesc != null" >
+        #{diseaseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="emerName != null" >
+        #{emerName,jdbcType=VARCHAR},
+      </if>
+      <if test="emerMobile != null" >
+        #{emerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="familyNo != null" >
+        #{familyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
+    update t_child_sign_info
+    <set >
+      <if test="childIdcard != null" >
+        child_idcard = #{childIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="childName != null" >
+        child_name = #{childName,jdbcType=VARCHAR},
+      </if>
+      <if test="childMobile != null" >
+        child_mobile = #{childMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="childAge != null" >
+        child_age = #{childAge,jdbcType=INTEGER},
+      </if>
+      <if test="childSex != null" >
+        child_sex = #{childSex,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisease != null" >
+        is_disease = #{isDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseDesc != null" >
+        disease_desc = #{diseaseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="emerName != null" >
+        emer_name = #{emerName,jdbcType=VARCHAR},
+      </if>
+      <if test="emerMobile != null" >
+        emer_mobile = #{emerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="familyNo != null" >
+        family_no = #{familyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
+    update t_child_sign_info
+    set child_idcard = #{childIdcard,jdbcType=VARCHAR},
+      child_name = #{childName,jdbcType=VARCHAR},
+      child_mobile = #{childMobile,jdbcType=VARCHAR},
+      child_age = #{childAge,jdbcType=INTEGER},
+      child_sex = #{childSex,jdbcType=VARCHAR},
+      is_disease = #{isDisease,jdbcType=VARCHAR},
+      disease_desc = #{diseaseDesc,jdbcType=VARCHAR},
+      emer_name = #{emerName,jdbcType=VARCHAR},
+      emer_mobile = #{emerMobile,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      family_no = #{familyNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

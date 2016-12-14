@@ -1,28 +1,188 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xuequ.cmoc.dao.ParentInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ParentInfo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="relation" property="relation" jdbcType="VARCHAR" />
-    <result column="child_name" property="childName" jdbcType="VARCHAR" />
-    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-    <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
-    <result column="openid" property="openid" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="INTEGER" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuequ.cmoc.dao.ParentInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ParentInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+    <result column="parent_mobile" jdbcType="VARCHAR" property="parentMobile" />
+    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="points" jdbcType="INTEGER" property="points" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="family_no" jdbcType="VARCHAR" property="familyNo" />
+    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, relation, child_name, mobile, parent_name, openid, sex, city, is_delete, create_time
+  <sql id="Base_Column_List">
+    id, relation, parent_mobile, parent_name, openid, city, points, head_img, family_no, 
+    is_delete, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_parent_info
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_parent_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ParentInfo">
+    insert into t_parent_info (id, relation, parent_mobile, 
+      parent_name, openid, city, 
+      points, head_img, family_no, 
+      is_delete, create_time)
+    values (#{id,jdbcType=INTEGER}, #{relation,jdbcType=VARCHAR}, #{parentMobile,jdbcType=VARCHAR}, 
+      #{parentName,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{points,jdbcType=INTEGER}, #{headImg,jdbcType=VARCHAR}, #{familyNo,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ParentInfo">
+    insert into t_parent_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="relation != null">
+        relation,
+      </if>
+      <if test="parentMobile != null">
+        parent_mobile,
+      </if>
+      <if test="parentName != null">
+        parent_name,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="points != null">
+        points,
+      </if>
+      <if test="headImg != null">
+        head_img,
+      </if>
+      <if test="familyNo != null">
+        family_no,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="relation != null">
+        #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMobile != null">
+        #{parentMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null">
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="points != null">
+        #{points,jdbcType=INTEGER},
+      </if>
+      <if test="headImg != null">
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="familyNo != null">
+        #{familyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ParentInfo">
+    update t_parent_info
+    <set>
+      <if test="relation != null">
+        relation = #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMobile != null">
+        parent_mobile = #{parentMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null">
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="points != null">
+        points = #{points,jdbcType=INTEGER},
+      </if>
+      <if test="headImg != null">
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="familyNo != null">
+        family_no = #{familyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ParentInfo">
+    update t_parent_info
+    set relation = #{relation,jdbcType=VARCHAR},
+      parent_mobile = #{parentMobile,jdbcType=VARCHAR},
+      parent_name = #{parentName,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      points = #{points,jdbcType=INTEGER},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      family_no = #{familyNo,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ParentInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+    <result column="child_name" jdbcType="VARCHAR" property="childName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, relation, child_name, mobile, parent_name, openid, sex, city, is_delete, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_parent_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
     SELECT 
     <include refid="Base_Column_List" />
     FROM t_parent_info
@@ -34,18 +194,18 @@
     WHERE is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
   </select>
   
-  <resultMap id="ChildActResultMap" type="com.xuequ.cmoc.view.ChildActRecordView" >
-    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
-    <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
-    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
-    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
-    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
-    <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
-    <result column="marine_id" property="marineId" jdbcType="INTEGER" />
-    <result column="child_name" property="childName" jdbcType="INTEGER" />
+  <resultMap id="ChildActResultMap" type="com.xuequ.cmoc.view.ChildActRecordView">
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="activity_num" jdbcType="VARCHAR" property="activityNum" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="activity_id" jdbcType="INTEGER" property="activityId" />
+    <result column="marine_name" jdbcType="VARCHAR" property="marineName" />
+    <result column="marine_id" jdbcType="INTEGER" property="marineId" />
+    <result column="child_name" jdbcType="INTEGER" property="childName" />
   </resultMap>
   
-  <select id="selectChildActRecord" resultMap="ChildActResultMap" parameterType="java.lang.String">
+  <select id="selectChildActRecord" parameterType="java.lang.String" resultMap="ChildActResultMap">
   	SELECT ai.`activity_name`, ai.`activity_num`, ai.`start_date`, ai.end_date,
   	ai.id activity_id, am.`marine_name`, am.id marine_id, af.`child_name` 
   	FROM t_parent_info pa
@@ -57,11 +217,11 @@
 	order by start_date desc
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_parent_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ParentInfo" >
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.ParentInfo">
     insert into t_parent_info (id, relation, child_name, 
       mobile, parent_name, openid, 
       sex, city, is_delete, 
@@ -71,107 +231,107 @@
       #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ParentInfo" >
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ParentInfo">
     insert into t_parent_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="relation != null" >
+      <if test="relation != null">
         relation,
       </if>
-      <if test="childName != null" >
+      <if test="childName != null">
         child_name,
       </if>
-      <if test="mobile != null" >
+      <if test="mobile != null">
         mobile,
       </if>
-      <if test="parentName != null" >
+      <if test="parentName != null">
         parent_name,
       </if>
-      <if test="openid != null" >
+      <if test="openid != null">
         openid,
       </if>
-      <if test="sex != null" >
+      <if test="sex != null">
         sex,
       </if>
-      <if test="city != null" >
+      <if test="city != null">
         city,
       </if>
-      <if test="isDelete != null" >
+      <if test="isDelete != null">
         is_delete,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="relation != null" >
+      <if test="relation != null">
         #{relation,jdbcType=VARCHAR},
       </if>
-      <if test="childName != null" >
+      <if test="childName != null">
         #{childName,jdbcType=VARCHAR},
       </if>
-      <if test="mobile != null" >
+      <if test="mobile != null">
         #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="parentName != null" >
+      <if test="parentName != null">
         #{parentName,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
+      <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
+      <if test="sex != null">
         #{sex,jdbcType=INTEGER},
       </if>
-      <if test="city != null" >
+      <if test="city != null">
         #{city,jdbcType=VARCHAR},
       </if>
-      <if test="isDelete != null" >
+      <if test="isDelete != null">
         #{isDelete,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ParentInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ParentInfo">
     update t_parent_info
-    <set >
-      <if test="relation != null" >
+    <set>
+      <if test="relation != null">
         relation = #{relation,jdbcType=VARCHAR},
       </if>
-      <if test="childName != null" >
+      <if test="childName != null">
         child_name = #{childName,jdbcType=VARCHAR},
       </if>
-      <if test="mobile != null" >
+      <if test="mobile != null">
         mobile = #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="parentName != null" >
+      <if test="parentName != null">
         parent_name = #{parentName,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
+      <if test="openid != null">
         openid = #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
+      <if test="sex != null">
         sex = #{sex,jdbcType=INTEGER},
       </if>
-      <if test="city != null" >
+      <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
       </if>
-      <if test="isDelete != null" >
+      <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ParentInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ParentInfo">
     update t_parent_info
     set relation = #{relation,jdbcType=VARCHAR},
       child_name = #{childName,jdbcType=VARCHAR},

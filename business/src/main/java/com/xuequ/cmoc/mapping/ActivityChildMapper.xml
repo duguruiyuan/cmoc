@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.ActivityChildMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ActivityChild" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="child_id" property="childId" jdbcType="INTEGER" />
+    <result column="child_img" property="childImg" jdbcType="VARCHAR" />
+    <result column="child_title" property="childTitle" jdbcType="VARCHAR" />
+    <result column="child_comment" property="childComment" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="marine_id" property="marineId" jdbcType="INTEGER" />
+    <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater_user_id" property="updaterUserId" jdbcType="INTEGER" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, child_id, child_img, child_title, child_comment, activity_id, marine_id, creater_user_id, 
+    creater, create_time, updater_user_id, updater, update_time, is_delete
+  </sql>
+  
+  <sql id="Child_Base_Column_List">
+  	ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, ac.marine_id, 
+  	ac.creater_user_id, ac.creater, ac.create_time, cs.child_idcard, cs.child_name, 
+  	cs.child_mobile, cs.child_age, cs.child_sex, cs.is_disease, cs.disease_desc, cs.emer_name, 
+  	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id, ai.activity_name, 
+  	am.marine_name, ai.activity_num, ai.activity_type
+  </sql>
+  <resultMap id="ChildBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityChildView" >
+  	<result column="child_idcard" property="childIdcard" jdbcType="VARCHAR" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="child_mobile" property="childMobile" jdbcType="VARCHAR" />
+    <result column="child_age" property="childAge" jdbcType="INTEGER" />
+    <result column="child_sex" property="childSex" jdbcType="VARCHAR" />
+    <result column="is_disease" property="isDisease" jdbcType="VARCHAR" />
+    <result column="disease_desc" property="diseaseDesc" jdbcType="VARCHAR" />
+    <result column="emer_name" property="emerName" jdbcType="VARCHAR" />
+    <result column="emer_mobile" property="emerMobile" jdbcType="VARCHAR" />
+     <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="family_no" property="familyNo" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+  	
+  	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
+    <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectListByMarineId" resultMap="ChildBaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, ac.marine_id, 
+  	ac.creater_user_id, ac.creater, ac.create_time, cs.child_idcard, cs.child_name, 
+  	cs.child_mobile, cs.child_age, cs.child_sex, cs.is_disease, cs.disease_desc, cs.emer_name, 
+  	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id
+    from t_activity_child ac, t_child_sign_info cs 
+    where cs.id = ac.child_id and ac.is_delete = 'N' and
+	ac.marine_id = #{marineId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectById" resultMap="ChildBaseResultMap" parameterType="java.lang.Integer">
+  	select 
+  	ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, ac.marine_id, 
+  	ac.creater_user_id, ac.creater, ac.create_time, cs.child_idcard, cs.child_name, 
+  	cs.child_mobile, cs.child_age, cs.child_sex, cs.is_disease, cs.disease_desc, cs.emer_name, 
+  	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id, ai.activity_name, 
+  	am.marine_name, ai.activity_num, ai.activity_type
+  	from t_activity_child ac 
+  	inner join t_child_sign_info cs on ac.child_id = cs.id 
+  	inner join t_activity_info ai on ac.activity_id = ai.id
+  	inner join t_activity_marines am on am.id = ac.marine_id
+    where ac.is_delete='N' and ac.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectListByPage" resultMap="PageBaseResultMap" >
+  	select 
+  	ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, ac.marine_id, 
+  	ac.creater_user_id, ac.creater, ac.create_time, cs.child_idcard, cs.child_name, 
+  	cs.child_mobile, cs.child_age, cs.child_sex, cs.is_disease, cs.disease_desc, cs.emer_name, 
+  	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id, ai.activity_name, 
+  	am.marine_name, ai.activity_num, ai.activity_type
+  	from t_activity_child ac 
+  	inner join t_child_sign_info cs on ac.child_id = cs.id 
+  	inner join t_activity_info ai on ac.activity_id = ai.id
+  	inner join t_activity_marines am on am.id = ac.marine_id
+    where ac.is_delete='N'
+    <if test="params.activityId != null">
+    	and ac.activity_id = #{params.activityId,jdbcType=INTEGER}
+    </if>
+    <if test="params.childName != null">
+    	and cs.child_name = #{params.childName,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityType != null">
+    	and ai.activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityName != null">
+    	and ai.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.startDate != null">
+    	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="params.endDate != null">
+    	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+    </if>
+    order by f.id desc
+  </select>
+	
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity_child
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityChild" >
+    insert into t_activity_child
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="childId != null" >
+        child_id,
+      </if>
+      <if test="childImg != null" >
+        child_img,
+      </if>
+      <if test="childTitle != null" >
+        child_title,
+      </if>
+      <if test="childComment != null" >
+        child_comment,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="marineId != null" >
+        marine_id,
+      </if>
+      <if test="createrUserId != null" >
+        creater_user_id,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updaterUserId != null" >
+        updater_user_id,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="childId != null" >
+        #{childId,jdbcType=INTEGER},
+      </if>
+      <if test="childImg != null" >
+        #{childImg,jdbcType=VARCHAR},
+      </if>
+      <if test="childTitle != null" >
+        #{childTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="childComment != null" >
+        #{childComment,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="marineId != null" >
+        #{marineId,jdbcType=INTEGER},
+      </if>
+      <if test="createrUserId != null" >
+        #{createrUserId,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterUserId != null" >
+        #{updaterUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ActivityChild" >
+    update t_activity_child
+    <set >
+      <if test="childId != null" >
+        child_id = #{childId,jdbcType=INTEGER},
+      </if>
+      <if test="childImg != null" >
+        child_img = #{childImg,jdbcType=VARCHAR},
+      </if>
+      <if test="childTitle != null" >
+        child_title = #{childTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="childComment != null" >
+        child_comment = #{childComment,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="marineId != null" >
+        marine_id = #{marineId,jdbcType=INTEGER},
+      </if>
+      <if test="createrUserId != null" >
+        creater_user_id = #{createrUserId,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterUserId != null" >
+        updater_user_id = #{updaterUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

@@ -32,12 +32,13 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<table tableName="t_img_group" domainObjectName="ImgGroup"
+		<table tableName="t_child_sign_info" domainObjectName="ChildSignInfo"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true">
 			<property name="useActualColumnNames" value="false" />
 		</table>
+		
 		
 	</context>
 </generatorConfiguration>

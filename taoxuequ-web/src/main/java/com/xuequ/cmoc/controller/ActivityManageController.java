@@ -38,16 +38,20 @@ import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IActivityTeacherService;
+import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
+import com.xuequ.cmoc.view.ActivityChildView;
 import com.xuequ.cmoc.view.ActivityFamilyView;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
 import com.xuequ.cmoc.view.ActivityMarinesView;
 import com.xuequ.cmoc.view.ActivityTeacherView;
+import com.xuequ.cmoc.view.HollowManTakeView;
 import com.xuequ.cmoc.vo.ActivityQueryVO;
 import com.xuequ.cmoc.vo.ActivitySubmitVO;
+import com.xuequ.cmoc.vo.HmResourceQueryVO;
 
 /**
  * 活动管理
@@ -71,6 +75,8 @@ public class ActivityManageController extends BaseController{
 	private IActivityHmService activityHmService;
 	@Autowired
 	private IActivityTeacherService activityTeacherService;
+	@Autowired
+	private IHollowManService hollowManService;
 	
 	/**
 	 * 活动管理页
@@ -173,7 +179,7 @@ public class ActivityManageController extends BaseController{
 	
 	@RequestMapping("json/namelist/query")
 	@ResponseBody Object namelistQuery(ActivityQueryVO vo) {
-		Page<ActivityFamilyView> page = new Page<ActivityFamilyView>();
+		Page<ActivityChildView> page = new Page<ActivityChildView>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("activityId", vo.getActivityId());
 		paramMap.put("childName", vo.getChildName());
@@ -185,7 +191,7 @@ public class ActivityManageController extends BaseController{
 		page.setParams(paramMap);
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
-		List<ActivityFamilyView> list = activityFamilyService.selectListByPage(page);
+		List<ActivityChildView> list = activityFamilyService.selectListByPage(page);
 		grid.setRows(list);
 		grid.setTotal(page.getTotalRecord());
 		return grid;
@@ -258,9 +264,12 @@ public class ActivityManageController extends BaseController{
             			if(j == 0) namelistVO.setMarineName(val.trim());
             			else if(j == 1) namelistVO.setChildName(val.trim());
             			else if(j == 2) namelistVO.setChildIdcard(val.trim());
-            			else if(j == 3) namelistVO.setParentMobile(val.trim());
-            			else if(j == 4) namelistVO.setTeatherName(val.trim());
-            			else if(j == 5) namelistVO.setTeacherMobile(val.trim());
+            			else if(j == 3) namelistVO.setChildSex(val.trim());
+            			else if(j == 4) namelistVO.setChildAge(StringUtils.isNotBlank(val.trim()) ? Integer.valueOf(val.trim()) : null);
+            			else if(j == 5) namelistVO.setEmerName(val.trim());
+            			else if(j == 6) namelistVO.setEmerMobile(val.trim());
+            			else if(j == 7) namelistVO.setTeatherName(val.trim());
+            			else if(j == 8) namelistVO.setTeacherMobile(val.trim());
             		}
             	}
             	list.add(namelistVO);
@@ -371,5 +380,23 @@ public class ActivityManageController extends BaseController{
 			logger.error("--auditHm, error={}", e);
 		}
 		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("hm/resource/total")
+	@ResponseBody Object hmResourceTotal(HmResourceQueryVO vo) {
+		try {
+			Page<HollowManTakeView> page = new Page<HollowManTakeView>();
+			Grid grid = new Grid();
+			page.setParams(vo);
+			page.setPageNo(vo.getPage());
+			page.setPageSize(vo.getRows());
+			List<HollowManTakeView> list = hollowManService.selectHmTakeListByPage(page);
+			grid.setRows(list);
+			grid.setTotal(page.getTotalRecord());
+			return grid;
+		} catch (Exception e) {
+			logger.error("--hmResourceTotal, error={}", e);
+		}
+		return null;
 	}
 }

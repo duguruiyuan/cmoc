@@ -77,4 +77,9 @@ public class HollowManServiceImpl implements IHollowManService {
 		return hollowManInfoMapper.selectListByIds(ids);
 	}
 
+	@Override
+	public List<HollowManTakeView> selectHmTakeListByPage(Page<HollowManTakeView> page) {
+		return hollowManInfoMapper.selectHmTakeListByPage(page);
+	}
+
 }

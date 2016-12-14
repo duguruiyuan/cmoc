@@ -19,24 +19,20 @@
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<td>姓名: <input class="form-control1" type="text" name="hmName" id="hmName"/></td>
-									<td>手机号码： <input class="form-control1" type="text" name="hmMobile" id="hmMobile"/></td>
-									<td>证件号码： <input class="form-control1" type="text" name="idCard" id="idCard"/></td>
+									<td>活动编号: <input class="form-control1 number" type="text" name="activityId" id="activityId"/></td>
+									<td>活动名称： <input class="form-control1" type="text" name="activityName" id="activityName"/></td>
+									<td>活动类型： 
+										<select class="form-control1 activityType" id="activityType" name="activityType">
+											<option value="">全部</option>
+										</select>
 								 </tr>
 								 <tr>
-									<td>性别: 
-										<select class="form-control1" id="sex" name="sex">
-											<option value="">全部</option>
-											<option value="F">帅哥</option>
-											<option value="M">美女</option>
-										</select>
-									</td>
-									<td>状态： 
-										<select class="form-control1" id="isActive" name="isActive">
-											<option value="">全部</option>
-											<option value="0">注册申请中</option>
-											<option value="1">已激活</option>
-										</select>
+									<td colspan="3">活动开始时间:  <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
+										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
+								 </tr>
+								 <tr>
+									<td>透明人姓名: <input class="form-control1" type="text" name="hmName" id="hmName"/></td>
+									<td colspan="2">透明人号码： <input class="form-control1" type="text" name="hmMobile" id="hmMobile"/></td>
 								 </tr>
 								 <tr>
 									<td colspan="3">

@@ -38,4 +38,6 @@ public interface HollowManInfoMapper {
     List<HollowManTakeView> selectHmTakeListByHmId(Integer hmId);
     
     List<HollowManInfo> selectListByIds(List<Integer> ids);
+    
+    List<HollowManTakeView> selectHmTakeListByPage(Page<HollowManTakeView> page);
 }

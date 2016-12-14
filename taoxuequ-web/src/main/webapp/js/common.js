@@ -232,7 +232,7 @@ $(".number").blur(function() {
 	var value = this.value;
 	if(value) {
 		if(!positiveValidate(value)) {
-			mui.alert('请输入正确格式','系统提示');
+			$.messager.alert('系统提示',"只能输入数字！", 'info');
 			this.value = null;
 		}
 	}

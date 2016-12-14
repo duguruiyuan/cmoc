@@ -2,9 +2,9 @@ package com.xuequ.cmoc.service;
 
 import java.util.List;
 
-import com.xuequ.cmoc.model.ActivityFamily;
-import com.xuequ.cmoc.model.ActivityMarines;
+import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.ActivityChildView;
 import com.xuequ.cmoc.view.ActivityFamilyView;
 
 public interface IActivityFamilyService {
@@ -14,15 +14,13 @@ public interface IActivityFamilyService {
 	 * @param page
 	 * @return
 	 */
-	public List<ActivityFamilyView> selectListByPage(Page<ActivityFamilyView> page);
+	public List<ActivityChildView> selectListByPage(Page<ActivityChildView> page);
 
-	List<ActivityFamily> selectListByMarineId(Integer marineId);
+	List<ActivityChildView> selectListByMarineId(Integer marineId);
 	
 	public int updateFamilyImg(String imgUrl, Integer id);
 	
-	public ActivityFamily selectByPrimaryKey(Integer id);
+	public int addAndUpdateFamily(ActivityChild child);
 	
-	public int addAndUpdateFamily(ActivityFamily family);
-	
-	ActivityFamilyView selectById(Integer id);
+	ActivityChildView selectById(Integer id);
 }
