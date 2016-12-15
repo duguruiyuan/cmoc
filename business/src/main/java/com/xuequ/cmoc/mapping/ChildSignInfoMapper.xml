@@ -14,6 +14,7 @@
     <result column="emer_mobile" property="emerMobile" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="sign_relation" property="signRelation" jdbcType="VARCHAR" />
     <result column="sign_resource" property="signResource" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="family_no" property="familyNo" jdbcType="VARCHAR" />
@@ -23,7 +24,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, child_idcard, child_name, child_mobile, child_age, child_sex, is_disease, disease_desc, 
-    emer_name, emer_mobile, city, product_id, sign_resource, parent_id, family_no, create_time,
+    emer_name, emer_mobile, city, product_id, sign_relation, sign_resource, parent_id, family_no, create_time,
     is_effect, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -34,7 +35,7 @@
   </select>
   
   <!-- 根据小孩姓名和紧急联系电话判断用户是否可以进行绑定 -->
-  <select id="selectByChildNameMobile" resultType="int">
+  <select id="selectByChildNameMobile" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" /> 
 	from t_child_sign_info
   	where is_effect = 1 and child_name = #{childName, jdbcType=VARCHAR}
@@ -51,8 +52,8 @@
   
   <select id="selectFamilyNo" parameterType="com.xuequ.cmoc.model.ChildSignInfo">
   	select family_no from t_child_sign_info
-    where is_effect = 1 and 
-    (child_idcard = #{childIdcard,jdbcType=VARCHAR} or emer_mobile = #{emerMobile,jdbcType=VARCHAR}) 
+    where child_idcard = #{childIdcard,jdbcType=VARCHAR} or 
+    emer_mobile = #{emerMobile,jdbcType=VARCHAR}
     limit 1
   </select>
   
@@ -94,6 +95,9 @@
       </if>
       <if test="productId != null" >
         product_id,
+      </if>
+      <if test="signRelation != null" >
+        sign_relation,
       </if>
       <if test="signResource != null" >
         sign_resource,
@@ -151,6 +155,9 @@
       <if test="productId != null" >
         #{productId,jdbcType=INTEGER},
       </if>
+      <if test="signRelation != null" >
+        #{signRelation,jdbcType=VARCHAR},
+      </if>
       <if test="signResource != null" >
         #{signResource,jdbcType=VARCHAR},
       </if>
@@ -207,6 +214,9 @@
       <if test="productId != null" >
         product_id = #{productId,jdbcType=INTEGER},
       </if>
+      <if test="signRelation != null" >
+        sign_relation = #{signResource,jdbcType=VARCHAR},
+      </if>
       <if test="signResource != null" >
         sign_resource = #{signResource,jdbcType=VARCHAR},
       </if>
@@ -242,6 +252,7 @@
       city = #{city,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=INTEGER},
       sign_resource = #{signResource,jdbcType=VARCHAR},
+      sign_relation = #{signRelation,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=VARCHAR},
       family_no = #{familyNo,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -19,13 +19,37 @@ public class ProductOrder implements Serializable {
 
     private BigDecimal totalAmount;
 
+    private Integer exchangepoints;
+
+    private Integer givePoints;
+
+    private String channel;
+
+    private BigDecimal commision;
+
+    private String commistionRate;
+
+    private String bankCode;
+
+    private String bankNo;
+
+    private String transNo;
+
+    private String bankTransNo;
+
+    private Date paySubmitTime;
+
+    private Date payCallbackTime;
+
     private String orderStatus;
 
-    private String creater;
+    private String errorCode;
+
+    private String errorReason;
+
+    private String isDelete;
 
     private Date createTime;
-
-    private String updater;
 
     private Date updateTime;
 
@@ -72,19 +96,107 @@ public class ProductOrder implements Serializable {
     }
 
     public BigDecimal getResAmount() {
-		return resAmount;
-	}
+        return resAmount;
+    }
 
-	public void setResAmount(BigDecimal resAmount) {
-		this.resAmount = resAmount;
-	}
+    public void setResAmount(BigDecimal resAmount) {
+        this.resAmount = resAmount;
+    }
 
-	public BigDecimal getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public Integer getExchangepoints() {
+        return exchangepoints;
+    }
+
+    public void setExchangepoints(Integer exchangepoints) {
+        this.exchangepoints = exchangepoints;
+    }
+
+    public Integer getGivePoints() {
+        return givePoints;
+    }
+
+    public void setGivePoints(Integer givePoints) {
+        this.givePoints = givePoints;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel == null ? null : channel.trim();
+    }
+
+    public BigDecimal getCommision() {
+        return commision;
+    }
+
+    public void setCommision(BigDecimal commision) {
+        this.commision = commision;
+    }
+
+    public String getCommistionRate() {
+        return commistionRate;
+    }
+
+    public void setCommistionRate(String commistionRate) {
+        this.commistionRate = commistionRate == null ? null : commistionRate.trim();
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode == null ? null : bankCode.trim();
+    }
+
+    public String getBankNo() {
+        return bankNo;
+    }
+
+    public void setBankNo(String bankNo) {
+        this.bankNo = bankNo == null ? null : bankNo.trim();
+    }
+
+    public String getTransNo() {
+        return transNo;
+    }
+
+    public void setTransNo(String transNo) {
+        this.transNo = transNo == null ? null : transNo.trim();
+    }
+
+    public String getBankTransNo() {
+        return bankTransNo;
+    }
+
+    public void setBankTransNo(String bankTransNo) {
+        this.bankTransNo = bankTransNo == null ? null : bankTransNo.trim();
+    }
+
+    public Date getPaySubmitTime() {
+        return paySubmitTime;
+    }
+
+    public void setPaySubmitTime(Date paySubmitTime) {
+        this.paySubmitTime = paySubmitTime;
+    }
+
+    public Date getPayCallbackTime() {
+        return payCallbackTime;
+    }
+
+    public void setPayCallbackTime(Date payCallbackTime) {
+        this.payCallbackTime = payCallbackTime;
     }
 
     public String getOrderStatus() {
@@ -95,12 +207,28 @@ public class ProductOrder implements Serializable {
         this.orderStatus = orderStatus == null ? null : orderStatus.trim();
     }
 
-    public String getCreater() {
-        return creater;
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public void setCreater(String creater) {
-        this.creater = creater == null ? null : creater.trim();
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode == null ? null : errorCode.trim();
+    }
+
+    public String getErrorReason() {
+        return errorReason;
+    }
+
+    public void setErrorReason(String errorReason) {
+        this.errorReason = errorReason == null ? null : errorReason.trim();
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
     public Date getCreateTime() {
@@ -109,14 +237,6 @@ public class ProductOrder implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater == null ? null : updater.trim();
     }
 
     public Date getUpdateTime() {

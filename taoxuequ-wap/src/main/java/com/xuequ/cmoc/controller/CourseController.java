@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
 import com.xuequ.cmoc.view.CourseBuyerView;
@@ -92,9 +94,9 @@ public class CourseController extends BaseController {
 	}
 	
 	@RequestMapping("signorder/create")
-	@ResponseBody Object signOrderCreate(CourseBuyerView vo) {
+	@ResponseBody Object signOrderCreate(CourseSignVO vo) {
 		try {
-			CourseBuyerView view = courseService.addUPdateOrder(vo);
+			CourseSignVO view = courseService.addUPdateOrder(vo);
 			Map<String, Object> map = new HashMap<>();
 			map.put("orderNo", view.getOrderNo());
 			map.put("productType", view.getProductType());

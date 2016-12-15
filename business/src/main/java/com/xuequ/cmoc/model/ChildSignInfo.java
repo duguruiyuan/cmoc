@@ -27,17 +27,19 @@ public class ChildSignInfo implements Serializable {
     private String city;
 
     private Integer productId;
-    
+
     private String signResource;
+
+    private String signRelation;
 
     private Integer parentId;
 
     private String familyNo;
 
     private Date createTime;
-    
+
     private Integer isEffect;
-    
+
     private String status;
 
     private static final long serialVersionUID = 1L;
@@ -130,31 +132,39 @@ public class ChildSignInfo implements Serializable {
         this.city = city == null ? null : city.trim();
     }
 
-    public String getSignResource() {
-		return signResource;
-	}
-
-	public void setSignResource(String signResource) {
-		this.signResource = signResource;
-	}
-
     public Integer getProductId() {
-		return productId;
-	}
+        return productId;
+    }
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
 
-	public Integer getParentId() {
-		return parentId;
-	}
+    public String getSignResource() {
+        return signResource;
+    }
 
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
+    public void setSignResource(String signResource) {
+        this.signResource = signResource == null ? null : signResource.trim();
+    }
 
-	public String getFamilyNo() {
+    public String getSignRelation() {
+        return signRelation;
+    }
+
+    public void setSignRelation(String signRelation) {
+        this.signRelation = signRelation == null ? null : signRelation.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getFamilyNo() {
         return familyNo;
     }
 
@@ -170,20 +180,19 @@ public class ChildSignInfo implements Serializable {
         this.createTime = createTime;
     }
 
-	public Integer getIsEffect() {
-		return isEffect;
-	}
+    public Integer getIsEffect() {
+        return isEffect;
+    }
 
-	public void setIsEffect(Integer isEffect) {
-		this.isEffect = isEffect;
-	}
+    public void setIsEffect(Integer isEffect) {
+        this.isEffect = isEffect;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-    
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
 }

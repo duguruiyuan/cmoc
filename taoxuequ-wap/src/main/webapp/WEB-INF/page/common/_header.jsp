@@ -21,7 +21,7 @@
 <link href="<%=basePath %>/css/mui.poppicker.css" rel="stylesheet" />
 <link  href="<%=basePath %>/css/display.css?v=${config.version}" rel="stylesheet" type="text/css"/>
 
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link href="<%=basePath %>/css/font-awesome.min.css" rel="stylesheet">
 
 <script src="<%=basePath %>/js/plugins/mui/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/mui/mui.js"></script>

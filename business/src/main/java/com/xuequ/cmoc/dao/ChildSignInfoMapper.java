@@ -19,9 +19,12 @@ public interface ChildSignInfoMapper {
 
     int updateByPrimaryKey(ChildSignInfo record);
     
-    ChildSignInfo selectByChildNameMobile(@Param("childName")String childName, @Param("emerMobile")String emerMobile);
+    int selectHasChild(String childName, String emerMobile);
     
     List<ChildSignInfo> selectEffectListByProductId(Integer productId);
+    
+    ChildSignInfo selectByChildNameMobile(@Param("childName")String childName, 
+    		@Param("emerMobile")String emerMobile);
     
     String selectFamilyNo(ChildSignInfo record);
 }

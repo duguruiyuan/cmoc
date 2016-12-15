@@ -3,19 +3,22 @@ package com.xuequ.cmoc.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.enums.ProductTypeEnum;
+import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.CourseInfoMapper;
 import com.xuequ.cmoc.dao.ParentInfoMapper;
 import com.xuequ.cmoc.dao.ProductOrderMapper;
+import com.xuequ.cmoc.dao.SysCommonMapper;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.view.CourseBuyerView;
@@ -30,6 +33,10 @@ public class CourseServiceImpl implements ICourseService {
 	private ParentInfoMapper parentInfoMapper;
 	@Autowired
 	private ProductOrderMapper productOrderMapper;
+	@Autowired
+	private ChildSignInfoMapper childSignInfoMapper;
+	@Autowired
+	private SysCommonMapper sysCommonMapper;
 	
 	@Override
 	public List<CourseInfo> selectListByPage(Page<CourseInfo> page) {
@@ -86,27 +93,34 @@ public class CourseServiceImpl implements ICourseService {
 	}
 
 	@Override
-	public CourseBuyerView addUPdateOrder(CourseBuyerView info) {
-		CourseBuyerView buyerInfo = parentInfoMapper.selectRemindOrder(info.getParentMobile(), 
-				info.getOpenid(), info.getProductId());
-		if(buyerInfo == null) {
-			CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
-			parentInfoMapper.insertSelective(info);
-			ProductOrder order = new ProductOrder();
-			order.setOrderNo(StringUtil.getCourseOrderNum(info.getId()));
-			order.setResAmount(courseInfo.getResAmount());
-			order.setCustId(info.getId());
-			order.setProductId(courseInfo.getId());
-			order.setProductType(ProductTypeEnum.COURSE.getCode());
-			order.setCreater(Const.SYS_USER);
-			productOrderMapper.insertSelective(order);
-			info.setProductType(order.getProductType());
-			info.setOrderNo(order.getOrderNo());
-		}else {
-			info.setId(buyerInfo.getId());
-			parentInfoMapper.updateByPrimaryKeySelective(info);
-			return buyerInfo;
+	public CourseSignVO addUPdateOrder(CourseSignVO info) {
+		String familyNo = childSignInfoMapper.selectFamilyNo(info);
+		if(StringUtils.isBlank(familyNo)) {
+			familyNo = sysCommonMapper.selectFamilyNoSeq();
 		}
+		ParentInfo parentInfo = parentInfoMapper.selectByOpenid(info.getOpenid());
+		if(parentInfo == null) {
+			parentInfo = new ParentInfo();
+			parentInfo.setOpenid(info.getOpenid());
+			parentInfo.setParentMobile(info.getEmerMobile());
+			parentInfo.setParentName(info.getEmerName());
+			parentInfo.setRelation(info.getSignRelation());
+			parentInfo.setFamilyNo(familyNo);
+			parentInfoMapper.insertSelective(parentInfo);
+		}
+		info.setParentId(parentInfo.getId());
+		info.setFamilyNo(familyNo);
+		childSignInfoMapper.insertSelective(info);
+		CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
+		ProductOrder order = new ProductOrder();
+		order.setOrderNo(StringUtil.getCourseOrderNum(info.getId()));
+		order.setResAmount(courseInfo.getResAmount());
+		order.setCustId(info.getId());
+		order.setProductId(courseInfo.getId());
+		order.setProductType(ProductTypeEnum.COURSE.getCode());
+		productOrderMapper.insertSelective(order);
+		info.setProductType(order.getProductType());
+		info.setOrderNo(order.getOrderNo());
 		return info;
 	}
 

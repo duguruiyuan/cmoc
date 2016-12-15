@@ -2,11 +2,11 @@ package com.xuequ.cmoc.service;
 
 import java.util.List;
 
-import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseListView;
 
@@ -60,5 +60,5 @@ public interface ICourseService {
 	 * @param info
 	 * @return
 	 */
-	CourseBuyerView addUPdateOrder(CourseBuyerView info);
+	CourseSignVO addUPdateOrder(CourseSignVO info);
 }

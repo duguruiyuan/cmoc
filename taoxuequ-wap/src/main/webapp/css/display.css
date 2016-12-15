@@ -1298,10 +1298,9 @@ select.regMT-select{
 	background-color: #50b349;
 }
 .sign-btn{
-	bottom: 10px;
-    position: absolute;
-    width: 90%;
-    left: 5%;
+	width: 90%;
+    margin-left: 5%;
+    margin-top: 20px;
 }
 
 /*支付*/

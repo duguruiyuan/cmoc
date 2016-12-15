@@ -118,7 +118,7 @@
   	FROM t_parent_info bi
 	INNER JOIN t_product_order po ON bi.`id` = po.cust_id
 	WHERE po.`order_status`='001' AND 
-	bi.`mobile` = #{mobile,jdbcType=VARCHAR} 
+	bi.`parent_mobile` = #{mobile,jdbcType=VARCHAR} 
 	AND bi.`openid` = #{openid,jdbcType=VARCHAR}
 	AND po.`product_id`= #{courseId,jdbcType=INTEGER}
   </select>
@@ -137,7 +137,7 @@
       #{points,jdbcType=INTEGER}, #{headImg,jdbcType=VARCHAR}, #{familyNo,jdbcType=VARCHAR}, 
       #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ParentInfo">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.ParentInfo">
     insert into t_parent_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
