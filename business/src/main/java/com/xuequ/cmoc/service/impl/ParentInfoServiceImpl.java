@@ -9,6 +9,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.ParentInfoMapper;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.service.IParentInfoService;
@@ -39,10 +40,12 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 
 	@Override
 	public RspResult addParentBind(ParentInfoVO parentInfo) {
-		int count = childSignInfoMapper.selectHasChild(parentInfo.getChildName(), parentInfo.getSignMobile());
-		if(count == 0) {
+		ChildSignInfo signInfo = childSignInfoMapper.selectByChildNameMobile(
+				parentInfo.getChildName(), parentInfo.getSignMobile());
+		if(signInfo == null) {
 			return new RspResult(StatusEnum.PARENT_BIND_ERROR);
 		}
+		parentInfo.setFamilyNo(signInfo.getFamilyNo());
 		parentInfoMapper.insertSelective(parentInfo);
 		return new RspResult(StatusEnum.SUCCESS);
 	}

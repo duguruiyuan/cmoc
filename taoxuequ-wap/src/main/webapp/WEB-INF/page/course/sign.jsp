@@ -21,7 +21,7 @@
 			<img src="${config.imgUrl }${course.courseImg }" class="signPic"><br>
 		</div>
 		<div class="sign-head-right">
-			<p class="mui-ellipsis sign-head-title">${course.name }</p>
+			<p class="mui-ellipsis sign-head-title">${course.courseName }</p>
 			<p class="mui-ellipsis-2">${course.courseDesc }</p>
 		</div>
 	</div>
@@ -31,16 +31,41 @@
 			<input type="hidden" id="openid" name="openid" value="${snsToken.openid }"/>
 			<input type="hidden" id="productId" name="productId" value="${course.id }"/>
 			<div class="mui-input-row">
-			    <label><span style="color:red;">*</span> 姓名</label>
-			    <input id="name" name="name" type="text" placeholder="请输入姓名">
+			    <label><span style="color:red;">*</span>姓名</label>
+			    <input id="childName" name="childName" type="text" placeholder="请输入小朋友姓名">
+			</div>
+			<div class="mui-input-row mui-radio">
+			   <label><span style="color:red;">*</span>性别</label>
+			</div>
+			<div class="mui-input-row mui-radio">
+			   <label>小帅哥</label>
+			   <input name="childSex" type="radio" value="F">
+			</div>
+			<div class="mui-input-row mui-radio">
+			   <label>小美女</label>
+			   <input name="childSex" type="radio" value="M">
 			</div>
 			<div class="mui-input-row">
-			    <label><span style="color:red;">*</span> 手机</label>
-			    <input id="mobile" name="mobile" type="text" maxlength="11" placeholder="请输入手机号码">
+			    <label><span style="color:red;">*</span>年龄</label>
+			    <input id="childAge" name="childAge" type="text" placeholder="请输入小朋友年龄">
 			</div>
 			<div class="mui-input-row">
-			    <label>微信号</label>
-			    <input id="wechatNum" name="wechatNum" type="text" placeholder="请输入微信号">
+			    <label><span style="color:red;">*</span>身份证号码</label>
+			    <input id="childIdcard" name="childIdcard" type="text" placeholder="请输入小朋友身份证号码">
+			</div>
+			<div class="mui-input-row">
+			    <label><span style="color:red;">*</span>紧急联系人</label>
+			    <input id="emerName" name="emerName" type="text" maxlength="11" placeholder="请输入紧急联系人">
+			</div>
+			<div class="mui-input-row">
+			    <label><span style="color:red;">*</span>关系</label>
+				<select id="relation" name="relation" class="form-control relation">
+	            	<option value="">请选择</option>
+	            </select>
+			</div>
+			<div class="mui-input-row">
+			    <label><span style="color:red;">*</span>联系电话</label>
+			    <input id="emerMobile" name="emerMobile" type="text" placeholder="联系电话">
 			</div>
 		</form>
 	</div>
@@ -50,10 +75,10 @@
 	<script type="text/javascript">
 		initSnsToken();
 		mui.init();
-		
+		initRelation();
 		$(function(){
 			$("#regMT-btn").click(function(){
-				var arr = ["name","mobile"];
+				var arr = ["childName","childSex","childAge","childIdcard","emerName","relation","emerMobile"];
 				for(var i = 0, len = arr.length; i < len; i++){
 					window[arr[i]] = $("#"+arr[i]).val();
 				}
@@ -67,11 +92,16 @@
 					else mui.alert('姓名不正确','消息提示');
 					return false;
 				}
-				
 				//验证手机号
 				if(!phoneReg.test(mobile)){
 					if(mobile == '') mui.alert('请填写手机号码','消息提示');
 					else mui.alert('手机号不正确','消息提示');
+					return false;
+				}
+				//验证身份证
+				if(!idCardNo(idCard)){
+					if(idCard == '') mui.alert('请填写身份证','消息提示');
+					else mui.alert('身份证不正确','消息提示');
 					return false;
 				}
 				

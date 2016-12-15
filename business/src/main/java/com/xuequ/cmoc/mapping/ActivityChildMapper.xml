@@ -75,7 +75,7 @@
     where ac.is_delete='N' and ac.id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectListByPage" resultMap="PageBaseResultMap" >
+  <select id="selectListByPage" resultMap="ChildBaseResultMap" >
   	select 
   	ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, ac.marine_id, 
   	ac.creater_user_id, ac.creater, ac.create_time, cs.child_idcard, cs.child_name, 
@@ -105,7 +105,7 @@
     <if test="params.endDate != null">
     	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
     </if>
-    order by f.id desc
+    order by ac.id desc
   </select>
 	
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

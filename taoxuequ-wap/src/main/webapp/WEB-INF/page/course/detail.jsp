@@ -20,7 +20,7 @@
 			<img src="${config.imgUrl }${course.courseImg }">
 		</div>
 		<div class="course-title">
-			${course.name }
+			${course.courseName }
 		</div>
 		<div class="wrapper">
 	        <div class="box">

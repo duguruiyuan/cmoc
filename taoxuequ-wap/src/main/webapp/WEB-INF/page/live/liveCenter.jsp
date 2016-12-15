@@ -27,7 +27,7 @@
 		</header>
 		
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
-		
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 		</div>
 		<script id="table-template" type="text/x-handlebars-template">
@@ -52,9 +52,6 @@
 				{{/if}}
 		  </script>
 		<script type="text/javascript">
-			mui.init();
-			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-			
 			$(function(){
 				initData();
 				var yearPicker = new mui.PopPicker();

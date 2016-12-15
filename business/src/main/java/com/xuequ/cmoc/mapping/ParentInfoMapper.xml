@@ -7,6 +7,7 @@
     <result column="parent_mobile" jdbcType="VARCHAR" property="parentMobile" />
     <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="wechat_num" property="wechatNum" jdbcType="VARCHAR" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="points" jdbcType="INTEGER" property="points" />
     <result column="head_img" jdbcType="VARCHAR" property="headImg" />
@@ -15,7 +16,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, relation, parent_mobile, parent_name, openid, city, points, head_img, family_no, 
+    id, relation, parent_mobile, parent_name, openid, wechat_num, city, points, head_img, family_no, 
     is_delete, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -24,7 +25,7 @@
     from t_parent_info
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByOpenid" resultMap="BaseResultMap">
     SELECT 
     <include refid="Base_Column_List" />
     FROM t_parent_info
@@ -51,25 +52,88 @@
   	SELECT ai.`activity_name`, ai.`activity_num`, ai.`start_date`, ai.end_date,
   	ai.id activity_id, am.`marine_name`, am.id marine_id, cs.`child_name` 
   	FROM t_parent_info pa
-	INNER JOIN t_activity_child ac ON ac.family_no = pa.family_no
-	INNER JOIN t_child_sign_info cs ON ac.chil_id = cs.id
-	INNER JOIN t_activity_marines am ON am.`id` = af.`marine_id`
+	INNER JOIN t_child_sign_info cs ON cs.family_no = pa.family_no
+	INNER JOIN t_activity_child ac ON ac.child_id = cs.id
+	INNER JOIN t_activity_marines am ON am.`id` = ac.`marine_id`
 	INNER JOIN t_activity_info ai ON ai.`id` = am.`activity_id`
-	WHERE af.`is_delete` = 'N' AND ai.`is_delete`='N'
+	WHERE ac.`is_delete` = 'N' AND ai.`is_delete`='N'
 	AND pa.`openid` = #{openid,jdbcType=VARCHAR}
 	order by start_date desc
   </select>
+  
+  <resultMap id="CourseBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.CourseBuyerView">
+  	<result column="res_amount" property="resAmount" jdbcType="DECIMAL" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_type" property="courseType" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectCourseBuyerByPage" resultMap="CourseBaseResultMap">
+  	SELECT tp.`id`, tp.`parent_name`, tp.`wechat_num`, tp.openid, 
+  		tp.head_img, po.`res_amount` 
+	FROM t_parent_info tp
+	INNER JOIN t_product_order po ON po.`cust_id` = tp.`id`
+	WHERE po.`product_type`='COURSE' AND po.order_status = '000' 
+	AND po.`product_id` = #{params.productId,jdbcType=INTEGER}
+	ORDER BY po.create_time DESC
+  </select>
+  
+  <select id="selectBuyRecordByPage" resultMap="CourseBaseResultMap">
+  	SELECT bi.`parent_name`, bi.`parent_mobile`, bi.`wechat_num`,bi.`openid`,bi.`head_img`, po.`order_no`, 
+       po.`product_type`,po.`res_amount`,po.`total_amount`, po.`create_time`,
+       po.product_id,ci.course_name,ci.`course_type`
+	FROM t_parent_info bi
+	INNER JOIN t_product_order po ON bi.`id` = po.`cust_id`
+	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
+	WHERE po.`product_type`='COURSE' AND po.`order_status` = '000'
+	<if test="params.courseName != null">
+		and ci.course_name like concat('%',#{params.courseName,jdbcType=VARCHAR},'%')
+	</if>
+	<if test="params.productId != null">
+		and ci.id = #{params.productId,jdbcType=INTEGER}
+	</if>
+	<if test="params.name != null">
+		and bi.parent_name = #{params.name,jdbcType=VARCHAR}
+	</if>
+	<if test="params.mobile != null">
+		and bi.parent_mobile = #{params.mobile,jdbcType=VARCHAR}
+	</if>
+	<if test="params.orderNo != null">
+		and po.order_no = #{params.orderNo,jdbcType=VARCHAR}
+	</if>
+	<if test="params.startDate != null">
+		and DATE_FORMAT(po.create_time,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+	</if>
+	<if test="params.endDate != null">
+		and DATE_FORMAT(po.create_time,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+	</if>
+	ORDER BY po.`create_time` DESC
+  </select>
+  
+  <select id="selectRemindOrder" resultMap="CourseBaseResultMap">
+  	SELECT bi.id, parent_name, parent_mobile, wechat_num, openid, po.`order_no`,po.`product_type` 
+  	FROM t_parent_info bi
+	INNER JOIN t_product_order po ON bi.`id` = po.cust_id
+	WHERE po.`order_status`='001' AND 
+	bi.`mobile` = #{mobile,jdbcType=VARCHAR} 
+	AND bi.`openid` = #{openid,jdbcType=VARCHAR}
+	AND po.`product_id`= #{courseId,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_parent_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ParentInfo">
     insert into t_parent_info (id, relation, parent_mobile, 
-      parent_name, openid, city, 
+      parent_name, openid, wechat_num, city, 
       points, head_img, family_no, 
       is_delete, create_time)
     values (#{id,jdbcType=INTEGER}, #{relation,jdbcType=VARCHAR}, #{parentMobile,jdbcType=VARCHAR}, 
-      #{parentName,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{parentName,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{wechatNum,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{points,jdbcType=INTEGER}, #{headImg,jdbcType=VARCHAR}, #{familyNo,jdbcType=VARCHAR}, 
       #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
@@ -90,6 +154,9 @@
       </if>
       <if test="openid != null">
         openid,
+      </if>
+      <if test="wechatNum != null">
+        wechat_num,
       </if>
       <if test="city != null">
         city,
@@ -126,6 +193,9 @@
       <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
       </if>
+      <if test="wechatNum != null">
+        #{wechatNum,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
       </if>
@@ -161,6 +231,9 @@
       <if test="openid != null">
         openid = #{openid,jdbcType=VARCHAR},
       </if>
+      <if test="wechatNum != null">
+        wechat_num = #{wechatNum,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
       </if>
@@ -188,193 +261,11 @@
       parent_mobile = #{parentMobile,jdbcType=VARCHAR},
       parent_name = #{parentName,jdbcType=VARCHAR},
       openid = #{openid,jdbcType=VARCHAR},
+      wechat_num = #{wechatNum,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       points = #{points,jdbcType=INTEGER},
       head_img = #{headImg,jdbcType=VARCHAR},
       family_no = #{familyNo,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.ParentInfo">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="relation" jdbcType="VARCHAR" property="relation" />
-    <result column="child_name" jdbcType="VARCHAR" property="childName" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
-    <result column="openid" jdbcType="VARCHAR" property="openid" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="city" jdbcType="VARCHAR" property="city" />
-    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, relation, child_name, mobile, parent_name, openid, sex, city, is_delete, create_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_parent_info
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT 
-    <include refid="Base_Column_List" />
-    FROM t_parent_info
-    WHERE is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
-  </select>
-  
-  <select id="selectCountByOpenid" resultType="int">
-  	SELECT count(1) FROM t_parent_info
-    WHERE is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
-  </select>
-  
-  <resultMap id="ChildActResultMap" type="com.xuequ.cmoc.view.ChildActRecordView">
-    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
-    <result column="activity_num" jdbcType="VARCHAR" property="activityNum" />
-    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
-    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
-    <result column="activity_id" jdbcType="INTEGER" property="activityId" />
-    <result column="marine_name" jdbcType="VARCHAR" property="marineName" />
-    <result column="marine_id" jdbcType="INTEGER" property="marineId" />
-    <result column="child_name" jdbcType="INTEGER" property="childName" />
-  </resultMap>
-  
-  <select id="selectChildActRecord" parameterType="java.lang.String" resultMap="ChildActResultMap">
-  	SELECT ai.`activity_name`, ai.`activity_num`, ai.`start_date`, ai.end_date,
-  	ai.id activity_id, am.`marine_name`, am.id marine_id, af.`child_name` 
-  	FROM t_parent_info pa
-	INNER JOIN t_activity_family af ON pa.`mobile` = af.parent_mobile
-	INNER JOIN t_activity_marines am ON am.`id` = af.`marine_id`
-	INNER JOIN t_activity_info ai ON ai.`id` = am.`activity_id`
-	WHERE af.`is_delete` = 'N' AND ai.`is_delete`='N'
-	AND pa.`openid` = #{openid,jdbcType=VARCHAR}
-	order by start_date desc
-  </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_parent_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ParentInfo">
-    insert into t_parent_info (id, relation, child_name, 
-      mobile, parent_name, openid, 
-      sex, city, is_delete, 
-      create_time)
-    values (#{id,jdbcType=INTEGER}, #{relation,jdbcType=VARCHAR}, #{childName,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ParentInfo">
-    insert into t_parent_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="relation != null">
-        relation,
-      </if>
-      <if test="childName != null">
-        child_name,
-      </if>
-      <if test="mobile != null">
-        mobile,
-      </if>
-      <if test="parentName != null">
-        parent_name,
-      </if>
-      <if test="openid != null">
-        openid,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="city != null">
-        city,
-      </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="relation != null">
-        #{relation,jdbcType=VARCHAR},
-      </if>
-      <if test="childName != null">
-        #{childName,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="parentName != null">
-        #{parentName,jdbcType=VARCHAR},
-      </if>
-      <if test="openid != null">
-        #{openid,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="city != null">
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.ParentInfo">
-    update t_parent_info
-    <set>
-      <if test="relation != null">
-        relation = #{relation,jdbcType=VARCHAR},
-      </if>
-      <if test="childName != null">
-        child_name = #{childName,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        mobile = #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="parentName != null">
-        parent_name = #{parentName,jdbcType=VARCHAR},
-      </if>
-      <if test="openid != null">
-        openid = #{openid,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="city != null">
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null">
-        is_delete = #{isDelete,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ParentInfo">
-    update t_parent_info
-    set relation = #{relation,jdbcType=VARCHAR},
-      child_name = #{childName,jdbcType=VARCHAR},
-      mobile = #{mobile,jdbcType=VARCHAR},
-      parent_name = #{parentName,jdbcType=VARCHAR},
-      openid = #{openid,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      city = #{city,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

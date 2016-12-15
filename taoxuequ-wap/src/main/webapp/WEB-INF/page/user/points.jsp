@@ -55,13 +55,9 @@
 				    		</c:otherwise>
 				    	</c:choose>
 		    		</tbody>
+		    	</table>
 		    </div>
 		</div>
-		
-		<script type="text/javascript">
-			mui.init();
-			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-		</script>
 </body>
 
 </html>

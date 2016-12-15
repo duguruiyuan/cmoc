@@ -40,28 +40,5 @@
 	    	</c:forEach>
 		</ul>
 	</div>
-		
-	<script type="text/javascript">
-		mui.init();
-		 /*$(function(){
-			var str = '<div class="code">\
-							<div class="code-inner">\
-								<div class="code-title">[穿越部落]长按二维码绑定队伍</div>\
-								<div class="code-pic">\
-									<img src="../images/code.png">\
-								</div>\
-								<div class="code-btn">确定</div>\
-							</div>\
-						</div>';
-			
-			$(".ranksList").on("click", ".mui-navigate-right", function(){
-				$("body").append(str);
-			});
-			
-			$("body").on("click", ".code-btn", function(){
-				$(".code").remove();
-			})
-		}) */
-	</script>
 </body>
 </html>

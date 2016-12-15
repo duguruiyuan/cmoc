@@ -23,10 +23,11 @@
 		    <h1 class="mui-title">战队列表</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 			<div class="banner pr">
 				<c:choose>
-					<c:when test="${activity.activityImgUrl != null}">
+					<c:when test="${activity.activityImgUrl != null && !activity.activityImgUrl.isEmpty()}">
 						<img src="${config.imgUrl }${activity.activityImgUrl}">
 					</c:when>
 					<c:otherwise>
@@ -65,12 +66,6 @@
 			    </ul>
 		    </div>
 		</div>
-		
-		<script type="text/javascript">
-			mui.init();
-			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-			
-		</script>
 	</body>
 
 </html>

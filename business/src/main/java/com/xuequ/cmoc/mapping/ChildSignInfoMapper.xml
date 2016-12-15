@@ -18,7 +18,7 @@
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="family_no" property="familyNo" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="is_effect" property="isEffect" jdbcType="Integer" />
+    <result column="is_effect" property="isEffect" jdbcType="INTEGER" />
   	<result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -34,9 +34,10 @@
   </select>
   
   <!-- 根据小孩姓名和紧急联系电话判断用户是否可以进行绑定 -->
-  <select id="selectHasChild" resultType="int">
-  	select count(1) from t_child_sign_info
-  	where child_name = #{childName, jdbcType=VARCHAR}
+  <select id="selectByChildNameMobile" resultType="int">
+  	select <include refid="Base_Column_List" /> 
+	from t_child_sign_info
+  	where is_effect = 1 and child_name = #{childName, jdbcType=VARCHAR}
   	and emer_mobile = #{emerMobile,jdbcType=VARCHAR}
   </select>
   

@@ -21,7 +21,6 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">战队直播</h1>
 		</header>
-		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
 			<div id="slider" class="mui-slider">
 		      <div class="mui-slider-group mui-slider-loop">
@@ -179,9 +178,6 @@
 		</div>
 		
 		<script type="text/javascript">
-			mui.init();
-			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-			
 			$(function(){
 				var picListWrap = $(".liveDetail-list-content");
 				var picListTop = $(".liveDetail-list").offset().top;

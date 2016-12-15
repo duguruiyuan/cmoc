@@ -63,12 +63,20 @@ function loadData() {
 			field : 'imageNum',
 			title : '图片数量',
 			align : "center",
-			resizable : true
+			resizable : true,
+			formatter: function(v) {
+				if(!v) return 0;
+				return v;
+			}
 		}, {
 			field : 'videoNum',
 			title : '视频数量',
 			align : "center",
-			resizable : true
+			resizable : true,
+			formatter: function(v) {
+				if(!v) return 0;
+				return v;
+			}
 		}] ]
 	});
 }

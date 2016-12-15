@@ -2,8 +2,13 @@ package com.xuequ.cmoc.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.ChildActRecordView;
+import com.xuequ.cmoc.view.CourseBuyerView;
 
 public interface ParentInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -23,4 +28,11 @@ public interface ParentInfoMapper {
     int selectCountByOpenid(String openid);
     
     List<ChildActRecordView> selectChildActRecord(String openid);
+    
+    List<CourseBuyerView> selectCourseBuyerByPage(Page<CourseBuyerView> page);
+    
+    List<CourseBuyerView> selectBuyRecordByPage(Page<CourseBuyerView> page);
+    
+    CourseBuyerView selectRemindOrder(@Param("mobile")String mobile, 
+    		@Param("openid")String openid, @Param("courseId")Integer courseId);
 }

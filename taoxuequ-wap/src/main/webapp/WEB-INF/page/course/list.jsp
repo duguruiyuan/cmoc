@@ -16,7 +16,9 @@
 <title>[陶学趣]课程列表</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />
-<body class="course-list">
+<body class="">
+		<jsp:include page="/WEB-INF/page/common/head.jsp" />
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 		    <div id="slider" class="mui-slider" data-slidershowtimer="3">
 		      <div class="mui-slider-group mui-slider-loop">
@@ -70,47 +72,49 @@
 		        <div class="mui-indicator"></div>
 		      </div>
 		    </div>
-		</div>
-		<div class="z_card">
-		  <c:forEach var="item" items="${list}">
-		        <div id="card_list" class="parent1">
-		            <div class="card">
-		                <div class="card_con">
-		                    <a href="<%=basePath%>/course/detail/${item.id}">
-		                        <img src="${config.imgUrl }${item.courseImg }">
-		                    </a>
-		                    <button class="small-btn">${item.courseType }</button>
-		                </div>
-		                <div class="card_top">
-		                    <div class="top_title">
-		                        <span class="zhuangtai enable">报名中</span><a class="href" >${course.name }</a>
-		                    </div>
-		                </div>
-		                <div class="card_foot">
-		                    <div class="jine clearfix">
-		                        	上课时间：<i class="time"><fmt:formatDate value='${item.startDate}' pattern='MM月dd日' /></i>
-		                        	<i>-<i><fmt:formatDate value='${item.endDate}' pattern='MM月dd日' /></i></i>
-		                        <i class="iconfont icon">&#xe628;</i>${item.city }
-		                    </div>
-		                    <ul class="simple-info" style="border-bottom-style: none; margin-bottom: 0px;">
-		                        <li style="margin-bottom: 0px;">
-		                            <a href="javascript:;" class="item-link cleardix" style="text-align: left;">
-		                                <div class="z-price fl" style="display: inline-block; margin-right: 10px;"><i>课程学费：</i><i class="thjg">¥${item.totalPrice }</i></div>
-		                                <div class="jd-point fr" style="display: inline-block; margin-right: 10px;"><i>已报名家长：</i><i><i class="yuyue">${item.peoples }人</i></div>
-		                            </a>
-		                        </li>
-		                    </ul>
-		
-		                    <div class="exp_text mt10">
-		                        <a href="<%=basePath%>/course/detail/${item.id}"><span class="clearfix"><span>${item.courseDesc }</span><span class="fr more-detail">查看详情<i class="iconfont icon">&#xe689;</i></span></span></a>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-	    	</c:forEach>
+		    <div class="course-list">
+				<div class="z_card">
+				  <c:forEach var="item" items="${list}">
+				        <div id="card_list" class="parent1">
+				            <div class="card">
+				                <div class="card_con">
+				                    <a href="<%=basePath%>/course/detail/${item.id}">
+				                        <img src="${config.imgUrl }${item.courseImg }">
+				                    </a>
+				                    <button class="small-btn">${item.courseType }</button>
+				                </div>
+				                <div class="card_top">
+				                    <div class="top_title">
+				                        <span class="zhuangtai enable">报名中</span><a class="href" >${course.name }</a>
+				                    </div>
+				                </div>
+				                <div class="card_foot">
+				                    <div class="jine clearfix">
+				                        	上课时间：<i class="time"><fmt:formatDate value='${item.startDate}' pattern='MM月dd日' /></i>
+				                        	<i>-<i><fmt:formatDate value='${item.endDate}' pattern='MM月dd日' /></i></i>
+				                        <i class="iconfont icon">&#xe628;</i><span class="city">${item.city }</span>
+				                    </div>
+				                    <ul class="simple-info" style="border-bottom-style: none; margin-bottom: 0px;">
+				                        <li style="margin-bottom: 0px;">
+				                            <a href="javascript:;" class="item-link cleardix" style="text-align: left;">
+				                                <div class="z-price fl" style="display: inline-block; margin-right: 10px;"><i>课程学费：</i><i class="thjg">¥${item.totalPrice }</i></div>
+				                                <div class="jd-point fr" style="display: inline-block; margin-right: 10px;"><i>已报名家长：</i><i><i class="yuyue">${item.peoples }人</i></div>
+				                            </a>
+				                        </li>
+				                    </ul>
+				
+				                    <div class="exp_text mt10">
+				                        <a href="<%=basePath%>/course/detail/${item.id}"><span class="clearfix"><span>${item.courseDesc }</span><span class="fr more-detail">查看详情<i class="iconfont icon">&#xe689;</i></span></span></a>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+			    	</c:forEach>
+				</div>
+			</div>
 		</div>
 		<script type="text/javascript">
-			mui.init();
+			
 		</script>
 	</body>
 </html>

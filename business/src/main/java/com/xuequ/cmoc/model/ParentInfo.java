@@ -13,6 +13,8 @@ public class ParentInfo implements Serializable {
     private String parentName;
 
     private String openid;
+    
+    private String wechatNum;
 
     private String city;
 
@@ -68,7 +70,15 @@ public class ParentInfo implements Serializable {
         this.openid = openid == null ? null : openid.trim();
     }
 
-    public String getCity() {
+    public String getWechatNum() {
+		return wechatNum;
+	}
+
+	public void setWechatNum(String wechatNum) {
+		this.wechatNum = wechatNum;
+	}
+
+	public String getCity() {
         return city;
     }
 

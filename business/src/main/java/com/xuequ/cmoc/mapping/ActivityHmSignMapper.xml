@@ -112,7 +112,7 @@
 	INNER JOIN t_hollow_man_info h ON h.id = s.hm_id
 	INNER JOIN t_activity_marines m ON s.marine_id = m.id
 	INNER JOIN t_activity_info i ON i.id = m.activity_id
-	where s.is_delete = 'N'
+	where s.is_delete = 'N' and s.is_effect = 1
 	<if test="params.activityId != null">
     	and s.activity_id = #{params.activityId,jdbcType=INTEGER}
     </if>

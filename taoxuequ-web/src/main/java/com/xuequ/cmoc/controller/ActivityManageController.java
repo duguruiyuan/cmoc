@@ -26,10 +26,9 @@ import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
-import com.xuequ.cmoc.model.ActivityFamily;
+import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.AuditReqVO;
-import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
@@ -44,7 +43,6 @@ import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
 import com.xuequ.cmoc.view.ActivityChildView;
-import com.xuequ.cmoc.view.ActivityFamilyView;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
 import com.xuequ.cmoc.view.ActivityMarinesView;
@@ -296,9 +294,9 @@ public class ActivityManageController extends BaseController{
 	}
 		
 	@RequestMapping("json/namelist/addUpdate")
-	public @ResponseBody Object familyAddUpdate(ChildSignInfo vo) {
+	public @ResponseBody Object familyAddUpdate(ActivityChild vo) {
 		try {
-			activityFamilyService.addAndUpdateSignChild(vo);
+			activityFamilyService.addAndUpdateChild(vo);
 			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("--familyAddUpdate, error={}", e);

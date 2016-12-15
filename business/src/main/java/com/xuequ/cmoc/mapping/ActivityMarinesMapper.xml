@@ -71,8 +71,9 @@
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
 	INNER JOIN (
-		SELECT b.`marine_id`, GROUP_CONCAT(b.`child_name`) AS marine_team 
-		FROM t_activity_family b 
+		SELECT b.`marine_id`, GROUP_CONCAT(s.`child_name`) AS marine_team 
+		FROM t_activity_child b
+        INNER JOIN t_child_sign_info s ON b.`child_id` = s.`id`
 		WHERE IS_DELETE='N' AND b.`activity_id` = #{activityId,jdbcType=INTEGER}
 		GROUP BY b.`marine_id`
 	) c ON m.`id` = c.marine_id

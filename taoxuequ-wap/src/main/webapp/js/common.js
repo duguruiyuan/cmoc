@@ -1,3 +1,46 @@
+initAllDictData(false);
+
+function initRelation() {
+	$.ajax({
+		url : basePath + "/dict/json/dictData/compent",
+		type : 'POST',
+		data : {
+			dictCode : "relation"
+		},
+		success : function(data) {
+			$(".relation").append(data);
+		}
+	});
+}
+
+function dictDataFormat(code, v) {
+	if(v) {
+		var dictDataMap = JSON.parse(window.localStorage.getItem("dictDataMap"));
+		var list = dictDataMap[code];
+		if(!list || (list && !list[v])) {
+			initAllDictData(true);
+			dictDataMap = JSON.parse(window.localStorage.getItem("dictDataMap"));
+			return dictDataMap[code][v];
+		}
+		return list[v];
+	}
+	return "";
+}
+
+function initAllDictData(reload) {
+	if(window.localStorage.getItem("dictDataMap") != null && !reload) return;
+	$.ajax({
+		url : basePath + "/dict/json/init/dictData",
+		type : 'POST',
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		success : function(data) {
+			window.localStorage.setItem("dictDataMap", JSON.stringify(data));
+		}
+	});
+}
 
 function getTime(v, format) {
 	if(v) return (new Date(v)).Format(format);

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.enums.ProductTypeEnum;
-import com.xuequ.cmoc.dao.CourseBuyerInfoMapper;
 import com.xuequ.cmoc.dao.CourseInfoMapper;
+import com.xuequ.cmoc.dao.ParentInfoMapper;
 import com.xuequ.cmoc.dao.ProductOrderMapper;
-import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
+import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
@@ -27,7 +27,7 @@ public class CourseServiceImpl implements ICourseService {
 	@Autowired
 	private CourseInfoMapper courseInfoMapper;
 	@Autowired
-	private CourseBuyerInfoMapper courseBuyerInfoMapper;
+	private ParentInfoMapper parentInfoMapper;
 	@Autowired
 	private ProductOrderMapper productOrderMapper;
 	
@@ -77,23 +77,21 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public List<CourseBuyerView> selectCourseBuyerByPage(Page<CourseBuyerView> page) {
-		return courseBuyerInfoMapper.selectCourseBuyerByPage(page);
+		return parentInfoMapper.selectCourseBuyerByPage(page);
 	}
 
 	@Override
-	public CourseBuyerInfo selectByOpenid(String openid) {
-		return courseBuyerInfoMapper.selectByOpenid(openid);
+	public ParentInfo selectByOpenid(String openid) {
+		return parentInfoMapper.selectByOpenid(openid);
 	}
 
 	@Override
 	public CourseBuyerView addUPdateOrder(CourseBuyerView info) {
-		CourseBuyerView buyerInfo = courseBuyerInfoMapper.selectRemindOrder(info.getMobile(), 
+		CourseBuyerView buyerInfo = parentInfoMapper.selectRemindOrder(info.getParentMobile(), 
 				info.getOpenid(), info.getProductId());
 		if(buyerInfo == null) {
 			CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
-			info.setCreater(Const.SYS_USER);
-			info.setCreateTime(new Date());
-			courseBuyerInfoMapper.insertSelective(info);
+			parentInfoMapper.insertSelective(info);
 			ProductOrder order = new ProductOrder();
 			order.setOrderNo(StringUtil.getCourseOrderNum(info.getId()));
 			order.setResAmount(courseInfo.getResAmount());
@@ -106,7 +104,7 @@ public class CourseServiceImpl implements ICourseService {
 			info.setOrderNo(order.getOrderNo());
 		}else {
 			info.setId(buyerInfo.getId());
-			courseBuyerInfoMapper.updateByPrimaryKeySelective(info);
+			parentInfoMapper.updateByPrimaryKeySelective(info);
 			return buyerInfo;
 		}
 		return info;
@@ -114,7 +112,7 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public List<CourseBuyerView> selectBuyRecordByPage(Page<CourseBuyerView> page) {
-		return courseBuyerInfoMapper.selectBuyRecordByPage(page);
+		return parentInfoMapper.selectBuyRecordByPage(page);
 	}
 
 }

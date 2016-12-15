@@ -22,6 +22,7 @@
 		    <h1 class="mui-title">用户绑定</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 		    <div id="slider" class="mui-slider">
 		      <div class="mui-slider-group mui-slider-loop">
@@ -82,11 +83,15 @@
 				            <p style="padding: 15px 0px 0px 20px;">您已绑定</p>
 				        </div>
 				        <div class="mui-input-row">
+				        	<div style="padding:10px 20px 0px;font-size: 14px;">
+				        		<i class="fa fa-list-ol"></i> 小孩活动体验列表
+				        	</div>
 				            <div class="tableList mt10">
 						    	<table border="0" cellspacing="0" cellpadding="0">
 						    		<thead>
 							    		<tr>
 							    			<th class="mui-text-center">活动名称</th>
+							    			<th class="mui-text-center">活动期数</th>
 							    			<th class="mui-text-center">活动时间</th>
 							    			<th class="mui-text-center">战队名称</th>
 							    			<th class="mui-text-center">状态</th>
@@ -94,21 +99,29 @@
 							    		</tr>
 						    		</thead>
 						    		<tbody>
-						    			<c:forEach var="item" items="${list }">
-						    				<tr>
-							    				<td class="mui-text-center">${item.activityName }</td>
-							    				<td class="mui-text-center"><fmt:formatDate value='${item.startDate}' pattern='yyyy/MM/dd' /></td>
-							    				<td class="mui-text-center">${item.marineName }</td>
-							    				<td class="mui-text-center">
-							    					<c:choose>
-							    						<c:when test="${item.status == 2 }">已结束</c:when>
-							    						<c:when test="${item.status == 1 }">直播中</c:when>
-							    						<c:when test="${item.status == 0 }">未开始</c:when>
-							    					</c:choose>
-							    				</td>
-							    				<td class="mui-text-center"><a href="<%=basePath %>/live/marine/detail/${item.marineId}">查看</a></td>
-							    			</tr>
-						    			</c:forEach>
+							    		<c:choose>
+						    				<c:when test="${list == null || list.isEmpty()}">
+						    					<tr><td colspan="6"><p style="padding: 10px 20px;">暂无记录</p></td></tr>
+						    				</c:when>
+						    				<c:otherwise>
+						    					<c:forEach var="item" items="${list }">
+								    				<tr>
+									    				<td class="mui-text-center">${item.activityName }</td>
+									    				<td class="mui-text-center">${item.activityNum }</td>
+									    				<td class="mui-text-center"><fmt:formatDate value='${item.startDate}' pattern='yyyy/MM/dd' /></td>
+									    				<td class="mui-text-center">${item.marineName }</td>
+									    				<td class="mui-text-center">
+									    					<c:choose>
+									    						<c:when test="${item.status == 2 }">已结束</c:when>
+									    						<c:when test="${item.status == 1 }">直播中</c:when>
+									    						<c:when test="${item.status == 0 }">未开始</c:when>
+									    					</c:choose>
+									    				</td>
+									    				<td class="mui-text-center"><a href="<%=basePath %>/live/marine/detail/${item.marineId}">查看</a></td>
+									    			</tr>
+								    			</c:forEach>
+						    				</c:otherwise>
+						    			</c:choose>
 						    		</tbody>
 						    	</table>
 						    </div>
@@ -118,12 +131,18 @@
 		    			<form id="bindForm" class="mui-input-group">
 			    			<input type="hidden" id="openid" name="openid" value="${openid }"/>
 			    			<div class="mui-input-row">
+					            <label>与小孩关系</label>
+					            <select id="relation" name="relation" class="form-control relation">
+					            	<option value="">请选择</option>
+					            </select>
+					        </div>
+			    			<div class="mui-input-row">
 					            <label>小孩姓名</label>
 					            <input id="childName" name="childName" type="text" class="mui-input-clear" placeholder="小孩姓名">
 					        </div>
 					        <div class="mui-input-row" style="height: 70px;">
 					            <label>手机号</label>
-					            <input id="mobile" name="mobile" type="text" class="mui-input-clear" maxlength="11" placeholder="手机号">
+					            <input id="signMobile" name="signMobile" type="text" class="mui-input-clear" maxlength="11" placeholder="手机号">
 					        	<p style="bottom: -5px;position: absolute;padding-left: 10px;">填写小朋友报名预留的家长联系电话</p>
 					        </div>
 					        <div class="mui-button-row">
@@ -137,9 +156,7 @@
 		
 		
 		<script type="text/javascript">
-			mui.init();
-			mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-			
+			initRelation();
 			//验证手机规则
 			function isMobile(str){
 				if($.trim(str)==""){
@@ -169,7 +186,7 @@
 			var bRegCode=true;
 			var countdowntime = 60;
 			$(".verificationCode").click(function(){
-				var telObj=$("#phone");
+				var telObj=$("#signMobile");
 				if(!isMobile(telObj.val())){
 					mui.toast('请输入正确的手机号');
 					return false;
@@ -189,7 +206,7 @@
 					return false;
 				}
 				
-				if(!isMobile($("#mobile").val())){
+				if(!isMobile($("#signMobile").val())){
 					mui.toast('请输入正确的手机号');
 					return false;
 				}

@@ -21,6 +21,7 @@
 		    <h1 class="mui-title">实践课堂</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 		    <div id="slider" class="mui-slider">
 		      <div class="mui-slider-group mui-slider-loop">
@@ -140,10 +141,6 @@
 		    </div>
 		</div>
 		
-		<script type="text/javascript">
-	mui.init();
-	mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-</script>
 	</body>
 
 </html>

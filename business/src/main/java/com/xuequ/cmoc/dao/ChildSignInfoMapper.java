@@ -2,6 +2,8 @@ package com.xuequ.cmoc.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xuequ.cmoc.model.ChildSignInfo;
 
 public interface ChildSignInfoMapper {
@@ -17,7 +19,7 @@ public interface ChildSignInfoMapper {
 
     int updateByPrimaryKey(ChildSignInfo record);
     
-    int selectHasChild(String childName, String emerMobile);
+    ChildSignInfo selectByChildNameMobile(@Param("childName")String childName, @Param("emerMobile")String emerMobile);
     
     List<ChildSignInfo> selectEffectListByProductId(Integer productId);
     

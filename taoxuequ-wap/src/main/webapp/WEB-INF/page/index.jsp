@@ -19,6 +19,7 @@
 		    <h1 class="mui-title">热文推荐</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 		    <div id="slider" class="mui-slider" data-slidershowtimer="3">
 		      <div class="mui-slider-group mui-slider-loop">
@@ -167,11 +168,5 @@
 		    </ul>
 		
 		</div>
-		
-		<script type="text/javascript">
-		window.localStorage.setItem("snsToken",null);
-	mui.init();
-	mui('.footer').on('tap','a',function(){document.location.href=this.href;});
-</script>
 	</body>
 </html>

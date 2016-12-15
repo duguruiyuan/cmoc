@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
+import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.CourseBuyerView;
@@ -51,7 +52,7 @@ public interface ICourseService {
 	 * @param openid
 	 * @return
 	 */
-	CourseBuyerInfo selectByOpenid(String openid);
+	ParentInfo selectByOpenid(String openid);
 	/**
 	 * 新增修改课程购买客户信息
 	 * @auther 胡启萌

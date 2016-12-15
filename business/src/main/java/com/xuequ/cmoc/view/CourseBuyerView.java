@@ -3,8 +3,9 @@ package com.xuequ.cmoc.view;
 import java.math.BigDecimal;
 
 import com.xuequ.cmoc.model.CourseBuyerInfo;
+import com.xuequ.cmoc.model.ParentInfo;
 
-public class CourseBuyerView extends CourseBuyerInfo {
+public class CourseBuyerView extends ParentInfo {
 
 	private static final long serialVersionUID = 6477502390468569364L;
 

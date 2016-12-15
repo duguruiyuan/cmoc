@@ -16,6 +16,7 @@
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 			<div class="regTMHeader" style="background-color: #25C26D;">
 				<img src="${userInfo.headimgurl }" class="regTMPic"><br>
@@ -28,7 +29,7 @@
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/hm/withteam/${userInfo.openid}">
+	                <a class="mui-navigate-right" href="<%=basePath%>/hm/withteam">
 	                     <i class="fa fa-users fs20" style="color: blue"></i> 带队记录
 	                </a>
 	            </li>

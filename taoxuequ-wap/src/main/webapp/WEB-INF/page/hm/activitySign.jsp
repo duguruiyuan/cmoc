@@ -41,7 +41,6 @@
 	</div>
 		
 	<script type="text/javascript">
-		mui.init();
 		$(function(){
 			$(".ranksList").on("click", ".mui-navigate-right", function(){
 				var str = '<div class="code">\

@@ -1,5 +1,6 @@
 package com.xuequ.cmoc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,8 +19,7 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
-import com.xuequ.cmoc.dao.ActivityMarinesMapper;
-import com.xuequ.cmoc.model.ActivityFamily;
+import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.HollowManInfo;
@@ -29,6 +29,7 @@ import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IHollowManService;
+import com.xuequ.cmoc.view.ActivityChildView;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityMarinesView;
 import com.xuequ.cmoc.vo.MarineEditVO;
@@ -53,20 +54,21 @@ public class HollowManController extends BaseController {
 	@RequestMapping(value={"","/"})
 	public String index(Model model) {
 		String page = "hm/hm";
-		String redir = wechatRedirect(model, page);
-		if(redir.equals(page)) {
-			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-			String openid = request.getParameter("openid");
-			if(token != null || StringUtils.isNotBlank(openid)) {
-				if(token != null) openid = token.getOpenid();
-				HollowManInfo hm = hollowManService.selectByOpenid(openid);
-				model.addAttribute("hm", hm);
-				if(hm != null && hm.getIsActive() == 1) {
-					return "hm/hmMy";
-				}
-			}
-		}
-		return redir;
+		return page;
+//		String redir = wechatRedirect(model, page);
+//		if(redir.equals(page)) {
+//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+//			String openid = request.getParameter("openid");
+//			if(token != null || StringUtils.isNotBlank(openid)) {
+//				if(token != null) openid = token.getOpenid();
+//				HollowManInfo hm = hollowManService.selectByOpenid(openid);
+//				model.addAttribute("hm", hm);
+//				if(hm != null && hm.getIsActive() == 1) {
+//					return "hm/hmMy";
+//				}
+//			}
+//		}
+//		return redir;
 	}
 	
 	/**
@@ -135,7 +137,7 @@ public class HollowManController extends BaseController {
 				if(token != null) openid = token.getOpenid();
 				ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(openid);
 				if(marine != null) {
-					List<ActivityFamily> families = activityFamilyService.selectListByMarineId(marine.getId());
+					List<ActivityChildView> families = activityFamilyService.selectListByMarineId(marine.getId());
 					model.addAttribute("marine", marine);
 					model.addAttribute("families", families);
 				}
@@ -151,7 +153,7 @@ public class HollowManController extends BaseController {
 				ActivityMarines marins = activityMarinesService.selectByPrimaryKey(id);
 				return new RspResult(StatusEnum.SUCCESS, marins);
 			}else if(ImgTypeEnum.MEMBER.getCode().equals(type)) {
-				 ActivityFamily family = activityFamilyService.selectByPrimaryKey(id);
+				 ActivityChild family = activityFamilyService.selectByPrimaryKey(id);
 				 return new RspResult(StatusEnum.SUCCESS, family);
 			}
 		} catch (Exception e) {
@@ -174,11 +176,11 @@ public class HollowManController extends BaseController {
 				activityMarinesService.updateByPrimaryKeySelective(marines);
 				return new RspResult(StatusEnum.SUCCESS);
 			}else if(ImgTypeEnum.MEMBER.getCode().equals(vo.getType())) {
-				 ActivityFamily family = new ActivityFamily();
+				 ActivityChild family = new ActivityChild();
 				 family.setId(vo.getId());
 				 family.setChildComment(vo.getChildComment());
 				 family.setChildTitle(vo.getChildTitle());
-				 activityFamilyService.addAndUpdateFamily(family);
+				 activityFamilyService.addAndUpdateChild(family);
 				 return new RspResult(StatusEnum.SUCCESS);
 			}
 		} catch (Exception e) {
@@ -187,11 +189,25 @@ public class HollowManController extends BaseController {
 		return new RspResult(StatusEnum.FAIL);
 	} 
 	
-	@RequestMapping("withteam/{openid}")
-	public String withTeam(Model model, @PathVariable String openid) {
-		List<ActivityHmSignView> records = activityHmService.selectWithTeamRecord(openid);
-		model.addAttribute("records", records);
-		return "hm/widthTeam";
+	@RequestMapping("withteam")
+	public String withTeam(Model model) {
+		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE1";
+		model.addAttribute("records", new ArrayList<>());
+		return "my";
+//		String page = "hm/withTeam";
+//		String redir = wechatRedirect(model, page);
+//		if(redir.equals(page)) {
+//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+//			String openid = request.getParameter("openid");
+//			if(token != null || StringUtils.isNotBlank(openid)) {
+//				if(token != null) openid = token.getOpenid();
+//				List<ActivityHmSignView> records = activityHmService.selectWithTeamRecord(openid);
+//				HollowManInfo hm = hollowManService.selectByOpenid(openid);
+//				model.addAttribute("records", records);
+//				model.addAttribute("hm", hm);
+//			}
+//		}
+//		return redir;
 	}
 	
 	@RequestMapping("act/sign")

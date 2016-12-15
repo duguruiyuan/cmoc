@@ -130,7 +130,6 @@
 	</div>
 	<script type="text/javascript">
 		initSnsToken();	
-		mui.init();
 		$(function(){
 			$(".editInfo").on("click", function() {
 				var thiz = $(this);

@@ -19,6 +19,7 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
+import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
@@ -35,7 +36,8 @@ public class CourseController extends BaseController {
 	private Logger logger = LoggerFactory.getLogger(CourseController.class);
 	@Autowired
 	private ICourseService courseService;
-	@RequestMapping("list")
+	
+	@RequestMapping(value={"","/"})
 	public String courseList(Model model) {
 		List<CourseListView> list = courseService.selectShelvesList();
 		model.addAttribute("list", list);
@@ -83,7 +85,7 @@ public class CourseController extends BaseController {
 //		}
 //		return redir;
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
-		CourseBuyerInfo buyerInfo = courseService.selectByOpenid("oqyqUwq_YY84qjFWUtn6Ti4XIROE");
+		ParentInfo buyerInfo = courseService.selectByOpenid("oqyqUwq_YY84qjFWUtn6Ti4XIROE");
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("buyer", buyerInfo);
 		return "course/sign";

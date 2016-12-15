@@ -42,8 +42,8 @@ public class ActivityFamilyServiceImpl implements IActivityFamilyService {
 	}
 
 	@Override
-	public int addAndUpdateSignChild(ChildSignInfo child) {
-		return childSignInfoMapper.updateByPrimaryKeySelective(child);
+	public int addAndUpdateChild(ActivityChild child) {
+		return activityChildMapper.updateByPrimaryKey(child);
 	}
 
 	@Override

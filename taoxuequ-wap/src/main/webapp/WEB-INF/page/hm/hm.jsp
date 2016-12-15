@@ -100,11 +100,8 @@
 			</div>							
 		</div>
 	</c:if>
-	<script type="text/javascript" src="<%=basePath %>/js/plugins/localResizeIMG/dist/lrz.bundle.js" ></script>
 	<script type="text/javascript">
 		initSnsToken();
-		mui.init();
-		
 		$(function(){
 			$("#regMT-btn").click(function(){
 				var arr = ["hmName","hmMobile","idCard"];
