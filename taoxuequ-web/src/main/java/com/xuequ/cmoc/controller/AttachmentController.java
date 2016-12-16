@@ -24,7 +24,7 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityFamily;
 import com.xuequ.cmoc.model.ActivityMarines;
-import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.utils.DateUtil;
@@ -40,7 +40,7 @@ public class AttachmentController {
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
-	private IActivityFamilyService activityFamilyService;
+	private IActivityChildService activityFamilyService;
 	@Autowired
 	private IActivityService activityService;
 	

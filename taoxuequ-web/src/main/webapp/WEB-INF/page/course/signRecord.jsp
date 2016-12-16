@@ -19,16 +19,32 @@
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<td>课程编号: <input class="form-control1" type="text" name="productId" id="productId"/></td>
-									<td>课程名称： <input class="form-control1" type="text" name="courseName" id="courseName"/></td>
+									<td>课程名称: 
+									<select class="form-control1 course" style="width: 173px;" name="productId" id="productId">
+										<option value="">全部</option>
+									</select>
 									<td>订单编号： <input class="form-control1" type="text" name="orderNo" id="orderNo"/></td>
+								 	<td>是否安排活动：
+									 	<select class="form-control1" name="status" id="status">
+											<option value="">全部</option>
+											<option value="002">已安排</option>
+											<option value="001">未安排</option>
+										</select>
+								 	</td>
 								 </tr>
 								 <tr>
 									<td>购买人姓名: <input class="form-control1" type="text" name="name" id="name"/></td>
-									<td colspan="2">购买人号码： <input class="form-control1" type="text" name="mobile" id="mobile"/></td>
+									<td>购买人号码： <input class="form-control1" type="text" name="mobile" id="mobile"/></td>
+									<td>是否电话确认： 
+										<select class="form-control1" name="isPhoneConfirm" id="isPhoneConfirm">
+											<option value="">全部</option>
+											<option value="1">已确认</option>
+											<option value="0">未确认</option>
+										</select>
+									</td>
 								 </tr>
 								 <tr>
-									<td colspan="3">购买时间:  <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
+									<td colspan="3">报名时间:  <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
 										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
 								 </tr>
 								 <tr>
@@ -50,6 +66,6 @@
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
-	<script type="text/javascript" src="<%=basePath%>/js/course/buyRecord.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/course/signRecord.js"></script>
 </body>
 </html>

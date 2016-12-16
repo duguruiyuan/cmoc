@@ -12,11 +12,14 @@ public class BuyerQueryVO extends GridBase implements Serializable{
 
 	private String courseName;
 	private Integer productId;
-	private String mobile;
-	private String name;
+	private String childName;
+	private String emerMobile;
+	private String emerName;
 	private String orderNo;
 	private String startDate;
 	private String endDate;
+	private Integer isPhoneConfirm;
+	private String status;
 	
 	public String getCourseName() {
 		return StringUtils.isNotBlank(courseName) ? courseName : null;
@@ -30,17 +33,23 @@ public class BuyerQueryVO extends GridBase implements Serializable{
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
-	public String getMobile() {
-		return StringUtils.isNotBlank(mobile) ? mobile : null;
+	public String getChildName() {
+		return childName;
 	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setChildName(String childName) {
+		this.childName = childName;
 	}
-	public String getName() {
-		return StringUtils.isNotBlank(name) ? name : null;
+	public String getEmerMobile() {
+		return emerMobile;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setEmerMobile(String emerMobile) {
+		this.emerMobile = emerMobile;
+	}
+	public String getEmerName() {
+		return emerName;
+	}
+	public void setEmerName(String emerName) {
+		this.emerName = emerName;
 	}
 	public String getOrderNo() {
 		return StringUtils.isNotBlank(orderNo) ? orderNo : null;
@@ -59,6 +68,18 @@ public class BuyerQueryVO extends GridBase implements Serializable{
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public Integer getIsPhoneConfirm() {
+		return isPhoneConfirm;
+	}
+	public void setIsPhoneConfirm(Integer isPhoneConfirm) {
+		this.isPhoneConfirm = isPhoneConfirm;
+	}
+	public String getStatus() {
+		return StringUtils.isNotBlank(status) ? status : null;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

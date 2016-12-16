@@ -7,7 +7,6 @@
     <result column="course_num" property="courseNum" jdbcType="VARCHAR" />
     <result column="course_type" property="courseType" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="city_id" property="cityId" jdbcType="INTEGER" />
     <result column="addr" property="addr" jdbcType="VARCHAR" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
@@ -29,7 +28,7 @@
     <result column="course_details" property="courseDetails" jdbcType="LONGVARBINARY" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, course_name, course_num, course_type, city, city_id, addr, start_date, end_date, res_amount, 
+    id, course_name, course_num, course_type, city, addr, start_date, end_date, res_amount, 
     total_price, activity_price, course_peoples, course_desc, shelves, creater_id, creater, 
     create_time, updater_id, updater, update_time, course_img
   </sql>
@@ -45,16 +44,23 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectShelvesList" resultMap="BaseResultMap">
+  	SELECT
+	<include refid="Base_Column_List" />
+	FROM t_course_info
+	WHERE is_delete = 'N' AND shelves = 1
+  </select>
+  
   <resultMap id="ListResultMap" type="com.xuequ.cmoc.view.CourseListView" extends="BaseResultMap" >
   	<result column="peoples" property="peoples" jdbcType="INTEGER" />
   </resultMap>
-  <select id="selectShelvesList" resultMap="ListResultMap">
+  <select id="selectShelvesSignList" resultMap="ListResultMap">
   	SELECT
 	<include refid="Base_Column_List" />, IFNULL(bu.peoples,0) peoples
 	FROM t_course_info ci
 	LEFT JOIN (
 	   SELECT COUNT(1) peoples, product_id 
-	   FROM t_product_order WHERE product_type='COURSE' 
+	   FROM t_product_order WHERE order_status = '000' and product_type='COURSE' 
 	   GROUP BY product_id
 	) bu ON ci.`id` = bu.product_id 
 	WHERE is_delete = 'N' AND shelves = 1
@@ -72,7 +78,8 @@
     LEFT JOIN (
 	   SELECT COUNT(1) peoples, product_id 
 	   FROM t_product_order 
-	   WHERE product_type='COURSE' and id = #{id,jdbcType=INTEGER}
+	   WHERE product_type='COURSE' and order_status = '000' 
+	   and product_id = #{productId,jdbcType=INTEGER}
 	   GROUP BY product_id
 	) bu ON ci.`id` = bu.product_id 
     where id = #{id,jdbcType=INTEGER}
@@ -106,7 +113,7 @@
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.CourseInfo" >
     insert into t_course_info (id, course_name, course_num, 
-      course_type, city, city_id, 
+      course_type, city, 
       addr, start_date, end_date, 
       res_amount, total_price, activity_price, 
       course_peoples, course_desc, shelves, 
@@ -114,7 +121,7 @@
       updater_id, updater, update_time, 
       course_details)
     values (#{id,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR}, #{courseNum,jdbcType=VARCHAR}, 
-      #{courseType,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
+      #{courseType,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{addr,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
       #{resAmount,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{activityPrice,jdbcType=DECIMAL}, 
       #{coursePeoples,jdbcType=INTEGER}, #{courseDesc,jdbcType=VARCHAR}, #{shelves,jdbcType=INTEGER}, 
@@ -139,9 +146,6 @@
       </if>
       <if test="city != null" >
         city,
-      </if>
-      <if test="cityId != null" >
-        city_id,
       </if>
       <if test="addr != null" >
         addr,
@@ -211,9 +215,6 @@
       <if test="city != null" >
         #{city,jdbcType=VARCHAR},
       </if>
-      <if test="cityId != null" >
-        #{cityId,jdbcType=INTEGER},
-      </if>
       <if test="addr != null" >
         #{addr,jdbcType=VARCHAR},
       </if>
@@ -281,9 +282,6 @@
       </if>
       <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="cityId != null" >
-        city_id = #{cityId,jdbcType=INTEGER},
       </if>
       <if test="addr != null" >
         addr = #{addr,jdbcType=VARCHAR},
@@ -354,9 +352,6 @@
       <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
       </if>
-      <if test="cityId != null" >
-        city_id = #{cityId,jdbcType=INTEGER},
-      </if>
       <if test="addr != null" >
         addr = #{addr,jdbcType=VARCHAR},
       </if>
@@ -420,7 +415,6 @@
       course_num = #{courseNum,jdbcType=VARCHAR},
       course_type = #{courseType,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
-      city_id = #{cityId,jdbcType=INTEGER},
       addr = #{addr,jdbcType=VARCHAR},
       start_date = #{startDate,jdbcType=TIMESTAMP},
       end_date = #{endDate,jdbcType=TIMESTAMP},

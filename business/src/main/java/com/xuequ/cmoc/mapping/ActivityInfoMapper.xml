@@ -78,12 +78,19 @@
   
   <resultMap id="InfoBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ActivityInfoView">
       <result column="enter_peoples" jdbcType="INTEGER" property="enterPeoples" />
+      <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+      <result column="course_type" jdbcType="VARCHAR" property="courseType" />
   </resultMap>
   <select id="selectListByPage" resultMap="InfoBaseResultMap">
-    SELECT <include refid="Base_Column_List" />,IFNULL(enter_peoples,0) enter_peoples 
+    SELECT a.id, a.activity_name, a.start_date, a.end_date, a.activity_addr, a.line_name, a.line_id, 
+    a.activity_peoples, a.activity_img_url, a.qrcode_url, a.city, a.city_id, a.activity_num, 
+    a.activity_desc, a.activity_type, a.year, a.month, a.product_id, a.creater_user_id, 
+    a.creater, a.create_time, a.updater_user_id, a.updater, a.updater_time,
+    b.course_name, b.course_type, IFNULL(enter_peoples,0) enter_peoples 
     FROM t_activity_info a
+    inner join t_course_info b on a.product_id = b.id
 	LEFT JOIN (
-	  SELECT COUNT(1) enter_peoples, activity_id FROM t_activity_family WHERE is_delete = 'n' GROUP BY activity_id
+	  SELECT COUNT(1) enter_peoples, activity_id FROM t_activity_child WHERE is_delete = 'n' GROUP BY activity_id
 	) f ON a.id = f.activity_id
 	WHERE a.is_delete = 'N'
     <if test="params.activityType != null">
@@ -91,6 +98,9 @@
     </if>
     <if test="params.activityName != null">
     	and activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.productId != null">
+    	and b.id = #{params.productId,jdbcType=INTEGER}
     </if>
     <if test="params.startDate != null">
     	and DATE_FORMAT(start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
@@ -380,7 +390,7 @@
   
   <select id="selectForUpload" resultType="com.xuequ.cmoc.view.ActivityResourceTypeView">
 	SELECT f.id, 3 type, f.activity_id activityId, f.marine_id marineId
-	FROM t_activity_family f 
+	FROM t_activity_child f 
 	WHERE f.child_name = #{name,jdbcType=VARCHAR} 
 	AND f.activity_id = #{activityId,jdbcType=INTEGER}
 	UNION
@@ -392,7 +402,7 @@
 
   <select id="selectForUpload1" resultType="com.xuequ.cmoc.view.ActivityResourceTypeView">
 	SELECT f.id, 3 type, f.activity_id activityId, f.marine_id marineId 
-	FROM t_activity_family f
+	FROM t_activity_child f
 	INNER JOIN t_activity_marines m ON f.marine_id = m.id
 	WHERE f.activity_id = #{activityId,jdbcType=INTEGER}
 	and f.child_name = #{childName,jdbcType=VARCHAR} 

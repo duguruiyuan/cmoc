@@ -41,6 +41,16 @@ public class ChildSignInfo implements Serializable {
     private Integer isEffect;
 
     private String status;
+    
+    private String orderNo;
+    
+    private Integer isPhoneConfirm;
+    
+    private Integer updateUserId; 
+    
+    private String updater;
+    
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -195,4 +205,45 @@ public class ChildSignInfo implements Serializable {
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public Integer getIsPhoneConfirm() {
+		return isPhoneConfirm;
+	}
+
+	public void setIsPhoneConfirm(Integer isPhoneConfirm) {
+		this.isPhoneConfirm = isPhoneConfirm;
+	}
+
+	public Integer getUpdateUserId() {
+		return updateUserId;
+	}
+
+	public void setUpdateUserId(Integer updateUserId) {
+		this.updateUserId = updateUserId;
+	}
+
+	public String getUpdater() {
+		return updater;
+	}
+
+	public void setUpdater(String updater) {
+		this.updater = updater;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+    
 }

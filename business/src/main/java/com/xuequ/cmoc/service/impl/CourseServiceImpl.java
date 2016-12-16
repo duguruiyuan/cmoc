@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.common.enums.ProductTypeEnum;
+import com.xuequ.cmoc.common.enums.SignResource;
 import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.CourseInfoMapper;
 import com.xuequ.cmoc.dao.ParentInfoMapper;
 import com.xuequ.cmoc.dao.ProductOrderMapper;
 import com.xuequ.cmoc.dao.SysCommonMapper;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.ProductOrder;
@@ -21,6 +23,7 @@ import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.utils.StringUtil;
+import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseListView;
 
@@ -73,8 +76,14 @@ public class CourseServiceImpl implements ICourseService {
 	}
 
 	@Override
-	public List<CourseListView> selectShelvesList() {
+	public List<CourseInfo> selectShelvesList() {
 		return courseInfoMapper.selectShelvesList();
+	}
+	
+
+	@Override
+	public List<CourseListView> selectShelvesSignList() {
+		return courseInfoMapper.selectShelvesSignList();
 	}
 
 	@Override
@@ -108,25 +117,42 @@ public class CourseServiceImpl implements ICourseService {
 			parentInfo.setFamilyNo(familyNo);
 			parentInfoMapper.insertSelective(parentInfo);
 		}
-		info.setParentId(parentInfo.getId());
-		info.setFamilyNo(familyNo);
-		childSignInfoMapper.insertSelective(info);
 		CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
 		ProductOrder order = new ProductOrder();
-		order.setOrderNo(StringUtil.getCourseOrderNum(info.getId()));
+		order.setOrderNo(StringUtil.getCourseOrderNum(parentInfo.getId()));
 		order.setResAmount(courseInfo.getResAmount());
-		order.setCustId(info.getId());
+		order.setCustId(parentInfo.getId());
 		order.setProductId(courseInfo.getId());
 		order.setProductType(ProductTypeEnum.COURSE.getCode());
 		productOrderMapper.insertSelective(order);
-		info.setProductType(order.getProductType());
+		info.setParentId(parentInfo.getId());
+		info.setFamilyNo(familyNo);
+		info.setSignResource(SignResource.ONLINE.getCode());
+		info.setProductId(courseInfo.getId());
 		info.setOrderNo(order.getOrderNo());
+		childSignInfoMapper.insertSelective(info);
+		info.setProductType(order.getProductType());
 		return info;
 	}
 
 	@Override
 	public List<CourseBuyerView> selectBuyRecordByPage(Page<CourseBuyerView> page) {
 		return parentInfoMapper.selectBuyRecordByPage(page);
+	}
+
+	@Override
+	public List<ChildSignView> selectCourseSignByPage(Page<ChildSignView> page) {
+		return childSignInfoMapper.selectCourseSignByPage(page);
+	}
+
+	@Override
+	public int updateChildSignInfo(ChildSignInfo info) {
+		return childSignInfoMapper.updateByPrimaryKeySelective(info);
+	}
+
+	@Override
+	public ChildSignInfo selectChildSignById(Integer id) {
+		return childSignInfoMapper.selectByPrimaryKey(id);
 	}
 
 }

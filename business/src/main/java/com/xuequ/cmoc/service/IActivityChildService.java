@@ -6,7 +6,7 @@ import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.ActivityChildView;
 
-public interface IActivityFamilyService {
+public interface IActivityChildService {
 
 	/**
 	 * 分页查询名单信息

@@ -6,22 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.dao.ActivityChildMapper;
-import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.model.ActivityChild;
-import com.xuequ.cmoc.model.ActivityFamily;
-import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.page.Page;
-import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.view.ActivityChildView;
-import com.xuequ.cmoc.view.ActivityFamilyView;
 
 @Service("activityFamilyService")
-public class ActivityFamilyServiceImpl implements IActivityFamilyService {
+public class ActivityChildServiceImpl implements IActivityChildService {
 	
 	@Autowired
 	private ActivityChildMapper activityChildMapper;
-	@Autowired
-	private ChildSignInfoMapper childSignInfoMapper;
 
 	@Override
 	public List<ActivityChildView> selectListByPage(Page<ActivityChildView> page) {

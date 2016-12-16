@@ -29,7 +29,9 @@ public interface CourseInfoMapper {
     
     int delCourse(Integer id);
     
-    List<CourseListView> selectShelvesList();
+    List<CourseInfo> selectShelvesList();
     
-    CourseListView selectDetailById(Integer id);
+    public List<CourseListView> selectShelvesSignList();
+    
+    CourseListView selectDetailById(Integer productId);
 }

@@ -7,6 +7,7 @@ $(function() {
 	loadData();
 	initActivityType();
 	initCity();
+	initCourse();
 });
 window.onload = initLoad();
 function initLoad(){
@@ -60,6 +61,22 @@ function loadData() {
 			title : '活动期数',
 			align : "center",
 			resizable : true
+		},{
+			field : 'courseName',
+			title : '课程名称',
+			align : "center",
+			resizable : true,
+			formatter: function(v) {
+				return "<span title=\"" + v + "\">" + v + "</span>";
+			}
+		}, {
+			field : 'courseType',
+			title : '课程类型',
+			align : "center",
+			resizable : true,
+			formatter: function(v) {
+				return dictDataFormat('course_type',v);
+			}
 		}, {
 			field : 'activityImgUrl',
 			title : '活动图片',
@@ -195,6 +212,7 @@ function updateActivity(id) {
  		async : false,
  		success : function(data) {
  			$("#addForm #id").val(data.id);
+ 			$("#addForm #productId").val(data.productId);
 			$("#addForm #activityName").val(data.activityName);
 			$("#addForm #activityNum").val(data.activityNum);
 			$("#addForm #activityImgUrl").val(data.activityImgUrl);
@@ -299,6 +317,9 @@ function validator() {
 		},
 		errorElement : "span",
 		rules : {
+			productId : {
+				required : true
+			},
 			activityName : {
 				required : true,
 				maxlength : 40,

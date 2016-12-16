@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.xuequ.cmoc.model.ChildSignInfo;
+import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.ChildSignView;
 
 public interface ChildSignInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,10 +23,12 @@ public interface ChildSignInfoMapper {
     
     int selectHasChild(String childName, String emerMobile);
     
-    List<ChildSignInfo> selectEffectListByProductId(Integer productId);
+    List<ChildSignInfo> selectNonStartingList(ChildSignInfo info);
     
     ChildSignInfo selectByChildNameMobile(@Param("childName")String childName, 
     		@Param("emerMobile")String emerMobile);
     
     String selectFamilyNo(ChildSignInfo record);
+    
+    List<ChildSignView> selectCourseSignByPage(Page<ChildSignView> page);
 }

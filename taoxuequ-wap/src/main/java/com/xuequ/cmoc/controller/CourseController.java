@@ -41,7 +41,7 @@ public class CourseController extends BaseController {
 	
 	@RequestMapping(value={"","/"})
 	public String courseList(Model model) {
-		List<CourseListView> list = courseService.selectShelvesList();
+		List<CourseListView> list = courseService.selectShelvesSignList();
 		model.addAttribute("list", list);
 		return "course/list";
 	}
@@ -106,4 +106,5 @@ public class CourseController extends BaseController {
 		}
 		return new RspResult(StatusEnum.FAIL);
 	}
+	
 }

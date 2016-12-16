@@ -184,6 +184,18 @@ function sexFormat(v) {
 	return "";
 }
 
+function diseaseFormat(v) {
+	if(v == 'N') return "无";
+	if(v == 'Y') return "有";
+	return "";
+}
+
+function signResourceFormat(v) {
+	if(v == 'ONLINE') return "线上报名";
+	if(v == 'SCHOOL') return "学校报名";
+	return "";
+}
+
 function shelvesFormat(v) {
 	if(v == 0) return "<span style='color:#f3450f'>待审核</span>";
 	if(v == 1) return "已上架";
@@ -241,6 +253,22 @@ function initCity() {
 		},
 		success : function(data) {
 			$(".city").each(function(index,item) {
+				$(item).append(data);
+			});
+		}
+	});
+}
+
+function initCourse() {
+	$.ajax({
+		url : basePath + "/course/json/course/compent",
+		type : 'POST',
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		success : function(data) {
+			$(".course").each(function(index,item) {
 				$(item).append(data);
 			});
 		}

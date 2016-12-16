@@ -30,6 +30,8 @@ public class ActivityQueryVO extends GridBase implements Serializable{
 
 	private String hmMobile;
 	
+	private Integer productId;
+	
 	public Integer getActivityId() {
 		return activityId;
 	}
@@ -108,6 +110,14 @@ public class ActivityQueryVO extends GridBase implements Serializable{
 
 	public void setHmMobile(String hmMobile) {
 		this.hmMobile = hmMobile;
+	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 	
 	

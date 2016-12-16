@@ -57,25 +57,23 @@ function loadData() {
 				return dictDataFormat('activity_type', v);
 			}
 		}, {
-			field : 'fatherName',
-			title : '爸爸姓名',
+			field : 'emerName',
+			title : '紧急联系人',
 			align : "center",
 			resizable : true
 		}, {
-			field : 'fatherMobile',
-			title : '爸爸手机号码',
+			field : 'emerMobile',
+			title : '联系电话',
 			align : "center",
 			resizable : true
 		}, {
-			field : 'motherName',
-			title : '妈妈姓名',
+			field : 'signResource',
+			title : '名单来源',
 			align : "center",
-			resizable : true
-		},{
-			field : 'motherMobile',
-			title : '妈妈手机号码',
-			align : "center",
-			resizable : true
+			resizable : true,
+			formatter: function(v) {
+				return signResourceFormat(v);
+			}
 		}, {
 			field : 'marineName',
 			title : '战队名称',

@@ -19,12 +19,11 @@
 						<input type="hidden" id="id" name="id">
 						<div class="form-group col-md-6">
 							<label for="name">课程名称</label>								
-							<input class="form-control" name="name" id="name">
+							<input class="form-control" name="courseName" id="courseName">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="courseType">课程类型</label>								
 							<select class="form-control courseType" name="courseType" id="courseType">
-								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="form-group col-md-6">
@@ -121,7 +120,7 @@
 				},
 				success : function(data) {
 					$("#id").val(data.id);
-					$("#name").val(data.name);
+					$("#courseName").val(data.courseName);
 					$("#courseNum").val(data.courseNum);
 					$("#courseType").val(data.courseType);
 					$("#city").val(data.city);

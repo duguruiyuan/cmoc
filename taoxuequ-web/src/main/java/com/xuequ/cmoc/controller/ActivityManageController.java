@@ -29,15 +29,18 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.AuditReqVO;
+import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.Grid;
+import com.xuequ.cmoc.model.SysDictData;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.ActivityNamelistVO;
-import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IActivityTeacherService;
+import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
@@ -67,7 +70,7 @@ public class ActivityManageController extends BaseController{
 	@Autowired
 	private IActivityService activityService;
 	@Autowired
-	private IActivityFamilyService activityFamilyService;
+	private IActivityChildService activityFamilyService;
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
@@ -76,6 +79,8 @@ public class ActivityManageController extends BaseController{
 	private IActivityTeacherService activityTeacherService;
 	@Autowired
 	private IHollowManService hollowManService;
+	@Autowired
+	private ICourseService courseService;
 	
 	/**
 	 * 活动管理页
@@ -127,13 +132,8 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("json/query")
 	@ResponseBody Object manageQuery(ActivityQueryVO vo) {
 		Page<ActivityInfoView> page = new Page<ActivityInfoView>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("activityType", vo.getActivityType());
-		paramMap.put("activityName", vo.getActivityName());
-		paramMap.put("startDate", vo.getStartDate());
-		paramMap.put("endDate", vo.getEndDate());
 		Grid grid = new Grid();
-		page.setParams(paramMap);
+		page.setParams(vo);
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<ActivityInfoView> list = activityService.selectListByPage(page);
@@ -179,15 +179,8 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("json/namelist/query")
 	@ResponseBody Object namelistQuery(ActivityQueryVO vo) {
 		Page<ActivityChildView> page = new Page<ActivityChildView>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("activityId", vo.getActivityId());
-		paramMap.put("childName", vo.getChildName());
-		paramMap.put("activityType", vo.getActivityType());
-		paramMap.put("activityName", vo.getActivityName());
-		paramMap.put("startDate", vo.getStartDate());
-		paramMap.put("endDate", vo.getEndDate());
 		Grid grid = new Grid();
-		page.setParams(paramMap);
+		page.setParams(vo);
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<ActivityChildView> list = activityFamilyService.selectListByPage(page);
@@ -199,15 +192,8 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("json/marines/query")
 	@ResponseBody Object marinesQuery(ActivityQueryVO vo) {
 		Page<ActivityMarinesView> page = new Page<ActivityMarinesView>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("activityId", vo.getActivityId());
-		paramMap.put("marineName", vo.getMarineName());
-		paramMap.put("activityType", vo.getActivityType());
-		paramMap.put("activityName", vo.getActivityName());
-		paramMap.put("startDate", vo.getStartDate());
-		paramMap.put("endDate", vo.getEndDate());
+		page.setParams(vo);
 		Grid grid = new Grid();
-		page.setParams(paramMap);
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<ActivityMarinesView> list = activityMarinesService.selectListByPage(page);
@@ -398,4 +384,5 @@ public class ActivityManageController extends BaseController{
 		}
 		return null;
 	}
+	
 }

@@ -7,18 +7,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
-import com.xuequ.cmoc.model.BuyRecord;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.ICourseService;
+import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.vo.BuyerQueryVO;
 import com.xuequ.cmoc.vo.CourseQueryVO;
@@ -38,9 +40,27 @@ public class CourseManageController extends BaseController{
 		return "course/manage";
 	}
 	
-	@RequestMapping("buy/record")
+	@RequestMapping("sign/record")
 	public String buyRecord(){
-		return "course/buyRecord";
+		return "course/signRecord";
+	}
+	
+	@RequestMapping("json/sign/list")
+	@ResponseBody Object courseSignList(BuyerQueryVO vo) {
+		try {
+			Page<ChildSignView> page = new Page<>();
+			page.setPageNo(vo.getPage());
+			page.setPageSize(vo.getRows());
+			page.setParams(vo);
+			List<ChildSignView> list = courseService.selectCourseSignByPage(page);
+			Grid grid = new Grid();
+			grid.setRows(list);
+			grid.setTotal(page.getTotalRecord());
+			return grid;
+		} catch (Exception e) {
+			logger.error("--courseSignList, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 	@RequestMapping("json/buyRecord/list")
@@ -112,5 +132,33 @@ public class CourseManageController extends BaseController{
 			logger.error("--editShelves, error={}", e);
 		}
 		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/course/compent")
+	@ResponseBody Object courseCompent() {
+		List<CourseInfo> list = courseService.selectShelvesList();
+		StringBuffer sb = new StringBuffer();
+		for(CourseInfo info : list) {
+			sb.append("<option value=\"" + info.getId() + "\">" + info.getCourseName() + "</option>");
+		}
+		return sb.toString();
+	}
+	
+	@RequestMapping("json/sign/update")
+	@ResponseBody Object signUpdate(ChildSignInfo vo) {
+		try {
+			courseService.updateChildSignInfo(vo);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--signUpdate, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("sign/print")
+	public String signPrint(Model model) {
+		Integer id = Integer.valueOf(request.getParameter("key"));
+		model.addAttribute("signInfo", courseService.selectChildSignById(id));
+		return "course/signPrint";
 	}
 }

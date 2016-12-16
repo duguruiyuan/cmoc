@@ -16,7 +16,7 @@ import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.page.Page;
-import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IWechatMessageService;
@@ -34,7 +34,7 @@ public class LiveCenterController extends BaseController{
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
-	private IActivityFamilyService activityFamilyService;
+	private IActivityChildService activityFamilyService;
 	@Autowired
 	private IWechatMessageService wechatMessageService;
 

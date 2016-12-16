@@ -25,7 +25,7 @@ import com.xuequ.cmoc.core.wechat.message.InputMessage;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
-import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.FileUtils;
@@ -38,7 +38,7 @@ public class AttachmentController {
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
-	private IActivityFamilyService activityFamilyService;
+	private IActivityChildService activityFamilyService;
 	
 	@RequestMapping("media/download")
 	@ResponseBody Object wechatMediaDownload(Integer activityId, 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.common.RspResult;
+import com.xuequ.cmoc.common.enums.SignResource;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.dao.ActivityChildMapper;
 import com.xuequ.cmoc.dao.ActivityHmSignMapper;
@@ -88,7 +89,10 @@ public class ActivityServiceImpl implements IActivityService {
 				DateUtil.compare(new Date(), activityInfo.getEndDate()) >= 0) {
 			return new RspResult(StatusEnum.ACTIVITY_OVER);
 		}
-		List<ChildSignInfo> onlineSignList = new ArrayList<>();
+		ChildSignInfo signInfo = new ChildSignInfo();
+		signInfo.setSignResource(SignResource.ONLINE.getCode());
+		signInfo.setProductId(activityInfo.getProductId());
+		List<ChildSignInfo> onlineSignList = childSignInfoMapper.selectNonStartingList(signInfo);
 		List<ActivityChild> childList = new ArrayList<>();
 		List<ActivityTeacher> teacherList = new ArrayList<>();
 		List<ActivityMarines> marinesList = new ArrayList<>();
@@ -131,7 +135,7 @@ public class ActivityServiceImpl implements IActivityService {
 			}
 			if(isSchool) {
 				childSign.setStatus("002");
-				childSign.setSignResource("ONLINE");
+				childSign.setSignResource(SignResource.SCHOOL.getCode());
 				String familyNo = childSignInfoMapper.selectFamilyNo(childSign);
 				if(StringUtils.isBlank(familyNo)) {
 					familyNo = sysCommonMapper.selectFamilyNoSeq();

@@ -10,8 +10,6 @@ public class CourseSignVO extends ChildSignInfo {
 	
 	private String productType;
 	
-	private String orderNo;
-
 	public String getOpenid() {
 		return openid;
 	}
@@ -28,13 +26,4 @@ public class CourseSignVO extends ChildSignInfo {
 		this.productType = productType;
 	}
 
-	public String getOrderNo() {
-		return orderNo;
-	}
-
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
-	}
-	
-	
 }

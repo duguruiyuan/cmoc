@@ -114,7 +114,12 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-			
+			$(function() {
+				$(".city").each(function(index, item) {
+					var val = item.innerText;
+					item.innerText = dictDataFormat("city", val);
+				});
+			});
 		</script>
 	</body>
 </html>

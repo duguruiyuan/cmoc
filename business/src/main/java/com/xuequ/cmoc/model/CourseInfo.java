@@ -15,8 +15,6 @@ public class CourseInfo implements Serializable {
 
     private String city;
 
-    private Integer cityId;
-
     private String addr;
 
     private Date startDate;
@@ -91,14 +89,6 @@ public class CourseInfo implements Serializable {
 
     public void setCity(String city) {
         this.city = city == null ? null : city.trim();
-    }
-
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
     }
 
     public String getAddr() {

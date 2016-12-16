@@ -24,7 +24,7 @@ import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.WechatSnsToken;
-import com.xuequ.cmoc.service.IActivityFamilyService;
+import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
@@ -47,7 +47,7 @@ public class HollowManController extends BaseController {
 	@Autowired
 	private IActivityMarinesService activityMarinesService;
 	@Autowired
-	private IActivityFamilyService activityFamilyService;
+	private IActivityChildService activityFamilyService;
 	@Autowired
 	private IActivityHmService activityHmService;
 	

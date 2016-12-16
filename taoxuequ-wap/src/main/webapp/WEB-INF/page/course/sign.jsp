@@ -81,12 +81,14 @@
 	</div>
 	<script type="text/javascript">
 		initSnsToken();
-		mui.init();
 		initRelation();
 		$(function(){
 			$("input[name='isDisease']").change(function() {
 				if(this.value == 'Y') $("#disDesc").attr("style", "display: true");
-				else $("#disDesc").attr("style", "display: none");
+				else {
+					$("#disDesc").attr("style", "display: none");
+					$("#diseaseDesc").val(null);
+				}
 			});
 			$("#regMT-btn").click(function(){
 				var arr = ["childName","childAge","childIdcard","emerName","signRelation","emerMobile","diseaseDesc"];

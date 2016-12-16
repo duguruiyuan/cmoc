@@ -12,7 +12,7 @@ public class StringUtil {
 	public static String getCourseOrderNum(Integer userId) {
 		Date date = new Date();
 		String dateTime = date.getTime()+"";
-		String str = 1 + DateUtil.dateToStr(date,"MMdd") + dateTime.substring(dateTime.length()-8, dateTime.length()) + userId;
+		String str = 1 + dateTime.substring(dateTime.length()-6, dateTime.length()) + userId;
 		return str;
 	}
 }

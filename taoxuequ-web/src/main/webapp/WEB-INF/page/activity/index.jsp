@@ -19,6 +19,11 @@
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
+									<td>课程名称： 
+										<select class="form-control1 course" style="width: 173px;" name="productId" id="productId">
+											<option value="">全部</option>
+										</select>
+									</td>
 									<td>活动名称： <input class="form-control1" type="text" name="activityName" id="activityName"/></td>
 									<td>活动类型： 
 										<select class="form-control1 activityType" name="activityType" id="activityType">
@@ -73,6 +78,17 @@
 				  <form id="addForm" novalidate="novalidate">
 						<input type="hidden" id="id" name="id">
 						<div class="form-group col-md-6">
+							<label for="activityDesc">活动图片</label>	
+							<input id="activity1-img-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+		            		<input type="hidden" name="activity_type" id="activity_type" value="ACTIVITY"/>
+							<input type="hidden" name="activityImgUrl" id="activityImgUrl" />
+						</div>
+						<div class="form-group col-md-6">
+							<label for="productId">课程名称</label>								
+							<select class="form-control course" name="productId" id="productId">
+							</select>
+						</div>
+						<div class="form-group col-md-6">
 							<label for="activityName">活动名称</label>								
 							<input class="form-control" name="activityName" id="activityName">
 						</div>
@@ -83,7 +99,6 @@
 						<div class="form-group col-md-6">
 							<label for="activityType">活动类型</label>								
 							<select class="form-control activityType" name="activityType" id="activityType">
-								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="form-group col-md-6">
@@ -93,16 +108,15 @@
 						<div class="form-group col-md-6">
 							<label for="city">活动城市</label>								
 							<select class="form-control city" name="city" id="city">
-								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="strStartDate">活动开始时间</label>								
-							<input class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'strEndDate\')}',readOnly:true})" name="strStartDate" id="strStartDate">
+							<input class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'strEndDate\')}',minDate:'%y-%M-%d',readOnly:true})" name="strStartDate" id="strStartDate">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="strEndDate">活动结束时间</label>								
-							<input class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'strStartDate\')}',readOnly:true})" name="strEndDate" id="strEndDate">
+							<input class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'strStartDate\')}',minDate:'%y-%M-%d',readOnly:true})" name="strEndDate" id="strEndDate">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="activityAddr">活动地址</label>								
@@ -111,12 +125,6 @@
 						<div class="form-group col-md-6">
 							<label for="activityDesc">活动描述</label>	
 							<textarea class="form-control" name="activityDesc" id="activityDesc" rows="3"></textarea>							
-						</div>
-						<div class="form-group col-md-6">
-							<label for="activityDesc">活动图片</label>	
-							<input id="activity1-img-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
-		            		<input type="hidden" name="activity_type" id="activity_type" value="ACTIVITY"/>
-							<input type="hidden" name="activityImgUrl" id="activityImgUrl" />
 						</div>
 						<div class="form-group col-md-12 text-right">
 							<button type="submit" class="btn btn-success">保存</button>
