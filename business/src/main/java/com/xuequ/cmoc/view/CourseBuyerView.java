@@ -23,6 +23,8 @@ public class CourseBuyerView extends ParentInfo {
 	
 	private BigDecimal totalAmount;
 	
+	private Integer courseId;
+	
 	public BigDecimal getResAmount() {
 		return resAmount;
 	}
@@ -78,6 +80,13 @@ public class CourseBuyerView extends ParentInfo {
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	
+
+	public Integer getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(Integer courseId) {
+		this.courseId = courseId;
+	}
 	
 }

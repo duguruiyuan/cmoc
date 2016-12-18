@@ -6,22 +6,30 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>
-<nav class="mui-bar mui-bar-tab footer">
+<link href="<%=basePath %>/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="add"></div>
+<nav class="mui-bar mui-bar-tab">
     <a class="foot-tab-item" href="<%=basePath %>/">
+    	<i class="mui-icon fa fa-home"></i>
         <span class="mui-tab-label">首页</span>
     </a>
     <a class="foot-tab-item" href="<%=basePath %>/course">
+    	<span class="mui-icon fa fa-book"></span>
         <span class="mui-tab-label">实践课程</span>
     </a>
     <a class="foot-tab-item" href="<%=basePath %>/live">
+   		 <span class="mui-icon fa fa-file-movie-o"></span>
         <span class="mui-tab-label">直播中心</span>
     </a>
     <a class="foot-tab-item tab-active" href="<%=basePath %>/my">
+    	<span class="mui-icon fa fa-user"></span>
         <span class="mui-tab-label">个人中心</span>
     </a>
 </nav>
+
 <script type="text/javascript">
-	$(".footer a").each(function(index, item) {
+	$(".mui-bar a").each(function(index, item) {
 		if(item.href == window.location.href){
 			$(item).addClass("tab-active").siblings().removeClass("tab-active");
 		}

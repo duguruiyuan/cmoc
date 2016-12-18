@@ -25,11 +25,9 @@
 		    	</li>
 		    </ul>
 		</header>
-		
-		<jsp:include page="/WEB-INF/page/common/head.jsp" />
-		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 		</div>
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<script id="table-template" type="text/x-handlebars-template">
 				{{#if rows}}
  				  {{#each rows}}

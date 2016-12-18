@@ -22,8 +22,6 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">战队列表</h1>
 		</header>
-		<jsp:include page="/WEB-INF/page/common/head.jsp" />
-		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 			<div class="banner pr">
 				<c:choose>
@@ -66,6 +64,7 @@
 			    </ul>
 		    </div>
 		</div>
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 	</body>
 
 </html>

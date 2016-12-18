@@ -51,6 +51,7 @@
 									<td colspan="3">
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="closeFormPanel('searchForm')">清空</button>
+										<button type="button" class="btn btn-warning" onclick="childSignReport('searchForm')">报表导出</button>
 									</td>
 								</tr>
 							</tbody>

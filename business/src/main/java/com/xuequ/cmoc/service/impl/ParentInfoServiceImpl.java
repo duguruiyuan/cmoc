@@ -11,9 +11,11 @@ import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.ParentInfoMapper;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.view.ChildActRecordView;
+import com.xuequ.cmoc.view.ParentInfoView;
 
 @Service("parentInfoService")
 public class ParentInfoServiceImpl implements IParentInfoService {
@@ -48,6 +50,16 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 		parentInfo.setFamilyNo(signInfo.getFamilyNo());
 		parentInfoMapper.insertSelective(parentInfo);
 		return new RspResult(StatusEnum.SUCCESS);
+	}
+
+	@Override
+	public List<ParentInfoView> selectBuyTotalByPage(Page<ParentInfoView> page) {
+		return parentInfoMapper.selectBuyTotalByPage(page);
+	}
+
+	@Override
+	public List<ParentInfo> selectListByPage(Page<ParentInfo> page) {
+		return parentInfoMapper.selectListByPage(page);
 	}
 
 }

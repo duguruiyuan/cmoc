@@ -20,6 +20,8 @@ public class BuyerQueryVO extends GridBase implements Serializable{
 	private String endDate;
 	private Integer isPhoneConfirm;
 	private String status;
+	private String orderStatus;
+	private Integer parentId;
 	
 	public String getCourseName() {
 		return StringUtils.isNotBlank(courseName) ? courseName : null;
@@ -34,19 +36,19 @@ public class BuyerQueryVO extends GridBase implements Serializable{
 		this.productId = productId;
 	}
 	public String getChildName() {
-		return childName;
+		return StringUtils.isNotBlank(childName) ? childName : null;
 	}
 	public void setChildName(String childName) {
 		this.childName = childName;
 	}
 	public String getEmerMobile() {
-		return emerMobile;
+		return StringUtils.isNotBlank(emerMobile) ? emerMobile : null;
 	}
 	public void setEmerMobile(String emerMobile) {
 		this.emerMobile = emerMobile;
 	}
 	public String getEmerName() {
-		return emerName;
+		return StringUtils.isNotBlank(emerName) ? emerName : null;
 	}
 	public void setEmerName(String emerName) {
 		this.emerName = emerName;
@@ -81,6 +83,16 @@ public class BuyerQueryVO extends GridBase implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+	public String getOrderStatus() {
+		return StringUtils.isNotBlank(orderStatus) ? orderStatus : null;
+	}
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	public Integer getParentId() {
+		return parentId;
+	}
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
 }

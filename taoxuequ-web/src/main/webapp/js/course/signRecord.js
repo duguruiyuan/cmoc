@@ -180,7 +180,11 @@ function phoneConfirm(id) {
 }
 
 function printCon(id) {
-	window.open(basePath + "/course/json/sign/print?key=" + id);
+	window.open(basePath + "/course/sign/print/" + id);
+}
+
+function childSignReport(formId){
+	$('#'+formId).attr('action', basePath + '/course/json/list/import').submit();
 }
 
 /**

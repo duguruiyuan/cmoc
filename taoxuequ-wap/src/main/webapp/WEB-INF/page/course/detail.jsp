@@ -15,6 +15,7 @@
 <title>[陶学趣]课程详情</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />
+<header>陶学趣</header>
 <body class="course-detail">
 		<div class="course-img">
 			<img src="${config.imgUrl }${course.courseImg }">

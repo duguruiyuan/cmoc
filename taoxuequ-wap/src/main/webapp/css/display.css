@@ -1464,7 +1464,9 @@ color: #09BB07;
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
-
+.mui-bar-tab .tab-active{
+	color: #2EC10E;
+}
 .foot-tab-item{
 	display: table-cell;
     overflow: hidden;
@@ -1475,7 +1477,92 @@ color: #09BB07;
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #929292;
+    padding: 5px;
 }
-.tab-active{
-	color: #2EC10E;
+.mui-bar-tab .foot-tab-item .mui-icon{
+	top: 0;
+    width: 24px;
+    height: 24px;
+    padding-top: 0;
+    padding-bottom:30px;
+	font-size: 30px;
+    position: relative;
+    z-index: 20;
 }
+
+.mui-bar-tab .foot-tab-item .mui-icon~.mui-tab-label {
+    font-size: 15px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fff{
+	color: #fff;
+}
+.bc-fff{
+	background-color: #fff;
+}
+/*新版*/
+header {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    color: #FFFFFF;
+    background: #25242a;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+.head_bg {
+	width: 100%;
+	position: relative;
+	text-align: center;
+}
+
+.head_bg img {
+	width: 100%;
+}
+
+.head_img img {
+	width: 60%;
+	height: 60%;
+	border-radius: 100%;
+	border: #fff solid 2px;
+	position: relative;
+	left: -50%;
+}
+
+.head_img {
+	position: absolute;
+	top: 25%;
+	left: 50%;
+}
+
+.name {
+	position: absolute;
+	top: 68%;
+	text-align: center;
+	width: 100%;
+	color: #f3fbe6;
+	font-size: 18px;
+	font-weight: bold;
+    letter-spacing: 2px;
+}
+.home{
+	background: url(../images/home.png) no-repeat;
+	background-size: 24px 24px;
+    top: 4px;
+}
+.subject{
+	background: url(../images/subject.png) no-repeat;
+	background-size: 24px 24px;
+    top: 4px;
+}
+.PersonalClick{
+	background: url(../images/PersonalClick.png) no-repeat;
+	background-size: 24px 24px;
+    top: 4px;
+}
+
+.add{height: 50px;}

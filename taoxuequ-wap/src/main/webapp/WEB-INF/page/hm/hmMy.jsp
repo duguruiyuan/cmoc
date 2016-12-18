@@ -16,7 +16,6 @@
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
-		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<div class="mui-content">
 			<div class="regTMHeader" style="background-color: #25C26D;">
 				<img src="${userInfo.headimgurl }" class="regTMPic"><br>
@@ -41,7 +40,7 @@
 	            
 	        </ul>
 		</div>
-		
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<script type="text/javascript">
 			mui.init();
 			mui('.footer').on('tap','a',function(){document.location.href=this.href;});

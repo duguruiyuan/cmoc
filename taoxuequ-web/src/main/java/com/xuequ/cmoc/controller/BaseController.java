@@ -43,5 +43,4 @@ public class BaseController {
 		return Configuration.getInstance();
 	}
 	
-	
 }

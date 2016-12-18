@@ -104,6 +104,9 @@
 	<if test="params.status != null">
 		and bi.status = #{params.status,jdbcType=VARCHAR}
 	</if>
+	<if test="params.parentId != null">
+		and pa.id = #{params.parentId,jdbcType=INTEGER}
+	</if>
 	<if test="params.startDate != null">
 		and DATE_FORMAT(bi.create_time,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
 	</if>

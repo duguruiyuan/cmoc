@@ -116,6 +116,11 @@ public class CourseServiceImpl implements ICourseService {
 			parentInfo.setRelation(info.getSignRelation());
 			parentInfo.setFamilyNo(familyNo);
 			parentInfoMapper.insertSelective(parentInfo);
+		}else {
+			parentInfo.setParentName(info.getEmerName());
+			parentInfo.setParentMobile(info.getEmerMobile());
+			parentInfo.setRelation(info.getSignRelation());
+			parentInfoMapper.updateByPrimaryKeySelective(parentInfo);
 		}
 		CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
 		ProductOrder order = new ProductOrder();

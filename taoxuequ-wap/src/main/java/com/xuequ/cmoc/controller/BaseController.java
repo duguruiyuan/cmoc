@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.model.WechatSnsUserInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
+import com.xuequ.cmoc.service.IContentManageService;
+import com.xuequ.cmoc.service.ISysDictService;
 import com.xuequ.cmoc.utils.TextUtil;
 
 /**
@@ -40,6 +44,12 @@ public class BaseController {
 	@Autowired
 	protected HttpServletRequest request;
 	
+	@Autowired
+	protected ISysDictService sysDictService;
+	
+	@Autowired
+	protected IContentManageService contentManageService;
+	
 	/**
 	 * 视图数据绑定模型前将字符串类型时间转型为日期格式
 	 * 
@@ -54,6 +64,13 @@ public class BaseController {
 	@ModelAttribute("config")
 	protected Configuration configInstance() {
 		return Configuration.getInstance();
+	}
+	
+	@ModelAttribute("topBannerList")
+	protected Object topBannerList() {
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
+		return contentManageService.selectListByParam(group);
 	}
 	/**
 	 * 是否关注跳转
