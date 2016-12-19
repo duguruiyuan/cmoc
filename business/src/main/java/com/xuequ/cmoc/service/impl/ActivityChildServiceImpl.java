@@ -37,7 +37,7 @@ public class ActivityChildServiceImpl implements IActivityChildService {
 
 	@Override
 	public int addAndUpdateChild(ActivityChild child) {
-		return activityChildMapper.updateByPrimaryKey(child);
+		return activityChildMapper.updateByPrimaryKeySelective(child);
 	}
 
 	@Override

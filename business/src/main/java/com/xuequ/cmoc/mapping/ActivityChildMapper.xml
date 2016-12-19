@@ -36,6 +36,7 @@
     <result column="child_age" property="childAge" jdbcType="INTEGER" />
     <result column="child_sex" property="childSex" jdbcType="VARCHAR" />
     <result column="is_disease" property="isDisease" jdbcType="VARCHAR" />
+    <result column="sign_resource" property="signResource" jdbcType="VARCHAR" />
     <result column="disease_desc" property="diseaseDesc" jdbcType="VARCHAR" />
     <result column="emer_name" property="emerName" jdbcType="VARCHAR" />
     <result column="emer_mobile" property="emerMobile" jdbcType="VARCHAR" />
@@ -81,7 +82,7 @@
   	ac.creater_user_id, ac.creater, ac.create_time, cs.child_idcard, cs.child_name, 
   	cs.child_mobile, cs.child_age, cs.child_sex, cs.is_disease, cs.disease_desc, cs.emer_name, 
   	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id, ai.activity_name, 
-  	am.marine_name, ai.activity_num, ai.activity_type
+  	cs.sign_resource, am.marine_name, ai.activity_num, ai.activity_type
   	from t_activity_child ac 
   	inner join t_child_sign_info cs on ac.child_id = cs.id 
   	inner join t_activity_info ai on ac.activity_id = ai.id

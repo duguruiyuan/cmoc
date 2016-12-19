@@ -22,7 +22,7 @@
    		 <span class="mui-icon fa fa-file-movie-o"></span>
         <span class="mui-tab-label">直播中心</span>
     </a>
-    <a class="foot-tab-item tab-active" href="<%=basePath %>/my">
+    <a class="foot-tab-item" href="<%=basePath %>/my">
     	<span class="mui-icon fa fa-user"></span>
         <span class="mui-tab-label">个人中心</span>
     </a>
@@ -30,7 +30,7 @@
 
 <script type="text/javascript">
 	$(".mui-bar a").each(function(index, item) {
-		if(item.href == window.location.href){
+		if(window.location.href.indexOf(item.href) != -1){
 			$(item).addClass("tab-active").siblings().removeClass("tab-active");
 		}
 	});

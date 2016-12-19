@@ -1479,7 +1479,7 @@ color: #09BB07;
     color: #929292;
     padding: 5px;
 }
-.mui-bar-tab .foot-tab-item .mui-icon{
+.foot-tab-item .mui-icon{
 	top: 0;
     width: 24px;
     height: 24px;
@@ -1490,7 +1490,7 @@ color: #09BB07;
     z-index: 20;
 }
 
-.mui-bar-tab .foot-tab-item .mui-icon~.mui-tab-label {
+.foot-tab-item .mui-icon~.mui-tab-label {
     font-size: 15px;
     display: block;
     overflow: hidden;
@@ -1501,13 +1501,13 @@ color: #09BB07;
 	color: #fff;
 }
 .bc-fff{
-	background-color: #fff;
+	background-color: #FFFFFF;
 }
-/*新版*/
-header {
+/*新版-个人中心*/
+.header {
     text-align: center;
     height: 50px;
-    line-height: 50px;
+    line-height: 20px;
     color: #FFFFFF;
     background: #25242a;
     font-size: 20px;
@@ -1540,14 +1540,12 @@ header {
 }
 
 .name {
-	position: absolute;
-	top: 68%;
-	text-align: center;
-	width: 100%;
+	text-align: left;
 	color: #f3fbe6;
 	font-size: 18px;
 	font-weight: bold;
     letter-spacing: 2px;
+    margin-left: -18%;
 }
 .home{
 	background: url(../images/home.png) no-repeat;
@@ -1566,3 +1564,133 @@ header {
 }
 
 .add{height: 50px;}
+
+/*首页*/
+#box1 {
+	width: 100%;
+	margin: 15px 0px 0px;
+}
+
+.bigone1 {
+	width: 33%;
+	display: inline-block;
+	border-right: 2px solid #CCC;
+	vertical-align: middle;
+	padding-top: 5px;
+}
+
+.bigone1 img {
+	width: 80%;
+	margin: 0px 10%;
+}
+
+#box1 p {
+	width: 65%;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: left;
+    padding-left: 5%;
+    font-size: 18px;
+    padding-top: 5px
+}
+
+.h10 {height: 10px;}
+.h20 {height: 20px;}
+
+#box2 {
+	width: 100%;
+	position: relative;
+}
+
+.bigone2 {
+	width: 33%;
+	padding-left: 2px;
+	float: left;
+}
+
+.bigone2 img {
+	width: 100%;
+}
+
+.bigone3 {
+	width: 60%;
+	float: right;
+}
+
+.small {
+	width: 50%;
+	float: left;
+	padding-top: 6%;
+	padding-left: 5%;
+	padding-bottom: 5%;
+}
+
+.small img {
+	width: 80%;
+}
+
+.br-l2{border-left: 2px solid #CCC;}
+.br-l1{border-left: 1px solid #CCC;}
+.br-b2{border-bottom: 2px solid #CCC}
+
+.mui-icon-arrowright {
+	color: #007AFF;
+}
+
+.recommend {
+	width: 100%;
+	position: relative;
+	height: 25px;
+	margin-top: 10px;
+	margin-bottom: 5%;
+}
+
+.recommend div {
+	position: absolute;
+	left: 55%;
+	width: 33%;
+	top: 5px;
+}
+
+.recommend div img {
+	position: relative;
+	left: -50%;
+	width: 70%;
+}
+
+.recommend a span {
+	float: right;
+	color: #007AFF;
+}
+
+.all {
+	position: relative;
+	top: 2px;
+	font-size: small;
+}
+
+.recommend_box {
+	position: relative;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.recommend_box a img {
+	width: 100%;
+}
+
+.bottom-title {
+	line-height: 40px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 40px;
+	margin: 0;
+	text-align: left;
+	text-indent: 12px;
+	opacity: .8;
+	background-color: #000;
+	color: #FFFFFF;
+    font-size: 18px;
+}

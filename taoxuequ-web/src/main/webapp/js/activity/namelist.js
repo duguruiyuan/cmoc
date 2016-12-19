@@ -180,7 +180,7 @@ function returnBack(){
 
 var loadForm = function(data){
 	confirmDialog = $('#confirmDialog').dialog({
-		title : data != null ? "修改活动" : "新增活动",
+		title : data != null ? "修改名单" : "新增名单",
 		modal : true,
 		width : 800,
 		top : 100,
@@ -188,7 +188,7 @@ var loadForm = function(data){
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
-			$(".fileinput-remove").click();
+			$(".kv-file-remove").click();
 			cleanFormPanel("addForm");
 		}
 	}).show();

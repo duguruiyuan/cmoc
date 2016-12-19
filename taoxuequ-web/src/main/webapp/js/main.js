@@ -289,3 +289,10 @@ function initAllDictData(reload) {
 		}
 	});
 }
+
+/**
+ * 模版下载操作
+ */
+function downloadTemplate(fileName){
+	window.location.href= basePath + "/common/upload?fileName=" + encodeURI(encodeURI(fileName));
+}

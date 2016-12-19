@@ -180,7 +180,6 @@ var loadForm = function(data){
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
-			$(".fileinput-remove").click();
 			cleanFormPanel("addForm");
 		}
 	}).show();

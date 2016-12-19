@@ -31,10 +31,10 @@
 		<script id="table-template" type="text/x-handlebars-template">
 				{{#if rows}}
  				  {{#each rows}}
-				  <div class="mui-card">
+				  <div class="mui-card" style="width: 96%">
 					<a href="<%=basePath %>/live/marine/list/{{id}}">
 						<div class="mui-card-content">
-							<img src="{{activityImgFormat activityImgUrl}}" alt="" width="100%" height="154">
+							<img src="{{activityImgFormat activityImgUrl}}" alt="" width="100%">
 						</div>
 						<div class="mui-card-footer">
 							<div class="courseList-line1">{{activityName}}</div>

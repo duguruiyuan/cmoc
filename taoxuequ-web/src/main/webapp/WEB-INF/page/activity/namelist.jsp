@@ -83,22 +83,6 @@
 					<label for="childTitle">小队员头衔</label>								
 					<input class="form-control" name="childTitle" id="childTitle">
 				</div>
-				<div class="form-group col-md-6">
-					<label for="fatherName">爸爸姓名</label>								
-					<input class="form-control" name="fatherName" id="fatherName">
-				</div>
-				<div class="form-group col-md-6">
-					<label for="fatherMobile">爸爸手机号码</label>								
-					<input class="form-control" name="fatherMobile" id="fatherMobile">
-				</div>
-				<div class="form-group col-md-6">
-					<label for="motherName">妈妈姓名</label>								
-					<input class="form-control" name="motherName" id="motherName">
-				</div>
-				<div class="form-group col-md-6">
-					<label for="motherMobile">妈妈手机号码</label>								
-					<input class="form-control" name="motherMobile" id="motherMobile">
-				</div>
 				<div class="form-group col-md-12 text-right">
 					<button type="submit" class="btn btn-success">保存</button>
 					<button class="btn btn-info" type="button"

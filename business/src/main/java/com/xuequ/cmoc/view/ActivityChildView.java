@@ -20,6 +20,8 @@ public class ActivityChildView extends ActivityChild {
 	
 	private String diseaseDesc;
 	
+	private String signResource;
+	
 	private String emerName;
 	
 	private String emerMobile;
@@ -94,6 +96,14 @@ public class ActivityChildView extends ActivityChild {
 
 	public void setDiseaseDesc(String diseaseDesc) {
 		this.diseaseDesc = diseaseDesc;
+	}
+
+	public String getSignResource() {
+		return signResource;
+	}
+
+	public void setSignResource(String signResource) {
+		this.signResource = signResource;
 	}
 
 	public String getEmerName() {

@@ -136,6 +136,7 @@ public class ActivityServiceImpl implements IActivityService {
 			if(isSchool) {
 				childSign.setStatus("002");
 				childSign.setSignResource(SignResource.SCHOOL.getCode());
+				childSign.setIsEffect(1);
 				String familyNo = childSignInfoMapper.selectFamilyNo(childSign);
 				if(StringUtils.isBlank(familyNo)) {
 					familyNo = sysCommonMapper.selectFamilyNoSeq();

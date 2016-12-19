@@ -16,8 +16,8 @@
 <title>[陶学趣]课程列表</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />
-<header>陶学趣</header>
 <body class="">
+		<header class="header">陶学趣</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
 		    <div class="course-list">

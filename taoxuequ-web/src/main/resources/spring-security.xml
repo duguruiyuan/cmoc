@@ -16,7 +16,7 @@
 	
     <http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
-        <access-denied-handler error-page="/403.html"/>        
+        <access-denied-handler error-page="/WEB-INF/page/common/404.jsp"/>        
     	<logout invalidate-session="true" logout-success-url="/" logout-url="/logout"/>
        	<!-- 单用户登陆 -->
         <session-management invalid-session-url="/auth/login">

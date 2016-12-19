@@ -15,14 +15,15 @@
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body class="bc-fff">
+		<header class="header">淘学趣</header>
 		<div class="mui-content">
 			<div class="head_bg">
 				<img src="<%=basePath %>/images/home_bg.png">
 				<div class="head_img">
 					<img src="<%=basePath %>/images/t01f91640b40600714f.jpg${userInfo.headimgurl }">
-				</div>
-				<div class="name">
-					胡启萌${userInfo.nickname }
+					<p class="name">
+						胡启萌${userInfo.nickname }
+					</p>
 				</div>
 			</div>
 		    <ul class="mui-table-view mb10" style="color: #614b4b;">

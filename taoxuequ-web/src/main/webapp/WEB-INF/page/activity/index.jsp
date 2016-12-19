@@ -53,12 +53,20 @@
 				</div>
 			</div>
 			<div id="uploadDialog" style="display: none;height: 'auto';">
-			 	 <div class="col-md-12 p15">
+				 <div class="col-md-12 p15">
+				  	<p class="text-left">
+				  		<span class="btn btn-success fileinput-button" onclick="downloadTemplate('名单模板.xls')">
+		                    <i class="fa fa-cloud"></i>
+		                    <span>模版下载</span>
+		                </span>
+				  	</p>
+			  	 </div>
+			 	 <div class="col-md-6 p15">
 				  	<p class="text-left">
 				  		活动名称： <input type="text" id="activityName" class="form-control1" readonly="readonly">
 				  	</p>
 			  	 </div>
-			  	 <div class="col-md-12 p15">
+			  	 <div class="col-md-6 p15">
 				  	<p class="text-left">
 				  		活动期数： <input type="text" id="activityNum" class="form-control1" readonly="readonly">
 				  	</p>
