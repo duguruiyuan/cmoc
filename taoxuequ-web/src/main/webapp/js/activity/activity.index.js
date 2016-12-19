@@ -176,7 +176,7 @@ function search(formId){
 }
 
 function closeFormPanel(formId){
-	$('#' + formId).form('clear');
+	$('#' + formId)[0].reset();
 	$('#confirmDialog').dialog("close");
 }
 
@@ -184,7 +184,7 @@ function closeFormPanel(formId){
  * 清空表单
  */
 var cleanFormPanel=function(formId){
-	$('#' + formId).form('clear');
+	$('#' + formId)[0].reset();
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
 	$("label").find("span").remove();
@@ -259,11 +259,11 @@ function uploadInit1() {
         }
 	});
 	$("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
+		$(".kv-file-remove").click();
 		if(data.response.code == '000') {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
 			$('#uploadDialog').dialog("close");
 		}else {
-			$(".kv-file-remove").click();
 			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.msg, 'info');
 		}
 	});

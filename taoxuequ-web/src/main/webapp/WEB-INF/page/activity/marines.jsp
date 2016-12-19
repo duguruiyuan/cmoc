@@ -80,7 +80,7 @@
  					<input type="hidden" name="resourceId" id="resourceId"/>
 		            <input type="hidden" name="type" id="type" value="MARINE"/>
 	             	<div class="form-group">
-	                    <input id="file-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+	                    <input id="file-upload" name="files" type="file" accept=".png,.jpg,.gif" multiple class="file" data-overwrite-initial="true" data-max-file-count="1">
 	                </div>
  				</div>
 				<div class="form-group col-md-12 text-right">

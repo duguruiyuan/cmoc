@@ -47,6 +47,7 @@
     <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
     <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
     <result column="marine_team" property="marineTeam" jdbcType="VARCHAR" />
+  	<result column="product_id" property="productId" jdbcType="INTEGER" />
   </resultMap>
   
   <select id="selectMarineByHmOpenid" resultMap="PageBaseResultMap">
@@ -83,7 +84,7 @@
   <select id="selectById" resultMap="PageBaseResultMap" parameterType="java.lang.Integer">
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id, comment, votes, `readnum`, score, 
+  	m.line_id, a.product_id, activity_id, comment, votes, `readnum`, score, 
   	m.qrcode_url, m.creater, m.create_time,
     a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m

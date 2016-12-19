@@ -18,10 +18,10 @@
 		<header class="mui-bar mui-bar-nav">
 		    <ul>
 		    	<li id="selectYear">
-		    		<span>选择年份 <i class="mui-icon mui-icon-arrowdown"></i></span>
+		    		<span>选择年份 <i class="mui-icon mui-icon-arrowdown" style="color: #000;"></i></span>
 		    	</li>
 		    	<li id="selectMonth">
-		    		<span>选择月份 <i class="mui-icon mui-icon-arrowdown"></i></span>
+		    		<span>选择月份 <i class="mui-icon mui-icon-arrowdown" style="color: #000;"></i></span>
 		    	</li>
 		    </ul>
 		</header>
@@ -39,7 +39,7 @@
 						<div class="mui-card-footer">
 							<div class="courseList-line1">{{activityName}}</div>
 							<div class="courseList-line2">[{{activityTypeValue}}] {{activityNum}} <span class="courseList-state">[{{statusFormat endDate}}]</span></div>
-							<div class="courseList-line3"><span class="clock-ico"></span>{{startDateFormat startDate}} | {{activityName}}</div>
+							<div class="courseList-line3"><span class="clock-ico"></span>{{startDateFormat startDate}}</div>
 							<span class="courseList-text">直播</span>
 						</div>
 					</a>

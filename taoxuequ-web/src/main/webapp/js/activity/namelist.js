@@ -131,7 +131,7 @@ function closeFormPanel(formId){
  * 清空表单
  */
 var cleanFormPanel=function(formId){
-	$('#' + formId).form('clear');
+	$('#' + formId)[0].reset();
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
 	$("label").find("span").remove();
@@ -188,7 +188,7 @@ var loadForm = function(data){
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
-			$(".kv-file-remove").click();
+			loadData();
 			cleanFormPanel("addForm");
 		}
 	}).show();

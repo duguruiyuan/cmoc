@@ -115,6 +115,14 @@ function uploadInit(id, url, resourceId, type) {
             return filename.replace('(', '_').replace(']', '_');
         }
 	});
+	$("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
+		$(".kv-file-remove").click();
+		if(data.response.code == '000') {
+			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
+		}else {
+			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.msg, 'info');
+		}
+	});
 }
 
 //图片上传预览    IE是用了滤镜。

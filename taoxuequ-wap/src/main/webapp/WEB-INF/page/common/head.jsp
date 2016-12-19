@@ -7,7 +7,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>
-<div id="slider" class="mui-slider" data-slidershowtimer="2">
+<div class="mui-slider">
 	<div class="mui-slider-group mui-slider-loop">
   		<c:forEach var="item" items="${topBannerList }" begin="${topBannerList.size() - 1 }">
 	  		<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
@@ -71,8 +71,13 @@
 </div>
 
 <script>
-	var gallery = mui('.mui-slider');
-	gallery.slider({
-	  interval:3000//自动轮播周期，若为0则不自动播放，默认为0；
+	$(function(){
+		setTimeout(muiSlider(),3000);
 	});
+	function muiSlider() {
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+			interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+		});
+	}
 </script>

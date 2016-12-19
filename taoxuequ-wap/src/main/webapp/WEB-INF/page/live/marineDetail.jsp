@@ -16,14 +16,14 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
-	<jsp:include page="/WEB-INF/page/common/head.jsp" />
 	<body id="liveDetail">
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">战队直播</h1>
+		<header class="header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #fff;"></a>
+		    	战队直播
 		</header>
+		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
-		    <div class="bg-white pb10 mb10">
+		    <div class="bg-white pbb10">
 			    <div class="liveDetail-title">
 			    	<input type="hidden" id="marineId" value="${marine.id }"/>
 			    	<h1>${marine.marineName }</h1>
@@ -34,26 +34,35 @@
 			    		<li>
 			    			<span class="liveDetail-listNum-title">支持票数</span><br>
 
-			    			<em class="liveDetail-listNum-intro">${marine.votes }</em>
+			    			<em class="liveDetail-listNum-intro" style="color: #6ac562;">${marine.votes }</em>
 			    		</li>
 			    		<li>
 			    			<span class="liveDetail-listNum-title">阅读量</span><br>
 
-			    			<em class="liveDetail-listNum-intro">${marine.readnum }</em>
+			    			<em class="liveDetail-listNum-intro" style="color: #8cb2f8;">${marine.readnum }</em>
 			    		</li>
 			    		<li>
-			    			<span class="liveDetail-listNum-title">得分</span><br>
+			    			<span class="liveDetail-listNum-title">得  分</span><br>
 
-			    			<em class="liveDetail-listNum-intro">${marine.score }</em>
+			    			<em class="liveDetail-listNum-intro" style="color: #e96747;">${marine.score }</em>
 			    		</li>
 			    	</ul>
 			    </div>
 			    <div class="liveDetail-award" style="position: relative;">
-			    	<img src="<%=basePath%>/images/test2.png"/>
-			    	<p class="marine-prize">${marine.marinePrize }</p>
+			    	<img src="<%=basePath%>/images/prize.png"/>
+			    	<p class="marine-prize">
+			    		<c:choose>
+			    			<c:when test="${marine.marinePrize != null && !marine.marinePrize.isEmpty() }">
+			    				${marine.marinePrize }
+			    			</c:when>
+			    			<c:otherwise>
+			    				暂未颁奖
+			    			</c:otherwise>
+			    		</c:choose>
+			    	</p>
 			    </div>
 		    </div>
-		    <div class="bg-white mb10 pb10">
+		    <div class="bg-white pbb10">
 			    <div class="liveDetail-user">
 			    	<ul>
 			    		<c:forEach var="itm" items="${familys }">
@@ -75,7 +84,7 @@
 			    	</ul>
 			    </div>
 		    </div>
-		    <div class="bg-white mb10">
+		    <div class="bg-white pbb10">
 			    <div class="liveDetail-list pb10">
 			    	<nav class="liveDetail-list-title mui-bar-tab">
 			    		<a class="mui-tab-item mui-active" href="#list1" id="panel1">
@@ -86,6 +95,11 @@
 			    		<a class="mui-tab-item" href="#list2" id="panel2">
 			    			<span class="mui-tab-label">视频直播</span>
 			    			<input type="hidden" name="msgType" value="shortvideo">
+			    			<input type="hidden" name="pageNo" value="1">
+			    		</a>
+			    		<a class="mui-tab-item" href="#list3" id="panel3">
+			    			<span class="mui-tab-label">小组评价</span>
+			    			<input type="hidden" name="msgType" value="comment">
 			    			<input type="hidden" name="pageNo" value="1">
 			    		</a>
 			    	</nav>
@@ -117,6 +131,20 @@
 			    				<p>玩命加载中<span></span><span></span><span></span></p>
 			    			</div>
 			    		</div>
+			    		
+			    		<div id="list3" class="mui-control-content">
+				    		<div class="sort">
+				    			<span class="sort-icon sort-icon-active" order="desc">最新</span>
+				    			<span class="sort-icon" order="asc">开始</span>
+				    		</div>
+				    		<ul>
+				    			
+				    		</ul>
+				    		
+			    			<div class="loader">
+			    				<p>加载中...<span></span><span></span><span></span></p>
+			    			</div>
+			    		</div>
 			    	</div>
 			    	<div class="rightfix">
 			    		<span class="mui-icon mui-icon-loop"></span>
@@ -124,8 +152,65 @@
 			    	</div>
 			    </div>
 		    </div>
+		    <div class="bg-white pbb10">
+		    	<div class="more-item">学生印象</div>
+		    	<div class="messageebox">
+					<div class="midbox">
+						<div class="textbox">
+							<div class="text_meg"><span>思路清晰</span><em>1456</em></div>
+						</div>
+						<div class="textbox">
+							<div class="text_meg"><span>态度热情</span><em>1212</em></div>
+						</div>
+						<div class="textbox">
+							<div class="text_meg"><span>板书美观</span><em>1515</em></div>
+						</div>
+						<div class="textbox">
+							<div class="text_meg"><span>知识渊博</span><em>4512</em></div>
+						</div>
+						<div class="textbox">
+							<div class="text_meg"><span>方法独特</span><em>4545</em></div>
+						</div>
+						<div class="textbox">
+							<div class="text_meg"><span>讲解细致</span><em>2222</em></div>
+						</div>
+					</div>
+				</div>
+		    </div>
+		    <div class="bg-white pbb10">
+		    	<div class="more-item">活动留言</div>
+		    	<div class="pms">
+					<div class="pms_box">
+						<div class="headlog">
+							<img src="<%=basePath %>/images/t01f91640b40600714f.jpg" alt="">
+						</div>
+						<div class="pmstext">勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组。</div>
+					</div>
+					<div class="pms_box">
+						<div class="headlog">
+							<img src="<%=basePath %>/images/t01f91640b40600714f.jpg" alt="">
+						</div>
+						<div class="pmstext">勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢</div>
+					</div>
+					<div class="pms_box">
+						<div class="headlog">
+							<img src="<%=basePath %>/images/t01f91640b40600714f.jpg" alt="">
+						</div>
+						<div class="pmstext">勇敢，团结，机智的小组勇敢</div>
+					</div>
+				</div>
+				<div class="input_box"><input placeholder="" type="text"> <button>留言</button> </div>
+		    </div>
+		    <div class="bg-white pbb10" style="height: 3em;"></div>
 		</div>
-		
+		<footer class="footer" style="padding:12px 10px;">
+	        <div class="btn-wrap clearfix" id="footerInner">
+	            <a href="<%=basePath %>/course/list" class="wbl-btn btn-border " id="newest">
+	               	 更多课程
+	            </a>
+	            <a href="<%=basePath %>/course/detail/${marine.productId}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
+	        </div>
+	    </footer>
 		<script type="text/javascript">
 			$(function(){
 				var picListWrap = $(".liveDetail-list-content");
