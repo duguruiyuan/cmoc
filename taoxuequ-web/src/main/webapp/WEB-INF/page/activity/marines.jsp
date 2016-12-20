@@ -71,6 +71,10 @@
 					<input class="form-control" name="marineSlogan" id="marineSlogan">
 				</div>
 				<div class="form-group col-md-6">
+					<label for="marineSlogan">战队评语</label>								
+					<textarea class="form-control" name="comment" id="comment"></textarea>
+				</div>
+				<div class="form-group col-md-6">
 					<label for="files">战队照片</label>
 <!-- 					<div id="preview">
 					    <img id="imghead" width=100 height=100 border=0>

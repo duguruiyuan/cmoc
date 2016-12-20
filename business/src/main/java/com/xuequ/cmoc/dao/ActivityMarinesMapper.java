@@ -33,4 +33,8 @@ public interface ActivityMarinesMapper {
     List<ActivityMarinesView> selectMarineTeam(Integer activityId);
     
     ActivityMarinesView selectMarineByHmOpenid(String openid);
+    
+    int addMarineReadnum(Integer id);
+    
+    int addMarineVotes(Integer id);
 }

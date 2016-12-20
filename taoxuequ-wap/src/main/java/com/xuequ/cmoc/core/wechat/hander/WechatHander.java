@@ -21,6 +21,7 @@ import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ActivityInfo;
+import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.model.WechatSendMessage;
 import com.xuequ.cmoc.service.IActivityHmService;
@@ -233,6 +234,26 @@ public class WechatHander {
 								DateUtil.dateToStr(currDate, DateUtil.DEFAULT_DATE_FORMAT)});
 					}
 				}
+			}
+		}else if(MessageUtil.SUPPORT_MARINE == type) {
+			Integer marineId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length())); 
+			RspResult result = activityMarinesService.addMarineVotes(marineId, openid);
+			ActivityMarines marines = (ActivityMarines) result.getData();
+			if(StatusEnum.MARINE_SUPPORT_HAD.getCode().equals(result.getCode())) {
+				String url = Constants.BASEPATH + "/live/marine/detail/" + marineId;
+				content = PropertiesUtil.getProperty("support_marine_had");
+				content = TextUtil.format(content, new String[]{marines.getMarineName(), String.valueOf(marines.getVotes()), 
+						DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT), url});
+			}else if(StatusEnum.SUCCESS.getCode().equals(result.getCode())) {
+				String url = Constants.BASEPATH + "/live/marine/detail/" + marineId;
+				content = PropertiesUtil.getProperty("support_marine_success");
+				content = TextUtil.format(content, new String[]{marines.getMarineName(), String.valueOf(marines.getVotes()),
+						DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT), url
+				});
+			}else {
+				String url = Constants.BASEPATH + "/course/list";
+				content = PropertiesUtil.getProperty("support_marine_fail");
+				content = TextUtil.format(content, new String[]{result.getMsg(), url});
 			}
 		}
 		if(StringUtils.isNotBlank(content)) {

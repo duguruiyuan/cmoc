@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.model.ActivityMarines;
+import com.xuequ.cmoc.model.MarineComment;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.view.ActivityMarinesView;
 
@@ -38,4 +39,9 @@ public interface IActivityMarinesService {
 	 * @return
 	 */
 	ActivityMarinesView selectMarineByHmOpenid(String openid);
+	
+	int addMarineReadnum(Integer id);
+    
+	RspResult addMarineVotes(Integer marineId, String openid);
+    
 }

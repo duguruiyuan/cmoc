@@ -53,5 +53,7 @@ public final class MessageUtil {
     public static final int BIND_TYPE_MARINE = 1;
     //活动申请带队
     public static final int ACTIVITY_SIGN = 2;
+    //投票支持战队
+    public static final int SUPPORT_MARINE = 3;
     
 }

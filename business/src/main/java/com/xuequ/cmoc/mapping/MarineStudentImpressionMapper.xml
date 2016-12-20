@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuequ.cmoc.dao.MarineStudentImpressionMapper" >
+  <resultMap id="BaseResultMap" type="com.xuequ.cmoc.model.MarineStudentImpression" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="marine_id" property="marineId" jdbcType="INTEGER" />
+    <result column="impression" property="impression" jdbcType="VARCHAR" />
+    <result column="votes" property="votes" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, marine_id, impression, votes, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_marine_student_impression
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByMarineId" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_marine_student_impression
+    where marine_id = #{marineId,jdbcType=INTEGER}
+  </select>
+  <insert id="insertByMarineId" parameterType="java.lang.Integer">
+  	INSERT INTO t_marine_student_impression(marine_id,impression)
+	SELECT #{marineId,jdbcType=INTEGER}, d.dict_data_key FROM t_sys_dict_data d, t_sys_dict_type t 
+	WHERE t.is_active = 1 AND d.dict_type_id = t.id AND t.dict_code='student_imp'
+  </insert>
+  <update id="addStuImpVotes" parameterType="java.lang.Integer">
+  	update t_marine_student_impression
+    set votes = votes + 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_marine_student_impression
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xuequ.cmoc.model.MarineStudentImpression" >
+    insert into t_marine_student_impression (id, marine_id, impression, 
+      votes, create_time)
+    values (#{id,jdbcType=INTEGER}, #{marineId,jdbcType=INTEGER}, #{impression,jdbcType=VARCHAR}, 
+      #{votes,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.MarineStudentImpression" >
+    insert into t_marine_student_impression
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="marineId != null" >
+        marine_id,
+      </if>
+      <if test="impression != null" >
+        impression,
+      </if>
+      <if test="votes != null" >
+        votes,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="marineId != null" >
+        #{marineId,jdbcType=INTEGER},
+      </if>
+      <if test="impression != null" >
+        #{impression,jdbcType=VARCHAR},
+      </if>
+      <if test="votes != null" >
+        #{votes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuequ.cmoc.model.MarineStudentImpression" >
+    update t_marine_student_impression
+    <set >
+      <if test="marineId != null" >
+        marine_id = #{marineId,jdbcType=INTEGER},
+      </if>
+      <if test="impression != null" >
+        impression = #{impression,jdbcType=VARCHAR},
+      </if>
+      <if test="votes != null" >
+        votes = #{votes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.MarineStudentImpression" >
+    update t_marine_student_impression
+    set marine_id = #{marineId,jdbcType=INTEGER},
+      impression = #{impression,jdbcType=VARCHAR},
+      votes = #{votes,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

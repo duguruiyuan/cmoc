@@ -3,6 +3,7 @@ package com.xuequ.cmoc.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,18 @@ import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.dao.ActivityHmSignMapper;
+import com.xuequ.cmoc.dao.ActivityInfoMapper;
 import com.xuequ.cmoc.dao.ActivityMarinesMapper;
 import com.xuequ.cmoc.dao.HollowManInfoMapper;
+import com.xuequ.cmoc.dao.MarineSupportMapper;
 import com.xuequ.cmoc.exception.ExpirationException;
 import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
+import com.xuequ.cmoc.model.MarineSupport;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IActivityMarinesService;
+import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.view.ActivityMarinesView;
 
 @Service("activityMarinesService")
@@ -26,6 +32,10 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 	private ActivityMarinesMapper activityMarinesMapper;
 	@Autowired
 	private ActivityHmSignMapper activityHmSignMapper;
+	@Autowired
+	private MarineSupportMapper marineSupportMapper;
+	@Autowired
+	private ActivityInfoMapper activityInfoMapper;
 	
 	@Override
 	public List<ActivityMarinesView> selectListByPage(Page<ActivityMarinesView> page) {
@@ -88,5 +98,41 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 	public ActivityMarinesView selectMarineByHmOpenid(String openid) {
 		return activityMarinesMapper.selectMarineByHmOpenid(openid);
 	}
+
+	@Override
+	public int addMarineReadnum(Integer id) {
+		return activityMarinesMapper.addMarineReadnum(id);
+	}
+
+	@Override
+	public RspResult addMarineVotes(Integer marineId, String openid) {
+		ActivityMarines marines = activityMarinesMapper.selectByPrimaryKey(marineId);
+		ActivityInfo activityInfo = activityInfoMapper.selectByPrimaryKey(marines.getActivityId());
+		Date date = new Date();
+		if(DateUtil.compare(date, activityInfo.getEndDate()) == 1) {
+			return new RspResult(StatusEnum.ACTIVITY_OVER, marines);
+		}else {
+			if(DateUtil.compare(date, activityInfo.getStartDate()) < 0) {
+				return new RspResult(StatusEnum.ACTIVITY_NON_START, marines);
+			}
+			int count = marineSupportMapper.selectCountForSupport(openid, marineId);
+			if(count > 0) {
+				return new RspResult(StatusEnum.MARINE_SUPPORT_HAD, marines);
+			}
+			MarineSupport support = new MarineSupport();
+			support.setActivityId(marines.getActivityId());
+			support.setMarineId(marines.getId());
+			support.setOpenid(openid);
+			marineSupportMapper.insertSelective(support);
+			activityMarinesMapper.addMarineVotes(marineId);
+			marines.setVotes(marines.getVotes().intValue() + 1);
+			return new RspResult(StatusEnum.SUCCESS, marines);
+		}
+		
+	}
+
+	
+	
+	
 
 }

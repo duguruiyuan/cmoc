@@ -1,6 +1,5 @@
 package com.xuequ.cmoc.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -54,21 +53,20 @@ public class HollowManController extends BaseController {
 	@RequestMapping(value={"","/"})
 	public String index(Model model) {
 		String page = "hm/hmMy";
-		return page;
-//		String redir = wechatRedirect(model, page);
-//		if(redir.equals(page)) {
-//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-//			String openid = request.getParameter("openid");
-//			if(token != null || StringUtils.isNotBlank(openid)) {
-//				if(token != null) openid = token.getOpenid();
-//				HollowManInfo hm = hollowManService.selectByOpenid(openid);
-//				model.addAttribute("hm", hm);
-//				if(hm != null && hm.getIsActive() == 1) {
-//					return "hm/hmMy";
-//				}
-//			}
-//		}
-//		return redir;
+		String redir = wechatRedirect(model, page);
+		if(redir.equals(page)) {
+			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+			String openid = request.getParameter("openid");
+			if(token != null || StringUtils.isNotBlank(openid)) {
+				if(token != null) openid = token.getOpenid();
+				HollowManInfo hm = hollowManService.selectByOpenid(openid);
+				model.addAttribute("hm", hm);
+				if(hm != null && hm.getIsActive() == 1) {
+					return "hm/hmMy";
+				}
+			}
+		}
+		return redir;
 	}
 	
 	/**
@@ -102,18 +100,32 @@ public class HollowManController extends BaseController {
 	public String activityQuery(Model model, @PathVariable Integer activityId) {
 		List<ActivityMarinesView> list = activityMarinesService.selectMarineTeam(activityId);
 		for(ActivityMarinesView view : list) {
-			if(StringUtils.isBlank(view.getQrcodeUrl())) {
+			boolean isUpdate = false;
+			if(StringUtils.isBlank(view.getBindQrcodeUrl())) {
 				try {
 					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_SCENE, 
 							MessageUtil.BIND_TYPE_MARINE, view.getId());
 					if(rsp != null) {
-						view.setQrcodeUrl(rsp.getQrcode());
-						activityMarinesService.updateByPrimaryKeySelective(view);
+						view.setBindQrcodeUrl(rsp.getQrcode());
+						isUpdate = true;
 					}
 				} catch (Exception e) {
 					logger.error("--activityQuery getQrcode, error={}", e);
 				}
 			}
+			if(StringUtils.isBlank(view.getSupportQrcodeUrl())) {
+				try {
+					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_SCENE, 
+							MessageUtil.SUPPORT_MARINE, view.getId());
+					if(rsp != null) {
+						view.setSupportQrcodeUrl(rsp.getQrcode());
+						isUpdate = true;
+					}
+				} catch (Exception e) {
+					logger.error("--activityQuery getQrcode, error={}", e);
+				}
+			}
+			if(isUpdate) activityMarinesService.updateByPrimaryKeySelective(view);
 		}
 		model.addAttribute("marines", list);
 		return "hm/marineList";

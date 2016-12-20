@@ -26,6 +26,8 @@
 		    <div class="bg-white pbb10">
 			    <div class="liveDetail-title">
 			    	<input type="hidden" id="marineId" value="${marine.id }"/>
+			    	<input type="hidden" id="marineImg" value="${config.imgUrl }${marine.marineImg }"/>
+			    	<input type="hidden" id="supportQrcodeUrl" value="${marine.supportQrcodeUrl }" />
 			    	<h1>${marine.marineName }</h1>
 			    	<h2>${marine.marineSlogan }</h2>
 			    </div>
@@ -39,7 +41,7 @@
 			    		<li>
 			    			<span class="liveDetail-listNum-title">阅读量</span><br>
 
-			    			<em class="liveDetail-listNum-intro" style="color: #8cb2f8;">${marine.readnum }</em>
+			    			<em class="liveDetail-listNum-intro" style="color: #8cb2f8;" id="readNum">${marine.readnum }</em>
 			    		</li>
 			    		<li>
 			    			<span class="liveDetail-listNum-title">得  分</span><br>
@@ -99,8 +101,6 @@
 			    		</a>
 			    		<a class="mui-tab-item" href="#list3" id="panel3">
 			    			<span class="mui-tab-label">小组评价</span>
-			    			<input type="hidden" name="msgType" value="comment">
-			    			<input type="hidden" name="pageNo" value="1">
 			    		</a>
 			    	</nav>
 			    	<div class="liveDetail-list-content mt10">
@@ -133,17 +133,7 @@
 			    		</div>
 			    		
 			    		<div id="list3" class="mui-control-content">
-				    		<div class="sort">
-				    			<span class="sort-icon sort-icon-active" order="desc">最新</span>
-				    			<span class="sort-icon" order="asc">开始</span>
-				    		</div>
-				    		<ul>
-				    			
-				    		</ul>
-				    		
-			    			<div class="loader">
-			    				<p>加载中...<span></span><span></span><span></span></p>
-			    			</div>
+			    			<div class="mar-comment">${marine.comment }</div>
 			    		</div>
 			    	</div>
 			    	<div class="rightfix">
@@ -155,51 +145,21 @@
 		    <div class="bg-white pbb10">
 		    	<div class="more-item">学生印象</div>
 		    	<div class="messageebox">
-					<div class="midbox">
-						<div class="textbox">
-							<div class="text_meg"><span>思路清晰</span><em>1456</em></div>
-						</div>
-						<div class="textbox">
-							<div class="text_meg"><span>态度热情</span><em>1212</em></div>
-						</div>
-						<div class="textbox">
-							<div class="text_meg"><span>板书美观</span><em>1515</em></div>
-						</div>
-						<div class="textbox">
-							<div class="text_meg"><span>知识渊博</span><em>4512</em></div>
-						</div>
-						<div class="textbox">
-							<div class="text_meg"><span>方法独特</span><em>4545</em></div>
-						</div>
-						<div class="textbox">
-							<div class="text_meg"><span>讲解细致</span><em>2222</em></div>
-						</div>
+					<div class="midbox" id="midbox">
+						
 					</div>
 				</div>
 		    </div>
 		    <div class="bg-white pbb10">
 		    	<div class="more-item">活动留言</div>
-		    	<div class="pms">
-					<div class="pms_box">
-						<div class="headlog">
-							<img src="<%=basePath %>/images/t01f91640b40600714f.jpg" alt="">
-						</div>
-						<div class="pmstext">勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢，团结，机智的小组。</div>
-					</div>
-					<div class="pms_box">
-						<div class="headlog">
-							<img src="<%=basePath %>/images/t01f91640b40600714f.jpg" alt="">
-						</div>
-						<div class="pmstext">勇敢，团结，机智的小组勇敢，团结，机智的小组勇敢</div>
-					</div>
-					<div class="pms_box">
-						<div class="headlog">
-							<img src="<%=basePath %>/images/t01f91640b40600714f.jpg" alt="">
-						</div>
-						<div class="pmstext">勇敢，团结，机智的小组勇敢</div>
-					</div>
+		    	<input type="hidden" id="commentPageNo" value="0" />
+		    	<div class="pms" id="pmsComment">
+				
 				</div>
-				<div class="input_box"><input placeholder="" type="text"> <button>留言</button> </div>
+				<div class="comment-more">
+					<span>查看更多</span>
+				</div>
+				<div class="input_box"><input placeholder="留下想对我们说的话吧" type="text" id="comment"> <button id="subComment">留言</button> </div>
 		    </div>
 		    <div class="bg-white pbb10" style="height: 3em;"></div>
 		</div>
@@ -213,6 +173,7 @@
 	    </footer>
 		<script type="text/javascript">
 			$(function(){
+				initSnsToken();
 				var picListWrap = $(".liveDetail-list-content");
 				var picListTop = $(".liveDetail-list").offset().top;
 				var picList = picListWrap.find("img");
@@ -235,6 +196,9 @@
 					loadItem(params, listObj, true);
 				});
 				initVideoItem();
+				readnum();
+				loadStuImp();
+				loadComment();
 				$(window).scroll(function(){
 					if($(this).scrollTop() >= picListTop-50){
 						rightfix.show();
@@ -294,6 +258,49 @@
 	                })
 	              }
 	            }).trigger("scroll");
+				
+				$("#subComment").click(function() {
+					var comment = $("#comment").val();
+					if(comment.length == 0 ) return;
+					submitComment();
+				});
+				
+				$(".comment-more").click(function() {
+					if($(this).hasClass("list-null")>0){
+						return false;
+					}
+					loadComment();
+				});
+				
+				$(".mui-icon-loop").click(function() {
+					window.location.reload();
+				});
+				
+				$("#midbox").on("click", ".textbox", function() {
+					addStuimp(this);
+				});
+				
+				$(".support").on("click", function(){
+					var str = '<div class="code">\
+						<div class="code-inner" style="height: 450px;width: 280px;">\
+							<div class="code-title" style="height: 40px;line-height: 40px;">支持我们</div><div class="code-pic">\
+							<img style="width: 100%" src="' + $("#marineImg").val() + '"/></div>\
+							<div class="qr-group">\
+								<img style="width: 50%;float:left;padding: 10px 0px 10px 20px;" src="' + $("#supportQrcodeUrl").val()+ '">\
+							</div>\
+							<div class="qr-desc">[陶学趣]长按二维码支持我们小战队</div>\
+							<div class="code-btn">确定</div>\
+						</div>\
+					</div>';
+					$("body").append(str);
+				});
+				
+				$("body").on("click", ".code-btn", function(){
+					$(".code").remove();
+				})
+			});
+			
+			
 				function initImageItem() {
 					var params = {
 						marineId: $("#marineId").val(),
@@ -346,8 +353,123 @@
 	                  }
 	              });
 				}
-			});
+				
+				function readnum() {
+					$.ajax({
+	                  type:"POST",
+	                  url:'<%=basePath%>/live/marine/read',
+	                  dataType:'json',
+	                  data: {
+	                	  marineId: $("#marineId").val()
+	                  },
+	                  cache:false,
+	                  success:function(data){
+	                	  var readNum = parseInt($("#readNum").innerHTML);
+	                	  $("#readNum").innerHTML = readNum+1;
+	                  }
+					});      
+				}
+			function loadStuImp() {
+				$.ajax({
+                  type:"POST",
+                  url:'<%=basePath%>/live/marine/stuimp',
+                  dataType:'json',
+                  data: {
+                	  marineId: $("#marineId").val()
+                  },
+                  cache:false,
+                  success:function(data){
+                	 var html = "";
+                	 for(var i = 0; i < data.length; i++) {
+                		 html += '<div class="textbox" id="'+ data[i].id +'">' + 
+                		 '<div class="text_meg"><span>'+ dictDataFormat("student_imp", data[i].impression) +'</span>  <em class="stuVotes">'+ data[i].votes +'</em></div></div>';
+                	 }
+                	 $("#midbox").html(html);
+                  }
+				});      
+			}
+			function submitComment() {
+				var params = {
+	                	  marineId: $("#marineId").val(),
+	                	  comment: $("#comment").val(),
+	                	  openid: '${snsToken.openid}',
+	                	  nikeName: '${snsToken.nikeName}',
+	                	  headUrl: '${snsToken.headimgurl}'
+	                  };
+				$.ajax({
+                  type:"POST",
+                  url:'<%=basePath%>/live/marine/comment',
+                  dataType:'json',
+                  data: params,
+                  cache:false,
+                  success:function(data){
+                	  if(data.code == '000') {
+                		  $("#comment").blur();
+                    	  var html = "";
+                    	  html+= '<div class="pms_box"><div class="headlog"><img src="${snsToken.headimgurl}">' + 
+    							'</div><div class="pmstext">' + params.comment + '</div></div>';
+                    	  $("#pmsComment").before(html);
+                    	  $("#comment").val(null);
+                    	  $(".comment-more").html("");
+                	  }
+                  }
+				});      
+			}
+			function loadComment() {
+				var pageNo = parseInt($("#commentPageNo").val()) + 1;
+                $.ajax({
+                  type:"POST",
+                  url:'<%=basePath%>/live/marine/comment/query',
+                  dataType:'json',
+                  data: {
+                	pageNo: pageNo,
+                	marineId: $("#marineId").val()
+                  },
+                  cache:false,
+                  success:function(data){
+                  	if(data.results && data.results.length > 0){
+                  		var html = "";
+                  		for(var i = 0,len = data.results.length;i < len;i++){
+                  			html+= '<div class="pms_box"><div class="headlog"><img src="'+data.results[i].headUrl+'">' + 
+							'</div><div class="pmstext">' + data.results[i].comment + '</div></div>';
+                  		}
+                  		$("#pmsComment").append(html);
+                  		$("#commentPageNo").val(pageNo);
+						if(data.totalPage == pageNo) {
+                  			$(".comment-more").addClass("list-null");
+                  			$(".comment-more").html("已显示全部留言");
+                  		}
+                  	}else {
+                  		$(".comment-more").addClass("list-null");
+              			$(".comment-more").html(pageNo == 1 ? "暂无留言，空位为你而留" : "已显示全部留言");
+                  	}
+                  },
+                  error:function(){
+                  	alert("系统异常，请稍后再试！");
+                  }
+              });
+			}
 			
+			function addStuimp(thiz) {
+                $.ajax({
+                  type:"POST",
+                  url:'<%=basePath%>/live/marine/stuimp/add',
+                  dataType:'json',
+                  data: {
+                	id: thiz.id,
+                  },
+                  cache:false,
+                  success:function(data){
+                	var val = $(thiz).find(".stuVotes").html()
+                  	$(thiz).find(".stuVotes").html(parseInt(val) + 1);
+                  }
+              });
+			}
+			
+			function initSnsToken() {
+				var snsToken = '${snsToken}';
+				setAccessToken(snsToken);
+			}
 		</script>
 	</body>
 

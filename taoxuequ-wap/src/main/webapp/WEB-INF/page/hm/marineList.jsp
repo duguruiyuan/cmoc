@@ -25,7 +25,7 @@
 			<ul class="mui-table-view">
 				<c:forEach var="item" items="${marines }">
 					<li class="mui-table-view-cell">
-				    	<a class="mui-navigate-right" qrcode-url="${item.qrcodeUrl }" mar-name="${item.marineName }">
+				    	<a class="mui-navigate-right" qrcode-url="${item.bindQrcodeUrl }" mar-name="${item.marineName }">
 					    	<div class="ranksList-content">${item.marineName }<span class="ranksList-people">(${item.marineTeam })</span></div>
 					    	<div class="ranksList-code">二维码</div>
 				    	</a>

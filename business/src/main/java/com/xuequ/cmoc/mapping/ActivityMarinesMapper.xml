@@ -14,7 +14,8 @@
     <result column="votes" property="votes" jdbcType="INTEGER" />
     <result column="readnum" property="readnum" jdbcType="INTEGER" />
     <result column="score" property="score" jdbcType="INTEGER" />
-    <result column="qrcode_url" property="qrcodeUrl" jdbcType="VARCHAR" />
+    <result column="bind_qrcode_url" property="supportQrcodeUrl" jdbcType="VARCHAR" />
+    <result column="support_qrcode_url" property="supportQrcodeUrl" jdbcType="VARCHAR" />
     <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -25,7 +26,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, marine_name, marine_img, marine_slogan, marine_prize, line_name, 
-    line_id, activity_id, comment, votes, `readnum`, score, qrcode_url,
+    line_id, activity_id, comment, votes, `readnum`, score, bind_qrcode_url,support_qrcode_url,
     creater_user_id, creater, create_time, updater_user_id, updater, 
     update_time, is_delete
   </sql>
@@ -59,7 +60,7 @@
 	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id` 
 	WHERE hs.`is_delete`='N' AND hs.is_effect = 1 
 	AND DATE_ADD(NOW(), INTERVAL 10 HOUR) BETWEEN ai.`start_date` AND ai.`end_date`
-	AND hm.`openid` = 'oqyqUwq_YY84qjFWUtn6Ti4XIROE'
+	AND hm.`openid` = #{openid,jdbcType=VARCHAR}
 	ORDER BY ai.`start_date`
   </select>
   
@@ -67,7 +68,7 @@
   	SELECT 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
   	m.line_id, activity_id, COMMENT, votes, `readnum`, score, 
-  	m.qrcode_url, m.creater, m.create_time,
+  	m.bind_qrcode_url, support_qrcode_url, m.creater, m.create_time,
 	a.activity_name,a.activity_num, a.activity_type, c.marine_team
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
@@ -85,7 +86,7 @@
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
   	m.line_id, a.product_id, activity_id, comment, votes, `readnum`, score, 
-  	m.qrcode_url, m.creater, m.create_time,
+  	m.bind_qrcode_url, m.support_qrcode_url, m.creater, m.create_time,
     a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
@@ -95,7 +96,7 @@
   <select id="selectListByPage" resultMap="PageBaseResultMap" >
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 
-  	m.line_id, activity_id,  comment, votes, `readnum`, score, m.qrcode_url,
+  	m.line_id, activity_id,  comment, votes, `readnum`, score, m.bind_qrcode_url,m.support_qrcode_url,
   	m.creater, m.create_time, a.activity_name,a.activity_num, a.activity_type
 	FROM t_activity_marines m
 	INNER JOIN t_activity_info a ON m.`activity_id` = a.`id`
@@ -129,7 +130,7 @@
     insert into t_activity_marines (id, marine_name, marine_img, 
       marine_slogan, marine_prize, line_name, 
       line_id, activity_id, comment, votes, 
-      readnum, score, qrcode_url, creater_user_id, 
+      readnum, score, bind_qrcode_url, support_qrcode_url, creater_user_id, 
       creater, create_time, updater_user_id, 
       updater, update_time, is_delete
       )
@@ -137,7 +138,7 @@
       #{marineSlogan,jdbcType=VARCHAR}, #{marinePrize,jdbcType=VARCHAR}, #{lineName,jdbcType=VARCHAR}, 
       #{lineId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, 
       #{comment,jdbcType=VARCHAR}, #{votes,jdbcType=INTEGER}, #{readnum,jdbcType=INTEGER}, 
-      #{score,jdbcType=INTEGER}, #{qrcodeUrl,jdbcType=INTEGER}, #{createrUserId,jdbcType=INTEGER}, 
+      #{score,jdbcType=INTEGER}, #{supportQrcodeUrl,jdbcType=VARCHAR},#{supportQrcodeUrl,jdbcType=VARCHAR}, #{createrUserId,jdbcType=INTEGER}, 
       #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterUserId,jdbcType=INTEGER}, 
       #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}
       )
@@ -181,8 +182,11 @@
       <if test="score != null" >
         score,
       </if>
-      <if test="qrcodeUrl != null" >
-        qrcode_url,
+      <if test="supportQrcodeUrl != null" >
+        bind_qrcode_url,
+      </if>
+      <if test="supportQrcodeUrl != null" >
+        support_qrcode_url,
       </if>
       <if test="createrUserId != null" >
         creater_user_id,
@@ -243,8 +247,11 @@
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
       </if>
-      <if test="qrcodeUrl != null" >
-        #{qrcodeUrl,jdbcType=VARCHAR},
+      <if test="supportQrcodeUrl != null" >
+        #{supportQrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="supportQrcodeUrl != null" >
+        #{supportQrcodeUrl,jdbcType=VARCHAR},
       </if>
       <if test="createrUserId != null" >
         #{createrUserId,jdbcType=INTEGER},
@@ -305,8 +312,11 @@
       <if test="score != null" >
         score = #{score,jdbcType=INTEGER},
       </if>
-      <if test="qrcodeUrl != null" >
-        qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      <if test="supportQrcodeUrl != null" >
+        bind_qrcode_url = #{supportQrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="supportQrcodeUrl != null" >
+        support_qrcode_url = #{supportQrcodeUrl,jdbcType=VARCHAR},
       </if>
       <if test="createrUserId != null" >
         creater_user_id = #{createrUserId,jdbcType=INTEGER},
@@ -345,7 +355,8 @@
       votes = #{votes,jdbcType=INTEGER},
       readnum = #{readnum,jdbcType=INTEGER},
       score = #{score,jdbcType=INTEGER},
-      qrcodeUrl = #{qrcodeUrl,jdbcType=VARCHAR},
+      bind_qrcode_url = #{supportQrcodeUrl,jdbcType=VARCHAR},
+      support_qrcode_url = #{supportQrcodeUrl,jdbcType=VARCHAR},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -360,5 +371,13 @@
   	update t_activity_marines set 
   	marine_img = #{marineImg,jdbcType=VARCHAR}
   	where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="addMarineVotes">
+  	update t_activity_marines set votes = votes + 1 where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="addMarineReadnum">
+  	update t_activity_marines set readnum = readnum + 1 where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

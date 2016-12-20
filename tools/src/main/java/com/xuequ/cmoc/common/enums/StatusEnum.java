@@ -25,6 +25,8 @@ public enum StatusEnum {
 	PARENT_BIND_ERROR("1015", "绑定失败！确认信息是否正确"),
 	ORDER_WARN("1016", "订单存在安全风险，请稍后重试"),
 	PARAM_FAIL("1017", "参数错误"),
+	MARINE_SUPPORT_HAD("1018", "已经投过票"),
+	ACTIVITY_NON_START("1019", "活动未开始"),
 	ACCESS_TOKEN_FAIL("获取access_token失败","001"),
 	JSAPI_TICKET_FAIL("获取jsapi_ticket失败","002"),
 	FAIL("9999", "失败");

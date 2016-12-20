@@ -30,7 +30,9 @@ public class ActivityMarines implements Serializable {
 
     private Integer score;
     
-    private String qrcodeUrl;
+    private String bindQrcodeUrl;
+    
+    private String supportQrcodeUrl;
 
     private Integer createrUserId;
 
@@ -154,12 +156,20 @@ public class ActivityMarines implements Serializable {
         this.score = score;
     }
 
-    public String getQrcodeUrl() {
-		return qrcodeUrl;
+	public String getBindQrcodeUrl() {
+		return bindQrcodeUrl;
 	}
 
-	public void setQrcodeUrl(String qrcodeUrl) {
-		this.qrcodeUrl = qrcodeUrl;
+	public void setBindQrcodeUrl(String bindQrcodeUrl) {
+		this.bindQrcodeUrl = bindQrcodeUrl;
+	}
+
+	public String getSupportQrcodeUrl() {
+		return supportQrcodeUrl;
+	}
+
+	public void setSupportQrcodeUrl(String supportQrcodeUrl) {
+		this.supportQrcodeUrl = supportQrcodeUrl;
 	}
 
 	public Integer getCreaterUserId() {

@@ -12,13 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuequ.cmoc.common.RspResult;
+import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.Grid;
+import com.xuequ.cmoc.model.MarineComment;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
+import com.xuequ.cmoc.service.IMarineCommentService;
 import com.xuequ.cmoc.service.IWechatMessageService;
 import com.xuequ.cmoc.vo.ActivityQueryVO;
 import com.xuequ.cmoc.vo.MarineLiveQueryVO;
@@ -37,6 +41,8 @@ public class LiveCenterController extends BaseController{
 	private IActivityChildService activityFamilyService;
 	@Autowired
 	private IWechatMessageService wechatMessageService;
+	@Autowired
+	private IMarineCommentService marineCommentService;
 
 	@RequestMapping(value={"","/"})
 	public String liveCenter(Model model) {
@@ -68,7 +74,14 @@ public class LiveCenterController extends BaseController{
 	public String marineDetail(Model model, @PathVariable Integer marineId) {
 		model.addAttribute("marine", activityMarinesService.selectById(marineId));
 		model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
-		return "live/marineDetail";
+		String page = "live/marineDetail";
+		return page;
+		/*String redir = wechatRedirect(model, page);
+		if(redir.equals(page)) {
+			model.addAttribute("marine", activityMarinesService.selectById(marineId));
+			model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
+		}
+		return redir;*/
 	}
 	
 	@RequestMapping("marine/resource/query")
@@ -87,4 +100,45 @@ public class LiveCenterController extends BaseController{
 		return null;
 	}
 	
+	@RequestMapping("marine/read")
+	public @ResponseBody Object marineRead(Integer marineId) {
+		return activityMarinesService.addMarineReadnum(marineId);
+	}
+	
+	@RequestMapping("marine/comment")
+	public @ResponseBody Object marineComment(MarineComment comment) {
+		try {
+			marineCommentService.insertMarineComment(comment);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--marineComment, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("marine/comment/query")
+	public @ResponseBody Object marineCommentQuery(MarineLiveQueryVO vo) {
+		try {
+			Page<MarineComment> page = new Page<MarineComment>();
+			page.setPageNo(vo.getPage());
+			page.setPageSize(3);
+			page.setParams(vo);
+			List<MarineComment> list = marineCommentService.selectListByPage(page);
+			page.setResults(list);
+			return page;
+		} catch (Exception e) {
+			logger.error("--marineImageQuery, error={}", e);
+		}
+		return null;
+	}
+	
+	@RequestMapping("marine/stuimp")
+	public @ResponseBody Object marineStuImp(Integer marineId) {
+		return marineCommentService.selectStudentImpByMarineId(marineId);
+	}
+	
+	@RequestMapping("marine/stuimp/add")
+	public @ResponseBody Object marineStuImpAdd(Integer id) {
+		return marineCommentService.addStuImpVotes(id);
+	}
 }
