@@ -95,7 +95,7 @@
 			<div class="code-inner" style="height: 170px;">									
 				<div class="code-title">[陶学趣]透明人注册</div>									
 				<div class="code-pic">										
-					<p style="color: red;">您已经注册成功，等待管理员审核中...</p>								
+					<p style="color: red;">你已经注册成功，等待管理员审核中...</p>								
 				</div>									
 			</div>							
 		</div>
@@ -197,8 +197,8 @@
 			 		dataType : "json",
 			 		async : false,
 			 		success : function(data) {
-			 			if(result.code == "000"){
-	        				$("#idPhoto").val(result.data);
+			 			if(data.code == "000"){
+	        				$("#idPhoto").val(data.data);
 			 			}
 			 		}, error:function(){
 			 			mui.alert("系统异常，请联系管理员",'消息提示');

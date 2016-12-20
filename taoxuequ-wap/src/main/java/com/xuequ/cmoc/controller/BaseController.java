@@ -70,6 +70,7 @@ public class BaseController {
 	protected Object topBannerList() {
 		ImgGroup group = new ImgGroup();
 		group.setPosition("1");
+		group.setShelves(1);
 		return contentManageService.selectListByParam(group);
 	}
 	/**

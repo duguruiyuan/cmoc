@@ -127,7 +127,7 @@ function closeFormPanel(formId){
  */
 var cleanFormPanel=function(formId){
 	initAuditDialog(0);
-	$('#' + formId).form('clear');
+	$('#' + formId)[0].reset();
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
 	$("label").find("span").remove();

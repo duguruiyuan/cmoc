@@ -52,7 +52,7 @@ public class HollowManController extends BaseController {
 	
 	@RequestMapping(value={"","/"})
 	public String index(Model model) {
-		String page = "hm/hmMy";
+		String page = "hm/hm";
 		String redir = wechatRedirect(model, page);
 		if(redir.equals(page)) {
 			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");

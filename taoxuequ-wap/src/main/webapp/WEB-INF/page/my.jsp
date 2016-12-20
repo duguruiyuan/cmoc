@@ -20,9 +20,9 @@
 			<div class="head_bg">
 				<img src="<%=basePath %>/images/home_bg.png">
 				<div class="head_img">
-					<img src="<%=basePath %>/images/t01f91640b40600714f.jpg${userInfo.headimgurl }">
+					<img src="${userInfo.headimgurl }">
 					<p class="name">
-						胡启萌${userInfo.nickname }
+						${userInfo.nickname }
 					</p>
 				</div>
 			</div>

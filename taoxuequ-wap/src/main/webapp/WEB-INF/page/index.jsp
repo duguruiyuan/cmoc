@@ -6,6 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
@@ -17,12 +18,14 @@
 <body class="bc-fff">
 	<header class="header">淘学趣</header>
 	<div id="box1">
-		<a href="<%=basePath%>/">
-			<div class="bigone1">
-				<img src="<%=basePath%>/images/review.png" />
-			</div>
-			<p>顺德碧桂MYP探究服务结束</p>
-		</a>
+		<div class="bigone1">
+			<img src="<%=basePath%>/images/review.png" />
+		</div>
+		<c:forEach var="item" items="${hotBack }" begin="0" end="0">
+			<a href="${item.linkUrl }">
+				<p>${item.title }</p>
+			</a>
+		</c:forEach>
 	</div>
 	<div class="h10"></div>
 	<div id="box2">
@@ -55,78 +58,14 @@
 				<span class="all">全部</span>
 			</a>
 		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider1.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider2.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider3.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider4.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider3.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider4.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider3.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider4.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider3.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider4.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider3.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
-		<div class="recommend_box">
-			<a href="#">
-				<img src="<%=basePath%>/images/slider4.jpg">
-				<p class="bottom-title">小小化学家-中英青少年科学实验营</p>
-			</a>
-		</div>
+		<c:forEach var="item" items="${hotCourse }">
+			<div class="recommend_box">
+				<a href="${item.linkUrl }">
+					<img src="${config.imgUrl }/${item.imgUrl }">
+					<p class="bottom-title">${item.title }</p>
+				</a>
+			</div>
+		</c:forEach>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 </body>

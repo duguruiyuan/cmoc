@@ -1,12 +1,7 @@
 package com.xuequ.cmoc.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.ImgTypeEnum;
-import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
-import com.xuequ.cmoc.common.enums.WechatReqMsgType;
-import com.xuequ.cmoc.core.wechat.message.InputMessage;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.utils.DateUtil;
-import com.xuequ.cmoc.utils.FileUtils;
 
 @RequestMapping("attachment")
 @Controller

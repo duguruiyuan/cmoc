@@ -19,7 +19,7 @@
         <span class="mui-tab-label">实践课程</span>
     </a>
     <a class="foot-tab-item" href="<%=basePath %>/live">
-   		 <span class="mui-icon fa fa-file-movie-o"></span>
+   		 <span class="mui-icon fa fa-video-camera"></span>
         <span class="mui-tab-label">直播中心</span>
     </a>
     <a class="foot-tab-item" href="<%=basePath %>/my">

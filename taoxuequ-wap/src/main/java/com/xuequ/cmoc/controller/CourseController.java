@@ -39,7 +39,7 @@ public class CourseController extends BaseController {
 	@Autowired
 	private ICourseService courseService;
 	
-	@RequestMapping(value={"","/"})
+	@RequestMapping(value={"","/","list"})
 	public String courseList(Model model) {
 		List<CourseListView> list = courseService.selectShelvesSignList();
 		model.addAttribute("list", list);

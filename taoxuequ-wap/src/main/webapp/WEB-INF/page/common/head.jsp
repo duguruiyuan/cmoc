@@ -8,6 +8,7 @@
 			+ path;
 %>
 <div class="mui-slider">
+  <c:if test="${topBannerList != null && !topBannerList.isEmpty() }">
 	<div class="mui-slider-group mui-slider-loop">
   		<c:forEach var="item" items="${topBannerList }" begin="${topBannerList.size() - 1 }">
 	  		<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
@@ -68,6 +69,7 @@
    	  	<div class="mui-indicator <c:if test="${status.index == 0 }">mui-active</c:if>"></div>
    	  </c:forEach>
    </div>
+  </c:if>
 </div>
 
 <script>

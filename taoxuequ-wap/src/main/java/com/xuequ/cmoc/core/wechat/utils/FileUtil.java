@@ -45,6 +45,7 @@ public class FileUtil {
     		conn.setRequestMethod("GET");
     		conn.setDoInput(true);
     		String contentType = conn.getHeaderField("Content-Type");
+    		logger.info("mediaId-" + mediaId + "--contentType--" + contentType + "--desc" + conn.getHeaderField("Content-disposition"));
     		if(contentType.indexOf(";") != -1) {
     			contentType = contentType.substring(0, contentType.indexOf(";"));
     		}
@@ -68,4 +69,12 @@ public class FileUtil {
 		return null;
     }
 	
+	public static void main(String[] args) {
+		String contentType = "image/jpeg";
+		if(contentType.indexOf(";") != -1) {
+			contentType = contentType.substring(0, contentType.indexOf(";"));
+		}
+		String extName = MimeTypeEnum.getKey(contentType);
+		System.out.println(extName);
+	}
 }

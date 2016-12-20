@@ -114,7 +114,8 @@ function initDictData(id){
  * 清空表单
  */
 var cleanFormPanel=function(formId){
-	$('#' + formId).form('clear');
+	$('#' + formId)[0].reset();
+	$('#' + formId + " #id").val(null);
 }
 
 function addDictType(){

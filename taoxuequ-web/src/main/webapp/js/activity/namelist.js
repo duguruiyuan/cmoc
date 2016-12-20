@@ -124,6 +124,7 @@ function search(formId){
 
 function closeFormPanel(formId){
 	cleanFormPanel(formId);
+	$('#' + formId + " #id").val(null);
 	$('#confirmDialog').dialog("close");
 }
 

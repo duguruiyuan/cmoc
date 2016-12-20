@@ -177,6 +177,7 @@ function search(formId){
 
 function closeFormPanel(formId){
 	$('#' + formId)[0].reset();
+	$('#' + formId + " #id").val(null);
 	$('#confirmDialog').dialog("close");
 }
 
@@ -185,6 +186,7 @@ function closeFormPanel(formId){
  */
 var cleanFormPanel=function(formId){
 	$('#' + formId)[0].reset();
+	$('#' + formId + " #id").val(null);
 	$(".valid").removeClass("valid");
 	$(".error").removeClass("error");
 	$("label").find("span").remove();

@@ -182,7 +182,7 @@
      *
      */
     function cleanFormPanel(formId){
-        $("#" + formId).form('clear');
+        $("#" + formId)[0].reset();
     }
 
     function initBlacklistDictList(formId){

@@ -14,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.model.HollowManInfo;
+import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.utils.MimeTypeUtils;
@@ -28,7 +30,13 @@ public class IndexController extends BaseController{
 	private IHollowManService hollowManService;
 
 	@RequestMapping(value = {"", "/"})
-	public String index() {
+	public String index(Model model) {
+		ImgGroup group = new ImgGroup();
+		group.setPosition("2");
+		group.setShelves(1);
+		model.addAttribute("hotCourse", contentManageService.selectListByParam(group));
+		group.setPosition("3");
+		model.addAttribute("hotBack", contentManageService.selectListByParam(group));
 		return "index";
 	}
 	
@@ -39,29 +47,34 @@ public class IndexController extends BaseController{
 	
 	@RequestMapping("my")
 	public String my(Model model) {
-		String openid = "oqyqUwq_YY84qjFWUtn6Ti4XIROE1";
-		model.addAttribute("openid", openid);
-		return "my";
-//		String page = "my";
-//		String redir = wechatRedirect(model, page);
-//		if(redir.equals(page)) {
-//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-//			String openid = request.getParameter("openid");
-//			if(token != null || StringUtils.isNotBlank(openid)) {
-//				if(token != null) openid = token.getOpenid();
-//				HollowManInfo hm = hollowManService.selectByOpenid(token.getOpenid());
-//				if(hm != null) {
-//					model.addAttribute("hm", hm);
-//					return "hm/hmMy";
-//				}
-//			}
-//		}
-//		return redir;
+		String page = "my";
+		String redir = wechatRedirect(model, page);
+		if(redir.equals(page)) {
+			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
+			String openid = request.getParameter("openid");
+			if(token != null || StringUtils.isNotBlank(openid)) {
+				if(token != null) openid = token.getOpenid();
+				HollowManInfo hm = hollowManService.selectByOpenid(openid);
+				if(hm != null) {
+					model.addAttribute("hm", hm);
+					return "hm/hmMy";
+				}
+			}
+		}
+		return redir;
 	}
 	
 	@RequestMapping("about")
 	public String about() {
 		return "about";
+	}
+	
+	@RequestMapping("hotCourse")
+	public @ResponseBody Object hotCourse() {
+		ImgGroup group = new ImgGroup();
+		group.setPosition("2");
+		group.setShelves(1);
+		return contentManageService.selectListByParam(group);
 	}
 	
 	@RequestMapping("xuequ/{url}")
