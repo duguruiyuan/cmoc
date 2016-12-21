@@ -66,13 +66,6 @@ public class BaseController {
 		return Configuration.getInstance();
 	}
 	
-	@ModelAttribute("topBannerList")
-	protected Object topBannerList() {
-		ImgGroup group = new ImgGroup();
-		group.setPosition("1");
-		group.setShelves(1);
-		return contentManageService.selectListByParam(group);
-	}
 	/**
 	 * 是否关注跳转
 	 * @auther 胡启萌

@@ -16,6 +16,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.Grid;
+import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.MarineComment;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.page.Page;
@@ -74,6 +75,10 @@ public class LiveCenterController extends BaseController{
 	public String marineDetail(Model model, @PathVariable Integer marineId) {
 		model.addAttribute("marine", activityMarinesService.selectById(marineId));
 		model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
+		group.setShelves(1);
+		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		String page = "live/marineDetail";
 		return page;
 		/*String redir = wechatRedirect(model, page);
@@ -89,7 +94,7 @@ public class LiveCenterController extends BaseController{
 		try {
 			Page<WechatReceiveMessage> page = new Page<WechatReceiveMessage>();
 			page.setPageNo(vo.getPage());
-			page.setPageSize(3);
+			page.setPageSize(vo.getRows());
 			page.setParams(vo);
 			List<WechatReceiveMessage> list = wechatMessageService.selectListByPage(page);
 			page.setResults(list);

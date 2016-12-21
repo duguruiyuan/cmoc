@@ -87,17 +87,17 @@
 			    </div>
 		    </div>
 		    <div class="bg-white pbb10">
-			    <div class="liveDetail-list">
+			    <div class="liveDetail-list pb10">
 			    	<nav class="liveDetail-list-title mui-bar-tab">
 			    		<a class="mui-tab-item mui-active" href="#list1" id="panel1">
 			    			<span class="mui-tab-label">图片直播</span>
 			    			<input type="hidden" name="msgType" value="image">
-			    			<input type="hidden" name="pageNo" value="0">
+			    			<input type="hidden" name="pageNo" value="1">
 			    		</a>
 			    		<a class="mui-tab-item" href="#list2" id="panel2">
 			    			<span class="mui-tab-label">视频直播</span>
 			    			<input type="hidden" name="msgType" value="shortvideo">
-			    			<input type="hidden" name="pageNo" value="0">
+			    			<input type="hidden" name="pageNo" value="1">
 			    		</a>
 			    		<a class="mui-tab-item" href="#list3" id="panel3">
 			    			<span class="mui-tab-label">小组评价</span>
@@ -105,23 +105,31 @@
 			    	</nav>
 			    	<div class="liveDetail-list-content mt10">
 			    		<div id="list1" class="mui-control-content mui-active">
+				    		<div class="sort">
+				    			<span class="sort-icon sort-icon-active" order="desc">最新</span>
+				    			<span class="sort-icon" order="asc">开始</span>
+				    		</div>
 				    		<ul>
 				    			
 				    		</ul>
 				    		
-				    		<div class="btn-more loader res-more">
-								<span>查看更多</span>
-							</div>
+			    			<div class="loader">
+			    				<p>玩命加载中<span></span><span></span><span></span></p>
+			    			</div>
 			    		</div>
 			    		
 			    		<div id="list2" class="mui-control-content">
+				    		<div class="sort">
+				    			<span class="sort-icon sort-icon-active" order="desc">最新</span>
+				    			<span class="sort-icon" order="asc">开始</span>
+				    		</div>
 				    		<ul>
 				    			
 				    		</ul>
 				    		
-			    			<div class="btn-more loader res-more">
-								<span>查看更多</span>
-							</div>
+			    			<div class="loader">
+			    				<p>玩命加载中<span></span><span></span><span></span></p>
+			    			</div>
 			    		</div>
 			    		
 			    		<div id="list3" class="mui-control-content">
@@ -148,7 +156,7 @@
 		    	<div class="pms" id="pmsComment">
 				
 				</div>
-				<div class="btn-more" id="comment-more">
+				<div class="comment-more">
 					<span>查看更多</span>
 				</div>
 				<div class="input_box"><input placeholder="留下想对我们说的话吧" type="text" id="comment"> <button id="subComment">留言</button> </div>
@@ -173,6 +181,20 @@
 				var picHeight = picList.width();
 				picList.css({height:picHeight});
 				
+				$(".sort-icon").click(function(){
+					var obj = $(this);
+					obj.addClass("sort-icon-active").siblings().removeClass("sort-icon-active");
+					var params = {
+						marineId: $("#marineId").val(),
+	                   	msgType: $(".liveDetail-list-title .mui-active").find("input[name='msgType']").val(),
+	                   	page: 1,
+	                   	order: $(this).attr("order")	
+					};
+					$(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(1);
+					var listObj = $(this.closest(".mui-control-content"));
+					listObj.removeClass("list-null");
+					loadItem(params, listObj, true);
+				});
 				initImageItem();
 				initVideoItem();
 				readnum();
@@ -189,14 +211,52 @@
 						return false;
 					}
 				  if ($(window).scrollTop() + $(window).height() + 10 >= $(document).height() && $(window).scrollTop() > 20) {
-	                  /* var msgType = $(".liveDetail-list-title .mui-active").find("input[name='msgType']").val();
+	                  var msgType = $(".liveDetail-list-title .mui-active").find("input[name='msgType']").val();
 					  var pageNo = parseInt($(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val()) + 1;
-					  var params = {
-							marineId: $("#marineId").val(),
-		                   	msgType: msgType,
-		                   	page: pageNo
-					  };
-					  loadItem(params, listObj) */
+	                  $.ajax({
+	                    type:"POST",
+	                    url:'<%=basePath%>/live/marine/resource/query',
+	                    dataType:'json',
+	                    data: {
+	                    	marineId: $("#marineId").val(),
+	                    	msgType: msgType,
+	                    	page: pageNo,
+	                    	order: listObj.find(".sort-icon-active").attr("order")
+	                    },
+	                    cache:false,
+	                    beforeSend:function(){
+	                    	listObj.find(".loader").show().html('<p>玩命加载中<span></span><span></span><span></span></p>');
+	                    },
+	                    success:function(data){
+	                    	var str = "";
+	                    	if(data.results.length > 0){
+	                    		$(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(pageNo);
+	                    		for(var i = 0,len = data.results.length;i < len;i++){
+	                    			if(msgType == 'image') {
+	                    				str += ' <li>\
+		                    				<img src="'+data.results[i].sysUrl+'"/>\
+		                    			</li> ';
+	                    			}else if(msgType == 'shortvideo') {
+	                    				str += '<li><video poster="' + data.results[i].picUrl + '" controls="controls" preload="none">'+
+                    					'<source src="' + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
+                    					'<source src="' + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
+                    					'</video></li>';
+	                    			}
+	                    		}
+	                    		listObj.find("ul").append(str);
+	                    	}else {
+	                    		listObj.addClass("list-null").find(".loader").html('<p>没有更多了~</p>');
+	                    	}
+	                    },
+	                    error:function(){
+	                    	alert("系统异常，请稍后再试！");
+	                    },
+	                    complete:function(){
+	                    	if(!listObj.hasClass("list-null")){
+	                    		listObj.find(".loader").hide();
+	                    	}
+	                    }
+	                })
 	              }
 	            }).trigger("scroll");
 				
@@ -206,15 +266,13 @@
 					submitComment();
 				});
 				
-				$("#comment-more").click(function() {
+				$(".comment-more").click(function() {
 					if($(this).hasClass("list-null")>0){
 						return false;
 					}
 					loadComment();
 				});
-				$(".res-more").click(function() {
-					moreResItem();
-				})
+				
 				$(".mui-icon-loop").click(function() {
 					window.location.reload();
 				});
@@ -243,85 +301,57 @@
 				})
 			});
 			
-				function moreResItem() {
-				  var listObj = $(".liveDetail-list-content .mui-active");
-				  var msgType = $(".liveDetail-list-title .mui-active").find("input[name='msgType']").val();
-				  var pageNo = parseInt($(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val()) + 1;
-				  var params = {
-						marineId: $("#marineId").val(),
-	                   	msgType: msgType,
-	                   	page: pageNo,
-	                   	rows: 48
-				  };
-				  loadItem(params, listObj);	
-				}
-				
+			
 				function initImageItem() {
 					var params = {
 						marineId: $("#marineId").val(),
 	                   	msgType: $("#panel1").find("input[name='msgType']").val(),
 	                   	page: $("#panel1").find("input[name='pageNo']").val(),
-	                   	rows: 9
+	                   	order: $("#list1").find(".sort-icon-active").attr("order")	
 					};
-					loadItem(params, $("#list1"));
+					loadItem(params, $("#list1"), false);
 				}
 				function initVideoItem() {
 					var params = {
 						marineId: $("#marineId").val(),
 	                   	msgType: $("#panel2").find("input[name='msgType']").val(),
 	                   	page: $("#panel2").find("input[name='pageNo']").val(),
-	                   	rows: 9
+	                   	order: $("#list2").find(".sort-icon-active").attr("order")		
 					};
-					loadItem(params, $("#list2"));
+					loadItem(params, $("#list2"), false);
 				}
-				function loadItem(params, listObj, isMore) {
-					var currPage = params.page;
-					if(currPage == 0) params.page = 1;
+				function loadItem(params, listObj, reload) {
 	                $.ajax({
 	                  type:"POST",
 	                  url:'<%=basePath%>/live/marine/resource/query',
 	                  dataType:'json',
 	                  data: params,
 	                  cache:false,
-	                  beforeSend:function(){
-                    	listObj.find(".res-more").removeClass("btn-more").addClass("loader").show().html('<p>玩命加载中<span></span><span></span><span></span></p>');
-                      },
 	                  success:function(data){
 	                  	var str = "";
 	                  	if(data.results.length > 0){
-                    		if(currPage > 0) $(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(params.page);
-                    		for(var i = 0,len = data.results.length;i < len;i++){
-                    			if(params.msgType == 'image') {
-                    				str += ' <li>\
-	                    				<img src="'+data.results[i].sysUrl+'"/>\
-	                    			</li> ';
-                    			}else if(params.msgType == 'shortvideo') {
-                    				str += '<li><video poster="' + data.results[i].picUrl + '" controls="controls" preload="none">'+
+	                  		for(var i = 0,len = data.results.length;i < len;i++){
+	                  			if(params.msgType == 'image') {
+	                  				str += ' <li>\
+		                    				<img src="'+data.results[i].sysUrl+'"/>\
+		                    			</li> ';
+	                  			}else if(params.msgType == 'shortvideo') {
+	                  				str += '<li><video poster="' + data.results[i].picUrl + '" controls="controls" preload="none">'+
                 					'<source src="' + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
                 					'<source src="' + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
                 					'</video></li>';
                     			}
-                    		}
-                    		if(currPage == 1) {
-                    			listObj.find("ul").html(str);
-                    		}else {
-                    			listObj.find("ul").append(str);
-                    		}
-                    		if(params.page == data.totalPage) {
-                    			listObj.addClass("list-null").find(".res-more").removeClass("btn-more").addClass("loader").html('<p>没有更多了~</p>');
-                    		}
-                    	}else {
-                    		listObj.addClass("list-null").find(".res-more").removeClass("btn-more").addClass("loader").html('<p>没有更多了~</p>');
-                    	}
+	                  		}
+	                  		if(reload) {
+	                  			listObj.find("ul").html(str);
+	                  		}else {
+	                  			listObj.find("ul").append(str);
+	                  		}
+	                  	}
 	                  },
 	                  error:function(){
 	                  	alert("系统异常，请稍后再试！");
-	                  },
-                      complete:function(){
-                    	if(!listObj.hasClass("list-null")){
-                    		listObj.find(".res-more").removeClass("loader").addClass("btn-more").show().html("<span>查看更多</span>");
-                    	}
-                      }
+	                  }
 	              });
 				}
 				
@@ -381,7 +411,7 @@
     							'</div><div class="pmstext">' + params.comment + '</div></div>';
                     	  $("#pmsComment").before(html);
                     	  $("#comment").val(null);
-                    	  $("#comment-more").html("");
+                    	  $(".comment-more").html("");
                 	  }
                   }
 				});      
@@ -407,12 +437,12 @@
                   		$("#pmsComment").append(html);
                   		$("#commentPageNo").val(pageNo);
 						if(data.totalPage == pageNo) {
-                  			$("#comment-more").addClass("list-null");
-                  			$("#comment-more").html("已显示全部留言");
+                  			$(".comment-more").addClass("list-null");
+                  			$(".comment-more").html("已显示全部留言");
                   		}
                   	}else {
-                  		$("#comment-more").addClass("list-null");
-              			$("#comment-more").html(pageNo == 1 ? "暂无留言，空位为你而留" : "已显示全部留言");
+                  		$(".comment-more").addClass("list-null");
+              			$(".comment-more").html(pageNo == 1 ? "暂无留言，空位为你而留" : "已显示全部留言");
                   	}
                   },
                   error:function(){

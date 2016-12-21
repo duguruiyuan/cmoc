@@ -68,11 +68,25 @@ public class IndexController extends BaseController{
 	public String about() {
 		return "about";
 	}
-	
+	/**
+	 * 热门课程
+	 * @return
+	 */
 	@RequestMapping("hotCourse")
 	public @ResponseBody Object hotCourse() {
 		ImgGroup group = new ImgGroup();
 		group.setPosition("2");
+		group.setShelves(1);
+		return contentManageService.selectListByParam(group);
+	}
+	/**
+	 * 头部banner
+	 * @return
+	 */
+	@RequestMapping("topBannerList")
+	public @ResponseBody Object topBannerList() {
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
 		group.setShelves(1);
 		return contentManageService.selectListByParam(group);
 	}

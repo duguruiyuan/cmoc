@@ -20,6 +20,7 @@ import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
+import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
@@ -43,6 +44,10 @@ public class CourseController extends BaseController {
 	public String courseList(Model model) {
 		List<CourseListView> list = courseService.selectShelvesSignList();
 		model.addAttribute("list", list);
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
+		group.setShelves(1);
+		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		return "course/list";
 	}
 	

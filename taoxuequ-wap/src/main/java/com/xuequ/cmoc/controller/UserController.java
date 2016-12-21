@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.service.IParentInfoService;
@@ -42,6 +43,10 @@ public class UserController extends BaseController{
 		}
 		model.addAttribute("isBind", count > 0 ? true : false);
 		model.addAttribute("openid", openid);
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
+		group.setShelves(1);
+		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		return "user/bind";
 	}
 	
@@ -79,7 +84,10 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("buyRecord")
 	public String buyRecord(Model model) {
-		
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
+		group.setShelves(1);
+		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		return "user/buyRecord";
 	}
 	
@@ -92,6 +100,10 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("collection")
 	public String collection(Model model) {
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
+		group.setShelves(1);
+		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		return "user/collection";
 	}
 	
