@@ -54,7 +54,7 @@
   <resultMap id="ListResultMap" type="com.xuequ.cmoc.view.CourseListView" extends="BaseResultMap" >
   	<result column="peoples" property="peoples" jdbcType="INTEGER" />
   </resultMap>
-  <select id="selectShelvesSignList" resultMap="ListResultMap">
+  <select id="selectShelvesSignByPage" resultMap="ListResultMap">
   	SELECT
 	<include refid="Base_Column_List" />, IFNULL(bu.peoples,0) peoples
 	FROM t_course_info ci

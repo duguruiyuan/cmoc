@@ -17,7 +17,7 @@
 		    <h1 class="mui-title">购买记录</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
-		<div class="mui-content">
+		<div>
 		    <div class="tableList">
 		    	<table border="0" cellspacing="0" cellpadding="0">
 		    		<thead>

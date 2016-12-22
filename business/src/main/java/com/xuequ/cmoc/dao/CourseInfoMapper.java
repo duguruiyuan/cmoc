@@ -31,7 +31,7 @@ public interface CourseInfoMapper {
     
     List<CourseInfo> selectShelvesList();
     
-    public List<CourseListView> selectShelvesSignList();
+    public List<CourseListView> selectShelvesSignByPage(Page<CourseListView> view);
     
     CourseListView selectDetailById(Integer productId);
 }

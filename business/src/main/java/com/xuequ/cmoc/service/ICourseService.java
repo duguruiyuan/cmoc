@@ -30,7 +30,7 @@ public interface ICourseService {
 	 * @Date 2016年12月10日
 	 * @return
 	 */
-	List<CourseListView> selectShelvesSignList();
+	List<CourseListView> selectShelvesSignByPage(Page<CourseListView> page);
 	/**
 	 * 查询上架课程
 	 * @auther 胡启萌

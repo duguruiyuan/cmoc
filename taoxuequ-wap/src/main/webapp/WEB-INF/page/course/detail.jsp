@@ -16,8 +16,11 @@
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />
 <body class="course-detail">
-		<header class="header">陶学趣</header>
-		<div class="course-img">
+		<header class="header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #fff;"></a>
+			陶学趣
+		</header>
+		<div class="course-img mt44">
 			<img src="${config.imgUrl }${course.courseImg }">
 		</div>
 		<div class="course-title">

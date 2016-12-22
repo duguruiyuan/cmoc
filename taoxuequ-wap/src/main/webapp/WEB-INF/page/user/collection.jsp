@@ -23,7 +23,7 @@
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
-		    <ul class="mui-table-view mb10">
+		    <ul class="mui-table-view" style="margin-top: 0px;">
 		    	<c:choose>
 		    		<c:when test="${list == null || list.isEmpty }">
 		    			<p style="padding: 10px 10px;">暂无收藏记录</p>

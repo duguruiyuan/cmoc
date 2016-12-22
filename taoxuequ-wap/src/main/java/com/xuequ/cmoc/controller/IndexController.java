@@ -29,7 +29,7 @@ public class IndexController extends BaseController{
 	@Autowired
 	private IHollowManService hollowManService;
 
-	@RequestMapping(value = {"", "/"})
+	@RequestMapping(value = {"", "/", "index"})
 	public String index(Model model) {
 		ImgGroup group = new ImgGroup();
 		group.setPosition("2");

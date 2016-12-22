@@ -32,7 +32,7 @@
 			<div id="live-list">
 			
 			</div>
-			<div class="loader" style="padding: 20px 0px;">
+			<div class="loader" style="padding: 50px 0px;">
 	 			<p>玩命加载中<span></span><span></span><span></span></p>
 	 		</div>
 		</div>
@@ -55,7 +55,7 @@
 				  </div>
                   {{/each}}
 				{{else}}
-					<div style="text-align: center;padding-top: 55px;">亲，暂无数据哦</div>
+					<div style="text-align: center;padding-top: 55px;">亲，暂无活动哦</div>
 				{{/if}}
 		  </script>
 		<script type="text/javascript">
@@ -214,13 +214,15 @@
 				        		listObj.addClass("list-null").find(".loader").html('<p>以上是全部活动了~</p>');
 				        	}
 				        }else {
+				        	$('#live-list').append(myTemplate(data));
 				        	if(data.results && data.results.length > 0) {
-					        	$("#pageNo").val(params.page);
-					        	$('#live-list').append(myTemplate(data));
 					        	if(params.page == data.totalPage) {
 					        		listObj.addClass("list-null").find(".loader").html('<p>以上是全部活动了~</p>');
+					        	}else {
+					        		$("#pageNo").val(params.page);
 					        	}
 					        }else {
+					        	if(params.page == 1) return;
 		                    	listObj.addClass("list-null").find(".loader").html('<p>以上是全部活动了~</p>');
 					        }
 				        }

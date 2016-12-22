@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
-import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
-import com.xuequ.cmoc.model.ChildSignInfo;
-import com.xuequ.cmoc.model.CourseBuyerInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.ICourseService;
@@ -29,8 +28,6 @@ import com.xuequ.cmoc.utils.OrderEncryptUtils;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseListView;
 import com.xuequ.cmoc.vo.CourseQueryVO;
-import com.xuequ.cmoc.model.ProductOrder;
-import com.xuequ.cmoc.model.WechatUserInfo;
 
 @RequestMapping("course")
 @Controller
@@ -42,13 +39,22 @@ public class CourseController extends BaseController {
 	
 	@RequestMapping(value={"","/","list"})
 	public String courseList(Model model) {
-		List<CourseListView> list = courseService.selectShelvesSignList();
-		model.addAttribute("list", list);
 		ImgGroup group = new ImgGroup();
 		group.setPosition("1");
 		group.setShelves(1);
 		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		return "course/list";
+	}
+	
+	@RequestMapping("list/query")
+	public @ResponseBody Object courseListQuery(CourseQueryVO vo) {
+		Page<CourseListView> page = new Page<CourseListView>();
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		page.setParams(vo);
+		List<CourseListView> list = courseService.selectShelvesSignByPage(page);
+		page.setResults(list);
+		return page;
 	}
 	
 	@RequestMapping("detail/{courseId}")
@@ -77,6 +83,11 @@ public class CourseController extends BaseController {
 
 	@RequestMapping("sign/{courseId}")
 	public String sign(Model model, @PathVariable Integer courseId) {
+		CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
+		ParentInfo buyerInfo = courseService.selectByOpenid("aaaa");
+		model.addAttribute("course", courseInfo);
+		model.addAttribute("buyer", buyerInfo);
+		return "course/sign";
 //		String page = "course/sign";
 //		String redir = wechatRedirect(model, page);
 //		if(redir.equals(page)) {
@@ -85,17 +96,12 @@ public class CourseController extends BaseController {
 //			if(token != null || StringUtils.isNotBlank(openid)) {
 //				if(token != null) openid = token.getOpenid();
 //				CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
-//				CourseBuyerInfo buyerInfo = courseService.selectByOpenid(openid);
+//				ParentInfo buyerInfo = courseService.selectByOpenid(openid);
 //				model.addAttribute("course", courseInfo);
 //				model.addAttribute("buyer", buyerInfo);
 //			}
 //		}
 //		return redir;
-		CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
-		ParentInfo buyerInfo = courseService.selectByOpenid("oqyqUwq_YY84qjFWUtn6Ti4XIROE");
-		model.addAttribute("course", courseInfo);
-		model.addAttribute("buyer", buyerInfo);
-		return "course/sign";
 	}
 	
 	@RequestMapping("signorder/create")

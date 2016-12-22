@@ -16,7 +16,7 @@
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
 <body>
-	<div class="header">
+	<div class="pay-header">
 		<c:choose>
 			<c:when test="${error != null && !error.isEmpty() }">
 				<p style="color:#f30606">${error }</p>

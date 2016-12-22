@@ -7,7 +7,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>
-<div class="mui-slider">
+<div class="mui-slider mt44">
   <c:if test="${topBannerList != null && !topBannerList.isEmpty() }">
 	<div class="mui-slider-group mui-slider-loop">
   		<c:forEach var="item" items="${topBannerList }" begin="${topBannerList.size() - 1 }">

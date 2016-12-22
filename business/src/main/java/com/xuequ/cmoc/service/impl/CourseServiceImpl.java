@@ -79,11 +79,10 @@ public class CourseServiceImpl implements ICourseService {
 	public List<CourseInfo> selectShelvesList() {
 		return courseInfoMapper.selectShelvesList();
 	}
-	
 
 	@Override
-	public List<CourseListView> selectShelvesSignList() {
-		return courseInfoMapper.selectShelvesSignList();
+	public List<CourseListView> selectShelvesSignByPage(Page<CourseListView> page) {
+		return courseInfoMapper.selectShelvesSignByPage(page);
 	}
 
 	@Override

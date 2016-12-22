@@ -179,9 +179,6 @@
       <if test="orderNo != null" >
         order_no,
       </if>
-      <if test="orderNo != null" >
-        order_no,
-      </if>
       <if test="isPhoneConfirm != null" >
         is_phone_confirm,
       </if>

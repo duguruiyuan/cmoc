@@ -71,20 +71,24 @@ public class LiveCenterController extends BaseController{
 	
 	@RequestMapping("marine/detail/{marineId}")
 	public String marineDetail(Model model, @PathVariable Integer marineId) {
+		String page = "live/marineDetail";
 		model.addAttribute("marine", activityMarinesService.selectById(marineId));
 		model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
 		ImgGroup group = new ImgGroup();
 		group.setPosition("1");
 		group.setShelves(1);
 		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
-		String page = "live/marineDetail";
 		return page;
-		/*String redir = wechatRedirect(model, page);
-		if(redir.equals(page)) {
-			model.addAttribute("marine", activityMarinesService.selectById(marineId));
-			model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
-		}
-		return redir;*/
+//		String redir = wechatRedirect(model, page);
+//		if(redir.equals(page)) {
+//			model.addAttribute("marine", activityMarinesService.selectById(marineId));
+//			model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
+//			ImgGroup group = new ImgGroup();
+//			group.setPosition("1");
+//			group.setShelves(1);
+//			model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
+//		}
+//		return redir;
 	}
 	
 	@RequestMapping("marine/resource/query")

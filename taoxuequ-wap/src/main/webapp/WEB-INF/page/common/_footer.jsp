@@ -9,29 +9,38 @@
 <link href="<%=basePath %>/css/font-awesome.min.css" rel="stylesheet">
 
 <div class="add"></div>
-<nav class="mui-bar mui-bar-tab">
-    <a class="foot-tab-item" href="<%=basePath %>/">
-    	<i class="mui-icon fa fa-home"></i>
-        <span class="mui-tab-label">首页</span>
+<nav class="mui-bar mui-bar-tab" id="mui-bar">
+    <a class="foot-tab-item" id="my-index" href="<%=basePath %>/index">
+    	<i class="mui-icon fa fa-eye"></i>
+        <span class="mui-tab-label">趣看看</span>
     </a>
     <a class="foot-tab-item" href="<%=basePath %>/course">
     	<span class="mui-icon fa fa-book"></span>
-        <span class="mui-tab-label">实践课程</span>
+        <span class="mui-tab-label">趣学学</span>
     </a>
-    <a class="foot-tab-item" href="<%=basePath %>/live">
-   		 <span class="mui-icon fa fa-video-camera"></span>
-        <span class="mui-tab-label">直播中心</span>
-    </a>
-    <a class="foot-tab-item" href="<%=basePath %>/my">
+    <a class="foot-tab-item" id="qu-my" href="<%=basePath %>/my">
     	<span class="mui-icon fa fa-user"></span>
-        <span class="mui-tab-label">个人中心</span>
+        <span class="mui-tab-label">趣我的</span>
     </a>
 </nav>
 
 <script type="text/javascript">
-	$(".mui-bar a").each(function(index, item) {
-		if(window.location.href.indexOf(item.href) != -1){
-			$(item).addClass("tab-active").siblings().removeClass("tab-active");
+	$(function() {
+		var isFind = false;
+		$("#mui-bar a").each(function(index, item) {
+			if(window.location.href.indexOf(item.href) != -1){
+				$(item).addClass("tab-active").siblings().removeClass("tab-active");
+				isFind = true;
+			}
+		});
+		if(!isFind) {
+			$("#my-index").each(function(i,it){
+				if(it.href.indexOf(window.location.href) != -1) {
+					$("#my-index").addClass("tab-active").siblings().removeClass("tab-active");
+				}else {
+					$("#qu-my").addClass("tab-active").siblings().removeClass("tab-active");
+				}
+			});
 		}
-	});
+	})
 </script>

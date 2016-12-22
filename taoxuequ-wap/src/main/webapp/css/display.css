@@ -7,6 +7,9 @@
 .pb10{
 	padding-bottom: 10px;
 }
+.mt44{
+	margin-top: 44px;
+}
 .bg-white{
 	background: #fff;
 }
@@ -18,9 +21,7 @@
 .mui-bar-nav{
 	background-color: rgb(42,178,87);
 }
-.mui-bar-nav~.mui-content{
-	padding-top: 0px;
-}
+
 .mui-bar-nav .mui-icon{color: #fff;}
 .mui-title{
 	color: #fff;
@@ -1316,45 +1317,45 @@ select.regMT-select{
 }
 
 /*支付*/
-.header{
+.pay-header{
 	background-color: #fff;
 	padding:10px 15px;
 	padding-top:15px;
 }
-.header > .title{
+.pay-header > .title{
 	padding-bottom:15px;
 	border-bottom: 1px solid #fafafa;
 }
-.header > .title p{
+.pay-header > .title p{
 	color: #aaa;
 	font-size: 14px;
 	/*overflow: hidden;
 	white-space:nowrap;
 	text-overflow:ellipsis;*/
 }
-.header > .title span{
+.pay-header > .title span{
 	color: #333;
 }
-.header > .money{
+.pay-header > .money{
 	text-align: center;
 	padding:18px 0;
 }
-.header > .money .money-sum , .header > .money .description{
+.pay-header > .money .money-sum , .pay-header > .money .description{
 	position: relative;
 	left:-20px;
 }
-.header > .money .description{
+.pay-header > .money .description{
 	color: #333;
 }
-.header > .money .double{
+.pay-header > .money .double{
 	font-size: 22px;
 }
-.header > .money .money-sum{
+.pay-header > .money .money-sum{
 	font-size: 38px;
 	color: #ff7d31
 }
 
-.header > .description{
+.pay-header > .description{
 	color: #aaa;
 	font-size: 14px;
 	padding-top: 10px;
@@ -1518,13 +1519,22 @@ color: #09BB07;
 /*新版-个人中心*/
 .header {
     text-align: center;
-    height: 50px;
-    line-height: 20px;
+    height: 44px;
+    line-height: 44px;
     color: #FFFFFF;
     background: #25242a;
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 4px;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    left: 0;
+    backface-visibility: hidden;
+}
+.header .mui-icon{
+	line-height: 2;
 }
 .head_bg {
 	width: 100%;
@@ -1535,7 +1545,9 @@ color: #09BB07;
 .head_bg img {
 	width: 100%;
 }
-
+.mui-bar-nav~.mui-content{
+	padding-top: 0px;
+}
 .head_img img {
 	width: 60%;
 	height: 60%;
@@ -1638,7 +1650,7 @@ color: #09BB07;
 }
 
 .small img {
-	width: 80%;
+	width: 95%;
 }
 
 .br-l2{border-left: 2px solid #CCC;}

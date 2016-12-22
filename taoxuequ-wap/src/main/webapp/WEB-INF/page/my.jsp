@@ -15,7 +15,7 @@
 	</head>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body class="bc-fff">
-		<header class="header">淘学趣</header>
+		<header class="header">陶学趣</header>
 		<div class="mui-content">
 			<div class="head_bg">
 				<img src="<%=basePath %>/images/home_bg.png">
@@ -33,7 +33,7 @@
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/live?id=openid">
+	                <a class="mui-navigate-right" href="<%=basePath%>/live">
 	                     直播中心
 	                </a>
 	            </li>

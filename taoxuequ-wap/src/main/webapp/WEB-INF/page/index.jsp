@@ -16,8 +16,8 @@
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />
 <body class="bc-fff">
-	<header class="header">淘学趣</header>
-	<div id="box1">
+	<header class="header">陶学趣</header>
+	<div id="box1" class="mt44">
 		<div class="bigone1">
 			<img src="<%=basePath%>/images/review.png" />
 		</div>

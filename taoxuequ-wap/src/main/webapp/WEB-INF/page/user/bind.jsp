@@ -22,7 +22,6 @@
 		    <h1 class="mui-title">用户绑定</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
-		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
 		    <div>
 		    	<c:choose>

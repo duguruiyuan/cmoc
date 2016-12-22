@@ -27,7 +27,7 @@
 			success : function(response) {
 			  var data = response.data;
 			  wx.config({
-		            debug: true,
+		            debug: false,
 		            appId: data.appid,
 		            timestamp:data.timestamp,
 		            nonceStr:data.nonceStr,
