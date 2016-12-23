@@ -3,6 +3,8 @@ package com.xuequ.cmoc.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.model.ActivityInfo;
-import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.MarineComment;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
+import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
@@ -70,25 +73,16 @@ public class LiveCenterController extends BaseController{
 	}
 	
 	@RequestMapping("marine/detail/{marineId}")
-	public String marineDetail(Model model, @PathVariable Integer marineId) {
-		String page = "live/marineDetail";
+	public String marineDetail(HttpServletResponse response, Model model, @PathVariable Integer marineId) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
 		model.addAttribute("marine", activityMarinesService.selectById(marineId));
 		model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
 		ImgGroup group = new ImgGroup();
 		group.setPosition("1");
 		group.setShelves(1);
 		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
-		return page;
-//		String redir = wechatRedirect(model, page);
-//		if(redir.equals(page)) {
-//			model.addAttribute("marine", activityMarinesService.selectById(marineId));
-//			model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
-//			ImgGroup group = new ImgGroup();
-//			group.setPosition("1");
-//			group.setShelves(1);
-//			model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
-//		}
-//		return redir;
+		return "live/marineDetail";
 	}
 	
 	@RequestMapping("marine/resource/query")

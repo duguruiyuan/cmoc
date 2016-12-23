@@ -13,13 +13,14 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
 
+@RequestMapping("pay")
 @Controller
 public class PayController extends BaseController{
 	
 	@Autowired
 	private IProductOrderService productOrderService;
 
-	@RequestMapping("wechatpay/pay")
+	@RequestMapping("wechatpay")
 	public String wechatPay(Model model) {
 		String orderNo = request.getParameter("orderNo");
 		String productType = request.getParameter("productType");

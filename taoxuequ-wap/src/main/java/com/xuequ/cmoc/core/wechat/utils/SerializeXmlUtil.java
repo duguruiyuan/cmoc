@@ -9,7 +9,6 @@ import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
-import com.xuequ.cmoc.core.wechat.message.ArticleItem;
 import com.xuequ.cmoc.core.wechat.message.XStreamCDATA;
 import com.xuequ.cmoc.core.wechat.message.XStreamSub;
 

@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.ParentInfo;
-import com.xuequ.cmoc.model.WechatSnsToken;
+import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.ICourseService;
@@ -82,26 +84,14 @@ public class CourseController extends BaseController {
 	}
 
 	@RequestMapping("sign/{courseId}")
-	public String sign(Model model, @PathVariable Integer courseId) {
+	public String sign(HttpServletResponse response, Model model, @PathVariable Integer courseId) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
 		ParentInfo buyerInfo = courseService.selectByOpenid("aaaa");
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("buyer", buyerInfo);
 		return "course/sign";
-//		String page = "course/sign";
-//		String redir = wechatRedirect(model, page);
-//		if(redir.equals(page)) {
-//			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-//			String openid = request.getParameter("openid");
-//			if(token != null || StringUtils.isNotBlank(openid)) {
-//				if(token != null) openid = token.getOpenid();
-//				CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
-//				ParentInfo buyerInfo = courseService.selectByOpenid(openid);
-//				model.addAttribute("course", courseInfo);
-//				model.addAttribute("buyer", buyerInfo);
-//			}
-//		}
-//		return redir;
 	}
 	
 	@RequestMapping("signorder/create")

@@ -1,7 +1,5 @@
 package com.xuequ.cmoc.core.wechat.utils;
 
-import java.util.Date;
-
 public final class DateTypeUtils {
 
 	/**

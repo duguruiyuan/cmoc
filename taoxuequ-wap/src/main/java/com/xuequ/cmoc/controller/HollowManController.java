@@ -2,6 +2,8 @@ package com.xuequ.cmoc.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.ImgTypeEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
@@ -22,7 +25,7 @@ import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.HollowManInfo;
-import com.xuequ.cmoc.model.WechatSnsToken;
+import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
@@ -51,22 +54,15 @@ public class HollowManController extends BaseController {
 	private IActivityHmService activityHmService;
 	
 	@RequestMapping(value={"","/"})
-	public String index(Model model) {
-		String page = "hm/hm";
-		String redir = wechatRedirect(model, page);
-		if(redir.equals(page)) {
-			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-			String openid = request.getParameter("openid");
-			if(token != null || StringUtils.isNotBlank(openid)) {
-				if(token != null) openid = token.getOpenid();
-				HollowManInfo hm = hollowManService.selectByOpenid(openid);
-				model.addAttribute("hm", hm);
-				if(hm != null && hm.getIsActive() == 1) {
-					return "hm/hmMy";
-				}
-			}
+	public String index(Model model, HttpServletResponse response) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
+		HollowManInfo hm = hollowManService.selectByOpenid(userInfo.getOpenid());
+		if(hm != null && hm.getIsActive() == 1) {
+			model.addAttribute("hm", hm);
+			return "hm/hmMy";
 		}
-		return redir;
+		return "hm/hm";
 	}
 	
 	/**
@@ -139,23 +135,16 @@ public class HollowManController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("manage/marine")
-	public String bindMarine(Model model) {
-		String page = "hm/marineManage";
-		String redir = wechatRedirect(model, page);
-		if(redir.equals(page)) {
-			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-			String openid = request.getParameter("openid");
-			if(token != null || StringUtils.isNotBlank(openid)) {
-				if(token != null) openid = token.getOpenid();
-				ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(openid);
-				if(marine != null) {
-					List<ActivityChildView> families = activityFamilyService.selectListByMarineId(marine.getId());
-					model.addAttribute("marine", marine);
-					model.addAttribute("families", families);
-				}
-			}
+	public String bindMarine(Model model, HttpServletResponse response) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
+		ActivityMarinesView marine = activityMarinesService.selectMarineByHmOpenid(userInfo.getOpenid());
+		if(marine != null) {
+			List<ActivityChildView> families = activityFamilyService.selectListByMarineId(marine.getId());
+			model.addAttribute("marine", marine);
+			model.addAttribute("families", families);
 		}
-		return redir;
+		return "hm/marineManage";
 	}
 	
 	@RequestMapping("marine/edit/query")
@@ -202,21 +191,14 @@ public class HollowManController extends BaseController {
 	} 
 	
 	@RequestMapping("withteam")
-	public String withTeam(Model model) {
-		String page = "hm/withTeam";
-		String redir = wechatRedirect(model, page);
-		if(redir.equals(page)) {
-			WechatSnsToken token = (WechatSnsToken) model.asMap().get("snsToken");
-			String openid = request.getParameter("openid");
-			if(token != null || StringUtils.isNotBlank(openid)) {
-				if(token != null) openid = token.getOpenid();
-				List<ActivityHmSignView> records = activityHmService.selectWithTeamRecord(openid);
-				HollowManInfo hm = hollowManService.selectByOpenid(openid);
-				model.addAttribute("records", records);
-				model.addAttribute("hm", hm);
-			}
-		}
-		return redir;
+	public String withTeam(Model model, HttpServletResponse response) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
+		List<ActivityHmSignView> records = activityHmService.selectWithTeamRecord(userInfo.getOpenid());
+		HollowManInfo hm = hollowManService.selectByOpenid(userInfo.getOpenid());
+		model.addAttribute("records", records);
+		model.addAttribute("hm", hm);
+		return "hm/withTeam";
 	}
 	
 	@RequestMapping("act/sign")

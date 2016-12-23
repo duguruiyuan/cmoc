@@ -36,9 +36,9 @@
 			</div>
 			<div class="mui-input-row mui-radio">
 			   <label style="width: 35%;padding: 11px 0px 0px 15px;"><span style="color:red;">*</span>性别</label>
-				<label style="width: 30%;padding: 11px 0px 0px 15px;">小帅哥</label>
-				<label style="width: 20%;padding: 11px 0px 0px 15px;">小美女</label>
-				<input style="width: 38%;" name="childSex" type="radio" value="F">
+				<label style="width: 30%;padding: 11px 0px 0px 0px;">小帅哥</label>
+				<label style="width: 30%;padding: 11px 0px 0px 0px;">小美女</label>
+				<input style="width: 40%;" name="childSex" type="radio" value="F">
 				<input name="childSex" type="radio" value="M">
 			</div>
 			<div class="mui-input-row">
@@ -46,12 +46,12 @@
 			    <input id="childAge" name="childAge" type="text" placeholder="请输入小朋友年龄">
 			</div>
 			<div class="mui-input-row">
-			    <label><span style="color:red;">*</span>身份证号码</label>
-			    <input id="childIdcard" name="childIdcard" type="text" placeholder="请输入小朋友身份证号码">
+			    <label style="width: 38%;"><span style="color:red;">*</span>身份证号码</label>
+			    <input style="width: 62%;" id="childIdcard" name="childIdcard" type="text" placeholder="请输入小朋友身份证号码">
 			</div>
 			<div class="mui-input-row">
-			    <label><span style="color:red;">*</span>紧急联系人</label>
-			    <input id="emerName" name="emerName" type="text" maxlength="11" placeholder="请输入紧急联系人">
+			    <label style="width: 38%;"><span style="color:red;">*</span>紧急联系人</label>
+			    <input  style="width: 62%;" id="emerName" name="emerName" type="text" maxlength="11" placeholder="请输入紧急联系人">
 			</div>
 			<div class="mui-input-row">
 			    <label><span style="color:red;">*</span>关系</label>
@@ -65,8 +65,8 @@
 			</div>
 			<div class="mui-input-row mui-radio" style="height: 115px;">
 			    <label style="width: 45%;padding: 11px 0px 0px 15px;"><span style="color:red;">*</span>有无重大疾病</label>
-				<label style="width: 30%;padding: 11px 0px 0px 15px;">无</label>
-				<label style="width: 20%;padding: 11px 0px 0px 15px;">有</label>
+				<label style="width: 30%;padding: 11px 0px 0px 5px;">无</label>
+				<label style="width: 20%;padding: 11px 0px 0px 5px;">有</label>
 				<input style="width: 38%;" name="isDisease" type="radio" value="N">
 				<input name="isDisease" type="radio" value="Y">
 				<div class="mui-input-row" id="disDesc" style="display: none;">
@@ -151,7 +151,7 @@
 			 		async : false,
 			 		success : function(data) {
 			 			if(data.code == '000') {
-			 				window.location.href=basePath + "/wechatpay/pay?" + data.data;
+			 				window.location.href=basePath + "/pay/wechatpay?" + data.data;
 			 			}else {
 			 				mui.alert(data.msg,'消息提示');
 			 			}

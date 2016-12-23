@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.model.WechatSnsUserInfo;
@@ -62,6 +63,10 @@ public class BaseController {
 	@ModelAttribute("config")
 	protected Configuration configInstance() {
 		return Configuration.getInstance();
+	}
+	
+	public WechatUserInfo getWechatUserInfo() {
+		return (WechatUserInfo) session.getAttribute(Constants.WECHAT_USERINFO);
 	}
 	
 	/**

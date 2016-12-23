@@ -3,10 +3,8 @@ package com.xuequ.cmoc.core.wechat.utils;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +15,7 @@ import com.xuequ.cmoc.common.enums.MimeTypeEnum;
 import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.WechatReqMsgType;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
-import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.FileUtils;
-import com.xuequ.cmoc.utils.MimeTypeUtils;
 import com.xuequ.cmoc.utils.TextUtil;
 
 public class FileUtil {
