@@ -220,6 +220,7 @@ function updateActivity(id) {
 			$("#addForm #activityImgUrl").val(data.activityImgUrl);
 			$("#addForm #activityPeoples").val(data.activityPeoples);
 			$("#addForm #city").val(data.city);
+//			$("#addForm .file-drop-zone").html("<img src=\"" + imgUrl+data.activityImgUrl + "\" width=\"100%\" />");
 			$("#addForm #activityType").val(data.activityType);
 			$("#addForm #strStartDate").val(getTime(data.startDate, "yyyy-MM-dd hh:mm"));
 			$("#addForm #strEndDate").val(getTime(data.endDate, "yyyy-MM-dd hh:mm"));

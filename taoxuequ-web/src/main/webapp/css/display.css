@@ -636,3 +636,14 @@ span.error {
     height: 100%;
     position: absolute;
 }
+.file-init-div{
+	width: 100%;
+    position: relative;
+    display: none;
+}
+.file-init-img{
+	width: 100%;
+    position: absolute;
+    left: 0px;
+    height: 275px;
+}

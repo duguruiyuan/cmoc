@@ -310,6 +310,7 @@ function validator() {
 							$("#content_div").replaceWith($('#body_div'));
 							$("#body_div").show();
 							$("#role_add").hide();
+							loadData();
 						} else {
 							$.messager.alert('系统提示', $("#idRole").val() == '' ? '角色新增失败' : '角色修改失败', 'warning');
 						}
