@@ -42,6 +42,7 @@ import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IActivityTeacherService;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IHollowManService;
+import com.xuequ.cmoc.thread.WechatMsgCallback;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
@@ -358,9 +359,10 @@ public class ActivityManageController extends BaseController{
 				AuditReqVO vo = new AuditReqVO();
 				vo.setIds(str);
 				vo.setStatus(isEffect);
-				HttpClientUtils.postJson(PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_hmSignMsg"), vo);
-				return new RspResult(StatusEnum.SUCCESS);
+				new WechatMsgCallback(PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_hmSignMsg"), 
+						vo).execute();
 			}
+			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("--auditHm, error={}", e);
 		}

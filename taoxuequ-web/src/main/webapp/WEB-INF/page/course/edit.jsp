@@ -8,6 +8,7 @@
 %>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"></jsp:include>
 <body>
+	<jsp:include page="/WEB-INF/page/common/header.jsp"></jsp:include>
 	<div id="middle">
 		<jsp:include page="/WEB-INF/page/common/menu.jsp"></jsp:include>
 		<div id="right">
@@ -82,9 +83,7 @@
 				</div>
 				<div class="col-md-6">
 					<label for="activityName">课程详情</label>	
-					<div style="width:414px;margin:20px auto 40px;">
-				        <script type="text/plain" id="editor" style="width:100%;height:500px;"></script>
-				    </div>
+				    <script type="text/plain" id="editor" style="width:414px;height:500px;"></script>
 				</div>
 			</div>
 		</div>

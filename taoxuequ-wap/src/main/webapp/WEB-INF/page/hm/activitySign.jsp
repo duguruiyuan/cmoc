@@ -28,7 +28,7 @@
 	    	</c:if>
 	    	<c:forEach var="item" items="${activitys }">
 	    		<li class="mui-table-view-cell">
-				    <a class="mui-navigate-right" qrcode-url="${item.bindQrcodeUrl }" >
+				    <a class="mui-navigate-right" qrcode-url="${item.qrcodeUrl }" >
 				    	<div class="ranksList-content">
 				    		<span>${item.activityName }</span>
 				    		&nbsp;<span><fmt:formatDate value='${item.startDate}' pattern='yyyy/MM/dd' /> </span>&nbsp;
@@ -56,6 +56,11 @@
 			});
 			
 			$("body").on("click", ".code-btn", function(){
+				alert('aaaa');
+				$(".code").remove();
+			})
+			$(".code-btn").click(function(){
+				alert('aaaa');
 				$(".code").remove();
 			})
 		})

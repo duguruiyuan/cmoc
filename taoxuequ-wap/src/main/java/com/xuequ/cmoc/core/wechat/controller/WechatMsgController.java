@@ -50,7 +50,7 @@ public class WechatMsgController extends BaseController{
 	@Autowired
 	private IActivityHmService activityHmService;
 	
-	@RequestMapping(value="hm/regMsg", method = RequestMethod.POST)  
+	@RequestMapping(value="hmRegMsg", method = RequestMethod.POST)  
     @ResponseBody Object hmRegMsg(@RequestBody AuditReqVO vo) { 
 		if(StringUtils.isBlank(Constants.BASEPATH)) Constants.BASEPATH = RequestUtil.getBasePath(request);
 		try {
@@ -71,7 +71,7 @@ public class WechatMsgController extends BaseController{
 		return new RspResult(StatusEnum.FAIL);
 	}
 	
-	@RequestMapping(value="hm/signMsg", method = RequestMethod.POST)
+	@RequestMapping(value="hmSignMsg", method = RequestMethod.POST)
 	@ResponseBody Object hmSignMsg(@RequestBody AuditReqVO vo) {
 		if(StringUtils.isBlank(Constants.BASEPATH)) Constants.BASEPATH = RequestUtil.getBasePath(request);
 		try {
