@@ -45,4 +45,12 @@ public interface IActivityHmService {
     int updateAuditHmSign(List<Integer> list, Integer isEffect, String reason);
     
     List<ActivityHmSignView> selectListByIds(List<Integer> ids);
+    /**
+     * 分页查询审核不通过的透明人
+     * @param page
+     * @return
+     */
+    List<ActivityHmSignView> selectHmSignAuditoutByPage(Page<ActivityHmSignView> page);
+    
+    int updateHmSignById(ActivityHmSign hmSign);
 }

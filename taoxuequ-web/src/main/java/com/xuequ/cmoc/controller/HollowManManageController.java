@@ -58,6 +58,10 @@ public class HollowManManageController extends BaseController{
 		return "hm/regAudit";
 	}
 	
+	@RequestMapping("registor/auditout")
+	public String registorAuditout() {
+		return "hm/regAuditout";
+	}
 
 	/**
 	 * 查询透明人数据
@@ -94,6 +98,19 @@ public class HollowManManageController extends BaseController{
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<HollowManInfoView> list = hollowManService.selectByPage(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
+	}
+	
+	@RequestMapping("json/regAuditout/query")
+	@ResponseBody Object jsonRegAuditout(HollowManQueryVO vo) {
+		Grid grid = new Grid();
+		Page<HollowManInfo> page = new Page<HollowManInfo>();
+		page.setParams(vo);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<HollowManInfo> list = hollowManService.selectRegAuditOutByPage(page);
 		grid.setRows(list);
 		grid.setTotal(page.getTotalRecord());
 		return grid;

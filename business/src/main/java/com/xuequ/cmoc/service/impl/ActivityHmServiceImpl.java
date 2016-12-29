@@ -80,4 +80,14 @@ public class ActivityHmServiceImpl implements IActivityHmService {
 		return activityHmSignMapper.selectListByIds(ids);
 	}
 
+	@Override
+	public List<ActivityHmSignView> selectHmSignAuditoutByPage(Page<ActivityHmSignView> page) {
+		return activityHmSignMapper.selectHmSignAuditoutByPage(page);
+	}
+
+	@Override
+	public int updateHmSignById(ActivityHmSign hmSign) {
+		return activityHmSignMapper.updateByPrimaryKeySelective(hmSign);
+	}
+
 }

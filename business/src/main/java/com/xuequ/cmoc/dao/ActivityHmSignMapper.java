@@ -49,4 +49,6 @@ public interface ActivityHmSignMapper {
     int updateAuditDeleteHmSign(@Param("list")List<Integer> list, @Param("reason")String reason);
     
     List<ActivityHmSignView> selectListByIds(List<Integer> list);
+    
+    List<ActivityHmSignView> selectHmSignAuditoutByPage(Page<ActivityHmSignView> page);
 }

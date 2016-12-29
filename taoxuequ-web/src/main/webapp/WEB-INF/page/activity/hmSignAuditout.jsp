@@ -16,6 +16,7 @@
 					<!--begin 搜索栏 -->
 					<div class="span12" id="body_div">
 					  <form id="searchForm" class="form-search" method="post">
+					  	<input type="hidden" id="isEffect" name="isEffect" value="0"/>
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
@@ -28,14 +29,17 @@
 									</td>
 								 </tr>
 								 <tr>
-								 	<td>战队名称: <input class="form-control1" type="text" name="marineName" id="marineName"/></td>
-									<td colspan="2">活动时间： <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
+									<td>透明人姓名: <input class="form-control1" type="text" name="hmName" id="hmName"/></td>
+									<td>透明人电话: <input class="form-control1" type="text" name="hmMobile" id="hmMobile"/></td>
+								 </tr>
+								 <tr>
+									<td colspan="3">活动时间： <input type="text" class="form-control1 Wdate" id="startDate" name="startDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}',readOnly:true})">  至 
 										    <input type="text" class="form-control1 Wdate " id="endDate" name="endDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}',readOnly:true})"></td>
 								 </tr>
 								 <tr>
 									<td colspan="3">
 										<button type="button" style="height: 28px;" class="btn btn-default" onclick="search('searchForm')">查找</button>
-										<button type="button" style="height: 28px;" class="btn btn-default" onclick="cleanFormPanel('searchForm')">清空</button>
+										<button type="button" style="height: 28px;" class="btn btn-default" onclick="closeFormPanel('searchForm')">清空</button>
 									</td>
 								</tr>
 							</tbody>
@@ -47,35 +51,15 @@
 				<div style="height: 330px;">
 					<table id="dataGrid"></table>
 				</div>
+				<table class="table table-condensed" style="margin: 5px 0;">
+					<tr>
+						<td class="success" style="text-align: right; font-weight: bold; color: red;">已选中数量：<span id="checkedNum">0</span></td>
+					</tr>
+				</table>
 			</div>
-		</div>
-	</div>
-	<div id="judgeDiolog" style="display: none;">
-		<form id="judgeForm">
-			<input type="hidden" id="id" name="id"/>
-			<div class="col-md-12 pt10">
-				<div class="col-md-9">
-					活动表现：
-					<select class="form-control1" id="showed" name="showed">
-						<option value="1">差</option>
-						<option value="2">良</option>
-						<option value="3">优</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-md-12 pd10">
-				<div class="col-md-9">
-					活动评价：
-					<input class="easyui-textbox" id="judge" name="judge" data-options="multiline:true" style="width:300px;height:100px">
-				</div>
-			</div>
-		</form>
-		<div id="btns" style="display: none;">
-			<center><a href="#" class="btn btn-success" onclick="judgeSubmit()">提交</a>
-			<a href="#" class="btn btn-warning" onclick="closeFormPanel('judgeForm')">取消</a></center>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
-	<script type="text/javascript" src="<%=basePath%>/js/activity/activityHm.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/activity/hmSignAuditout.js"></script>
 </body>
 </html>

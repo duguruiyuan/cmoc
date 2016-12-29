@@ -280,7 +280,9 @@ function takeList(hmId){
 					+"<th style='text-align: center;'>活动时间</th>"
 					+"<th style='text-align: center;'>活动类型</th>"
 					+"<th style='text-align: center;'>图片数</th>"
-					+"<th style='text-align: center;'>视频数</th>"	
+					+"<th style='text-align: center;'>视频数</th>"
+					+"<th style='text-align: center;'>活动表现</th>"	
+					+"<th style='text-align: center;'>活动评价</th>"	
 				+"</tr></thead><tbody>";
 	$.ajax({
 		url : basePath + "/hm/json/takeList",
@@ -321,6 +323,8 @@ function buildAssetData(obj){
 			+"<td remark='活动类型' style='text-align: center;'>"+dictDataFormat('activity_type', v.activityType)+"</td>"
 			+"<td remark='图片数' style='text-align: center;'>"+Number((v.imageNum == null || v.imageNum == "") ? 0 : v.imageNum)+"</td>"
 			+"<td remark='视频数' style='text-align: center;'>"+Number((v.videoNum == null || v.videoNum == "") ? 0 : v.videoNum)+"</td>"
+			+"<td remark='活动表现' style='text-align: center;'>"+showedFormat(v.showed)+"</td>"
+			+"<td remark='活动评价' style='text-align: center;'>"+getNullString(v.judge)+"</td>"
 		+"</tr>";
 	});	
 	return dataHtml;

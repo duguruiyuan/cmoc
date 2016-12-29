@@ -49,21 +49,15 @@
 						<div class="code-pic">\
 							<img src="' + $(this).attr("qrcode-url") + '">\
 						</div>\
-						<div class="code-btn">确定</div>\
+						<div class="code-btn" onclick="closeCode()">确定</div>\
 					</div>\
 				</div>';
 				$("body").append(str);
 			});
-			
-			$("body").on("click", ".code-btn", function(){
-				alert('aaaa');
-				$(".code").remove();
-			})
-			$(".code-btn").click(function(){
-				alert('aaaa');
-				$(".code").remove();
-			})
 		})
+		function closeCode() {
+			$(".code").remove();
+		}
 	</script>
 </body>
 </html>

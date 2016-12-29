@@ -5,7 +5,8 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
-%>  
+%> 
+<title>陶学趣后台运营中心</title>
 <div id="top" class="clearfix">
 	<a href="<%=basePath %>/auth/main"><img class="logoIns" /></a>
 	<div class="header-right">

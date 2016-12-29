@@ -196,6 +196,14 @@ function diseaseFormat(v) {
 	return "";
 }
 
+function showedFormat(v) {
+	if(v == null) return "";
+	if(v == 1) return "差";
+	if(v == 2) return "良";
+	if(v == 3) return "优";
+	return "";
+}
+
 function signResourceFormat(v) {
 	if(v == 'ONLINE') return "线上报名";
 	if(v == 'SCHOOL') return "学校报名";
