@@ -58,10 +58,8 @@ public class LiveCenterController extends BaseController{
 		page.setPageSize(vo.getRows());
 		page.setParams(vo);
 		List<ActivityInfo> list = activityService.selectListByParam(page);
-		Grid grid = new Grid();
-		grid.setRows(list);
-		grid.setTotal(page.getTotalRecord());
-		return grid;
+		page.setResults(list);
+		return page;
 	}
 	
 	@RequestMapping("marine/list/{activityId}")

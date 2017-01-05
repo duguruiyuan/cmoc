@@ -18,19 +18,28 @@
 		<header class="mui-bar mui-bar-nav">
 		    <ul>
 		    	<li id="selectYear">
-		    		<span>选择年份 <i class="mui-icon mui-icon-arrowdown" style="color: #000;"></i></span>
+		    		<span><label id="yearText">选择年份 </label><i class="mui-icon mui-icon-arrowdown" style="color: #000;"></i></span>
+		    		<input type="hidden" id="year" />
 		    	</li>
 		    	<li id="selectMonth">
-		    		<span>选择月份 <i class="mui-icon mui-icon-arrowdown" style="color: #000;"></i></span>
+		    		<span><label id="monthText">选择月份 </label><i class="mui-icon mui-icon-arrowdown" style="color: #000;"></i></span>
+		    		<input type="hidden" id="month" />
 		    	</li>
 		    </ul>
 		</header>
+		<input type="hidden" id="pageNo" value="0">
 		<div class="mui-content">
+			<div id="live-list">
+			
+			</div>
+			<div class="loader" style="padding: 20px 0px;">
+	 			<p>玩命加载中<span></span><span></span><span></span></p>
+	 		</div>
 		</div>
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<script id="table-template" type="text/x-handlebars-template">
-				{{#if rows}}
- 				  {{#each rows}}
+				{{#if results}}
+ 				  {{#each results}}
 				  <div class="mui-card" style="width: 96%">
 					<a href="<%=basePath %>/live/marine/list/{{id}}">
 						<div class="mui-card-content">
@@ -46,24 +55,41 @@
 				  </div>
                   {{/each}}
 				{{else}}
-					<div style="text-align: center;padding-top: 20px;">亲，暂无数据哦</div>
+					<div style="text-align: center;padding-top: 55px;">亲，暂无数据哦</div>
 				{{/if}}
 		  </script>
 		<script type="text/javascript">
 			$(function(){
+				var picListWrap = $(".mui-content");
+				var picListTop = $("#live-list").offset().top;
+				var picList = picListWrap.find(".mui-card");
+				var picHeight = picList.width();
+				picList.css({height:picHeight});
+				
 				initData();
+				$(window).scroll(function(){
+				  var listObj = $(".mui-content");
+				  if(listObj.hasClass("list-null")>0){
+						return false;
+				  }
+				  if ($(window).scrollTop() + $(window).height() + 10 >= $(document).height() && $(window).scrollTop() > 20) {
+					  initData();
+	              }
+	            }).trigger("scroll");
+				
 				var yearPicker = new mui.PopPicker();
 				var monthPicker = new mui.PopPicker();
 				
-				var yearList = [{
-					value: '2015',
-					text: '2015'
-				}, {
-					value: '2016',
-					text: '2016'
-				}];
+				var yearList = [{value: "", text: "全部"}];
+				var year = parseInt(new Date().getFullYear());
+				for(var i = 0; i < (year - 2015); i++) {
+					yearList.push({value: year - i, text: year - i});
+				}
 				
 				var monthList = [{
+					value: '',
+					text: '全部'
+				}, {
 					value: '1',
 					text: '1'
 				}, {
@@ -108,8 +134,15 @@
 					var flag = false;
 					yearPicker.show(function(items) {
 						if(!flag){
+							var params = {
+						    	page: 1,
+						    	year: items[0].value,
+						    	month: $("#month").val()
+						    }
+							$("#yearText").html(items[0].text);
+							$("#year").val(items[0].value);
+							loadItem(params, true);
 							flag = true;
-							console.log(JSON.stringify(items[0]));
 						}
 					});
 				})
@@ -119,7 +152,14 @@
 					monthPicker.show(function(items) {
 						if(!flag){
 							flag = true;
-							console.log(JSON.stringify(items[0]));
+							var params = {
+						    	page: 1,
+						    	month: items[0].value,
+						    	year: $("#year").val()
+						    }
+							$("#monthText").html(items[0].text);
+							$("#month").val(items[0].value);
+							loadItem(params, true);
 						}
 					});
 				})
@@ -127,11 +167,26 @@
 			});
 			
 			function initData() {
+				var pageNo = parseInt($("#pageNo").val()) + 1;
+				var params = {
+			    	page: pageNo
+			    }
+				loadItem(params);
+			}
+			
+			function loadItem(params, reload) {
+				var listObj = $(".mui-content");
+				params.year = $("#year").val();
+				params.month = $("#month").val();
 				$.ajax({
 				    type: 'post',
 				    url: '<%=basePath %>/live/json/activity/query',
-				    data: {},
+				    data: params,
 				    dataType: 'json',
+				    cache:false,
+                    beforeSend:function(){
+                    	listObj.find(".loader").show().html('<p>玩命加载中<span></span><span></span><span></span></p>');
+                    },
 				    success: function(data) {
 				    	var myTemplate = Handlebars.compile($("#table-template").html());
 				    	
@@ -153,9 +208,31 @@
 				        		return "<%=basePath %>/images/slider1.jpg";
 				        	}
 				        });
-				        
-				        $('.mui-content').html(myTemplate(data));
-				    }
+				        if(reload) {
+				        	$('#live-list').html(myTemplate(data));
+				        	if(params.page == data.totalPage) {
+				        		listObj.addClass("list-null").find(".loader").html('<p>以上是全部活动了~</p>');
+				        	}
+				        }else {
+				        	if(data.results && data.results.length > 0) {
+					        	$("#pageNo").val(params.page);
+					        	$('#live-list').append(myTemplate(data));
+					        	if(params.page == data.totalPage) {
+					        		listObj.addClass("list-null").find(".loader").html('<p>以上是全部活动了~</p>');
+					        	}
+					        }else {
+		                    	listObj.addClass("list-null").find(".loader").html('<p>以上是全部活动了~</p>');
+					        }
+				        }
+				    },
+				    error:function(){
+                    	alert("系统异常，请稍后再试！");
+                    },
+				    complete:function(){
+                    	if(!listObj.hasClass("list-null")){
+                    		listObj.find(".loader").hide();
+                    	}
+                    }
 				});
 			}
 		</script>

@@ -184,6 +184,12 @@ function sexFormat(v) {
 	return "";
 }
 
+function sex1Format(v) {
+	if(v == 'F') return "男";
+	if(v == 'M') return "女";
+	return "";
+}
+
 function diseaseFormat(v) {
 	if(v == 'N') return "无";
 	if(v == 'Y') return "有";
