@@ -236,7 +236,7 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isEffect != null" >
-         #{is_effect,jdbcType=INTEGER},
+         #{isEffect,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},

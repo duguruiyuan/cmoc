@@ -70,17 +70,16 @@ public class ActivityNamelistVO implements Serializable{
 		this.childIdcard = childIdcard;
 	}
 	public String getChildSex() {
-		if(StringUtils.isNotBlank(childSex)) {
-			if("男".equals(childSex)) {
-				return "F";
-			}else{
-				return "M";
-			}
-		}
-		return null;
+		return childSex;
 	}
 	public void setChildSex(String childSex) {
-		this.childSex = childSex;
+		if(StringUtils.isNotBlank(childSex)) {
+			if("男".equals(childSex)) {
+				this.childSex = "F";
+			}else{
+				this.childSex = "M";
+			}
+		}
 	}
 	public Integer getChildAge() {
 		return childAge;

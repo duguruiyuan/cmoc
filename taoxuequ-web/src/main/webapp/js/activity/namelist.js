@@ -85,6 +85,19 @@ function loadData() {
 			align : "center",
 			resizable : true
 		}, {
+			field : 'childAge',
+			title : '小孩年龄',
+			align : "center",
+			resizable : true
+		}, {
+			field : 'childSex',
+			title : '小孩性别',
+			align : "center",
+			resizable : true,
+			formatter : function(v) {
+				return sexFormat(v);
+			}
+		}, {
 			field : 'childTitle',
 			title : '小孩头衔',
 			align : "center",
