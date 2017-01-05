@@ -6,6 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>  
+<title>陶学趣后台管理中心</title>
 <div id="top" class="clearfix">
 	<a href="<%=basePath %>/auth/main"><img class="logoIns" /></a>
 	<div class="header-right">
@@ -29,7 +30,7 @@
 				<tbody>
 					<tr>
 						<td>登录账号：</td>
-						<td><input class="form-control" name="userAccount" id="userAccount" value="${appUser.userAccount }"/> <span id="userAccountTip"></span>
+						<td><input class="form-control" name="userAccount" id="userAccount" readonly="readonly" value="${appUser.userAccount }"/> <span id="userAccountTip"></span>
 						</td>
 					</tr>
 					<tr>
@@ -45,7 +46,7 @@
 					<tr>
 						<td colspan="2" class="text-center">
 							<button type="submit" class="btn btn-success">保存</button>
-							<button class="btn btn-info" type="button" onclick="closeFormPanel('updatePwdForm')">取消</button></td>
+							<button class="btn btn-info" type="button" onclick="pwdCloseFormPanel('updatePwdForm')">取消</button></td>
 					</tr>
 				</tbody>
 			</table>

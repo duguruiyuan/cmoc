@@ -36,7 +36,7 @@ public final class AuthConstant {
     
     public static final String NO_AUTHORITY_MESSAGE = "您无登录本系统的权限，请直接联系管理员!";
     
-    public static final String USER_PASSWORD_NOT_MATCH_MESSAGE = "您输入的用户名和密码不匹配，请重新重试!";
+    public static final String USER_PASSWORD_NOT_MATCH_MESSAGE = "您输入的用户名或密码不正确，请重试!";
     
     public static final String ROOT_AUTHORITY = "0";
     
