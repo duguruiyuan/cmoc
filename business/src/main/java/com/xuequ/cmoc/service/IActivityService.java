@@ -50,7 +50,7 @@ public interface IActivityService {
 	 */
 	public List<ActivityInfo> selectListByParam(Page<ActivityInfo> page);
 	/**
-	 * 查询排期的获取
+	 * 查询排期的活动
 	 * @auther 胡启萌
 	 * @Date 2016年12月4日
 	 * @param info

@@ -205,7 +205,7 @@
   </select>
   
   <select id="selectForMessage" resultMap="PageBaseResultMap">
-	SELECT DISTINCT hs.id, hs.activity_id, hs.marine_id, hs.hm_id, hm.hm_name, am.marine_name, ai.activity_name 
+	SELECT hs.id, hs.activity_id, hs.marine_id, hs.hm_id, hm.hm_name, am.marine_name, ai.activity_name 
 	FROM t_activity_hm_sign hs 
 	INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id` 
 	INNER JOIN t_activity_marines am ON am.`id` = hs.`marine_id`

@@ -68,7 +68,7 @@ public class WechatHander {
         else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
         	insertWechatReceiveMessage(outputMsg, inputMsg);
         }// 视频消息
-		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_SHORTVIDEO)) {
+		else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_SHORTVIDEO) || msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
 			insertWechatReceiveMessage(outputMsg, inputMsg);
 		}
 		else if(msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {// 语音消息
@@ -136,6 +136,7 @@ public class WechatHander {
     						WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType)) {
     					String picUrl = FileUtil.downloadWechatFile(path, message, true);
     					message.setPicUrl(picUrl);
+    					message.setMsgType(WechatReqMsgType.SHORTVIDEO.getCode());
     				}
     			}
     			message.setHmSignId(hmSign.getId());
@@ -178,7 +179,7 @@ public class WechatHander {
 				outputMsg.setArticles(newsList);
 			}
 		}else {
-			outputMsg.setContent("欢迎光临逃学趣");
+			outputMsg.setContent("欢迎光临陶学趣");
 	        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 		}
 	}

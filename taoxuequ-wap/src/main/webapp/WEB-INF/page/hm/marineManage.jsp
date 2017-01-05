@@ -51,10 +51,10 @@
 				    	<div class="ranksManager-name">${item.childName }</div>
 				    	<c:choose>
 				    		<c:when test="${item.childTitle == null }">
-				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-type="MEMBER">未设置</div>
+				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-name="${item.childName }" ed-type="MEMBER">未设置</div>
 				    		</c:when>
 				    		<c:otherwise>
-				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-type="MEMBER">编辑</div>
+				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-name="${item.childName }" ed-type="MEMBER">编辑</div>
 				    		</c:otherwise>
 				    	</c:choose>
 			    	</a>
@@ -135,7 +135,8 @@
 				var thiz = $(this);
 				var id = thiz.attr("id");
 				var type = thiz.attr("ed-type");
-				marineEditQuery(id, type);
+				var childName = thiz.attr("ed-name");
+				marineEditQuery(id, childName, type);
 			})
 			
 			$("#member-btn").click(function(){
@@ -253,7 +254,7 @@
        		}
 		 });
 	   }
-	   function marineEditQuery(id, type) {
+	   function marineEditQuery(id, childName, type) {
 		   $.ajax({
 		 		url : "<%=basePath%>/hm/marine/edit/query",
 		 		type : "post",
@@ -279,7 +280,7 @@
 		 					$("#memberEdit").attr("style", "display:block");
 		 					$("#memberForm #id").val(obj.id);
 		 					$("#memberForm #type").val(type);
-		 					$("#memberForm #childName").val(obj.childName);
+		 					$("#memberForm #childName").val(childName);
 		 					$("#memberForm #childTitle").val(obj.childTitle);
 		 					$("#memberForm #childComment").val(obj.childComment);
 		 				}

@@ -59,9 +59,10 @@
 	INNER JOIN t_activity_marines am ON am.`id` = hs.`marine_id`
 	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id` 
 	WHERE hs.`is_delete`='N' AND hs.is_effect = 1 
-	AND DATE_ADD(NOW(), INTERVAL 10 HOUR) BETWEEN ai.`start_date` AND ai.`end_date`
+	AND NOW() <![CDATA[ < ]]> ai.`end_date`
 	AND hm.`openid` = #{openid,jdbcType=VARCHAR}
 	ORDER BY ai.`start_date`
+	limit 1
   </select>
   
   <select id="selectMarineTeam" resultMap="PageBaseResultMap">

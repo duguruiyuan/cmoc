@@ -232,12 +232,14 @@
 								<img style="width: 50%;float:left;padding: 10px 0px 10px 20px;" src="' + $("#supportQrcodeUrl").val()+ '">\
 							</div>\
 							<div class="qr-desc">[陶学趣]长按二维码支持我们小战队</div>\
-							<div class="code-btn">确定</div>\
+							<div class="code-btn" onclick="closeCode()">确定</div>\
 						</div>\
 					</div>';
 					$("body").append(str);
 				});
-				
+				function closeCode() {
+					$(".code").remove();
+				}
 				$("body").on("click", ".code-btn", function(){
 					$(".code").remove();
 				})
@@ -293,12 +295,12 @@
                     		for(var i = 0,len = data.results.length;i < len;i++){
                     			if(params.msgType == 'image') {
                     				str += ' <li>\
-	                    				<img src="'+data.results[i].sysUrl+'"/>\
+	                    				<img src="'+imgUrl+data.results[i].sysUrl+'"/>\
 	                    			</li> ';
                     			}else if(params.msgType == 'shortvideo') {
-                    				str += '<li><video poster="' + data.results[i].picUrl + '" controls="controls" preload="none">'+
-                					'<source src="' + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
-                					'<source src="' + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
+                    				str += '<li><video poster="' + imgUrl + data.results[i].picUrl + '" controls="controls" preload="none">'+
+                					'<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
+                					'<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
                 					'</video></li>';
                     			}
                     		}
@@ -361,12 +363,9 @@
 			}
 			function submitComment() {
 				var params = {
-	                	  marineId: $("#marineId").val(),
-	                	  comment: $("#comment").val(),
-	                	  openid: '${snsToken.openid}',
-	                	  nikeName: '${snsToken.nikeName}',
-	                	  headUrl: '${snsToken.headimgurl}'
-	                  };
+                	  marineId: $("#marineId").val(),
+                	  comment: $("#comment").val()
+                  };
 				$.ajax({
                   type:"POST",
                   url:'<%=basePath%>/live/marine/comment',
@@ -377,7 +376,7 @@
                 	  if(data.code == '000') {
                 		  $("#comment").blur();
                     	  var html = "";
-                    	  html+= '<div class="pms_box"><div class="headlog"><img src="${snsToken.headimgurl}">' + 
+                    	  html+= '<div class="pms_box"><div class="headlog"><img src="'+ data.data +'">' + 
     							'</div><div class="pmstext">' + params.comment + '</div></div>';
                     	  $("#pmsComment").before(html);
                     	  $("#comment").val(null);

@@ -109,8 +109,12 @@ public class LiveCenterController extends BaseController{
 	@RequestMapping("marine/comment")
 	public @ResponseBody Object marineComment(MarineComment comment) {
 		try {
+			WechatUserInfo userInfo = getWechatUserInfo();
+      		comment.setHeadUrl(userInfo.getHeadimgurl());
+			comment.setNikeName(userInfo.getNickname());
+			comment.setOpenid(userInfo.getOpenid());
 			marineCommentService.insertMarineComment(comment);
-			return new RspResult(StatusEnum.SUCCESS);
+			return new RspResult(StatusEnum.SUCCESS, userInfo.getHeadimgurl());
 		} catch (Exception e) {
 			logger.error("--marineComment, error={}", e);
 		}
@@ -122,7 +126,7 @@ public class LiveCenterController extends BaseController{
 		try {
 			Page<MarineComment> page = new Page<MarineComment>();
 			page.setPageNo(vo.getPage());
-			page.setPageSize(3);
+			page.setPageSize(vo.getRows());
 			page.setParams(vo);
 			List<MarineComment> list = marineCommentService.selectListByPage(page);
 			page.setResults(list);
