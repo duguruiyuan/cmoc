@@ -23,7 +23,7 @@ public class ActivityHmSign implements Serializable {
 
     private BigDecimal score;
     
-    private Integer showed;
+    private Integer showed; 
     
     private String judge;
 
