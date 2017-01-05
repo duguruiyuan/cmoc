@@ -37,7 +37,11 @@
 	                     	<i class="fa fa-hand-rock-o" style="color: #C3822C"></i> 申请带队
 	                </a>
 	            </li>
-	            
+	            <li class="mui-table-view-cell">
+	                <a class="mui-navigate-right" href="<%=basePath%>/live">
+	                     	<i class="fa fa-video-camera" style="color: #2CC33F"></i> 直播中心
+	                </a>
+	            </li>
 	        </ul>
 		</div>
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />

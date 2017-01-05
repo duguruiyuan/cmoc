@@ -50,6 +50,31 @@
 			</div>
 		</div>
 	</div>
+	<div id="judgeDiolog" style="display: none;">
+		<form id="judgeForm">
+			<input type="hidden" id="id" name="id"/>
+			<div class="col-md-12 pt10">
+				<div class="col-md-9">
+					活动表现：
+					<select class="form-control1" id="showed" name="showed">
+						<option value="1">差</option>
+						<option value="2">良</option>
+						<option value="3">优</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-12 pd10">
+				<div class="col-md-9">
+					活动评价：
+					<input class="easyui-textbox" id="judge" name="judge" data-options="multiline:true" style="width:300px;height:100px">
+				</div>
+			</div>
+		</form>
+		<div id="btns" style="display: none;">
+			<center><a href="#" class="btn btn-success" onclick="judgeSubmit()">提交</a>
+			<a href="#" class="btn btn-warning" onclick="closeFormPanel('judgeForm')">取消</a></center>
+		</div>
+	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/activity/activityHm.js"></script>
 </body>

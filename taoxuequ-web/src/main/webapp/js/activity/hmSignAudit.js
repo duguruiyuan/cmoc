@@ -94,6 +94,22 @@ function loadData() {
 			align : "center",
 			resizable : true
 		}, {
+			field : 'activityType',
+			title : '活动类型',
+			align : "center",
+			resizable : true,
+			formatter: function(v) {
+				return dictDataFormat('activity_type',v);
+			}
+		}, {
+			field : 'startDate',
+			title : '活动开始时间',
+			align : "center",
+			resizable : true,
+			formatter: function(v) {
+				return getTime(v, "yyyy-MM-dd hh:mm");
+			}
+		}, {
 			field : 'takeNum',
 			title : '带队次数',
 			align : "center",
@@ -143,7 +159,7 @@ function loadData() {
 			resizable : true
 		}, {
 			field : 'signDate',
-			title : '申请时间',
+			title : '报名时间',
 			align : "center",
 			resizable : true,
 			formatter : function(value) {

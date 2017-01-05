@@ -19,6 +19,12 @@ public interface IHollowManService {
 	 */
 	List<HollowManInfoView> selectByPage(Page<HollowManInfoView> page);
 	/**
+	 * 分页查询注册审核不通过透明人
+	 * @param page
+	 * @return
+	 */
+	List<HollowManInfo> selectRegAuditOutByPage(Page<HollowManInfo> page);
+	/**
 	 * 根据openid查询透明人信息
 	 * @auther 胡启萌
 	 * @Date 2016年12月3日

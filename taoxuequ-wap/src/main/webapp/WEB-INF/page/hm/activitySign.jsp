@@ -28,7 +28,7 @@
 	    	</c:if>
 	    	<c:forEach var="item" items="${activitys }">
 	    		<li class="mui-table-view-cell">
-				    <a class="mui-navigate-right" qrcode-url="${item.bindQrcodeUrl }" >
+				    <a class="mui-navigate-right" qrcode-url="${item.qrcodeUrl }" >
 				    	<div class="ranksList-content">
 				    		<span>${item.activityName }</span>
 				    		&nbsp;<span><fmt:formatDate value='${item.startDate}' pattern='yyyy/MM/dd' /> </span>&nbsp;
@@ -49,16 +49,15 @@
 						<div class="code-pic">\
 							<img src="' + $(this).attr("qrcode-url") + '">\
 						</div>\
-						<div class="code-btn">确定</div>\
+						<div class="code-btn" onclick="closeCode()">确定</div>\
 					</div>\
 				</div>';
 				$("body").append(str);
 			});
-			
-			$("body").on("click", ".code-btn", function(){
-				$(".code").remove();
-			})
 		})
+		function closeCode() {
+			$(".code").remove();
+		}
 	</script>
 </body>
 </html>

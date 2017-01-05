@@ -377,7 +377,7 @@
       activity_type = #{activityType,jdbcType=VARCHAR},
       year = #{year,jdbcType=INTEGER},
       month = #{month,jdbcType=INTEGER},
-      product_id = #{month,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

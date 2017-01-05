@@ -82,10 +82,8 @@
 					</form>
 				</div>
 				<div class="col-md-6">
-					<label for="activityName">课程详情</label>		
-	   				<script id="editor" type="text/plain" style="width: 414px;height: 500px;">
-					
-					</script>
+					<label for="activityName">课程详情</label>	
+				    <script type="text/plain" id="editor" style="width:414px;height:500px;"></script>
 				</div>
 			</div>
 		</div>

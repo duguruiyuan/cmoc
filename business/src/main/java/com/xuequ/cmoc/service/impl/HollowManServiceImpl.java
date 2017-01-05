@@ -82,4 +82,9 @@ public class HollowManServiceImpl implements IHollowManService {
 		return hollowManInfoMapper.selectHmTakeListByPage(page);
 	}
 
+	@Override
+	public List<HollowManInfo> selectRegAuditOutByPage(Page<HollowManInfo> page) {
+		return hollowManInfoMapper.selectRegAuditOutByPage(page);
+	}
+
 }

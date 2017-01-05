@@ -22,7 +22,9 @@ public class ActivityHmSign implements Serializable {
     private String effectDate;
 
     private BigDecimal score;
-
+    
+    private Integer showed; 
+    
     private String judge;
 
     private Integer createrUserId;
@@ -122,7 +124,15 @@ public class ActivityHmSign implements Serializable {
         this.score = score;
     }
 
-    public String getJudge() {
+    public Integer getShowed() {
+		return showed;
+	}
+
+	public void setShowed(Integer showed) {
+		this.showed = showed;
+	}
+
+	public String getJudge() {
         return judge;
     }
 

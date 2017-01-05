@@ -38,6 +38,25 @@
     from t_hollow_man_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectRegAuditOutByPage" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_hollow_man_info
+    where is_delete = 'Y'
+    <if test="params.hmName != null">
+		and hm_name = #{params.hmName,jdbcType=VARCHAR}
+	</if>
+	<if test="params.hmMobile != null">
+		and hm_mobile = #{params.hmMobile,jdbcType=VARCHAR}
+	</if>
+	<if test="params.idCard != null">
+		and id_card = #{params.idCard,jdbcType=VARCHAR}
+	</if>
+	<if test="params.sex != null">
+		and sex = #{params.sex,jdbcType=VARCHAR}
+	</if>
+    order by create_time desc
+  </select>
   <select id="selectListByIds" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
@@ -126,10 +145,12 @@
     <result column="activity_type" jdbcType="VARCHAR" property="activityType" />
     <result column="image_num" jdbcType="INTEGER" property="imageNum" />
     <result column="video_num" jdbcType="INTEGER" property="videoNum" />
+    <result column="showed" jdbcType="INTEGER" property="showed" />
+    <result column="judge" jdbcType="VARCHAR" property="judge" />
   </resultMap>
   <select id="selectHmTakeListByHmId" resultMap="TakeBaseResult">
   	 SELECT hs.`hm_id`, hm.hm_name, hm.hm_mobile,ai.`activity_name`,ai.`activity_num`,ai.`start_date`,
-		ai.`activity_type`, ai.id activity_id, nu.image_num, nu2.video_num
+		ai.`activity_type`, ai.id activity_id, nu.image_num, nu2.video_num, hs.showed, hs.judge
 	 FROM t_activity_hm_sign hs
 	 INNER JOIN t_activity_info ai ON hs.`activity_id` = ai.`id`
 	 INNER JOIN t_hollow_man_info hm ON hs.`hm_id` = hm.id

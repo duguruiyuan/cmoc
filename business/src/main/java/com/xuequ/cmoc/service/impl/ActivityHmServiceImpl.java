@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
@@ -52,7 +53,7 @@ public class ActivityHmServiceImpl implements IActivityHmService {
 		if(count > 0) {
 			return new RspResult(StatusEnum.ALREADY_SIGN_ACTIVITY);
 		}
-		ActivityHmSign hmSign = BeanUtils.copyAs(manInfo, ActivityHmSign.class);
+		ActivityHmSign hmSign = new ActivityHmSign();
 		hmSign.setCreater(Const.SYS_USER);
 		hmSign.setCreateTime(new Date());
 		hmSign.setActivityId(activityId);
@@ -78,6 +79,16 @@ public class ActivityHmServiceImpl implements IActivityHmService {
 	@Override
 	public List<ActivityHmSignView> selectListByIds(List<Integer> ids) {
 		return activityHmSignMapper.selectListByIds(ids);
+	}
+
+	@Override
+	public List<ActivityHmSignView> selectHmSignAuditoutByPage(Page<ActivityHmSignView> page) {
+		return activityHmSignMapper.selectHmSignAuditoutByPage(page);
+	}
+
+	@Override
+	public int updateHmSignById(ActivityHmSign hmSign) {
+		return activityHmSignMapper.updateByPrimaryKeySelective(hmSign);
 	}
 
 }

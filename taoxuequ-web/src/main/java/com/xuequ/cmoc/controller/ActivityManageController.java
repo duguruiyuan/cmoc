@@ -27,6 +27,7 @@ import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityChild;
+import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.CourseInfo;
@@ -42,6 +43,7 @@ import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IActivityTeacherService;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IHollowManService;
+import com.xuequ.cmoc.thread.WechatMsgCallback;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
@@ -116,6 +118,11 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("hmsign/audit")
 	public String hmSignAudit() {
 		return "activity/hmSignAudit";
+	}
+	
+	@RequestMapping("hmsign/auditout")
+	public String hmsignAuditout() {
+		return "activity/hmSignAuditout";
 	}
 	
 	@RequestMapping("teacher")
@@ -290,8 +297,6 @@ public class ActivityManageController extends BaseController{
 		return new RspResult(StatusEnum.FAIL);
 	}
 	
-	
-	
 	@RequestMapping("/json/hm/query")
 	public @ResponseBody Object activityHmQuery(ActivityQueryVO vo) {
 		Page<ActivityHmSignView> page = new Page<ActivityHmSignView>();
@@ -320,6 +325,19 @@ public class ActivityManageController extends BaseController{
 		page.setPageNo(vo.getPage());
 		page.setPageSize(vo.getRows());
 		List<ActivityHmSignView> list = activityHmService.selectHmSignForAudit(page);
+		grid.setRows(list);
+		grid.setTotal(page.getTotalRecord());
+		return grid;
+	}
+	
+	@RequestMapping("/json/hmSignAuditout/query")
+	public @ResponseBody Object hmSignAuditoutQuery(ActivityQueryVO vo) {
+		Page<ActivityHmSignView> page = new Page<ActivityHmSignView>();
+		Grid grid = new Grid();
+		page.setParams(vo);
+		page.setPageNo(vo.getPage());
+		page.setPageSize(vo.getRows());
+		List<ActivityHmSignView> list = activityHmService.selectHmSignAuditoutByPage(page);
 		grid.setRows(list);
 		grid.setTotal(page.getTotalRecord());
 		return grid;
@@ -358,9 +376,10 @@ public class ActivityManageController extends BaseController{
 				AuditReqVO vo = new AuditReqVO();
 				vo.setIds(str);
 				vo.setStatus(isEffect);
-				HttpClientUtils.postJson(PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_hmSignMsg"), vo);
-				return new RspResult(StatusEnum.SUCCESS);
+				new WechatMsgCallback(PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_hmSignMsg"), 
+						vo).execute();
 			}
+			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("--auditHm, error={}", e);
 		}
@@ -383,6 +402,17 @@ public class ActivityManageController extends BaseController{
 			logger.error("--hmResourceTotal, error={}", e);
 		}
 		return null;
+	}
+	
+	@RequestMapping("json/hmSign/judge")
+	@ResponseBody Object hmSignJudge(ActivityHmSign hmSign) {
+		try {
+			activityHmService.updateHmSignById(hmSign);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--hmSignJudge, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 }

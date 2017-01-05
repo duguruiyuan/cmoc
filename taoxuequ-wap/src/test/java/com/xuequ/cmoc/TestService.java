@@ -11,22 +11,23 @@ import com.xuequ.cmoc.core.wechat.template.Data_Time;
 import com.xuequ.cmoc.core.wechat.template.OutputTemateData;
 import com.xuequ.cmoc.core.wechat.template.TemplateDate;
 import com.xuequ.cmoc.utils.HttpClientUtils;
+import com.xuequ.cmoc.utils.MD5Util;
 import com.xuequ.cmoc.utils.TextUtil;
 
 public class TestService {
 
 	public static void main(String[] args) {
-		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), "GMs0UihDEQIs9zMZ2JR3OvTdg-pJ_yzdQkCRN7TfYtYTiAaABJa2LGppaKzWej5XHBj9BDhRIl-C4S8rYr7Ce7fhTyoILd_KjtvFv4VOXHN86VkIwA1E-tXmXkOC_mmKBAHcABAGFM");
-//		OutputTemateData outputData = regMsg();
-		OutputTemateData outputData = sign();
-		try {
-			String json = JSONObject.toJSONString(outputData);
-			json = json.replace("clazz", "class");
-			String result = HttpClientUtils.postStringJosn(url, json);
-			System.out.println(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), "GMs0UihDEQIs9zMZ2JR3OvTdg-pJ_yzdQkCRN7TfYtYTiAaABJa2LGppaKzWej5XHBj9BDhRIl-C4S8rYr7Ce7fhTyoILd_KjtvFv4VOXHN86VkIwA1E-tXmXkOC_mmKBAHcABAGFM");
+////		OutputTemateData outputData = regMsg();
+//		OutputTemateData outputData = sign();
+//		try {
+//			String json = JSONObject.toJSONString(outputData);
+//			json = json.replace("clazz", "class");
+//			String result = HttpClientUtils.postStringJosn(url, json);
+//			System.out.println(result);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public static OutputTemateData sign() {

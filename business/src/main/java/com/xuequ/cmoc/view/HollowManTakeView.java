@@ -26,6 +26,10 @@ public class HollowManTakeView implements Serializable {
 	private Integer imageNum;
 	
 	private Integer videoNum;
+	
+	private Integer showed;
+	
+	private String judge;
 
 	public Integer getHmId() {
 		return hmId;
@@ -107,6 +111,20 @@ public class HollowManTakeView implements Serializable {
 		this.videoNum = videoNum;
 	}
 
-    
+	public Integer getShowed() {
+		return showed;
+	}
+
+	public void setShowed(Integer showed) {
+		this.showed = showed;
+	}
+
+	public String getJudge() {
+		return judge;
+	}
+
+	public void setJudge(String judge) {
+		this.judge = judge;
+	}
     
 }

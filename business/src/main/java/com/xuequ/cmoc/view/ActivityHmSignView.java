@@ -44,6 +44,14 @@ public class ActivityHmSignView extends ActivityHmSign {
 	
 	private String openid;
 	
+	private String idCard;
+	
+	private String reason;
+	
+	private Integer showed;
+	
+	private String judge;
+	
 	public String getActivityName() {
 		return activityName;
 	}
@@ -186,6 +194,38 @@ public class ActivityHmSignView extends ActivityHmSign {
 
 	public void setOpenid(String openid) {
 		this.openid = openid;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public Integer getShowed() {
+		return showed;
+	}
+
+	public void setShowed(Integer showed) {
+		this.showed = showed;
+	}
+
+	public String getJudge() {
+		return judge;
+	}
+
+	public void setJudge(String judge) {
+		this.judge = judge;
 	}
 	
 	

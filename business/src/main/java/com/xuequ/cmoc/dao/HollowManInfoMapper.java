@@ -27,6 +27,8 @@ public interface HollowManInfoMapper {
     
     List<HollowManInfoView> selectByPage(Page<HollowManInfoView> page);
     
+    List<HollowManInfo> selectRegAuditOutByPage(Page<HollowManInfo> page);
+    
     HollowManInfo selectByOpenid(String openid);
     
     int selectCountByOpenid(String openid);

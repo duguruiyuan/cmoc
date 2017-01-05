@@ -11,6 +11,7 @@
     <result column="is_effect" property="isEffect" jdbcType="INTEGER" />
     <result column="effect_date" property="effectDate" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="DECIMAL" />
+    <result column="showed" property="showed" jdbcType="INTEGER" />
     <result column="judge" property="judge" jdbcType="VARCHAR" />
     <result column="creater_user_id" property="createrUserId" jdbcType="INTEGER" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
@@ -22,7 +23,7 @@
     <result column="reason" property="reason" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, activity_id, line_id, marine_id, hm_id, sign_date, is_effect, effect_date, score, 
+    id, activity_id, line_id, marine_id, hm_id, sign_date, is_effect, effect_date, score, showed,
     judge, creater_user_id, creater, create_time, updater_user_id, updater, update_time, 
     is_delete,reason
   </sql>
@@ -35,7 +36,7 @@
   
   <select id="selectCountForSign" resultType="int">
   	select count(1) from t_activity_hm_sign
-  	where s_delete = 'N' and activity_id = #{activityId,jdbcType=INTEGER}
+  	where is_delete = 'N' and activity_id = #{activityId,jdbcType=INTEGER}
   	and hm_id = #{hmId,jdbcType=INTEGER}
   </select>
   
@@ -60,13 +61,59 @@
     <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="VARCHAR" />
     <result column="take_num" property="takeNum" jdbcType="INTEGER" />
+    <result column="id_card" property="idCard" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    
+    <result column="showed" jdbcType="INTEGER" property="showed" />
+    <result column="judge" jdbcType="VARCHAR" property="judge" />
   </resultMap>
+  
+  <select id="selectHmSignAuditoutByPage" resultMap="PageBaseResultMap">
+  	SELECT hs.id, hs.hm_id, hm_name, hm_mobile, place, sex, grade, schoole,
+    	id_card, level, h.score, IFNULL(take_num,0) take_num, hs.`is_effect`,
+    	hs.`effect_date`, hs.`create_time` sign_date, ai.activity_type,
+    	ai.`activity_name`,ai.start_date, ai.end_date, hs.`activity_id`,ai.`activity_num`, hs.reason
+    	FROM t_activity_hm_sign hs
+	INNER JOIN t_hollow_man_info h ON hs.`hm_id` = h.`id`
+	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id`
+	LEFT JOIN (
+	  SELECT COUNT(1) take_num, hm_id FROM t_activity_hm_sign 
+	  WHERE is_delete = 'N' AND is_effect=1 
+	  GROUP BY hm_id
+	)n ON n.hm_id = h.id
+	where hs.is_delete = 'Y'
+	<if test="params.activityId != null">
+    	and hs.activity_id = #{params.activityId,jdbcType=INTEGER}
+    </if>
+    <if test="params.activityType != null">
+    	and ai.activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+    <if test="params.activityName != null">
+    	and ai.activity_name like concat('%',#{params.activityName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="params.hmName != null">
+    	and h.hm_name = #{params.hmName,jdbcType=VARCHAR}
+    </if>
+    <if test="params.hmMobile != null">
+    	and h.hm_mobile = #{params.hmMobile,jdbcType=VARCHAR}
+    </if>
+    <if test="params.isEffect != null">
+    	and hs.is_effect = #{params.isEffect,jdbcType=INTEGER}
+    </if>
+    <if test="params.startDate != null">
+    	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') >= #{params.startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="params.endDate != null">
+    	and DATE_FORMAT(ai.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
+    </if>
+	ORDER BY hs.`create_time` desc
+  </select>
   
   <select id="selectHmSignForAudit" resultMap="PageBaseResultMap">
   	SELECT hs.id, hs.hm_id, hm_name, hm_mobile, place, sex, grade, schoole,
-    	level, h.score, IFNULL(take_num,0) take_num, hs.`is_effect`,
-    	hs.`effect_date`, hs.`create_time` sign_date,
-    	ai.`activity_name`,hs.`activity_id`,ai.`activity_num`
+    	id_card, level, h.score, IFNULL(take_num,0) take_num, hs.`is_effect`,
+    	hs.`effect_date`, hs.`create_time` sign_date, ai.activity_type,
+    	ai.`activity_name`,ai.start_date, ai.end_date, hs.`activity_id`,ai.`activity_num`
     	FROM t_activity_hm_sign hs
 	INNER JOIN t_hollow_man_info h ON hs.`hm_id` = h.`id`
 	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id`
@@ -106,12 +153,12 @@
   <select id="selectListByPage" resultMap="PageBaseResultMap">
   	SELECT s.id, s.activity_id, s.line_id, s.marine_id, s.hm_id, s.sign_date, s.is_effect, 
   	s.effect_date, s.score, s.judge, s.creater_user_id, s.creater, s.create_time, 
-  	m.marine_name, m.line_id, m.line_name, 
+  	m.marine_name, m.line_id, m.line_name, s.showed, s.judge, i.start_date, i.end_date, 
   	i.activity_name, i.activity_num, i.activity_type, h.hm_name, h.hm_mobile
 	FROM t_activity_hm_sign s
 	INNER JOIN t_hollow_man_info h ON h.id = s.hm_id
-	INNER JOIN t_activity_marines m ON s.marine_id = m.id
-	INNER JOIN t_activity_info i ON i.id = m.activity_id
+	INNER JOIN t_activity_info i ON i.id = s.activity_id
+	LEFT JOIN t_activity_marines m ON s.marine_id = m.id
 	where s.is_delete = 'N' and s.is_effect = 1
 	<if test="params.activityId != null">
     	and s.activity_id = #{params.activityId,jdbcType=INTEGER}
@@ -170,7 +217,7 @@
   
   <select id="selectListByIds" resultMap="PageBaseResultMap">
   	SELECT hs.activity_id, ai.activity_name, ai.activity_num, ai.activity_addr,
-  	ai.start_date, ai.end_date, hm.id hm_id, hm.hm_name, hm.hm_mobile, hm.openid
+  	ai.start_date, ai.end_date, hm.id hm_id, hm.hm_name, hm.hm_mobile, hm.openid,hs.reason
 	FROM t_activity_hm_sign hs 
 	INNER JOIN t_hollow_man_info hm ON hs.hm_id = hm.id 
 	INNER JOIN t_activity_info ai ON ai.id = hs.activity_id
@@ -190,7 +237,7 @@
   </update>
   
   <update id="updateAuditEffectHmSign">
-  	 update t_activity_hm_sign set is_effect = 1
+  	 update t_activity_hm_sign set is_effect = 1, effect_date = DATE_FORMAT(NOW(),'%Y%m%d')
   	 where id in
   	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
   	 	#{item}
@@ -253,6 +300,9 @@
       <if test="score != null" >
         score,
       </if>
+      <if test="showed != null" >
+        showed,
+      </if>
       <if test="judge != null" >
         judge,
       </if>
@@ -308,6 +358,9 @@
       </if>
       <if test="score != null" >
         #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="showed != null" >
+        #{showed,jdbcType=INTEGER},
       </if>
       <if test="judge != null" >
         #{judge,jdbcType=VARCHAR},
@@ -365,6 +418,9 @@
       <if test="score != null" >
         score = #{score,jdbcType=DECIMAL},
       </if>
+      <if test="showed != null" >
+        showed = #{showed,jdbcType=INTEGER},
+      </if>
       <if test="judge != null" >
         judge = #{judge,jdbcType=VARCHAR},
       </if>
@@ -405,6 +461,7 @@
       is_effect = #{isEffect,jdbcType=INTEGER},
       effect_date = #{effectDate,jdbcType=VARCHAR},
       score = #{score,jdbcType=DECIMAL},
+      showed = #{showed,jdbcType=INTEGER},
       judge = #{judge,jdbcType=VARCHAR},
       creater_user_id = #{createrUserId,jdbcType=INTEGER},
       creater = #{creater,jdbcType=VARCHAR},

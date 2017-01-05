@@ -213,7 +213,7 @@ public class ActivityServiceImpl implements IActivityService {
 
 	@Override
 	public int updateByPrimaryKey(ActivityInfo info) {
-		return activityInfoMapper.updateByPrimaryKey(info);
+		return activityInfoMapper.updateByPrimaryKeySelective(info);
 	}
 
 }

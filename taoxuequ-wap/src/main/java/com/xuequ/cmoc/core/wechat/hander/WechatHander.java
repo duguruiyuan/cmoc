@@ -217,7 +217,7 @@ public class WechatHander {
 				String url = Constants.BASEPATH + "/live/marine/list/" + activityId;
 				content = TextUtil.format(content, new String[]{url, activityInfo.getActivityName()});
 			}else {
-				if(DateUtil.compare(activityInfo.getStartDate(), currDate) != -1) {
+				if(DateUtil.compare(activityInfo.getStartDate(), currDate) != 1) {
 					content = PropertiesUtil.getProperty("sign_activity_begining");
 					String url = Constants.BASEPATH + "/live/marine/list/" + activityId;
 					content = TextUtil.format(content, new String[]{url, activityInfo.getActivityName()});

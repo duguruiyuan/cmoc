@@ -35,6 +35,9 @@ public class IndexController extends BaseController{
 		model.addAttribute("hotCourse", contentManageService.selectListByParam(group));
 		group.setPosition("3");
 		model.addAttribute("hotBack", contentManageService.selectListByParam(group));
+		group.setPosition("1");
+		group.setShelves(1);
+		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		return "index";
 	}
 	
