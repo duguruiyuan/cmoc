@@ -18,9 +18,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectCountForSupport" resultType="java.lang.Integer">
-  	select 
-    <include refid="Base_Column_List" />
-    from t_marine_support
+  	select count(1) from t_marine_support
     where openid = #{openid,jdbcType=VARCHAR} and marine_id = #{marineId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

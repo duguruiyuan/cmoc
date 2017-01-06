@@ -25,6 +25,7 @@
     <include refid="Base_Column_List" />
     from t_marine_comment
     where is_delete = 'N' and marine_id = #{params.marineId,jdbcType=INTEGER}
+    order by create_time desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_marine_comment

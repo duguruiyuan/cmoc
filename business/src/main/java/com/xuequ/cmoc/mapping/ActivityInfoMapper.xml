@@ -53,7 +53,7 @@
   	  select 
   	  <include refid="Base_Column_List" />
       from t_activity_info where is_delete = 'N'
-      and now() between start_date and end_date
+      and now() <![CDATA[ < ]]> end_date
 	  order by start_date
   </select>
   

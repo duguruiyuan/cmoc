@@ -66,7 +66,7 @@ function validator() {
 						$.messager.progress('close');
 						if (data.code == '000') {
 							$.messager.alert('系统提示', '密码修改成功', 'info');
-							closeFormPanel("updatePwdForm");
+							pwdCloseFormPanel("updatePwdForm");
 						} else {
 							$.messager.alert('系统提示', data.msg, 'warning');
 						}
@@ -92,7 +92,7 @@ var updatePwdForm = function(){
 	validator();
 }
 
-function closeFormPanel(formId){
+function pwdCloseFormPanel(formId){
 	$("#" + formId + " #oldPwd").val('');
 	$("#" + formId + " #newPwd").val('');
 	$(".valid").removeClass("valid");
