@@ -298,9 +298,8 @@
 	                    				<img src="'+imgUrl+data.results[i].sysUrl+'"/>\
 		                            </a></li> ';
 		                        }else if(params.msgType == 'shortvideo') {
-		                            str += '<li style="margin: 0 2px 5px;"><a class="detail-a" href="javascript:;"><video poster="' + imgUrl + data.results[i].picUrl + '" controls="controls" preload="none">'+
-		                          '<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
-		                          '<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
+		                            str += '<li style="margin: 0 2px 5px;"><a class="detail-a" href="javascript:;">\
+		                            <video poster="' + imgUrl + data.results[i].picUrl + '" src="' + imgUrl + data.results[i].sysUrl + '" controls>'+
 		                          '</video></a></li>';
 		                        }
                     		}

@@ -28,7 +28,7 @@
 		    </ul>
 		</header>
 		<input type="hidden" id="pageNo" value="0">
-		<div class="mui-content">
+		<div class="mui-content mt50">
 			<div id="live-list">
 			
 			</div>

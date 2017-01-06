@@ -22,7 +22,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">战队列表</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content mt44">
 			<div class="banner pr">
 				<c:choose>
 					<c:when test="${activity.activityImgUrl != null && !activity.activityImgUrl.isEmpty()}">
