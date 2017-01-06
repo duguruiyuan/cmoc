@@ -294,15 +294,15 @@
                     		if(currPage > 0) $(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(params.page);
                     		for(var i = 0,len = data.results.length;i < len;i++){
                     			if(params.msgType == 'image') {
-                    				str += ' <li>\
+                    				str += ' <li><a class="detail-a" href="javascript:;">\
 	                    				<img src="'+imgUrl+data.results[i].sysUrl+'"/>\
-	                    			</li> ';
-                    			}else if(params.msgType == 'shortvideo') {
-                    				str += '<li><video poster="' + imgUrl + data.results[i].picUrl + '" controls="controls" preload="none">'+
-                					'<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
-                					'<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
-                					'</video></li>';
-                    			}
+		                            </a></li> ';
+		                        }else if(params.msgType == 'shortvideo') {
+		                            str += '<li style="margin: 0 2px 5px;"><a class="detail-a" href="javascript:;"><video poster="' + imgUrl + data.results[i].picUrl + '" controls="controls" preload="none">'+
+		                          '<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (min-device-width: 360px)">'+
+		                          '<source src="' + imgUrl + data.results[i].sysUrl + '" media="only screen and (max-device-width: 960px)">'+
+		                          '</video></a></li>';
+		                        }
                     		}
                     		if(currPage == 1) {
                     			listObj.find("ul").html(str);

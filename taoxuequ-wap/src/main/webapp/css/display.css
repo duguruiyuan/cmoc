@@ -269,17 +269,17 @@
     -webkit-align-items: center;
     align-items: center;
 }
-.liveDetail-list-content li img{
+ .detail-a img{
 	width: 100%;
 	border: 1px #00a5da solid;
     border-radius: 5px;
-    height: auto;
+    height: 135px;
 }
-.liveDetail-list-content li video{
+.detail-a video{
 	width: 100%;
 	border: 1px #00a5da solid;
     border-radius: 5px;
-    height: auto;
+    height: 135px;
 }
 .liveDetail-list .rightfix{
 	display: none;
