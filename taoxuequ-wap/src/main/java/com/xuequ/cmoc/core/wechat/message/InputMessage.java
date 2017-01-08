@@ -29,6 +29,8 @@ public class InputMessage implements Serializable {
     //消息媒体id
     @XStreamAlias("MediaId")
     private String mediaId;
+    @XStreamAlias("MenuId")
+    private String menuId;
     
     // 文本消息
     //文本消息内容
@@ -246,6 +248,12 @@ public class InputMessage implements Serializable {
 	}
 	public void setPrecision(String precision) {
 		this.precision = precision;
+	}
+	public String getMenuId() {
+		return menuId;
+	}
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
 	}
 	
 }

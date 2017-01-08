@@ -1,6 +1,8 @@
 package com.xuequ.cmoc.core.wechat.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -8,6 +10,12 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.core.wechat.message.ArticleItem;
+import com.xuequ.cmoc.core.wechat.message.MediaListReq;
+import com.xuequ.cmoc.core.wechat.message.ShorturlReq;
+import com.xuequ.cmoc.core.wechat.message.MaterialMedia.NewsItem;
+import com.xuequ.cmoc.core.wechat.message.MaterialMedia.NewsMedia;
+import com.xuequ.cmoc.core.wechat.message.MaterialMedia.NewsTotItem;
 import com.xuequ.cmoc.core.wechat.model.WechatActionInfo;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeReq;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
@@ -17,6 +25,7 @@ import com.xuequ.cmoc.model.WechatSnsUserInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.JsonUtils;
+import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.utils.TextUtil;
 
 /**
@@ -32,6 +41,16 @@ public class WechatUtils {
 	private final static String ACCESS_TOKEN = "access_token";
 	//公众号用于调用微信JS-SDK接口的临时票据
 	private final static String JSAPI_TICKET = "jsapi_ticket";
+	//菜单点击图文消息
+    private static String EVENT_CLICK_MENU = "event_click_menu";
+    
+    public static List<ArticleItem> getEventClickMenu() {
+    	WechatGlobalValue globalValue = WechatGlobalMap.get(EVENT_CLICK_MENU); 
+		if(globalValue != null) {
+			return (List<ArticleItem>) globalValue.getValue();
+		}
+		return getMaterialMediaList();
+    }
 	
 	public static WechatModel getWechatModel() {
 		return new WechatModel(getAccessToken(), getJsapiTicket());
@@ -44,7 +63,7 @@ public class WechatUtils {
 	public static String getAccessToken() {
 		WechatGlobalValue globalValue = WechatGlobalMap.get(ACCESS_TOKEN); 
 		if(globalValue != null) {
-			return globalValue.getValue();
+			return (String)globalValue.getValue();
 		}
 		return getToken(ACCESS_TOKEN);
 	}
@@ -56,7 +75,7 @@ public class WechatUtils {
 	public static String getJsapiTicket() {
 		WechatGlobalValue globalValue = WechatGlobalMap.get(JSAPI_TICKET); 
 		if(globalValue != null) {
-			return globalValue.getValue();
+			return (String)globalValue.getValue();
 		}
 		return getToken(JSAPI_TICKET);
 	}
@@ -209,6 +228,51 @@ public class WechatUtils {
 		JSONObject jsonObject = JSONObject.parseObject(response);
 		if(jsonObject.getString("errcode") == null) {
 			return JsonUtils.jsonToObject(response, WechatQrcodeRsp.class);
+		}
+		return null;
+	}
+	
+	private static List<ArticleItem> getMaterialMediaList() {
+		List<ArticleItem> newsList = new ArrayList<>();
+		try {
+			String url = TextUtil.format(WechatConfigure.getInstance().getMediaList(), 
+					getWechatModel().getAccessToken());
+			MediaListReq reqParam = new MediaListReq();
+			String resultStr = HttpClientUtils.postJson(url, reqParam);
+			NewsMedia newsMedia = JsonUtils.jsonToObject(resultStr, NewsMedia.class);
+			for(NewsTotItem totItem : newsMedia.getItem()) {
+				List<NewsItem> list = totItem.getContent().getNews_item();
+				if(!StringUtil.isNullOrEmpty(list) && list.size() == 1) {
+					NewsItem newsItem = list.get(0);
+					ArticleItem item = new ArticleItem();
+					item.setTitle(newsItem.getTitle());
+			        item.setDescription(newsItem.getDigest());
+			        item.setPicUrl(newsItem.getThumb_url());
+			        item.setUrl(getShortUrl(newsItem.getUrl()));
+			        newsList.add(item);
+				}
+			}
+			if(newsList.size() > 0) {
+				WechatGlobalMap.put(EVENT_CLICK_MENU, newsList, 24*60*60);
+			}
+		} catch (IOException e) {
+			logger.error("--getOpenidByFefreshToken, error={}", e);
+		}
+		return newsList;
+	}
+	
+	public static String getShortUrl(String longUrl){
+		try {
+			WechatModel model = WechatUtils.getWechatModel();
+			String url = TextUtil.format(WechatConfigure.getInstance().getLongToShort(), 
+					model.getAccessToken());
+			ShorturlReq req = new ShorturlReq();
+			req.setLong_url(longUrl);
+			String response = HttpClientUtils.postJson(url, req);
+			JSONObject jsonObject = JSONObject.parseObject(response);
+			return jsonObject.getString("short_url");
+		} catch (Exception e) {
+			logger.error("--getShortUrl,error={}", e);
 		}
 		return null;
 	}

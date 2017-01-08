@@ -1,5 +1,9 @@
 package com.xuequ.cmoc.core.wechat.utils;
 
+import java.util.List;
+
+import com.xuequ.cmoc.core.wechat.message.ArticleItem;
+
 public final class MessageUtil {
 
 	// 请求消息类型：文本

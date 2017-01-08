@@ -144,4 +144,9 @@ public class WechatController {
 		}
 	}
 	
+	@RequestMapping("getModel")
+	@ResponseBody Object getModel(){
+		return WechatUtils.getWechatModel();
+	}
+	
 }

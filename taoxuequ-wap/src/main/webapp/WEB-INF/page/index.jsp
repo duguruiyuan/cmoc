@@ -31,11 +31,11 @@
 	<div class="h10"></div>
 	<div id="box2">
 		<div class="bigone2">
-			<a href="#"><img src="<%=basePath%>/images/camp-edu.png" /></a>
+			<a href="http://mp.weixin.qq.com/s/XrzT92mO3BgJSCMNquMO8Q"><img src="<%=basePath%>/images/camp-edu.png" /></a>
 		</div>
 		<div class="bigone3 br-l2 br-b2">
 			<div class="small">
-				<a href="#"><img src="<%=basePath%>/images/practice.png" /></a>
+				<a href="http://mp.weixin.qq.com/s/uuyDEdfyo1b1iVoctNwmlQ"><img src="<%=basePath%>/images/practice.png" /></a>
 			</div>
 			<div class="small br-l1">
 				<a href="#"><img src="<%=basePath%>/images/stem.png" /></a>
@@ -46,7 +46,7 @@
 				<a href="#"><img src="<%=basePath%>/images/customize.png" /></a>
 			</div>
 			<div class="small br-l1">
-				<a href="#"><img src="<%=basePath%>/images/explore.png" /></a>
+				<a href="http://mp.weixin.qq.com/s/IA8xTeOidtw89ilqOLBZrA"><img src="<%=basePath%>/images/explore.png" /></a>
 			</div>
 		</div>
 	</div>

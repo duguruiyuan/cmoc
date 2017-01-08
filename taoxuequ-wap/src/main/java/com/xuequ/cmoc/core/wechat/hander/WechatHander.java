@@ -19,6 +19,7 @@ import com.xuequ.cmoc.core.wechat.message.InputMessage;
 import com.xuequ.cmoc.core.wechat.message.OutputMessage;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
+import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
@@ -104,7 +105,7 @@ public class WechatHander {
     			}
     			// 自定义菜单
     			else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
-    				// TODO 处理菜单点击事件
+    				eventTypeClick(outputMsg, inputMsg);
     			}
     		}else {
     			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
@@ -260,6 +261,15 @@ public class WechatHander {
 		if(StringUtils.isNotBlank(content)) {
 			outputMsg.setContent(content);
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+		}
+	}
+	
+	private void eventTypeClick(OutputMessage outputMsg, InputMessage inputMsg) {
+		if(inputMsg.getEventKey().equals("rselfmenu_3_0")) {
+			List<ArticleItem> newsList = WechatUtils.getEventClickMenu();
+			outputMsg.setArticleCount(newsList.size());
+			outputMsg.setArticles(newsList);
+			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
 		}
 	}
 }

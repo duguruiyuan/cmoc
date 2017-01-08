@@ -4,11 +4,11 @@ public class WechatGlobalValue {
 	
 	private String key;
 	
-	private String value;
+	private Object value;
 	
 	private long expireMillis;
 	
-	public WechatGlobalValue(String key, String value, long mills) {
+	public WechatGlobalValue(String key, Object value, long mills) {
 		this.key = key;
 		this.value = value;
 		if (mills>0){
@@ -24,11 +24,11 @@ public class WechatGlobalValue {
 		this.key = key;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 

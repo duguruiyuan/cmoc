@@ -7,11 +7,11 @@ public final class WechatGlobalMap {
 	
 	public static Map<String, WechatGlobalValue> caches = new HashMap<String, WechatGlobalValue>();
 	
-	public static void put(String key, String value) {
+	public static void put(String key, Object value) {
 		put(key, value, 0);
 	}
 	
-	public static void put(String key, String value, long mills) {
+	public static void put(String key, Object value, long mills) {
 		WechatGlobalValue newValue = new WechatGlobalValue(key, value, (mills - 600) * 1000 );
 		caches.put(key, newValue);
 	}

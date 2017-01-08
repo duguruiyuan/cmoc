@@ -167,7 +167,6 @@ public class HttpClientUtils {
 			HttpResponse response = client.execute(postMethod);
 			HttpEntity entity = response.getEntity(); 
 			String res = EntityUtils.toString(entity, charset);
-			LOG.info(">>httpclient post result:" + res);
 			return res;
 		} catch (IOException e) {
 			postMethod.abort();
@@ -206,7 +205,6 @@ public class HttpClientUtils {
 			HttpResponse response = client.execute(postMethod);
 			HttpEntity entity = response.getEntity(); 
 			String res = EntityUtils.toString(entity, charset);
-			LOG.info(">>httpclient post result:" + res);
 			return res;
 		} catch (IOException e) {
 			postMethod.abort();
