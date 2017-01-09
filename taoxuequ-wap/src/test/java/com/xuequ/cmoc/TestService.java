@@ -42,15 +42,15 @@ public class TestService {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-//		pushMenu();
-		getMedia();
+		pushMenu();
+//		getMedia();
 //		System.out.println(WechatUtils.getWechatModel().getAccessToken());
 	}
 	
 	public static void getMedia() {
 		try {
 			List<ArticleItem> newsList = new ArrayList<>();
-			String acc = "gnJ33frMg1Iz05LgGfgk5z9eEqbm-_dk1hFWqVO6gOtdBsQMKIf6B836QXb9f7kDm4MdsHlpesc7zxnr1WdwQFzqApfImAKoB3kCCm2XnywMBSjADAYNE";//WechatUtils.getWechatModel().getAccessToken();
+			String acc = "_CFAoCZxtVKojwjM4W8HuU7XJiAxaxXzKCZ2haWjCidqE98CR6jC2SzWzXtN3nPCf9eqj1pva10irP4Ge8SDXQXIU7GdmyQszj9EG-yGRuKJzAxml67yhnQKEPSwA0gLPRHbAFAYAQ";//WechatUtils.getWechatModel().getAccessToken();
 			String url = TextUtil.format("https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token={0}", acc);
 			String result = HttpClientUtils.postJson(url, new MediaListReq());
 			NewsMedia newsMedia = JsonUtils.jsonToObject(result, NewsMedia.class);
@@ -78,7 +78,7 @@ public class TestService {
 		
 		List<SubButtonMenu> subButtonMenus = new ArrayList<>();
 		FirstButtonMenu firstButtonMenu = new FirstButtonMenu();
-		firstButtonMenu.setName("介绍");
+		firstButtonMenu.setName("🌏介绍");
 		SubButtonMenu subButtonMenu = new SubButtonMenu();
 		subButtonMenu.setType("scancode_waitmsg");
 		subButtonMenu.setName("扫码带提示");
@@ -92,7 +92,7 @@ public class TestService {
 		SubButtonMenu subButtonMenu02 = new SubButtonMenu();
 		subButtonMenu02.setType("view");
 		subButtonMenu02.setName("校辅实践");
-		subButtonMenu02.setUrl("http://mp.weixin.qq.com/s/uuyDEdfyo1b1iVoctNwmlQ");
+		subButtonMenu02.setUrl("http://mp.weixin.qq.com/s/_bjOQwWFy4M3UBgOyECzsw");
 		subButtonMenus.add(subButtonMenu02);
 		SubButtonMenu subButtonMenu03 = new SubButtonMenu();
 		subButtonMenu03.setType("view");
@@ -109,8 +109,20 @@ public class TestService {
 		subButtonMenu05.setName("营地教育");
 		subButtonMenu05.setUrl("http://mp.weixin.qq.com/s/XrzT92mO3BgJSCMNquMO8Q");
 		subButtonMenus.add(subButtonMenu05);
+		SubButtonMenu subButtonMenu07 = new SubButtonMenu();
+		subButtonMenu07.setType("view");
+		subButtonMenu07.setName("STEAM创客");
+		subButtonMenu07.setUrl("http://mp.weixin.qq.com/s/kcUP6k8YkP6MDpNEkMBE8A");
+		subButtonMenus.add(subButtonMenu07);
+		SubButtonMenu subButtonMenu06 = new SubButtonMenu();
+		subButtonMenu06.setType("view");
+		subButtonMenu06.setName("关于我们");
+		subButtonMenu06.setUrl("http://mp.weixin.qq.com/s/F4eDKmVwmYXGCtubGVUrMw");
+		subButtonMenus.add(subButtonMenu06);
+		
 		firstButtonMenu.setSub_button(subButtonMenus);
 		firstButtonMenus.add(firstButtonMenu);
+		
 		
 		FirstButtonMenu firstButtonMenu2 = new FirstButtonMenu();
 		firstButtonMenu2.setName("发图");
@@ -135,7 +147,7 @@ public class TestService {
 //		firstButtonMenus.add(firstButtonMenu3);
 		
 		FirstButtonMenu firstButtonMenu4 = new FirstButtonMenu();
-		firstButtonMenu4.setName("图文消息");
+		firstButtonMenu4.setName("📡图文消息");
 		firstButtonMenu4.setType("click");
 		firstButtonMenu4.setKey("rselfmenu_3_0");
 		firstButtonMenus.add(firstButtonMenu4);
@@ -148,7 +160,7 @@ public class TestService {
 		
 		menuList.setButton(firstButtonMenus);
 		try {
-			String acc = "ELUm_UUF843Ehbh82pHYRWa3nG4qPe9ASmsq-3VTHD9IxoG1IxtDo0Y5MDc02H4YzdIXifI7z3eNcfKZaW0IjIpBWhyQUoFT1oFU58MK5TcId8hOmihXyHhPw_Q5pVljZSZaAAAOHO";//WechatUtils.getWechatModel().getAccessToken();
+			String acc = "nzmWjzwUfNNyxi9w248i0qvkW-__hbY42YJkPjjfpWB_BahFPgwL9wwUN7HfBzh26sF7fmQamTGxdeAX1tVySdg3x8ZZEOQGmZbZWP7wvfJrYMlZQtQv_o9NICcYAhfGXBLaAGALPZ";//WechatUtils.getWechatModel().getAccessToken();
 //			System.out.println("------"+acc);
 //			String url1 = TextUtil.format("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={0}", acc);
 //			String result1 = HttpClientUtils.doPost(url1);

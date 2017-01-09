@@ -145,9 +145,9 @@
 		    <div class="bg-white pbb10">
 		    	<div class="more-item">活动留言</div>
 		    	<input type="hidden" id="commentPageNo" value="0" />
-		    	<div class="pms" id="pmsComment">
-				
-				</div>
+				<ul class="com-list" id="pmsComment">
+					
+				</ul>
 				<div class="btn-more" id="comment-more">
 					<span>查看更多</span>
 				</div>
@@ -165,7 +165,6 @@
 	    </footer>
 		<script type="text/javascript">
 			$(function(){
-				initSnsToken();
 				var picListWrap = $(".liveDetail-list-content");
 				var picListTop = $(".liveDetail-list").offset().top;
 				var picList = picListWrap.find("img");
@@ -298,9 +297,15 @@
 	                    				<img src="'+imgUrl+data.results[i].sysUrl+'"/>\
 		                            </a></li> ';
 		                        }else if(params.msgType == 'shortvideo') {
-		                            str += '<li style="margin: 0 2px 5px;"><a class="detail-a" href="javascript:;">\
-		                            <video poster="' + imgUrl + data.results[i].picUrl + '" src="' + imgUrl + data.results[i].sysUrl + '" controls>'+
-		                          '</video></a></li>';
+		                            str += '<li style="margin: 0 2px 10px;"><a class="detail-a" href="javascript:;">\
+		                            <video poster="' + imgUrl + data.results[i].picUrl + '" controls preload="none">\
+		                            	<source src="' + imgUrl + data.results[i].sysUrl + '">\
+		                            </video></a></li>';
+		                            //str += '<li style="margin: 0 2px 5px;"><a class="detail-a" href="javascript:;">\
+		                            //	<video id="video_'+data.results[i].msgId+'" class="video-js vjs-default-skin" controls preload="none"\
+		                            //	poster="' + imgUrl + data.results[i].picUrl + '" data-setup="{}">\
+		                            //      <source src="' + imgUrl + data.results[i].sysUrl + '" />\
+		                            //    </video></a></li>';
 		                        }
                     		}
                     		if(currPage == 1) {
@@ -314,6 +319,7 @@
                     	}else {
                     		listObj.addClass("list-null").find(".res-more").removeClass("btn-more").addClass("loader").html('<p>没有更多了~</p>');
                     	}
+	                  	img_click();
 	                  },
 	                  error:function(){
 	                  	alert("系统异常，请稍后再试！");
@@ -374,12 +380,15 @@
                   success:function(data){
                 	  if(data.code == '000') {
                 		  $("#comment").blur();
-                    	  var html = "";
-                    	  html+= '<div class="pms_box"><div class="headlog"><img src="'+ data.data +'">' + 
-    							'</div><div class="pmstext">' + params.comment + '</div></div>';
-                    	  $("#pmsComment").before(html);
+                    	  var html = '<li><div class="u-profile"><img src="'+ data.data.headimgurl +'">\
+  								</div><div class="u-criticism"><div class="clearfix cri-info">\
+  								<span class="fl">'+ data.data.nickname +'</span>\
+  								<time class="fr">'+ getTime(new Date().getTime(),'yyyy-MM-dd hh:mm') +'</time>\
+  								</div><p>'+ params.comment +'</p></div></li>';
+  						  var lis = $("#pmsComment").find("li");
+  						  if(lis.length > 0) $(lis[0]).before(html);
+  						  else $("#pmsComment").before(html);
                     	  $("#comment").val(null);
-                    	  $("#comment-more").html("");
                 	  }
                   }
 				});      
@@ -391,7 +400,7 @@
                   url:'<%=basePath%>/live/marine/comment/query',
                   dataType:'json',
                   data: {
-                	pageNo: pageNo,
+                	page: pageNo,
                 	marineId: $("#marineId").val()
                   },
                   cache:false,
@@ -399,8 +408,11 @@
                   	if(data.results && data.results.length > 0){
                   		var html = "";
                   		for(var i = 0,len = data.results.length;i < len;i++){
-                  			html+= '<div class="pms_box"><div class="headlog"><img src="'+data.results[i].headUrl+'">' + 
-							'</div><div class="pmstext">' + data.results[i].comment + '</div></div>';
+                  			html += '<li><div class="u-profile"><img src="'+ data.results[i].headUrl +'">\
+								</div><div class="u-criticism"><div class="clearfix cri-info">\
+								<span class="fl">'+ data.results[i].nikeName +'</span>\
+								<time class="fr">'+ getTime(data.results[i].createTime,'yyyy-MM-dd hh:mm') +'</time>\
+								</div><p>'+ data.results[i].comment +'</p></div></li>';
                   		}
                   		$("#pmsComment").append(html);
                   		$("#commentPageNo").val(pageNo);
@@ -434,11 +446,33 @@
                   }
               });
 			}
-			
-			function initSnsToken() {
-				var snsToken = '${snsToken}';
-				setAccessToken(snsToken);
+			function img_click() {
+				$("#list1 img").click(function(){
+					var obj = $(this.closest("#list1")).find("img");
+					var src = get_img(obj);
+					var curent = obj.index(this);
+					img_preview(src[curent], src);
+				});
 			}
+			function img_preview(current, urls){
+                if(!current || urls.length == 0){
+        	        return ;
+                }
+        
+                WeixinJSBridge.invoke('imagePreview', { 
+                    'current': current,
+                    'urls': urls
+                });
+			}
+			function get_img(obj){
+				var m = [];
+				for(var i=0; i<obj.length; i++){
+					m[i] = obj[i].src;
+				}
+				
+				return m;
+			}
+			
 		</script>
 	</body>
 

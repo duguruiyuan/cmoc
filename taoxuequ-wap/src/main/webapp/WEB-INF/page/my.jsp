@@ -53,7 +53,7 @@
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/about">
+	                <a class="mui-navigate-right" href="http://mp.weixin.qq.com/s/F4eDKmVwmYXGCtubGVUrMw">
 	                     关于我们
 	                </a>
 	            </li>

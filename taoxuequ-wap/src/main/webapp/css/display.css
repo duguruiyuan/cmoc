@@ -277,6 +277,7 @@
 .detail-a video{
 	width: 100%;
 	border: 1px #00a5da solid;
+	background-color: #000;
     border-radius: 5px;
     height: 135px;
 }
@@ -800,8 +801,7 @@ select.regMT-select{
 .marine-prize {
     position: absolute;
     top: 50%;
-    left: 8%;
-    width: 100%;
+    left: 45%;
     text-align: center;
     font-size: 1.5em;
     font-weight: bold;
@@ -1886,4 +1886,34 @@ color: #09BB07;
 	background:url(../images/finger.png) no-repeat 0 0;
 	background-size: contain;
 	vertical-align: middle;
+}
+
+.com-list li {
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    border-bottom: 1px solid #ebebeb;
+}
+.u-profile {
+    position: absolute;
+    left: -30px;
+    top: 10px;
+    width: 35px;
+    height: 35px;
+}
+.u-profile img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.cri-info {
+    color: #999;
+    padding-bottom: 2px;
+    font-size: 14px;
+}
+.fl {float: left;}
+.fr {float: right;}
+.u-criticism p {
+    word-wrap: break-word;
+    font-size: 15px;
+    color: #000;
 }

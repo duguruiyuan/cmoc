@@ -44,7 +44,7 @@
   
   <select id="selectListByPage" resultMap="BaseResultMap">
   	SELECT 
-    wm.`msg_Type`, wm.`sys_Url`, wm.`pic_Url`, wm.`create_Time`
+    wm.msg_Id, wm.`msg_Type`, wm.`sys_Url`, wm.`pic_Url`, wm.`create_Time`
     FROM t_wechat_receive_message wm
     INNER JOIN t_activity_hm_sign hs ON wm.`hm_Sign_Id` = hs.`id`
     WHERE wm.`is_Delete` = 'N' AND hs.`marine_id` = #{params.marineId,jdbcType=INTEGER}

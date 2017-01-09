@@ -72,6 +72,11 @@ public class LiveCenterController extends BaseController{
 		return "live/marinesList";
 	}
 	
+	@RequestMapping("marine/test-detail/{marineId}")
+	public String marineTestDetail(HttpServletResponse response, Model model, @PathVariable Integer marineId) {
+		return marineDetail(response, model, marineId);
+	}
+	
 	@RequestMapping("marine/detail/{marineId}")
 	public String marineDetail(HttpServletResponse response, Model model, @PathVariable Integer marineId) {
 		WechatUserInfo userInfo = getWechatUserInfo();
@@ -114,7 +119,7 @@ public class LiveCenterController extends BaseController{
 			comment.setNikeName(userInfo.getNickname());
 			comment.setOpenid(userInfo.getOpenid());
 			marineCommentService.insertMarineComment(comment);
-			return new RspResult(StatusEnum.SUCCESS, userInfo.getHeadimgurl());
+			return new RspResult(StatusEnum.SUCCESS, userInfo);
 		} catch (Exception e) {
 			logger.error("--marineComment, error={}", e);
 		}

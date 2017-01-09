@@ -35,10 +35,10 @@
 		</div>
 		<div class="bigone3 br-l2 br-b2">
 			<div class="small">
-				<a href="http://mp.weixin.qq.com/s/uuyDEdfyo1b1iVoctNwmlQ"><img src="<%=basePath%>/images/practice.png" /></a>
+				<a href="http://mp.weixin.qq.com/s/_bjOQwWFy4M3UBgOyECzsw"><img src="<%=basePath%>/images/practice.png" /></a>
 			</div>
 			<div class="small br-l1">
-				<a href="#"><img src="<%=basePath%>/images/stem.png" /></a>
+				<a href="http://mp.weixin.qq.com/s/kcUP6k8YkP6MDpNEkMBE8A"><img src="<%=basePath%>/images/stem.png" /></a>
 			</div>
 		</div>
 		<div class="bigone3 br-l2">
