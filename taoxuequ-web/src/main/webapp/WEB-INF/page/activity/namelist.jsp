@@ -55,6 +55,7 @@
 		<div class="col-md-12 p10">
 		  <form id="addForm" novalidate="novalidate">
 				<input type="hidden" id="id" name="id">
+				<input type="hidden" id="childId" name="childId">
 				<div class="form-group col-md-6">
 					<label for="files">小队员照片</label>								
 					<input type="hidden" name="resourceId" id="resourceId"/>

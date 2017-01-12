@@ -287,7 +287,7 @@ public class ActivityManageController extends BaseController{
 	}
 		
 	@RequestMapping("json/namelist/addUpdate")
-	public @ResponseBody Object familyAddUpdate(ActivityChild vo) {
+	public @ResponseBody Object familyAddUpdate(ActivityChildView vo) {
 		try {
 			activityFamilyService.addAndUpdateChild(vo);
 			return new RspResult(StatusEnum.SUCCESS);

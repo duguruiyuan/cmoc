@@ -174,6 +174,7 @@ function updateActivity(id) {
  		success : function(data) {
  			$("#addForm #resourceId").val(data.id);
  			$("#addForm #id").val(data.id);
+ 			$("#addForm #childId").val(data.childId);
 			$("#addForm #activityName").val(data.activityName);
 			$("#addForm #activityNum").val(data.activityNum);
 			$("#addForm #marineName").val(data.marineName);
@@ -202,7 +203,6 @@ var loadForm = function(data){
 		resizable : true,
 		buttons : '#btns',
 		onClose : function() {
-			loadData();
 			cleanFormPanel("addForm");
 		}
 	}).show();

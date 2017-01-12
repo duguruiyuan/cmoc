@@ -1,12 +1,16 @@
 package com.xuequ.cmoc.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuequ.cmoc.dao.ActivityChildMapper;
+import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.model.ActivityChild;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.service.IActivityChildService;
 import com.xuequ.cmoc.view.ActivityChildView;
@@ -16,6 +20,8 @@ public class ActivityChildServiceImpl implements IActivityChildService {
 	
 	@Autowired
 	private ActivityChildMapper activityChildMapper;
+	@Autowired
+	private ChildSignInfoMapper childSignInfoMapper;
 
 	@Override
 	public List<ActivityChildView> selectListByPage(Page<ActivityChildView> page) {
@@ -36,8 +42,16 @@ public class ActivityChildServiceImpl implements IActivityChildService {
 	}
 
 	@Override
-	public int addAndUpdateChild(ActivityChild child) {
-		return activityChildMapper.updateByPrimaryKeySelective(child);
+	public int addAndUpdateChild(ActivityChildView view) {
+		if(StringUtils.isNotBlank(view.getChildName())) {
+			ChildSignInfo childSignInfo = new ChildSignInfo();
+			childSignInfo.setId(view.getChildId());
+			childSignInfo.setChildName(view.getChildName());
+			childSignInfo.setUpdateTime(new Date());
+			childSignInfoMapper.updateByPrimaryKeySelective(childSignInfo);
+		}
+		view.setUpdateTime(new Date());
+		return activityChildMapper.updateByPrimaryKeySelective(view);
 	}
 
 	@Override
@@ -48,6 +62,11 @@ public class ActivityChildServiceImpl implements IActivityChildService {
 	@Override
 	public ActivityChild selectByPrimaryKey(Integer id) {
 		return activityChildMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public ActivityChildView selectByChildId(Integer childId) {
+		return activityChildMapper.selectChildByChildId(childId);
 	}
 
 }

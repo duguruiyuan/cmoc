@@ -23,5 +23,7 @@ public interface ActivityChildMapper {
     
     ActivityChildView selectById(Integer id);
     
+    ActivityChildView selectChildByChildId(Integer childId);
+    
     List<ActivityChildView> selectListByMarineId(Integer marineId);
 }

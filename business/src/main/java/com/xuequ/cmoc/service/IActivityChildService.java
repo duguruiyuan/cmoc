@@ -19,9 +19,11 @@ public interface IActivityChildService {
 	
 	int updateFamilyImg(String imgUrl, Integer id);
 	
-	int addAndUpdateChild(ActivityChild child);
+	int addAndUpdateChild(ActivityChildView view);
 	
 	ActivityChildView selectById(Integer id);
 	
 	ActivityChild selectByPrimaryKey(Integer id);
+	
+	ActivityChildView selectByChildId(Integer childId);
 }

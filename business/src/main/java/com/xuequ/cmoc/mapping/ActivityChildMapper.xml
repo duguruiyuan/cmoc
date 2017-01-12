@@ -61,7 +61,6 @@
 	ac.marine_id = #{marineId,jdbcType=INTEGER}
   </select>
   
-  
   <select id="selectById" resultMap="ChildBaseResultMap" parameterType="java.lang.Integer">
   	select 
   	ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, ac.marine_id, 
@@ -114,6 +113,13 @@
     <include refid="Base_Column_List" />
     from t_activity_child
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectChildByChildId" resultMap="ChildBaseResultMap" parameterType="java.lang.Integer">
+  	SELECT ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, 
+  		ac.marine_id, cs.`child_name` 
+  	FROM t_activity_child ac, t_child_sign_info cs 
+	WHERE ac.child_id = cs.`id` AND ac.id = #{childId,jdbcType=INTEGER}
   </select>
   
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityChild" >

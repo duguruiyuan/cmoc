@@ -154,7 +154,7 @@ public class HollowManController extends BaseController {
 				ActivityMarines marins = activityMarinesService.selectByPrimaryKey(id);
 				return new RspResult(StatusEnum.SUCCESS, marins);
 			}else if(ImgTypeEnum.MEMBER.getCode().equals(type)) {
-				 ActivityChild family = activityFamilyService.selectByPrimaryKey(id);
+				 ActivityChildView family = activityFamilyService.selectByChildId(id);
 				 return new RspResult(StatusEnum.SUCCESS, family);
 			}
 		} catch (Exception e) {
@@ -177,11 +177,13 @@ public class HollowManController extends BaseController {
 				activityMarinesService.updateByPrimaryKeySelective(marines);
 				return new RspResult(StatusEnum.SUCCESS);
 			}else if(ImgTypeEnum.MEMBER.getCode().equals(vo.getType())) {
-				 ActivityChild family = new ActivityChild();
-				 family.setId(vo.getId());
-				 family.setChildComment(vo.getChildComment());
-				 family.setChildTitle(vo.getChildTitle());
-				 activityFamilyService.addAndUpdateChild(family);
+				 ActivityChildView view = new ActivityChildView();
+				 view.setId(vo.getId());
+				 view.setChildId(vo.getChildId());
+				 view.setChildName(vo.getChildName());
+				 view.setChildComment(vo.getChildComment());
+				 view.setChildTitle(vo.getChildTitle());
+				 activityFamilyService.addAndUpdateChild(view);
 				 return new RspResult(StatusEnum.SUCCESS);
 			}
 		} catch (Exception e) {

@@ -6,7 +6,11 @@ public class MarineEditVO {
 
 	private Integer id;
 	
+	private Integer childId;
+	
 	private String type;
+	
+	private String childName;
 	
 	private String childTitle;
 	
@@ -30,12 +34,28 @@ public class MarineEditVO {
 		this.id = id;
 	}
 
+	public Integer getChildId() {
+		return childId;
+	}
+
+	public void setChildId(Integer childId) {
+		this.childId = childId;
+	}
+
 	public String getType() {
 		return StringUtils.isNotBlank(type) ? type : null;
 	}
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getChildName() {
+		return childName;
+	}
+
+	public void setChildName(String childName) {
+		this.childName = childName;
 	}
 
 	public String getChildTitle() {

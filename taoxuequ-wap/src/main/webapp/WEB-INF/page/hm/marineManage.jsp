@@ -30,7 +30,7 @@
 	</div>
 	<div class="marine-head">
 		<div style="float:left">编辑队伍信息</div>
-		<div class="marine-setting editInfo" id="${marine.id }" ed-type="MARINE">编辑</div>
+		<div class="marine-setting editInfo" onclick="marineEditQuery(${marine.id}, 'MARINE')">编辑</div>
 	</div>
 	<div class="ranksManager-listHead">编辑队员信息</div>
 	<div class="mui-content ranksManager-list">
@@ -48,13 +48,13 @@
 				    			</c:otherwise>
 				    		</c:choose>
 				    	</div>
-				    	<div class="ranksManager-name">${item.childName }</div>
+				    	<div class="ranksManager-name" id="member_${item.id }">${item.childName }</div>
 				    	<c:choose>
 				    		<c:when test="${item.childTitle == null }">
-				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-name="${item.childName }" ed-type="MEMBER">未设置</div>
+				    			<div class="ranksManager-right editInfo" onclick="marineEditQuery(${item.id}, 'MEMBER')">未设置</div>
 				    		</c:when>
 				    		<c:otherwise>
-				    			<div class="ranksManager-right editInfo" id="${item.id }" ed-name="${item.childName }" ed-type="MEMBER">编辑</div>
+				    			<div class="ranksManager-right editInfo" onclick="marineEditQuery(${item.id}, 'MEMBER')">编辑</div>
 				    		</c:otherwise>
 				    	</c:choose>
 			    	</a>
@@ -72,12 +72,13 @@
 			<form id="memberForm" class="mui-input-group">
 				<input type="hidden" id="id" name="id" />
 				<input type="hidden" id="type" name="type" />
+				<input type="hidden" id="childId" name="childId" />
 				<div class="mui-input-row">
-				    <label>队员</label>
-				    <input id="childName" type="text" maxlength="11" readonly value="小明">
+				    <label><span style="color:red;">*</span>队员</label>
+				    <input id="childName" name="childName" type="text" placeholder="小米">
 				</div>
 				<div class="mui-input-row">
-				    <label>队员头衔</label>
+				    <label><span style="color:red;">*</span>队员头衔</label>
 				    <input id="childTitle" name="childTitle" type="text" placeholder="队员头衔">
 				</div>
 				<div class="mui-input-row textarea-row">
@@ -129,21 +130,21 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		initSnsToken();	
 		$(function(){
-			$(".editInfo").on("click", function() {
-				var thiz = $(this);
-				var id = thiz.attr("id");
-				var type = thiz.attr("ed-type");
-				var childName = thiz.attr("ed-name");
-				marineEditQuery(id, childName, type);
-			})
-			
 			$("#member-btn").click(function(){
+				var childName = $("#memberForm #childName").val();
+				if(!childName) {
+					alert("队员姓名不能为空");
+					return;
+				}
 				var childTitle = $("#memberForm #childTitle").val();
 				if(!childTitle) {
 					alert("队员头衔不能为空");
 					return;
+				}
+				var id = $("#memberForm #id").val();
+				if($("#member_" + id).html() == childName) {
+					$("#memberForm #childName").val(null);
 				}
 				$.ajax({
 			 		url : "<%=basePath%>/hm/marine/edit/submit",
@@ -154,12 +155,15 @@
 			 		success : function(data) {
 			 			if(data.code == '000') {
 			 				$("#memberEdit").attr("style", "display:none");
+			 				$("#member_" + id).html(childName);
 			 				mui.alert('队员信息编辑成功','消息提示');
 			 			}else {
 			 				mui.alert(data.msg,'消息提示');
+			 				$("#memberForm #childName").val(childName);
 			 			}
 			 		}, error:function(){
 			 			mui.alert("系统异常，请联系管理员",'消息提示');
+			 			$("#memberForm #childName").val(childName);
 	        		}
 			 	});
 			});
@@ -254,7 +258,7 @@
        		}
 		 });
 	   }
-	   function marineEditQuery(id, childName, type) {
+	   function marineEditQuery(id, type) {
 		   $.ajax({
 		 		url : "<%=basePath%>/hm/marine/edit/query",
 		 		type : "post",
@@ -279,8 +283,9 @@
 		 				}else if(type == 'MEMBER') {
 		 					$("#memberEdit").attr("style", "display:block");
 		 					$("#memberForm #id").val(obj.id);
+		 					$("#memberForm #childId").val(obj.childId);
 		 					$("#memberForm #type").val(type);
-		 					$("#memberForm #childName").val(childName);
+		 					$("#memberForm #childName").val(obj.childName);
 		 					$("#memberForm #childTitle").val(obj.childTitle);
 		 					$("#memberForm #childComment").val(obj.childComment);
 		 				}
@@ -292,11 +297,6 @@
 		 		}
 		 	});
        	}
-	   
-	   function initSnsToken() {
-			var snsToken = '${snsToken}';
-			setAccessToken(snsToken);
-		}
 	   
 	   function closeEdit(id) {
 		   $("#" + id).attr("style", "display:none");
