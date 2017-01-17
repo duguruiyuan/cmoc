@@ -9,6 +9,7 @@ import java.util.Date;
 
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.xuequ.cmoc.common.Const;
+import com.xuequ.cmoc.core.wechat.thread.WechatMsgCallback;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.utils.DateUtil;
@@ -34,11 +35,16 @@ public class ImageService {
 //		System.out.println("--------------" + (ac - ab));
 		try {
 			WechatReceiveMessage message = new WechatReceiveMessage();
+//			message.setMsgType("video");
+//			message.setMsgId("6376098832272535098");
+//			message.setMediaId("sEOBrIuNA4cF42_EAs-15KiuV-TrDMivVfCycmrWf22sZGnG2ollO1ElHJCNyJ6E");
 			message.setMsgType("image");
-			message.setMsgId("6376476424322380493");
-			message.setMediaId("ObBuW-M27XbJruaNkw87MYBoKNrHmvncepEUSPIyO3J0OBr0H0ti5vNyUsu1LCxZ");
-			String sysUrl = FileUtil.downloadWechatFile(DateUtil.getYear(new Date()) + Const.SEPARATOR, message, false);
-			System.out.println(sysUrl);
+			message.setMsgId("6376605217506692764");
+			message.setMediaId("EhBzXjpbkskvz9x_AUslqbAkavrjmD0A6D0WZeiCMVs2SuL9iKLsuVopvnHAozf6");
+			String path = FileUtil.getRelativePath(message, 1);
+//			new WechatMsgCallback(path, message).execute();
+			FileUtil.downloadWechatFile(path, message, false);
+			System.out.println("success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

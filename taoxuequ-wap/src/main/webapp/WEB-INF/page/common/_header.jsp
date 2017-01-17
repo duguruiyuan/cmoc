@@ -33,12 +33,12 @@
 <script src="<%=basePath %>/js/plugins/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/common.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <script>mui.init();</script>
-<script>
+<!-- <script>
 	var _hmt = _hmt || [];
 	(function() {
 	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?842538d1fb9105ab7d00450312241003";
+	  hm.src = "http://hm.baidu.com/hm.js?842538d1fb9105ab7d00450312241003";
 	  var s = document.getElementsByTagName("script")[0]; 
 	  s.parentNode.insertBefore(hm, s);
 	})();
-</script>
+</script> -->

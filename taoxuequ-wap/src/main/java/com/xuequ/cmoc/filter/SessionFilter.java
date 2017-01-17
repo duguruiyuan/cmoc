@@ -46,7 +46,7 @@ public class SessionFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		String openid = "oXDCCs3AjlFVcKWtJybY54gqP9hI";  //RequestUtil.getCookieValue(request, "openid");
+		String openid = RequestUtil.getCookieValue(request, "openid"); //"oXDCCs3AjlFVcKWtJybY54gqP9hI";  
 		if(StringUtils.isNotBlank(openid)) {
 			WechatUserInfo userInfo = (WechatUserInfo) request.getSession().getAttribute(Constants.WECHAT_USERINFO);
 			if(userInfo == null) {

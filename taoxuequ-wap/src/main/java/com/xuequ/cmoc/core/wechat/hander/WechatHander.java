@@ -9,7 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.common.enums.WechatReqMsgType;
@@ -17,6 +16,7 @@ import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.message.ArticleItem;
 import com.xuequ.cmoc.core.wechat.message.InputMessage;
 import com.xuequ.cmoc.core.wechat.message.OutputMessage;
+import com.xuequ.cmoc.core.wechat.thread.WechatMsgCallback;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
@@ -130,12 +130,14 @@ public class WechatHander {
     					WechatReqMsgType.VIDEO.getCode().equals(fileType) ||
     					WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType) ||
     					WechatReqMsgType.VOICE.getCode().equals(fileType)) {
-    				String path = DateUtil.getYear(new Date()) + Const.SEPARATOR + hmSign.getActivityId();
-    				String sysUrl = FileUtil.downloadWechatFile(path, message, false);
-    				message.setSysUrl(sysUrl);
+    				String path = FileUtil.getRelativePath(message, hmSign.getActivityId());
+    				FileUtil.downloadWechatFile(path, message, false);
+    				new WechatMsgCallback(path, message).execute();
+    				message.setSysUrl(path);
     				if(WechatReqMsgType.VIDEO.getCode().equals(fileType) || 
     						WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType)) {
-    					String picUrl = FileUtil.downloadWechatFile(path, message, true);
+    					String picUrl = FileUtil.getRelativePath(message, hmSign.getActivityId());
+    					FileUtil.downloadWechatFile(picUrl, message, true);
     					message.setPicUrl(picUrl);
     					message.setMsgType(WechatReqMsgType.SHORTVIDEO.getCode());
     				}

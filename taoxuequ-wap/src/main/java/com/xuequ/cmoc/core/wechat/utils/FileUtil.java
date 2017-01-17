@@ -6,9 +6,9 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -23,6 +23,7 @@ import com.xuequ.cmoc.common.enums.MimeTypeEnum;
 import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.WechatReqMsgType;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
+import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.FileUtils;
 import com.xuequ.cmoc.utils.TextUtil;
 
@@ -30,38 +31,53 @@ public class FileUtil {
 	
 	private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
 	
-	public static String downloadWechatFile(String path, WechatReceiveMessage message, Boolean isThumb) {
-		String resourceType = null;
-		if(message.getMsgType().equals(WechatReqMsgType.IMAGE.getCode())) {
-			resourceType = ResourcePathEnum.IMGE.getValue();
-		}else {
-			resourceType = ResourcePathEnum.VIDEO.getValue();
-		}
+	public static String getRelativePath(WechatReceiveMessage message, String path) {
+		String resourceType = ResourcePathEnum.IMGE.getValue();
+		String realName = message.getMsgId() + Const.DOT + "jpeg";
 		resourceType += Const.SEPARATOR + path;
 		String relativeAttachmentPath = Const.rootPath + resourceType;
+		FileUtils.createDir(relativeAttachmentPath);
+		return resourceType + Const.SEPARATOR + realName;
+	}
+	
+	public static String getRelativePath(WechatReceiveMessage message, Integer activityId) {
+		String resourceType = null;
+		String realName = null;
+		if(message.getMsgType().equals(WechatReqMsgType.IMAGE.getCode())) {
+			resourceType = ResourcePathEnum.IMGE.getValue();
+			realName = message.getMediaId() + Const.DOT + "jpeg";
+		}else {
+			resourceType = ResourcePathEnum.VIDEO.getValue();
+			realName = message.getMediaId() + Const.DOT + "mp4";
+		}
+		resourceType += Const.SEPARATOR + DateUtil.getYear(new Date()) + Const.SEPARATOR + activityId;
+		String relativeAttachmentPath = "E:/xuequ" + resourceType;//Const.rootPath + resourceType;
+		FileUtils.createDir(relativeAttachmentPath);
+		return resourceType + Const.SEPARATOR + realName;
+	}
+	
+	public static void downloadWechatFile(String path, WechatReceiveMessage message, Boolean isThumb) {
 		try {
-			FileUtils.createDir(relativeAttachmentPath);
+			logger.info("--------------------path={}, message={}", path, message);
 			String mediaId = isThumb ? message.getThumbMediaId() : message.getMediaId();
 			String wechatUrl = TextUtil.format(WechatConfigure.getInstance().getMediaDownload(), 
-					new String[]{WechatConfigure.getInstance().getAccessToken(), mediaId});
-    		URL url = new URL(wechatUrl);
+					new String[]{"nzmWjzwUfNNyxi9w248i0gCe500i5zPzVzF1I9CG174Dyfxtw0yScmCgGjV5us8vlfwYg21zMUu7CDW5_7-MdZWGxhh82RGSejesFx9BsHAUZGaAAAQVC", mediaId});
+			URL url = new URL(wechatUrl);
     		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     		conn.setRequestMethod("GET");
     		conn.setDoInput(true);
-    		String contentType = conn.getHeaderField("Content-Type");
-    		logger.info("mediaId-" + mediaId + "--contentType--" + contentType + "--desc" + conn.getHeaderField("Content-disposition"));
-    		if(contentType.indexOf(";") != -1) {
-    			contentType = contentType.substring(0, contentType.indexOf(";"));
-    		}
-    		String extName = MimeTypeEnum.getKey(contentType);
-    		String realFileName = mediaId + Const.DOT + extName;
     		// 文件保存磁盘的完整路径
-            String attachmentURL = relativeAttachmentPath + Const.SEPARATOR + realFileName;
+            String attachmentURL = "E:/xuequ" + path; // Const.rootPath + path;
             BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-            BufferedImage sourceImg = ImageIO.read(bis);
-            if(sourceImg.getWidth() > 1280) {//压缩图片
-            	reduceImg(sourceImg, attachmentURL, 1280, 960);
-            }else {
+            Boolean isImageReduce = false;
+            if(message.getMsgType().equals(WechatReqMsgType.IMAGE.getCode())) {
+            	BufferedImage sourceImg = ImageIO.read(bis);
+            	if(sourceImg.getWidth() > 1280) {//压缩图片
+            		isImageReduce = true;
+                	reduceImg(sourceImg, attachmentURL, 1280, 960);
+                }
+            }
+            if(!isImageReduce) {
             	FileOutputStream fos = new FileOutputStream(new File(attachmentURL));  
                 byte[] buf = new byte[8096];  
                 int size = 0;  
@@ -71,11 +87,9 @@ public class FileUtil {
                 bis.close();  
                 conn.disconnect();
             }
-    		return resourceType + Const.SEPARATOR + realFileName;
 		} catch (Exception e) {
 			logger.error("创建文件路径出错, error={}", e);
 		}
-		return null;
     }
 	
 	public static void reduceImg(Image src, String imgsrc, int widthdist, int heightdist) {

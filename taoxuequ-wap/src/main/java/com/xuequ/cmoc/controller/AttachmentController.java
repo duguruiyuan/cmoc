@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.ImgTypeEnum;
+import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
@@ -37,8 +38,8 @@ public class AttachmentController {
 			WechatReceiveMessage message = new WechatReceiveMessage();
 			message.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_IMAGE);
 			message.setMediaId(mediaId);
-			String path = DateUtil.getYear(new Date()) + Const.SEPARATOR + activityId;
-			String imgUrl = FileUtil.downloadWechatFile(path, message, false);
+			String imgUrl = FileUtil.getRelativePath(message, activityId);
+			FileUtil.downloadWechatFile(imgUrl, message, false);
 			if(ImgTypeEnum.MARINE.getCode().equals(imgType)) {
 				activityMarinesService.updateMarineImg(imgUrl, id);
 			}else if(ImgTypeEnum.MEMBER.getCode().equals(imgType)) {
@@ -57,9 +58,9 @@ public class AttachmentController {
         	WechatReceiveMessage message = new WechatReceiveMessage();
 			message.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_IMAGE);
 			message.setMediaId(mediaId);
-        	String path = ImgTypeEnum.ID_PHOTO.getCode();
-        	String imgUrl = FileUtil.downloadWechatFile(path, message, false);
-        	return new RspResult(StatusEnum.SUCCESS, imgUrl);
+        	String path = FileUtil.getRelativePath(message, ImgTypeEnum.ID_PHOTO.getCode());
+        	FileUtil.downloadWechatFile(path, message, false);
+        	return new RspResult(StatusEnum.SUCCESS, path);
         } catch (Exception e) {  
             LOGGER.error("--idPhotoUpload, error={}", e);  
         }
