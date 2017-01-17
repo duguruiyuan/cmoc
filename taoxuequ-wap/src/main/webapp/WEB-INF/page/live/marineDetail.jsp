@@ -155,6 +155,12 @@
 		    </div>
 		    <div class="bg-white pbb10" style="height: 3em;"></div>
 		</div>
+		<div id="hide-bg">
+			<div style="height: 10%;">
+				<a class="video-close" href="javascript:closevideo();">X</a>
+			</div>
+			<div id="start-video"></div>
+		</div>
 		<footer class="footer" style="padding:12px 10px;">
 	        <div class="btn-wrap clearfix" id="footerInner">
 	            <a href="<%=basePath %>/course/list" class="wbl-btn btn-border " id="newest">
@@ -293,26 +299,21 @@
                     		if(currPage > 0) $(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(params.page);
                     		for(var i = 0,len = data.results.length;i < len;i++){
                     			if(params.msgType == 'image') {
-                    				str += ' <li><a class="detail-a" href="javascript:;">\
+                    				str = ' <li><a class="detail-a" href="javascript:;">\
 	                    				<img src="'+imgUrl+data.results[i].sysUrl+'"/>\
 		                            </a></li> ';
 		                        }else if(params.msgType == 'shortvideo') {
-		                            str += '<li style="margin: 0 2px 10px;"><a class="detail-a" href="javascript:;">\
-		                            <video poster="' + imgUrl + data.results[i].picUrl + '" controls preload="none">\
-		                            	<source src="' + imgUrl + data.results[i].sysUrl + '">\
-		                            </video></a></li>';
-		                            //str += '<li style="margin: 0 2px 5px;"><a class="detail-a" href="javascript:;">\
-		                            //	<video id="video_'+data.results[i].msgId+'" class="video-js vjs-default-skin" controls preload="none"\
-		                            //	poster="' + imgUrl + data.results[i].picUrl + '" data-setup="{}">\
-		                            //      <source src="' + imgUrl + data.results[i].sysUrl + '" />\
-		                            //    </video></a></li>';
+			                        str = '<li style="margin: 0 2px 10px;"><div class="bubble_content" onclick="showvideo(\''+ imgUrl + data.results[i].sysUrl + '\')">\
+			                        		<div><img src="'+ basePath +'/images/vbtn.png" width="80"></div>\
+				                        	<img class="source" src="'+ imgUrl + data.results[i].picUrl +'"></div></li>';
 		                        }
+		                        if(currPage == 1 && i == 0) {
+		                    			listObj.find("ul").html(str);
+		                    		}else {
+		                    			listObj.find("ul").append(str);
+		                    		}
                     		}
-                    		if(currPage == 1) {
-                    			listObj.find("ul").html(str);
-                    		}else {
-                    			listObj.find("ul").append(str);
-                    		}
+                    		
                     		if(params.page == data.totalPage) {
                     			listObj.addClass("list-null").find(".res-more").removeClass("btn-more").addClass("loader").html('<p>没有更多了~</p>');
                     		}
@@ -473,6 +474,37 @@
 				return m;
 			}
 			
+			//显示视频播放
+		    function showvideo(vurl){
+		        $('#start-video').html("<video  width='100%' class='video embed-responsive-item' controls='controls' webkit-playsinline preload='none' id='video' src='"+vurl+"'></video>");
+		        $('#video')[0].load();
+		        $('#start-video').show();
+		        $('#hide-bg').show();
+		        $('#video')[0].play();
+
+		        $('#video')[0].addEventListener("playing", function(){ //开始播放时触发或用$('#video').on("playing", function(){})
+		            var vwidth = $('#video').width();
+		            var vheight = $('#video').height();
+		            console.info(vwidth);
+		            console.info(vheight);
+		            if(vwidth>vheight){
+		                $('#video').attr({
+		                    width: '100%'
+		                });
+		            }else{
+		                $('#video').attr({
+		                    height: '100%'
+		                });
+		            }
+		        });
+
+		    }
+		    //关闭视频播放
+		    function closevideo(){
+		        $('#start-video').hide();
+		        $('#hide-bg').hide();
+		        $('#video')[0].pause();
+		    }
 		</script>
 	</body>
 
