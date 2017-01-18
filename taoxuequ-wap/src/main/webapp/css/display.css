@@ -653,7 +653,7 @@ select.regMT-select{
 }
 .code-inner{
 	position: absolute;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	width: 260px;
 	height: 370px;
@@ -1939,7 +1939,7 @@ color: #09BB07;
 	border: 1px #00a5da solid;
 	background-color: #000;
     border-radius: 5px;
-    height: 120px;
+    height: 130px;
 }
 .bubble_content img {
     width: 100%;

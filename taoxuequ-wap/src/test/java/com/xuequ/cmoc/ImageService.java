@@ -35,15 +35,15 @@ public class ImageService {
 //		System.out.println("--------------" + (ac - ab));
 		try {
 			WechatReceiveMessage message = new WechatReceiveMessage();
-//			message.setMsgType("video");
-//			message.setMsgId("6376098832272535098");
-//			message.setMediaId("sEOBrIuNA4cF42_EAs-15KiuV-TrDMivVfCycmrWf22sZGnG2ollO1ElHJCNyJ6E");
 			message.setMsgType("image");
-			message.setMsgId("6376605217506692764");
-			message.setMediaId("EhBzXjpbkskvz9x_AUslqbAkavrjmD0A6D0WZeiCMVs2SuL9iKLsuVopvnHAozf6");
+			message.setMsgId("6376098832272535098");
+			message.setMediaId("L8rEaVdoQZwwUMnJacZVH9CIeI2KLOb0cJi4jOsPxC8qcT5eY6txIWrxjFUr9wjG");
+//			message.setMsgType("image");
+//			message.setMsgId("6376605217506692764");
+//			message.setMediaId("EhBzXjpbkskvz9x_AUslqbAkavrjmD0A6D0WZeiCMVs2SuL9iKLsuVopvnHAozf6");
 			String path = FileUtil.getRelativePath(message, 1);
-//			new WechatMsgCallback(path, message).execute();
-			FileUtil.downloadWechatFile(path, message, false);
+			new WechatMsgCallback(path, message).execute();
+//			FileUtil.downloadWechatFile(path, message, false);
 			System.out.println("success");
 		} catch (Exception e) {
 			e.printStackTrace();

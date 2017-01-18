@@ -125,27 +125,7 @@ public class WechatHander {
     	}else {
     		WechatReceiveMessage message = BeanUtils.copyAs(inputMsg, WechatReceiveMessage.class);
     		if(message != null) {
-    			String fileType = message.getMsgType();
-    			if(WechatReqMsgType.IMAGE.getCode().equals(fileType) || 
-    					WechatReqMsgType.VIDEO.getCode().equals(fileType) ||
-    					WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType) ||
-    					WechatReqMsgType.VOICE.getCode().equals(fileType)) {
-    				String path = FileUtil.getRelativePath(message, hmSign.getActivityId());
-    				FileUtil.downloadWechatFile(path, message, false);
-    				new WechatMsgCallback(path, message).execute();
-    				message.setSysUrl(path);
-    				if(WechatReqMsgType.VIDEO.getCode().equals(fileType) || 
-    						WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType)) {
-    					String picUrl = FileUtil.getRelativePath(message, hmSign.getActivityId());
-    					FileUtil.downloadWechatFile(picUrl, message, true);
-    					message.setPicUrl(picUrl);
-    					message.setMsgType(WechatReqMsgType.SHORTVIDEO.getCode());
-    				}
-    			}
-    			message.setHmSignId(hmSign.getId());
-    			message.setSysCreateTime(new Date());
-    			message.setCreateTime(new Date(inputMsg.getCreateTime()));
-    			wechatMessageService.addReceiveMessage(message);
+    			new Thread(new WechatMsgExecutor(inputMsg, hmSign, message)).start();
     			String content = PropertiesUtil.getProperty("hm_send_message");
     			content = TextUtil.format(content, new String[]{
     					WechatReqMsgType.getDesc(inputMsg.getMsgType()), hmSign.getHmName(),
@@ -273,5 +253,49 @@ public class WechatHander {
 			outputMsg.setArticles(newsList);
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
 		}
+	}
+	
+	class WechatMsgExecutor implements Runnable {
+		
+		private InputMessage inputMsg;
+		
+		private ActivityHmSign hmSign;
+		
+		private WechatReceiveMessage message;
+		
+		public WechatMsgExecutor(InputMessage inputMsg, ActivityHmSign hmSign, WechatReceiveMessage message) {
+			this.inputMsg = inputMsg;
+			this.hmSign = hmSign;
+			this.message = message;
+		}
+
+		@Override
+		public void run() {
+			try { 
+				String fileType = message.getMsgType();
+    			if(WechatReqMsgType.IMAGE.getCode().equals(fileType) || 
+    					WechatReqMsgType.VIDEO.getCode().equals(fileType) ||
+    					WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType) ||
+    					WechatReqMsgType.VOICE.getCode().equals(fileType)) {
+    				String path = FileUtil.getRelativePath(message, hmSign.getActivityId());
+    				message.setSysUrl(path);
+    				FileUtil.downloadWechatFile(path, message, false);
+    				if(WechatReqMsgType.VIDEO.getCode().equals(fileType) || 
+    						WechatReqMsgType.SHORTVIDEO.getCode().equals(fileType)) {
+    					String picUrl = FileUtil.getRelativePath(message, hmSign.getActivityId(), true);
+    					FileUtil.downloadWechatFile(picUrl, message, true);
+    					message.setPicUrl(picUrl);
+    					message.setMsgType(WechatReqMsgType.SHORTVIDEO.getCode());
+    				}
+    			}
+    			message.setHmSignId(hmSign.getId());
+    			message.setSysCreateTime(new Date());
+    			message.setCreateTime(new Date(inputMsg.getCreateTime()));
+    			wechatMessageService.addReceiveMessage(message);
+	        } catch (Exception e) { 
+	            e.printStackTrace(); 
+	        }
+		}
+
 	}
 }
