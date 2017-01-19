@@ -149,46 +149,4 @@ public class WechatController {
 		return WechatUtils.getWechatModel();
 	}
 	
-	@RequestMapping("video")
-	@ResponseBody Object video() {
-		try {
-			String xmlMsg = "<xml><ToUserName><![CDATA[gh_c171dcbc9956]]></ToUserName><FromUserName><![CDATA[oqyqUwm2vyRxWfmBLsDADu7-0ImU]]></FromUserName><CreateTime>1484695063</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[ER0FO-Vp7gGDZcy9wtBvVGvjyDB1vexXpfA2nY4eGObIArJPdFvJMBsE14V-DGnC]]></MediaId><ThumbMediaId><![CDATA[QGodKev3xVntyDs2jbcaE_Y4RDomdk2sNz_GANx4r7PXr-BVr69vM-AmHCxiCc93]]></ThumbMediaId><MsgId>6376867472504763676</MsgId></xml>";
-			// 将POST流转换为XStream对象  
-	        XStream xs = SerializeXmlUtil.createXstream();  
-	        xs.processAnnotations(InputMessage.class);  
-	        xs.processAnnotations(OutputMessage.class);  
-	        // 将指定节点下的xml节点数据映射为对象  
-	        xs.alias("xml", InputMessage.class);  
-	        // 将xml内容转换为InputMessage对象  
-	        InputMessage inputMsg = (InputMessage) xs.fromXML(xmlMsg);  
-			OutputMessage outputMsg = wechatHander.respMessage(inputMsg);
-			String respStr = xs.toXML(outputMsg);
-	        return respStr;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return e.getMessage();
-		}
-	}
-	
-	@RequestMapping("image")
-	@ResponseBody Object image() {
-		try {
-			String xmlMsg = "<xml><ToUserName><![CDATA[gh_c171dcbc9956]]></ToUserName><FromUserName><![CDATA[oqyqUwm2vyRxWfmBLsDADu7-0ImU]]></FromUserName><CreateTime>1484695063</CreateTime><MsgType><![CDATA[image]]></MsgType><MediaId><![CDATA[gUVu9zMe8D9WbQSHrNE8H63YazN4JeUe7Wn7Qv6OHOtPCn1jGd5VGrvyYf9DAKiO]]></MediaId><ThumbMediaId><![CDATA[vg-6QUhpGSD7WX2bb6PbP9vJt4G2DkRvZBhE95iJilokV-Fm2S-yRbxX5myGZ6UC]]></ThumbMediaId><MsgId>6376867661483324713</MsgId></xml>";
-			// 将POST流转换为XStream对象  
-	        XStream xs = SerializeXmlUtil.createXstream();  
-	        xs.processAnnotations(InputMessage.class);  
-	        xs.processAnnotations(OutputMessage.class);  
-	        // 将指定节点下的xml节点数据映射为对象  
-	        xs.alias("xml", InputMessage.class);  
-	        // 将xml内容转换为InputMessage对象  
-	        InputMessage inputMsg = (InputMessage) xs.fromXML(xmlMsg);  
-			OutputMessage outputMsg = wechatHander.respMessage(inputMsg);
-			String respStr = xs.toXML(outputMsg);
-	        return respStr;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return e.getMessage();
-		}
-	}
-	
 }

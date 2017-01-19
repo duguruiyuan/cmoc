@@ -52,7 +52,7 @@
   </resultMap>
   
   <select id="selectMarineByHmOpenid" resultMap="PageBaseResultMap">
-  	SELECT DISTINCT am.`id`, am.`marine_name`, am.activity_id, ai.activity_name, am.`marine_img`, 
+  	SELECT am.`id`, am.`marine_name`, am.activity_id, ai.activity_name, am.`marine_img`, 
 	am.`marine_prize`, am.`marine_slogan`, am.`comment`
 	FROM t_activity_hm_sign hs 
 	INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id` 

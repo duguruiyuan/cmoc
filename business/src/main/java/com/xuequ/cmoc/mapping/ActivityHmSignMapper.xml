@@ -210,7 +210,8 @@
 	INNER JOIN t_hollow_man_info hm ON hm.`id` = hs.`hm_id` 
 	INNER JOIN t_activity_marines am ON am.`id` = hs.`marine_id`
 	INNER JOIN t_activity_info ai ON ai.`id` = hs.`activity_id` 
-	WHERE hs.`is_delete`='N' AND hs.is_effect = 1 AND NOW() >= ai.`start_date` 
+	WHERE hs.`is_delete`='N' AND hs.is_effect = 1 AND 
+	NOW() between ai.`start_date` and DATE_ADD(ai.`end_date`, INTERVAL 6 HOUR)
 	AND hm.`openid` = #{openid,jdbcType=VARCHAR}
 	ORDER BY ai.`start_date`
 	limit 1

@@ -10,15 +10,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.common.enums.ImgTypeEnum;
 import com.xuequ.cmoc.common.enums.MimeTypeEnum;
 import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.WechatReqMsgType;
@@ -34,7 +34,7 @@ public class FileUtil {
 	
 	public static String getRelativePath(WechatReceiveMessage message, String path) {
 		String resourceType = ResourcePathEnum.IMGE.getValue();
-		String realName = message.getMsgId() + Const.DOT + "jpeg";
+		String realName = message.getMediaId() + Const.DOT + "jpeg";
 		resourceType += Const.SEPARATOR + path;
 		String relativeAttachmentPath = Const.rootPath + resourceType;
 		FileUtils.createDir(relativeAttachmentPath);
@@ -62,10 +62,9 @@ public class FileUtil {
 	
 	public static void downloadWechatFile(String path, WechatReceiveMessage message, Boolean isThumb) {
 		try {
-			logger.info("--------------------path={}, message={}", path, message);
 			String mediaId = isThumb ? message.getThumbMediaId() : message.getMediaId();
 			String wechatUrl = TextUtil.format(WechatConfigure.getInstance().getMediaDownload(), 
-					new String[]{"Kho2-Usc-E0f3u8CQmdlJ2AhDnIl6pg-BTRmBihA3yfePRM0HPP13LVlNDrYv2rxnVLStUqBEpCyVQBJa_RPMG4-fE8QcZrkvNDWt9N1Bljx9rK_nVmqgkX8XTcEocwDRYFhAEAMTA", mediaId});
+					new String[]{WechatUtils.getAccessToken(), mediaId});
 			URL url = new URL(wechatUrl);
     		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     		conn.setRequestMethod("GET");
@@ -73,9 +72,11 @@ public class FileUtil {
     		// 文件保存磁盘的完整路径
             String attachmentURL = Const.rootPath + path;
             Boolean isImageReduce = false;
+            String contentType = conn.getHeaderField("Content-Type");
+    		logger.info("-------mediaId-" + mediaId + "--contentType--" + contentType + "--desc" + conn.getHeaderField("Content-disposition"));
             BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
             if(message.getMsgType().equals(WechatReqMsgType.IMAGE.getCode())) {
-            	BufferedImage sourceImg = ImageIO.read(new BufferedInputStream(conn.getInputStream()));
+            	BufferedImage sourceImg =  javax.imageio.ImageIO.read(bis);
             	if(sourceImg.getWidth() > 1280) {//压缩图片
             		isImageReduce = true;
                 	reduceImg(sourceImg, attachmentURL, 1280, 960);
