@@ -26,13 +26,14 @@
 			<div class="banner pr">
 				<c:choose>
 					<c:when test="${activity.activityImgUrl != null && !activity.activityImgUrl.isEmpty()}">
-						<img src="${config.imgUrl }${activity.activityImgUrl}">
+						<img src="${config.imgUrl }${activity.activityImgUrl}" id="marine-name">
 					</c:when>
 					<c:otherwise>
 						<img src="<%=basePath %>/images/slider1.jpg">
 					</c:otherwise>
 				</c:choose>
 				<div class="marines-banner-title">
+					<input type="hidden" id="activity-name" value="${activity.activityName}" />
 					<div class="marines-banner-title1">${activity.activityNum }</div>
 					<div class="marines-banner-title2"><fmt:formatDate value='${activity.startDate}' pattern='yyyy-MM-dd' /> | ${activity.activityTypeValue}</div>
 				</div>
@@ -64,6 +65,16 @@
 			    </ul>
 		    </div>
 		</div>
+		<script type="text/javascript">
+			var activityName = $("#activity-name");
+			window.param = {
+				title: '我们的战队邀你来打气,你不来一下吗',
+				desc: activityName + '，战队都在这里啦。你喜欢谁就点谁，不要害羞哦。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				wZoneTitle: activityName + '，战队都在这里啦。你喜欢谁就点谁，不要害羞哦。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				imgUrl: $("#marine-name").attr("src") 
+			}
+		</script>
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 	</body>
 

@@ -1,5 +1,9 @@
 initAllDictData(false);
 
+function getShareUrl(channel) {
+	return window.location.href + "?from=" + channel;
+}
+
 function initRelation() {
 	$.ajax({
 		url : basePath + "/dict/json/dictData/compent",

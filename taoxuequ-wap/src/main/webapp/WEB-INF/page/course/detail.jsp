@@ -21,9 +21,9 @@
 			陶学趣
 		</header>
 		<div class="course-img mt44">
-			<img src="${config.imgUrl }${course.courseImg }">
+			<img src="${config.imgUrl }${course.courseImg }" id="course-img">
 		</div>
-		<div class="course-title">
+		<div class="course-title" id="course-name">
 			${course.courseName }
 		</div>
 		<div class="wrapper">
@@ -79,6 +79,15 @@
 	            <a href="<%=basePath %>/course/sign/${course.id}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
 	        </div>
 	    </footer>
+	    <script type="text/javascript">
+	    	window.param = {
+				title: $("#course-name").html() + ', 点我来了解我的精彩',
+				desc: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				wZoneTitle: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				imgUrl: $("#course-img").attr("src") 
+			}
+		</script>
+		<script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			

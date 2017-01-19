@@ -18,36 +18,36 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 public class ImageService {
 
 	public static void main(String[] args) {
-//		File file = new File("C:\\Users\\000001436\\Documents\\aab");
-//		String filepath = file.getPath();
-//		if (file.isDirectory()) {
-//            String[] filelist = file.list();
-//            for (int i = 0; i < filelist.length; i++) {
-//            	String path = filepath + "\\" + filelist[i];
-//            	reduceImg(path, 1280, 960);    
-//            }
-//            System.out.println("success");
-//		}
+		File file = new File("C:\\Users\\000001436\\Documents\\Axure\\活动");
+		String filepath = file.getPath();
+		if (file.isDirectory()) {
+            String[] filelist = file.list();
+            for (int i = 0; i < filelist.length; i++) {
+            	String path = filepath + "\\" + filelist[i];
+            	reduceImg(path, 1280, 960);    
+            }
+            System.out.println("success");
+		}
 //		long ab = new Date().getTime();
 //		String src = "C:\\Users\\000001436\\Downloads\\Fo6hZaOsqQlsLWcr0k7GoZICq3sM9cKpYh6Ce44f1N34l1_nualUU15HZZF9wfX2.jpeg";
 //		reduceImg(src, 1280, 960);
 //		long ac = new Date().getTime();
 //		System.out.println("--------------" + (ac - ab));
-		try {
-			WechatReceiveMessage message = new WechatReceiveMessage();
-			message.setMsgType("image");
-			message.setMsgId("6376098832272535098");
-			message.setMediaId("L8rEaVdoQZwwUMnJacZVH9CIeI2KLOb0cJi4jOsPxC8qcT5eY6txIWrxjFUr9wjG");
+//		try {
+//			WechatReceiveMessage message = new WechatReceiveMessage();
 //			message.setMsgType("image");
-//			message.setMsgId("6376605217506692764");
-//			message.setMediaId("EhBzXjpbkskvz9x_AUslqbAkavrjmD0A6D0WZeiCMVs2SuL9iKLsuVopvnHAozf6");
-			String path = FileUtil.getRelativePath(message, 1);
-			new WechatMsgCallback(path, message).execute();
-//			FileUtil.downloadWechatFile(path, message, false);
-			System.out.println("success");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//			message.setMsgId("6376098832272535098");
+//			message.setMediaId("L8rEaVdoQZwwUMnJacZVH9CIeI2KLOb0cJi4jOsPxC8qcT5eY6txIWrxjFUr9wjG");
+////			message.setMsgType("image");
+////			message.setMsgId("6376605217506692764");
+////			message.setMediaId("EhBzXjpbkskvz9x_AUslqbAkavrjmD0A6D0WZeiCMVs2SuL9iKLsuVopvnHAozf6");
+//			String path = FileUtil.getRelativePath(message, 1);
+//			new WechatMsgCallback(path, message).execute();
+////			FileUtil.downloadWechatFile(path, message, false);
+//			System.out.println("success");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public static void reduceImg(String imgsrc, int widthdist, int heightdist) {        

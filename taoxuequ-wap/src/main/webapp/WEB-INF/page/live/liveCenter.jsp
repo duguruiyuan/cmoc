@@ -36,7 +36,6 @@
 	 			<p>玩命加载中<span></span><span></span><span></span></p>
 	 		</div>
 		</div>
-		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<script id="table-template" type="text/x-handlebars-template">
 				{{#if results}}
  				  {{#each results}}
@@ -58,6 +57,15 @@
 					<div style="text-align: center;padding-top: 55px;">亲，暂无活动哦</div>
 				{{/if}}
 		  </script>
+		<script type="text/javascript">
+			window.param = {
+				title: '陶学趣,专注于青少年社会实践教育',
+				desc: '我们在直播大厅等你，不见不散 🐳 💝 📷。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				wZoneTitle: '邀您来看直播 🐳 💝 📷。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				imgUrl: '<%=basePath %>/images/whead.png' 
+			}
+		</script>
+		<jsp:include page="/WEB-INF/page/common/_footer.jsp" /> 
 		<script type="text/javascript">
 			$(function(){
 				var picListWrap = $(".mui-content");

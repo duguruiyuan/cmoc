@@ -26,6 +26,7 @@
 		    <div class="bg-white pbb10">
 			    <div class="liveDetail-title">
 			    	<input type="hidden" id="marineId" value="${marine.id }"/>
+			    	<input type="hidden" id="marineName" value="${marine.marineName }"/>
 			    	<input type="hidden" id="marineImg" value="${config.imgUrl }${marine.marineImg }"/>
 			    	<input type="hidden" id="supportQrcodeUrl" value="${marine.supportQrcodeUrl }" />
 			    	<h1>${marine.marineName }</h1>
@@ -169,6 +170,16 @@
 	            <a href="<%=basePath %>/course/detail/${marine.productId}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
 	        </div>
 	    </footer>
+	    <script type="text/javascript">
+	    	var marineName = $("#marineName").val();
+			window.param = {
+				title: '快来啊，' + marineName + "急需火力支援",
+				desc: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
+				wZoneTitle: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
+				imgUrl: $("#marineImg").val() 
+			}
+		</script>
+		<script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
 				var picListWrap = $(".liveDetail-list-content");

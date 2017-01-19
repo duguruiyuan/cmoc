@@ -74,6 +74,14 @@
 						<div style="text-align: center;padding-top: 35px;">亲，暂无课程哦</div>
 					{{/if}}
 				</script>
+		<script type="text/javascript">
+		   window.param = {
+				title: '陶学趣,专注青少年社会实践教育',
+				desc: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				wZoneTitle: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+				imgUrl: '<%=basePath %>/images/whead.png' 
+			}
+		</script>
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<script type="text/javascript">
 			$(function() {
