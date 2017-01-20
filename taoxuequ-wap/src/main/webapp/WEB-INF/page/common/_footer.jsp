@@ -6,7 +6,6 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>
-<link href="<%=basePath %>/css/font-awesome.min.css" rel="stylesheet">
 <script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 
 <div class="add"></div>

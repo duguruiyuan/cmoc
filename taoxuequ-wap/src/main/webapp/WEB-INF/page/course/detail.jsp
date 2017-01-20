@@ -17,7 +17,7 @@
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />
 <body class="course-detail">
 		<header class="header">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #fff;"></a>
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" href="<%=basePath%>/course"></a>
 			陶学趣
 		</header>
 		<div class="course-img mt44">

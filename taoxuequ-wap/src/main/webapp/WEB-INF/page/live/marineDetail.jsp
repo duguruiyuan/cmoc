@@ -18,7 +18,7 @@
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body id="liveDetail">
 		<header class="header">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #fff;"></a>
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" href="<%=basePath%>/live/marine/list/${marine.activityId }"></a>
 		    	战队直播
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
@@ -157,8 +157,8 @@
 		    <div class="bg-white pbb10" style="height: 3em;"></div>
 		</div>
 		<div id="hide-bg">
-			<div style="height: 10%;">
-				<a class="video-close" href="javascript:closevideo();">X</a>
+			<a class="video-close" href='javascript:closevideo()'><i class="fa fa-times"></i></a>
+			<div id="step-box">
 			</div>
 			<div id="start-video"></div>
 		</div>
@@ -259,6 +259,10 @@
 				$("body").on("click", ".code-btn", function(){
 					$(".code").remove();
 				})
+				$("#list2").on("click", ".bubble_content img", function() {
+					var currId = $(this).closest("li").attr("id");
+					showvideo(currId);
+				})
 			});
 			
 				function moreResItem() {
@@ -314,7 +318,8 @@
 	                    				<img src="'+imgUrl+data.results[i].sysUrl+'"/>\
 		                            </a></li> ';
 		                        }else if(params.msgType == 'shortvideo') {
-			                        str = '<li style="margin: 0 2px 10px;"><div class="bubble_content" onclick="showvideo(\''+ imgUrl + data.results[i].sysUrl + '\')">\
+			                        str = '<li style="margin: 0 2px 10px;" id="vid_'+ data.results[i].msgId +'" video-url="'+ imgUrl + data.results[i].sysUrl +'">\
+			                        		<div class="bubble_content">\
 			                        		<div><img src="'+ basePath +'/images/vbtn.png" width="80"></div>\
 				                        	<img class="source" src="'+ imgUrl + data.results[i].picUrl +'"></div></li>';
 		                        }
@@ -486,8 +491,32 @@
 			}
 			
 			//显示视频播放
-		    function showvideo(vurl){
-		        $('#start-video').html("<video  width='100%' class='video embed-responsive-item' controls='controls' webkit-playsinline preload='none' id='video' src='"+vurl+"'></video>");
+		    function showvideo(currId){
+				var videoContent = "<video  width='100%' class='video' controls='controls' preload='none' id='video' src='"+$("#" + currId).attr("video-url")+"'></video>"
+		        var stepBox = "";
+				var prev = $("#" + currId ).prev();
+				var next = $("#" + currId ).next();
+				var lis = $("#" + currId ).closest("ul").find("li");
+				var idx = 1;
+				for(var i = 0; i < lis.length; i++) {
+					if(lis[i].id == currId){
+						idx = i+1;
+						break;
+					}
+				}
+				if(prev.length > 0) {
+					stepBox += "<a href='javascript:showvideo(\"" + prev.attr("id") + "\");'><i class='fa fa-step-backward'></i></a>";
+		        }else {
+		        	stepBox += "<a href='javascript:void(0)' style='color: #777272'><i class='fa fa-step-backward'></i></a>";
+		        }
+				stepBox += "<a href='javascript:void(0)' style='font-size: 18px;'>" + idx + "/" + lis.length + "</a>";
+				if(next.length > 0) {
+					stepBox += "<a href='javascript:showvideo(\"" + next.attr("id") + "\");'><i class='fa fa-step-forward'></i></a>";
+				}else {
+					stepBox += "<a href='javascript:void(0)' style='color: #777272'><i class='fa fa-step-forward'></i></a>";
+				}
+				$('#start-video').html(videoContent);
+				$('#step-box').html(stepBox);
 		        $('#video')[0].load();
 		        $('#start-video').show();
 		        $('#hide-bg').show();
@@ -496,8 +525,6 @@
 		        $('#video')[0].addEventListener("playing", function(){ //开始播放时触发或用$('#video').on("playing", function(){})
 		            var vwidth = $('#video').width();
 		            var vheight = $('#video').height();
-		            console.info(vwidth);
-		            console.info(vheight);
 		            if(vwidth>vheight){
 		                $('#video').attr({
 		                    width: '100%'

@@ -39,8 +39,13 @@
 						'onMenuShareQQ',
 						'onMenuShareQZone',
 						'onMenuShareWeibo',
+						'hideMenuItems',
+						'showMenuItems',
+						'hideAllNonBaseMenuItem',
+						'showAllNonBaseMenuItem'
 		            ]
 		      });
+			  window.param = {};
 			  var currUrl = window.location.href;
 			  if(!(currUrl.indexOf(basePath1 + "/live") == 0 || currUrl.indexOf(basePath1 + "/course") == 0)) {
 				  window.param = {
@@ -48,6 +53,10 @@
 						desc: '陶学趣欢迎您光临！不要问我凭什么：趣看看 🙋',
 						wZoneTitle: '陶学趣,专注于青少年社会实践教育,欢迎您光临！不要问我凭什么：趣看看 🙋',
 						imgUrl: basePath + '/images/whead.png' 
+				  }
+			  }else {
+				  if(currUrl.indexOf(basePath1 + "/course/sign") == 0 || currUrl.indexOf(basePath1 + "/pay") == 0) {
+					  wx.hideOptionMenu();
 				  }
 			  }
 			  	wx.onMenuShareTimeline({//分享到朋友圈

@@ -1546,6 +1546,8 @@ color: #09BB07;
 }
 .header .mui-icon{
 	line-height: 2;
+	color: #fff;
+    padding-left: 10px;
 }
 .head_bg {
 	width: 100%;
@@ -1931,9 +1933,9 @@ color: #09BB07;
 
 .bubble_content div {
 	position: absolute;
-	top:40%;
-	left:38%;
-	right:38%;
+	top: 36%;
+	left: 30%;
+	right: 30%;
 }
 .bubble_content .source {
 	border: 1px #00a5da solid;
@@ -1970,7 +1972,20 @@ color: #09BB07;
     height: 80%;
 }
 .video-close{
-	padding: 0px 15px 0;
-    line-height: 44px;
+	padding: 10px 30px 0;
+    line-height: 30px;
     color: #fff;
+    font-size: 22px;
+    display: block;
+}
+#step-box{
+	height: 40px;
+	text-align: center;
+}
+#step-box a{
+    color: #fff;
+    line-height: 25px;
+    text-decoration: none;
+    font-size: 25px;
+    padding: 0 30px;
 }

@@ -19,7 +19,7 @@
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" href="<%=basePath%>/live"></a>
 		    <h1 class="mui-title">战队列表</h1>
 		</header>
 		<div class="mui-content mt44">
@@ -66,7 +66,7 @@
 		    </div>
 		</div>
 		<script type="text/javascript">
-			var activityName = $("#activity-name");
+			var activityName = $("#activity-name").val();
 			window.param = {
 				title: '我们的战队邀你来打气,你不来一下吗',
 				desc: activityName + '，战队都在这里啦。你喜欢谁就点谁，不要害羞哦。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
@@ -74,7 +74,6 @@
 				imgUrl: $("#marine-name").attr("src") 
 			}
 		</script>
-		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 	</body>
 
