@@ -4,3 +4,6 @@ http://www.foxsem.com/emoji/
 ##数据库登录账户
 test@hardword2017
 update@hardword2017
+
+##直播云
+https://developer.qiniu.com/kodo/sdk/java

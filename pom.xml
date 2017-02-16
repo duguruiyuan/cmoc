@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.xuequ.cmoc</groupId>
@@ -13,6 +14,7 @@
   	<business.version>1.0.0</business.version>
   	<service.version>1.0.0</service.version>
   	<tools.version>1.0.0</tools.version>
+  	<hqm-live.version>1.0.0</hqm-live.version>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<spring.version>4.0.6.RELEASE</spring.version>
 	<spring.security.version>3.2.5.RELEASE</spring.security.version>
@@ -230,6 +232,7 @@
   	<module>taoxuequ-web</module>
   	<module>business</module>
   	<module>taoxuequ-wap</module>
+    <module>hqm-live</module>
   </modules>
 	
 </project>
