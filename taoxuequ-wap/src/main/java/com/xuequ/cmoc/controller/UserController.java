@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ImgGroup;
+import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.view.ChildActRecordView;
@@ -34,18 +35,15 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("bind")
 	public String bind(Model model) {
-		String openid = request.getParameter("id");
-		int count = parentInfoService.selectCountByOpenid(openid);
+		WechatUserInfo userInfo = getWechatUserInfo();
+		int count = parentInfoService.selectCountByOpenid(userInfo.getOpenid());
 		if(count > 0) {
-			List<ChildActRecordView> list = parentInfoService.selectChildActRecord(openid);
+			List<ChildActRecordView> list = parentInfoService.selectChildActRecord(userInfo.getOpenid());
 			model.addAttribute("list", list);
 		}
 		model.addAttribute("isBind", count > 0 ? true : false);
-		model.addAttribute("openid", openid);
-		ImgGroup group = new ImgGroup();
-		group.setPosition("1");
-		group.setShelves(1);
-		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
+		model.addAttribute("openid", userInfo.getOpenid());
+		topBannerList(model);
 		return "user/bind";
 	}
 	
@@ -69,7 +67,6 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("points")
 	public String points(Model model) {
-		String openid = request.getParameter("id");
 		model.addAttribute("list", null);
 		return "user/points";
 	}
@@ -99,10 +96,7 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("collection")
 	public String collection(Model model) {
-		ImgGroup group = new ImgGroup();
-		group.setPosition("1");
-		group.setShelves(1);
-		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
+		topBannerList(model);
 		return "user/collection";
 	}
 	

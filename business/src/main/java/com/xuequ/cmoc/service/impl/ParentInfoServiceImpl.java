@@ -48,6 +48,7 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 			return new RspResult(StatusEnum.PARENT_BIND_ERROR);
 		}
 		parentInfo.setFamilyNo(signInfo.getFamilyNo());
+		parentInfo.setParentMobile(parentInfo.getSignMobile());
 		parentInfoMapper.insertSelective(parentInfo);
 		return new RspResult(StatusEnum.SUCCESS);
 	}

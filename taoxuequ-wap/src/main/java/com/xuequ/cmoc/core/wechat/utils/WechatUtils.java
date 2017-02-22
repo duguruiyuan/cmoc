@@ -232,6 +232,10 @@ public class WechatUtils {
 		return null;
 	}
 	
+	/**
+	 * 获取图文素材
+	 * @return
+	 */
 	private static List<ArticleItem> getMaterialMediaList() {
 		List<ArticleItem> newsList = new ArrayList<>();
 		try {
@@ -261,6 +265,11 @@ public class WechatUtils {
 		return newsList;
 	}
 	
+	/**
+	 * 获取短链接
+	 * @param longUrl
+	 * @return
+	 */
 	public static String getShortUrl(String longUrl){
 		try {
 			WechatModel model = WechatUtils.getWechatModel();

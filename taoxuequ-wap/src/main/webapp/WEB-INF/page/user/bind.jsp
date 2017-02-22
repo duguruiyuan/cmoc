@@ -19,16 +19,17 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">用户绑定</h1>
+		    <h1 class="mui-title"><c:choose>
+		    		<c:when test="${isBind }">我的关注</c:when>
+		    		<c:otherwise>用户绑定</c:otherwise>
+		    		</c:choose>
+		    </h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
 		<div class="mui-content">
 		    <div>
 		    	<c:choose>
 		    		<c:when test="${isBind }">
-		    			<div class="mui-input-row">
-				            <p style="padding: 15px 0px 0px 20px;">您已绑定</p>
-				        </div>
 				        <div class="mui-input-row">
 				        	<div style="padding:10px 20px 0px;font-size: 14px;">
 				        		<i class="fa fa-list-ol"></i> 小孩活动体验列表

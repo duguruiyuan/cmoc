@@ -20,6 +20,7 @@ import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.model.WechatSnsUserInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
@@ -151,6 +152,17 @@ public class BaseController {
 		model.addAttribute("snsToken", snsToken);
 		model.addAttribute("userInfo", userInfo);
 		return viewUrl;
+	}
+	
+	/**
+	 * 头部广告
+	 * @param model
+	 */
+	public void topBannerList(Model model) {
+		ImgGroup group = new ImgGroup();
+		group.setPosition("1");
+		group.setShelves(1);
+		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 	}
 	
 }

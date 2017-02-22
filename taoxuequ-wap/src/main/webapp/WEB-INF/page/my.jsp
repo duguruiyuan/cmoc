@@ -28,7 +28,7 @@
 			</div>
 		    <ul class="mui-table-view mb10" style="color: #614b4b;">
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/bind?id=${userInfo.openid}">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/bind">
 	                   用户绑定
 	                </a>
 	            </li>
@@ -38,17 +38,17 @@
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/points?id=${userInfo.openid}">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/points">
 	                     学习积分
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/buyRecord?id=${userInfo.openid}">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/buyRecord">
 	                     购买记录
 	                </a>
 	            </li>
 	            <li class="mui-table-view-cell">
-	                <a class="mui-navigate-right" href="<%=basePath%>/user/collection?id=${userInfo.openid}">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/collection">
 	                     个人收藏
 	                </a>
 	            </li>

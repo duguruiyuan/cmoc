@@ -22,7 +22,7 @@ public class AttachService extends BaseTest {
 	@Test
 	public void upload() {
 		try {
-			String xmlMsg = "<xml><ToUserName><![CDATA[gh_c171dcbc9956]]></ToUserName><FromUserName><![CDATA[oqyqUwm2vyRxWfmBLsDADu7-0ImU]]></FromUserName><CreateTime>1484695063</CreateTime><MsgType><![CDATA[video]]></MsgType><MediaId><![CDATA[sEOBrIuNA4cF42_EAs-15KiuV-TrDMivVfCycmrWf22sZGnG2ollO1ElHJCNyJ6E]]></MediaId><ThumbMediaId><![CDATA[vg-6QUhpGSD7WX2bb6PbP9vJt4G2DkRvZBhE95iJilokV-Fm2S-yRbxX5myGZ6UC]]></ThumbMediaId><MsgId>6376716740627501589</MsgId></xml>";
+			String xmlMsg = "<xml><ToUserName><![CDATA[gh_c171dcbc9956]]></ToUserName><FromUserName><![CDATA[oqyqUwq_YY84qjFWUtn6Ti4XIROE]]></FromUserName><CreateTime>1487755107</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[CLICK]]></Event><EventKey><![CDATA[transfer_customer_service]]></EventKey></xml>";
 			// 将POST流转换为XStream对象  
 	        XStream xs = SerializeXmlUtil.createXstream();  
 	        xs.processAnnotations(InputMessage.class);  

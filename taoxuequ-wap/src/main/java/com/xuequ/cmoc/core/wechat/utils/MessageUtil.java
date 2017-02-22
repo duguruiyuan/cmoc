@@ -47,6 +47,9 @@ public final class MessageUtil {
     public static final String RESP_MESSAGE_TYPE_MUSIC = "music";
     // 响应消息类型：图文
     public static final String RESP_MESSAGE_TYPE_NEWS = "news";
+    //响应消息类型：多客服转发
+    public static final String RESP_TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
+    
     
     //临时二维码
     public static final String QR_SCENE = "QR_SCENE";

@@ -99,6 +99,11 @@ public class InputMessage implements Serializable {
     //地理位置精度
     @XStreamAlias("Precision")
     private String precision;
+    
+    //客服账号
+    @XStreamAlias("KfAccount")
+    private String kfAccount;
+    
 	public String getToUserName() {
 		return toUserName;
 	}
@@ -254,6 +259,12 @@ public class InputMessage implements Serializable {
 	}
 	public void setMenuId(String menuId) {
 		this.menuId = menuId;
+	}
+	public String getKfAccount() {
+		return kfAccount;
+	}
+	public void setKfAccount(String kfAccount) {
+		this.kfAccount = kfAccount;
 	}
 	
 }

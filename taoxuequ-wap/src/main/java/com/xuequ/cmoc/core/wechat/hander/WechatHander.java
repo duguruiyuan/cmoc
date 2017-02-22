@@ -16,7 +16,6 @@ import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.message.ArticleItem;
 import com.xuequ.cmoc.core.wechat.message.InputMessage;
 import com.xuequ.cmoc.core.wechat.message.OutputMessage;
-import com.xuequ.cmoc.core.wechat.thread.WechatMsgCallback;
 import com.xuequ.cmoc.core.wechat.utils.FileUtil;
 import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
@@ -162,8 +161,12 @@ public class WechatHander {
 				outputMsg.setArticles(newsList);
 			}
 		}else {
-			outputMsg.setContent("欢迎光临陶学趣");
-	        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+			if(inputMsg.getContent().equals("客服")) {
+				outputMsg.setMsgType(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE);
+			}else {
+				outputMsg.setContent("欢迎光临陶学趣");
+		        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+			}
 		}
 	}
 	
@@ -252,6 +255,8 @@ public class WechatHander {
 			outputMsg.setArticleCount(newsList.size());
 			outputMsg.setArticles(newsList);
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+		}else if(inputMsg.getEventKey().equals(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE)) {
+			outputMsg.setMsgType(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE);
 		}
 	}
 	
