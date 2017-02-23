@@ -210,6 +210,12 @@ function signResourceFormat(v) {
 	return "";
 }
 
+function signWayFormat(v) {
+	if(v == 0) return "单人";
+	if(v == 1) return "组队";
+	return "";
+}
+
 function shelvesFormat(v) {
 	if(v == 0) return "<span style='color:#f3450f'>待审核</span>";
 	if(v == 1) return "已上架";

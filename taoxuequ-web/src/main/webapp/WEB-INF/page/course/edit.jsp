@@ -45,12 +45,15 @@
 							<input class="form-control" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'strStartDate\')}',readOnly:true})" name="strEndDate" id="strEndDate">
 						</div>
 						<div class="form-group col-md-6">
-							<label for="activityAddr">总价</label>								
-							<input class="form-control" name="totalPrice" id="totalPrice">
+							<label for="city">报名方式</label>								
+							<select class="form-control" name="signWay" id="signWay">
+								<option value="0">单人</option>
+								<option value="1">组队</option>
+							</select>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="activityAddr">优惠价</label>								
-							<input class="form-control" name="activityPrice" id="activityPrice">
+							<label for="activityAddr">总价</label>								
+							<input class="form-control" name="totalPrice" id="totalPrice">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="activityAddr">预约金</label>								
@@ -121,6 +124,7 @@
 					$("#courseName").val(data.courseName);
 					$("#courseNum").val(data.courseNum);
 					$("#courseType").val(data.courseType);
+					$("#signWay").val(data.signWay);
 					$("#city").val(data.city);
 					$("#addr").val(data.addr);
 					$("#strStartDate").val(getTime(data.startDate, "yyyy-MM-dd hh:mm"));
@@ -164,6 +168,9 @@
 					endDate : {
 						required : true,
 						date:true
+					},
+					signWay : {
+						required : true
 					},
 					resAmount : {
 						required : true,

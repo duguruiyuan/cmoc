@@ -10,7 +10,7 @@ public class MediaListReq implements Serializable {
 	
 	private int offset = 0;
 	
-	private int count = 4;
+	private int count = 6;
 
 	public String getType() {
 		return type;

@@ -162,7 +162,7 @@ public class WechatHander {
 			}
 		}else {
 			if(inputMsg.getContent().equals("客服")) {
-				outputMsg.setMsgType(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE);
+				customerService(outputMsg);
 			}else {
 				outputMsg.setContent("欢迎光临陶学趣");
 		        outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
@@ -256,8 +256,19 @@ public class WechatHander {
 			outputMsg.setArticles(newsList);
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
 		}else if(inputMsg.getEventKey().equals(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE)) {
-			outputMsg.setMsgType(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE);
+			customerService(outputMsg);
 		}
+	}
+	
+	private void customerService(OutputMessage outputMsg) {
+		 Date now = new Date();
+		 int hours = now.getHours();
+         if(!(hours >= 9 && hours < 18)) {
+        	 outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+        	 outputMsg.setContent("非常抱歉，我们的客服工作时间是：09:00-18:00！谢谢谢您的理解");
+         }else {
+        	 outputMsg.setMsgType(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE); 
+         }
 	}
 	
 	class WechatMsgExecutor implements Runnable {

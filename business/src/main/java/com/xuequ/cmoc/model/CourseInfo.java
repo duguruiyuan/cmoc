@@ -48,6 +48,8 @@ public class CourseInfo implements Serializable {
     private byte[] courseDetails;
     
     private String courseImg;
+    
+    private Integer signWay;
 
     private static final long serialVersionUID = 1L;
 
@@ -225,6 +227,14 @@ public class CourseInfo implements Serializable {
 
 	public void setCourseImg(String courseImg) {
 		this.courseImg = courseImg;
+	}
+
+	public Integer getSignWay() {
+		return signWay;
+	}
+
+	public void setSignWay(Integer signWay) {
+		this.signWay = signWay;
 	}
     
     

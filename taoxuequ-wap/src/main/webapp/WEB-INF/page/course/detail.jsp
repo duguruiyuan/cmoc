@@ -26,34 +26,51 @@
 		<div class="course-title" id="course-name">
 			${course.courseName }
 		</div>
-		<div class="wrapper">
-	        <div class="box">
-	            <div class="f_le">
-	               	 课程价格：<span class="price">¥<label>${course.totalPrice }</label></span>
-	            </div>
-	            <div class="clear"></div>
-	        </div>
-	        <div class="barT">
-	            <ul>
-	                <li>
-	                    <span class="price_gray">¥<label>${course.totalPrice }</label></span>
-	                    <br> 课程价格
-	                    <i class="split"></i>
-	                </li>
-	                <li>
-	                    <span class="price_gray">¥<label>${course.resAmount }</label></span>
-	                    <br> 预约金
-	                    <i class="split"></i>
-	                </li>
-	                <li>
-	                    <span class="price_gray"><label>${course.peoples }</label>人</span>
-	                    <br> 已预约家长
-	                    <i class="split"></i>
-	                </li>
-	            </ul>
-	        </div>
-	
-	    </div>
+		<c:choose>
+        	<c:when test="${course.signWay == 1 }">
+        	 <div class="pl10">
+        		 	课程价格：<span class="price">¥<label>${course.totalPrice }</label> 组/5人</span>
+          	 </div>
+          	 <div class="clearfix mt10 dbb">
+          	 	 <p><i class="fa fa-universal-access" style="font-size: 17px;color: #E95800;"></i> 适合7~12岁儿童参加</p>
+                  <p><i class="fa fa-clock-o" style="font-size: 18px;color: #E95800;"></i> </p>
+                  <p><i class="fa fa-map-marker" style="font-size: 18px;color: #E95800;"></i> ${course.addr }</p>
+              </div>
+              <div class="dbb">
+              	<div class="fem12 lh25">选期参与</div>
+              	
+              </div>
+        	</c:when>
+        	<c:otherwise>
+	         	<div class="wrapper">
+		          	<div class="box">
+			            <div class="f_le">
+			               	 课程价格：<span class="price">¥<label>${course.totalPrice }</label><c:if test="${course.signWay == 1 }"> 组/5人</c:if></span>
+			            </div>
+			            <div class="clear"></div>
+			        </div>
+			        <div class="barT">
+			          	<ul>
+			              	<li>
+			                   <span class="price_gray">¥<label>${course.totalPrice }</label></span>
+			                   <br> 课程价格
+			                   <i class="split"></i>
+			               </li>
+			             		<li>
+			                   <span class="price_gray">¥<label>${course.resAmount }</label></span>
+			                   <br> 预约金
+			                   <i class="split"></i>
+			               </li>
+			               <li>
+			                   <span class="price_gray"><label>${course.peoples }</label>人</span>
+			                   <br> 已预约家长
+			                   <i class="split"></i>
+			               </li>
+			             </ul>
+			         </div>
+	       		</div>
+        	</c:otherwise>
+        </c:choose>
 		<div class="course-tab">
 			<ul>
 				<li class="cur">课程详情</li>

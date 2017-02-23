@@ -1,6 +1,6 @@
-﻿.mt10{
-	margin-top: 10px;
-}
+﻿.mt10{margin-top: 10px;}
+.mt15{margin-top: 15px;}
+.mt20{margin-top: 20px;}
 .mb10{
 	margin-bottom: 10px;
 }
@@ -1988,4 +1988,15 @@ color: #09BB07;
     text-decoration: none;
     font-size: 25px;
     padding: 0 30px;
+}
+
+.pl10{padding-left: 10px}
+.fem15{font-size: 1.5em;}
+.fem12{font-size: 1.2em;}
+.lh25{line-height: 25px;}
+.lh18{line-height: 18px;}
+.lh16{line-height: 16px;}
+.dbb{
+	border-bottom: 2px solid #ECE9E9;
+    padding: 10px;
 }

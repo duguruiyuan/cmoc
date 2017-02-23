@@ -73,7 +73,7 @@
 		<!-- access的请求直接放过，无需session验证，常用在api,通知等接口 -->
 		<init-param>
 			<param-name>noAccess</param-name>
-			<param-value>/my;/hm/;/live/marine/detail;/course/sign;/pay</param-value>
+			<param-value>/user/;/my;/hm/;/live/marine/detail;/course/sign;/pay</param-value>
 		</init-param>
 		<init-param>
 			<param-name>characterEncoding</param-name>

@@ -79,6 +79,14 @@ function loadData() {
 				return dictDataFormat('course_type', value);
 			}
 		}, {
+			field : 'signWay',
+			title : '报名方式',
+			align : "center",
+			resizable : true,
+			formatter : function(value) {
+				return signWayFormat(value);
+			}
+		}, {
 			field : 'city',
 			title : '城市',
 			align : "center",

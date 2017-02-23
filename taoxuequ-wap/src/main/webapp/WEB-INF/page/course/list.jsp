@@ -56,8 +56,13 @@
 				                    <ul class="simple-info" style="border-bottom-style: none; margin-bottom: 0px;">
 				                        <li style="margin-bottom: 0px;">
 				                            <a href="javascript:;" class="item-link cleardix" style="text-align: left;">
-				                                <div class="z-price fl" style="display: inline-block; margin-right: 10px;"><i>课程学费：</i><i class="thjg">¥{{totalPrice }}</i></div>
-				                                <div class="jd-point fr" style="display: inline-block; margin-right: 10px;"><i>已报名家长：</i><i class="yuyue">{{peoples }}人</i></div>
+												{{#equal signWay 1}}
+													<div class="z-price fl" style="display: inline-block; margin-right: 10px;"><i>课程学费：</i><i class="thjg">¥{{totalPrice }}</i>{{#equal signWay 1}} 组/5人{{/equal}}</div>
+				                                	<div class="jd-point fr" style="display: inline-block; margin-right: 10px;"><i>已报名组数：</i><i class="yuyue">{{peoples }}组</i></div>
+												{{else}}
+													<div class="z-price fl" style="display: inline-block; margin-right: 10px;"><i>课程学费：</i><i class="thjg">¥{{totalPrice }}</i></div>
+				                                	<div class="jd-point fr" style="display: inline-block; margin-right: 10px;"><i>已报名家长：</i><i class="yuyue">{{peoples }}人</i></div>
+												{{/equal}}
 				                            </a>
 				                        </li>
 				                    </ul>
@@ -120,6 +125,20 @@
 				        
 				        Handlebars.registerHelper("cityFormat", function(val) {
 				    		return dictDataFormat("city", val);
+				    	});
+				        
+				        Handlebars.registerHelper("equal", function(v1,v2,options) {
+				    		if(v1 == v2) {
+				    			//满足添加继续执行
+				    			return options.fn(this);
+				    		}else {
+				    			//不满足条件执行{{else}}部分
+				    			return options.inverse(this);
+				    		}
+				    	});
+				        
+				        Handlebars.registerHelper("plusFormat", function(v1, v2) {
+				    		return parseInt(v1) * parseInt(v2);
 				    	});
 				        
 				        Handlebars.registerHelper("courseDateFormat", function(startDate, endDate) {
