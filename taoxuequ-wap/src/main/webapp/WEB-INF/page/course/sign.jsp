@@ -81,7 +81,6 @@
 		<button type="button" id="regMT-btn">下一步</button>
 	</div>
 	<script type="text/javascript">
-		initSnsToken();
 		initRelation();
 		$(function(){
 			$("input[name='isDisease']").change(function() {
@@ -162,10 +161,6 @@
 			 	});
 			})
 		})
-		function initSnsToken() {
-			var snsToken = '${snsToken}';
-			setAccessToken(snsToken);
-		}
 	</script>
 </body>
 </html>

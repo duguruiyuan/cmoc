@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
+import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
+import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
 import com.xuequ.cmoc.view.CourseBuyerView;
@@ -38,6 +38,8 @@ public class CourseController extends BaseController {
 	private Logger logger = LoggerFactory.getLogger(CourseController.class);
 	@Autowired
 	private ICourseService courseService;
+	@Autowired
+	private IActivityService activityService;
 	
 	@RequestMapping(value={"","/","list"})
 	public String courseList(Model model) {
@@ -64,6 +66,9 @@ public class CourseController extends BaseController {
 		CourseListView courseInfo = courseService.selectCourseDetail(courseId);
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("desc", new String(courseInfo.getCourseDetails(),"UTF-8"));
+		if(courseInfo.getSignWay() == 1) {
+			model.addAttribute("schuduList", courseService.selectScheduActivityInfoByCourseId(courseId));
+		}
 		return "course/detail";
 	}
 	
@@ -84,7 +89,7 @@ public class CourseController extends BaseController {
 	}
 
 	@RequestMapping("sign/{courseId}")
-	public String sign(HttpServletResponse response, Model model, @PathVariable Integer courseId) {
+	public String sign(Model model, @PathVariable Integer courseId) {
 		WechatUserInfo userInfo = getWechatUserInfo();
 		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
@@ -92,6 +97,16 @@ public class CourseController extends BaseController {
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("buyer", buyerInfo);
 		return "course/sign";
+	}
+	
+	@RequestMapping("sign/{courseId}/{activityId}")
+	public String groupSign(Model model, @PathVariable Integer courseId, 
+			@PathVariable Integer activityId) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
+		ActivityInfo activityInfo = activityService.selectById(activityId);
+		model.addAttribute("activityInfo", activityInfo);
+		return "course/groupSign";
 	}
 	
 	@RequestMapping("signorder/create")

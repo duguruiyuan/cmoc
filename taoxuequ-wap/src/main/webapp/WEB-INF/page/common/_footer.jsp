@@ -18,6 +18,10 @@
     	<span class="mui-icon fa fa-book"></span>
         <span class="mui-tab-label">趣学学</span>
     </a>
+    <a class="foot-tab-item" href="<%=basePath %>/live">
+    	<span class="mui-icon fa fa-video-camera"></span>
+        <span class="mui-tab-label">趣直播</span>
+    </a>
     <a class="foot-tab-item" id="qu-my" href="<%=basePath %>/my">
     	<span class="mui-icon fa fa-user"></span>
         <span class="mui-tab-label">趣我的</span>

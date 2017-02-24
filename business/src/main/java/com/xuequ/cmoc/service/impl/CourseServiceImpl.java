@@ -26,6 +26,7 @@ import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseListView;
+import com.xuequ.cmoc.view.CourseSchduleActivityView;
 
 @Service("courseService")
 public class CourseServiceImpl implements ICourseService {
@@ -157,6 +158,11 @@ public class CourseServiceImpl implements ICourseService {
 	@Override
 	public ChildSignInfo selectChildSignById(Integer id) {
 		return childSignInfoMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<CourseSchduleActivityView> selectScheduActivityInfoByCourseId(Integer courseId) {
+		return courseInfoMapper.selectScheduActivityInfoByCourseId(courseId);
 	}
 
 }

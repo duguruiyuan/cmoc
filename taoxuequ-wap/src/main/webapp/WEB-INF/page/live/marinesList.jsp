@@ -55,10 +55,13 @@
 				                </c:otherwise>
 				            </c:choose>
 			                <div class="mui-media-body">
-			                    <div class="marines-list-lev1">${itm.marineName }</div>
+			                	<div class="marines-list-lev1">
+			                		<div style="float: left">${itm.marineName }</div>
+			                		<div style="float:right;font-size: 16px;">${itm.votes}票</div>
+			                	</div>
+			                	<div style="clear:both;"></div>
 			                    <div class="marines-list-lev2">${itm.lineName }</div>
 			                </div>
-			            	<span class="mui-badge mui-badge-inverted">${itm.votes}票</span>
 			            </a>
 			        </li>
 			    	</c:forEach>

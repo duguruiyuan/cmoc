@@ -11,6 +11,7 @@ import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseListView;
+import com.xuequ.cmoc.view.CourseSchduleActivityView;
 
 public interface ICourseService {
 
@@ -80,4 +81,11 @@ public interface ICourseService {
 	int updateChildSignInfo(ChildSignInfo info);
 	
 	ChildSignInfo selectChildSignById(Integer id);
+	
+	/**
+     * 查询课程得排期活动列表
+     * @param courseId 课程id
+     * @return
+     */
+    List<CourseSchduleActivityView> selectScheduActivityInfoByCourseId(Integer courseId);
 }

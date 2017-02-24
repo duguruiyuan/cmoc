@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -33,12 +34,33 @@
           	 </div>
           	 <div class="clearfix mt10 dbb">
           	 	 <p><i class="fa fa-universal-access" style="font-size: 17px;color: #E95800;"></i> 适合7~12岁儿童参加</p>
-                  <p><i class="fa fa-clock-o" style="font-size: 18px;color: #E95800;"></i> </p>
+                  <p><i class="fa fa-clock-o" style="font-size: 18px;color: #E95800;"></i>
+	                  <c:choose>
+	                  	<c:when test="${schuduList.size() == 0 }">暂无场次可选</c:when>
+	                  	<c:otherwise>有${schuduList.size()}个场次可选</c:otherwise>
+	                  </c:choose>
+                  </p>
                   <p><i class="fa fa-map-marker" style="font-size: 18px;color: #E95800;"></i> ${course.addr }</p>
               </div>
-              <div class="dbb">
-              	<div class="fem12 lh25">选期参与</div>
-              	
+              <div class="dbb" id="cal-change">
+              	<div class="fem12 lh25"><i class="fa fa-list-ol"></i> 选期参与</div>
+	                <c:if test="${schuduList.size() == 0 }">
+	                	<div class="cal-none">暂无排期活动</div>
+	                </c:if>
+              		<c:forEach var="itm" items="${schuduList }">
+              			<div class="cal-content" data-pid="${course.id }" data-aid="${itm.activityId }">
+		              		<div class="cal-left">
+		              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
+								<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
+								<span>已报名${itm.buyCount }组</span>
+		              		</div>
+		              		<div class="cal-right">
+		              			<span>[剩余<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />队]</span><br/>
+		              			<span></span><br/>
+		              			<span></span>
+		              		</div>
+	              		</div>
+              		</c:forEach>
               </div>
         	</c:when>
         	<c:otherwise>
@@ -75,6 +97,7 @@
 			<ul>
 				<li class="cur">课程详情</li>
 				<li>已预约家长</li>
+				<li>往期直播</li>
 			</ul>
 		</div>
 		<div class="course-content">
@@ -87,13 +110,25 @@
 				<p class="more" id="more">查看更多</p>
 				<input type="hidden" id="pageNo" value="0"/>
 			</div>
+			<div class="course-content-live" style="display: none;">
+				<ul>
+				</ul>
+				<p class="more" id="more">查看更多课程</p>
+			</div>
 		</div>
 		<footer class="footer" style="padding:12px 10px;">
 	        <div class="btn-wrap clearfix" id="footerInner">
 	            <a href="<%=basePath %>/course/list" class="wbl-btn btn-border " id="newest">
 	               	 更多课程
 	            </a>
-	            <a href="<%=basePath %>/course/sign/${course.id}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
+	            <c:choose>
+        			<c:when test="${course.signWay == 1 }">
+        				<a href="javascript:void(0)" class="wbl-btn btn-go" id="submit"><label>预约报名</label><i class="iconfont icon"></i></a>
+        			</c:when>
+        			<c:otherwise>
+        				<a href="<%=basePath %>/course/sign/${course.id}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
+        			</c:otherwise>
+	            </c:choose>
 	        </div>
 	    </footer>
 	    <script type="text/javascript">
@@ -120,7 +155,21 @@
 				
 				$(".more").click(function(){
 					loadBuyer();
-				})
+				});
+				
+				$(".cal-content").click(function() {
+					$(this).addClass("cal-content-active").siblings().removeClass("cal-content-active");
+				});
+				
+				$("#submit").click(function() {
+					if($("#cal-change").find(".cal-content-active").length == 0) {
+						window.location.hash = "#cal-change";
+					}else {
+						var obj = $("#cal-change").find(".cal-content-active");
+						window.location.href = basePath + "/course/sign/" + obj.attr("data-pid") + "/" + obj.attr("data-aid");
+						return;
+					}	
+				});
 			})
 			
 			function loadBuyer() {
@@ -158,6 +207,7 @@
 	                  }
 				  });
 			 }
+			
 		</script>
 </body>
 </html>

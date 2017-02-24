@@ -19,6 +19,10 @@ public class ChildSignInfo implements Serializable {
     private String isDisease;
 
     private String diseaseDesc;
+    
+    private Integer childHeight;
+    
+    private Integer childWeight;
 
     private String emerName;
 
@@ -27,6 +31,8 @@ public class ChildSignInfo implements Serializable {
     private String city;
 
     private Integer productId;
+    
+    private Integer activityId;
 
     private String signResource;
 
@@ -118,7 +124,23 @@ public class ChildSignInfo implements Serializable {
         this.diseaseDesc = diseaseDesc == null ? null : diseaseDesc.trim();
     }
 
-    public String getEmerName() {
+    public Integer getChildHeight() {
+		return childHeight;
+	}
+
+	public void setChildHeight(Integer childHeight) {
+		this.childHeight = childHeight;
+	}
+
+	public Integer getChildWeight() {
+		return childWeight;
+	}
+
+	public void setChildWeight(Integer childWeight) {
+		this.childWeight = childWeight;
+	}
+
+	public String getEmerName() {
         return emerName;
     }
 
@@ -150,7 +172,15 @@ public class ChildSignInfo implements Serializable {
         this.productId = productId;
     }
 
-    public String getSignResource() {
+    public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
+
+	public String getSignResource() {
         return signResource;
     }
 

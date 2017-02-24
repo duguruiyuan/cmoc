@@ -108,6 +108,26 @@
   	</if>
   </select>
   
+  <resultMap id="ScheduResultMap" type="com.xuequ.cmoc.view.CourseSchduleActivityView">
+  	<result column="activity_id" property="activityId" jdbcType="INTEGER" />
+  	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+  	<result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
+  	<result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+  	<result column="activity_peoples" property="activityPeoples" jdbcType="INTEGER" />
+  	<result column="buy_count" property="buyCount" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectScheduActivityInfoByCourseId" resultMap="ScheduResultMap">
+ 	select ai.id activity_id, ai.`activity_name`, ai.`activity_num`, ai.`start_date`, 
+ 		   ai.`activity_peoples`, ifnull(po.buy_count,0) buy_count
+	from t_course_info ci 
+	inner join t_activity_info ai on ai.`product_id` = ci.`id`
+	left join (
+	  select count(1) buy_count, t.`product_id` from t_product_order t where t.`product_id` = 'COURSE' and t.`order_status` in ('000','001','003')
+	) po on po.product_id = ci.`id`
+	where ci.`id` = #{courseId,jdbcType=INTEGER}
+	order by ai.start_date
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_course_info
     where id = #{id,jdbcType=INTEGER}

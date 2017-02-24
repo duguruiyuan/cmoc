@@ -10,10 +10,13 @@
     <result column="child_sex" property="childSex" jdbcType="VARCHAR" />
     <result column="is_disease" property="isDisease" jdbcType="VARCHAR" />
     <result column="disease_desc" property="diseaseDesc" jdbcType="VARCHAR" />
+    <result column="child_height" property="childHeight" jdbcType="INTEGER" />
+    <result column="child_weight" property="childWeight" jdbcType="INTEGER" />
     <result column="emer_name" property="emerName" jdbcType="VARCHAR" />
     <result column="emer_mobile" property="emerMobile" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
     <result column="sign_relation" property="signRelation" jdbcType="VARCHAR" />
     <result column="sign_resource" property="signResource" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
@@ -25,8 +28,8 @@
   	<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, child_idcard, child_name, child_mobile, child_age, child_sex, is_disease, disease_desc, 
-    emer_name, emer_mobile, city, product_id, sign_relation, sign_resource, parent_id, family_no, create_time,
+    id, child_idcard, child_name, child_mobile, child_age, child_sex, is_disease, disease_desc, child_height, child_height,
+    emer_name, emer_mobile, city, product_id, activity_id, sign_relation, sign_resource, parent_id, family_no, create_time,
     is_effect, status, order_no, is_phone_confirm
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -143,6 +146,12 @@
       <if test="diseaseDesc != null" >
         disease_desc,
       </if>
+      <if test="childHeight != null" >
+        child_height,
+      </if>
+      <if test="childWeight != null" >
+        child_weight,
+      </if>
       <if test="emerName != null" >
         emer_name,
       </if>
@@ -154,6 +163,9 @@
       </if>
       <if test="productId != null" >
         product_id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
       </if>
       <if test="signRelation != null" >
         sign_relation,
@@ -208,6 +220,12 @@
       <if test="diseaseDesc != null" >
         #{diseaseDesc,jdbcType=VARCHAR},
       </if>
+      <if test="childHeight != null" >
+        #{childHeight,jdbcType=INTEGER},
+      </if>
+      <if test="childWeight != null" >
+        #{childWeight,jdbcType=INTEGER},
+      </if>
       <if test="emerName != null" >
         #{emerName,jdbcType=VARCHAR},
       </if>
@@ -219,6 +237,9 @@
       </if>
       <if test="productId != null" >
         #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
       </if>
       <if test="signRelation != null" >
         #{signRelation,jdbcType=VARCHAR},
@@ -273,6 +294,12 @@
       <if test="diseaseDesc != null" >
         disease_desc = #{diseaseDesc,jdbcType=VARCHAR},
       </if>
+      <if test="childHeight != null" >
+        child_height = #{childHeight,jdbcType=INTEGER},
+      </if>
+      <if test="childWeight != null" >
+        child_weight = #{childWeight,jdbcType=INTEGER},
+      </if>
       <if test="emerName != null" >
         emer_name = #{emerName,jdbcType=VARCHAR},
       </if>
@@ -284,6 +311,9 @@
       </if>
       <if test="productId != null" >
         product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
       </if>
       <if test="signRelation != null" >
         sign_relation = #{signResource,jdbcType=VARCHAR},
@@ -333,10 +363,13 @@
       child_sex = #{childSex,jdbcType=VARCHAR},
       is_disease = #{isDisease,jdbcType=VARCHAR},
       disease_desc = #{diseaseDesc,jdbcType=VARCHAR},
+      child_height = #{childHeight,jdbcType=INTEGER},
+      child_weight = #{childWeight,jdbcType=INTEGER},
       emer_name = #{emerName,jdbcType=VARCHAR},
       emer_mobile = #{emerMobile,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=INTEGER},
+      activity_id = #{activityId,jdbcType=INTEGER},
       sign_resource = #{signResource,jdbcType=VARCHAR},
       sign_relation = #{signRelation,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=VARCHAR},

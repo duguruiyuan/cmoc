@@ -147,7 +147,7 @@
 	border-left: none;
 }
 .liveDetail-listNum-title{
-	font-size: 18px;
+	font-size: 15px;
 	color: #565656;
 	font-weight: bold;
 	margin-bottom: 10px;
@@ -198,7 +198,7 @@
     width: 85px;
 }
 .liveDetail-user-name{
-	font-size: 16px;
+	font-size: 14px;
     color: #676767;
 }
 .liveDetail-user-intro{
@@ -375,7 +375,7 @@
     background: linear-gradient(to bottom, rgba(247, 247, 228, 0), rgb(31, 105, 6));
 }
 .marines-banner-title1{
-	font-size: 23px;
+	font-size: 20px;
 }
 .marines-banner-title2{
 	font-size: 14px;
@@ -389,7 +389,7 @@
 	height: 106px;
 }
 .marines-list-lev1{
-	font-size: 24px;
+	font-size: 20px;
 	padding-top: 8px;
 }
 .marines-list-lev2{
@@ -804,7 +804,7 @@ select.regMT-select{
     top: 45%;
     left: 45%;
     text-align: center;
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-weight: bold;
     color: white;
 }
@@ -976,7 +976,7 @@ select.regMT-select{
     overflow: hidden;
 }
 .course-tab li {
-    width: 50%;
+    width: 33%;
     float: left;
     font-size: 14px;
     font-weight: 100;
@@ -1863,8 +1863,8 @@ color: #09BB07;
     font-size: 15px;
 }
 .btn-more span{
-    padding: 10px 60px;
-    font-size: 18px;
+    padding: 10px 50px;
+    font-size: 15px;
     border-radius: 10px;
     border: 2px #0DA9DB solid;
     cursor: pointer;
@@ -1999,4 +1999,27 @@ color: #09BB07;
 .dbb{
 	border-bottom: 2px solid #ECE9E9;
     padding: 10px;
+}
+.cal-content {
+	width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #0DA9DB;
+    border-radius: 5px;
+    margin-top: 3px;
+}
+.cal-none {
+	padding: 10px 10px;
+    background: #E5E5E5;
+}
+.cal-content-active {
+    background: #0DA9DB;
+    color: #fff;
+}
+.cal-left {
+	width: 75%;
+	display: inline-block;
+}
+.cal-right {
+	width: 20%;
+	display: inline-block;
 }
