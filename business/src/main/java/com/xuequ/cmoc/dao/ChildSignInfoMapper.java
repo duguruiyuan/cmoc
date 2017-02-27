@@ -27,8 +27,13 @@ public interface ChildSignInfoMapper {
     
     ChildSignInfo selectByChildNameMobile(@Param("childName")String childName, 
     		@Param("emerMobile")String emerMobile);
+    String selectFamilyNoByOrderNo(String orderNo);
     
     String selectFamilyNo(ChildSignInfo record);
     
     List<ChildSignView> selectCourseSignByPage(Page<ChildSignView> page);
+    
+    int selectCountByOrderNo(String orderNo);
+    
+    List<ChildSignInfo> selectListByOrderNo(String orderNo);
 }

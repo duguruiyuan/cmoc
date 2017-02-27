@@ -10,6 +10,14 @@ public class CourseSignVO extends ChildSignInfo {
 	
 	private String productType;
 	
+	private String channel;
+	
+	private String wechatNum;
+	
+	private String headImg;
+	
+	private String city;
+	
 	public String getOpenid() {
 		return openid;
 	}
@@ -24,6 +32,38 @@ public class CourseSignVO extends ChildSignInfo {
 
 	public void setProductType(String productType) {
 		this.productType = productType;
+	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+
+	public String getWechatNum() {
+		return wechatNum;
+	}
+
+	public void setWechatNum(String wechatNum) {
+		this.wechatNum = wechatNum;
+	}
+
+	public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }

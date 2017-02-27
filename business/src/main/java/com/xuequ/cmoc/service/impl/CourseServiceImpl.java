@@ -19,6 +19,7 @@ import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
+import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.ICourseService;
@@ -115,11 +116,15 @@ public class CourseServiceImpl implements ICourseService {
 			parentInfo.setParentName(info.getEmerName());
 			parentInfo.setRelation(info.getSignRelation());
 			parentInfo.setFamilyNo(familyNo);
+			parentInfo.setCity(info.getCity());
+			parentInfo.setHeadImg(info.getHeadImg());
 			parentInfoMapper.insertSelective(parentInfo);
 		}else {
 			parentInfo.setParentName(info.getEmerName());
 			parentInfo.setParentMobile(info.getEmerMobile());
 			parentInfo.setRelation(info.getSignRelation());
+			parentInfo.setCity(info.getCity());
+			parentInfo.setHeadImg(info.getHeadImg());
 			parentInfoMapper.updateByPrimaryKeySelective(parentInfo);
 		}
 		CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
@@ -129,13 +134,17 @@ public class CourseServiceImpl implements ICourseService {
 		order.setCustId(parentInfo.getId());
 		order.setProductId(courseInfo.getId());
 		order.setProductType(ProductTypeEnum.COURSE.getCode());
+		order.setChannel(info.getChannel());
+		order.setActivityId(info.getActivityId());
 		productOrderMapper.insertSelective(order);
 		info.setParentId(parentInfo.getId());
 		info.setFamilyNo(familyNo);
 		info.setSignResource(SignResource.ONLINE.getCode());
 		info.setProductId(courseInfo.getId());
 		info.setOrderNo(order.getOrderNo());
-		childSignInfoMapper.insertSelective(info);
+		if(courseInfo.getSignWay() == 0) {
+			childSignInfoMapper.insertSelective(info);
+		}
 		info.setProductType(order.getProductType());
 		return info;
 	}

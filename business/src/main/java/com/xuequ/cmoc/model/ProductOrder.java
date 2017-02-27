@@ -12,6 +12,8 @@ public class ProductOrder implements Serializable {
     private Integer custId;
 
     private Integer productId;
+    
+    private Integer activityId;
 
     private String productType;
 
@@ -87,7 +89,15 @@ public class ProductOrder implements Serializable {
         this.productId = productId;
     }
 
-    public String getProductType() {
+    public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
+
+	public String getProductType() {
         return productType;
     }
 

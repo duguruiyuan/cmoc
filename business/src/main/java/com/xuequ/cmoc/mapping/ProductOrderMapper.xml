@@ -7,6 +7,7 @@
     <result column="cust_id" jdbcType="INTEGER" property="custId" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="activity_id" jdbcType="INTEGER" property="activityId" />
     <result column="res_amount" jdbcType="DECIMAL" property="resAmount" />
     <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
     <result column="exchangePoints" jdbcType="INTEGER" property="exchangepoints" />
@@ -28,7 +29,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_no, cust_id, product_id, product_type, res_amount, total_amount, exchangePoints, 
+    id, order_no, cust_id, product_id, activity_id, product_type, res_amount, total_amount, exchangePoints, 
     give_points, channel, commision, commistion_rate, bank_code, bank_no, trans_no, bank_trans_no, 
     pay_submit_time, pay_callback_time, order_status, error_code, error_reason, is_delete, 
     create_time, update_time
@@ -51,7 +52,7 @@
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ProductOrder">
     insert into t_product_order (id, order_no, cust_id, 
-      product_id, product_type, res_amount, 
+      product_id, activity_id, product_type, res_amount, 
       total_amount, exchangePoints, give_points, 
       channel, commision, commistion_rate, 
       bank_code, bank_no, trans_no, 
@@ -60,7 +61,7 @@
       is_delete, create_time, update_time
       )
     values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, 
-      #{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{resAmount,jdbcType=DECIMAL}, 
+      #{productId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{resAmount,jdbcType=DECIMAL}, 
       #{totalAmount,jdbcType=DECIMAL}, #{exchangepoints,jdbcType=INTEGER}, #{givePoints,jdbcType=INTEGER}, 
       #{channel,jdbcType=VARCHAR}, #{commision,jdbcType=DECIMAL}, #{commistionRate,jdbcType=VARCHAR}, 
       #{bankCode,jdbcType=VARCHAR}, #{bankNo,jdbcType=VARCHAR}, #{transNo,jdbcType=VARCHAR}, 
@@ -83,6 +84,9 @@
       </if>
       <if test="productId != null">
         product_id,
+      </if>
+      <if test="activityId != null">
+        activity_id,
       </if>
       <if test="productType != null">
         product_type,
@@ -158,6 +162,9 @@
       <if test="productId != null">
         #{productId,jdbcType=INTEGER},
       </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=INTEGER},
+      </if>
       <if test="productType != null">
         #{productType,jdbcType=VARCHAR},
       </if>
@@ -232,6 +239,9 @@
       <if test="productId != null">
         product_id = #{productId,jdbcType=INTEGER},
       </if>
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
       <if test="productType != null">
         product_type = #{productType,jdbcType=VARCHAR},
       </if>
@@ -300,6 +310,7 @@
     set order_no = #{orderNo,jdbcType=VARCHAR},
       cust_id = #{custId,jdbcType=INTEGER},
       product_id = #{productId,jdbcType=INTEGER},
+      activity_id = #{activityId,jdbcType=INTEGER},
       product_type = #{productType,jdbcType=VARCHAR},
       res_amount = #{resAmount,jdbcType=DECIMAL},
       total_amount = #{totalAmount,jdbcType=DECIMAL},

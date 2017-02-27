@@ -47,6 +47,10 @@
   	and emer_mobile = #{emerMobile,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectCountByOrderNo" resultType="int">
+  	select count(1) from t_child_sign_info where order_no = #{orderNo, jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectNonStartingList" resultMap="BaseResultMap" parameterType="com.xuequ.cmoc.model.ChildSignInfo">
   	select 
     <include refid="Base_Column_List" />
@@ -65,6 +69,16 @@
     where child_idcard = #{childIdcard,jdbcType=VARCHAR} or 
     emer_mobile = #{emerMobile,jdbcType=VARCHAR}
     limit 1
+  </select>
+  
+  <select id="selectFamilyNoByOrderNo" resultMap="BaseResultMap">
+  	select family_no from t_child_sign_info where order_no = #{orderNo,jdbcType=VARCHAR}
+  	limit 1
+  </select>
+  
+  <select id="selectListByOrderNo" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+    from t_child_sign_info where order_no = #{orderNo,jdbcType=VARCHAR}
   </select>
   
   <resultMap id="SignBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ChildSignView" >

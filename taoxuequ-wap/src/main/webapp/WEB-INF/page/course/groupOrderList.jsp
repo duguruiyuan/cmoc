@@ -1,0 +1,64 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>课程报名[陶学趣]</title>
+</head>
+<jsp:include page="/WEB-INF/page/common/_header.jsp"/>
+<script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
+<body style="font-size: 15px;">
+	<header class="header">
+		<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+		队伍管理
+	</header>
+	<div style="margin-top: 60px;">
+		<div style="padding: 10px;border-top: 1px solid #E3D7D7;border-bottom: 1px solid #F9DEDE;">
+			<div style="float: left;">两天一夜</div>
+			<div style="float: right;"><span class="group-but">暂未组队</span></div>
+			<div style="clear:both"></div>
+		</div>
+		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">实际应付款：2800</div>
+		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">
+			<div style="float: left;">总价：2800</div>
+			<div style="float: right;">
+				<span class="group-but1">未付款 (转账支付)</span>
+				<span class="group-but2">管理队伍</span>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	</div>
+	<div style="margin-top:10px">
+		<div style="padding: 10px;border-top: 1px solid #E3D7D7;border-bottom: 1px solid #F9DEDE;">
+			<div style="float: left;">两天一夜</div>
+			<div style="float: right;"><span class="group-but">暂未组队</span></div>
+			<div style="clear:both"></div>
+		</div>
+		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">实际应付款：2800</div>
+		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">
+			<div style="float: left;">总价：2800</div>
+			<div style="float: right;">
+				<span class="group-but1">未付款 (转账支付)</span>
+				<span class="group-but2">管理队伍</span>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	</div>
+	<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
+	<script type="text/javascript">
+		$(function() {
+			
+		})
+	</script>
+</body>
+</html>
