@@ -71,7 +71,7 @@
     limit 1
   </select>
   
-  <select id="selectFamilyNoByOrderNo" resultMap="BaseResultMap">
+  <select id="selectFamilyNoByOrderNo" resultType="java.lang.String">
   	select family_no from t_child_sign_info where order_no = #{orderNo,jdbcType=VARCHAR}
   	limit 1
   </select>
@@ -397,4 +397,5 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
 </mapper>

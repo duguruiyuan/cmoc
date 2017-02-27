@@ -26,6 +26,7 @@ import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
+import com.xuequ.cmoc.view.CourseGroupOrderView;
 import com.xuequ.cmoc.view.CourseListView;
 import com.xuequ.cmoc.view.CourseSchduleActivityView;
 
@@ -172,6 +173,11 @@ public class CourseServiceImpl implements ICourseService {
 	@Override
 	public List<CourseSchduleActivityView> selectScheduActivityInfoByCourseId(Integer courseId) {
 		return courseInfoMapper.selectScheduActivityInfoByCourseId(courseId);
+	}
+
+	@Override
+	public List<CourseGroupOrderView> selectCourseGroupOrder(String openid, String orderNo) {
+		return courseInfoMapper.selectCourseGroupOrder(openid, orderNo);
 	}
 
 }

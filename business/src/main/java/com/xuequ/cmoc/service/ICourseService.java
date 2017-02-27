@@ -10,6 +10,7 @@ import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
+import com.xuequ.cmoc.view.CourseGroupOrderView;
 import com.xuequ.cmoc.view.CourseListView;
 import com.xuequ.cmoc.view.CourseSchduleActivityView;
 
@@ -88,4 +89,6 @@ public interface ICourseService {
      * @return
      */
     List<CourseSchduleActivityView> selectScheduActivityInfoByCourseId(Integer courseId);
+
+    List<CourseGroupOrderView> selectCourseGroupOrder(String openid, String orderNo);
 }

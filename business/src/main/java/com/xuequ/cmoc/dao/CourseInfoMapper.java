@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.CourseGroupOrderView;
 import com.xuequ.cmoc.view.CourseListView;
 import com.xuequ.cmoc.view.CourseSchduleActivityView;
 
@@ -42,4 +43,5 @@ public interface CourseInfoMapper {
      * @return
      */
     List<CourseSchduleActivityView> selectScheduActivityInfoByCourseId(Integer courseId);
+    List<CourseGroupOrderView> selectCourseGroupOrder(@Param("openid")String openid, @Param("orderNo")String orderNo);
 }

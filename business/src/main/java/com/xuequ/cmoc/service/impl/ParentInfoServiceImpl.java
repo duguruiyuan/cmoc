@@ -63,4 +63,9 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 		return parentInfoMapper.selectListByPage(page);
 	}
 
+	@Override
+	public ParentInfo selectById(Integer custId) {
+		return parentInfoMapper.selectByPrimaryKey(custId);
+	}
+
 }

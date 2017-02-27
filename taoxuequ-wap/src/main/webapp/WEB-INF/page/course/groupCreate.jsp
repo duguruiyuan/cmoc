@@ -19,7 +19,7 @@
 <script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <body>
 	<header class="header">
-		<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		队伍信息管理
 	</header>
 	<div class="mt44"></div>
@@ -40,17 +40,29 @@
 		<p style="padding-left: 10px;color: #3F3E3E;font-size: 16px;">以下信息仅用于活动报名，主办方承诺对资料保密</p>
 		<div class="mui-content">
 			<form id="courseSignForm" class="mui-form">
-				<mui-textfield type="text" label="姓名" placeholder="请填写您孩子的姓名"></mui-textfield>
-				<mui-textfield type="text" label="家长姓名"  placeholder="紧急联系人姓名"></mui-textfield>
-				<mui-textfield type="text" label="联系电话"  placeholder="紧急联系人电话"></mui-textfield>
-				<mui-textfield type="text" label="小朋友的身份证"  placeholder="用于购买活动当天的保险"></mui-textfield>
+				<div class="mui-textfield">
+					<input type="text" placeholder="请填写您孩子的姓名" id="childName" value="${childInfo.childName }">
+					<label>姓名</label>
+				</div>
+				<div class="mui-textfield">
+					<input type="text" placeholder="紧急联系人姓名" id="emerName" value="${childInfo.emerName }">
+					<label>家长姓名</label>
+				</div>
+				<div class="mui-textfield">
+					<input type="text" placeholder="紧急联系人电话" id="emerMobile" value="${childInfo.emerMobile }">
+					<label>联系电话</label>
+				</div>
+				<div class="mui-textfield">
+					<input type="text" placeholder="用于购买活动当天的保险" id="childIdcard" value="${childInfo.childIdcard }">
+					<label>小朋友的身份证</label>
+				</div>
 				<label>小孩性别：</label>
 				<div class="mui-radio">
-	                <input type="radio" style="padding-top: 10px;left: 0;top: -4px;" class="check" name="childSex" value="F" checked="checked">
+	                <input type="radio" style="padding-top: 10px;left: 0;top: -4px;" class="check" name="childSex" value="F" <c:if test="${childInfo.childSex == null || (childInfo.childSex != null && childInfo.childSex == 'F')}">checked="checked"</c:if>>
 	            	<label class="pl30 pt10">男</label>
 	            </div>
 	            <div class="mui-radio" style="padding-top: 20px;">
-	                <input type="radio" style="padding-top: 10px;left: 0;" class="check" name="childSex" value="M">
+	                <input type="radio" style="padding-top: 10px;left: 0;" class="check" name="childSex" value="M" <c:if test="${childInfo.childSex != null && childInfo.childSex == 'M'}">checked="checked"</c:if>>
 	            	<label class="pl30">女</label>
 	            </div>
 			</form>
@@ -99,15 +111,19 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#regMT-btn").click(function() {
+				var childName = $("#childName").val();
+				var emerName = $("#emerName").val();
+				var emerMobile = $("#emerMobile").val();
+				var childIdcard = $("#childIdcard").val();
 				$.ajax({
 			 		url : basePath + "/course/json/group/addMember",
 			 		type : "post",
 			 		data : {
-			 			id: '${member.id}',
-			 			childName: '胡小萌',
-			 			emerName: '胡启萌',
-			 			emerMobile: '13681984045',
-			 			childIdcard: '429004199006274911',
+			 			id: '${childInfo.id}',
+			 			childName: childName,
+			 			emerName: emerName,
+			 			emerMobile: emerMobile,
+			 			childIdcard: childIdcard,
 			 			childAge: $("input[type='childSex']:checked"),
 			 			orderNo: '${orderNo}'
 			 		},

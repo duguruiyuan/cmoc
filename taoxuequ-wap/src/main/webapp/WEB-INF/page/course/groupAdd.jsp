@@ -19,7 +19,7 @@
 <script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <body>
 	<header class="header">
-		<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<a class="mui-icon mui-icon-left-nav mui-pull-left" href="<%=basePath%>/course/group/orderList"></a>
 		队伍信息管理
 	</header>
 	<div class="group-add-tips mt44">
@@ -44,29 +44,33 @@
 		<div style="width: 100%;text-align: center;margin: 30px 0;">队员资料</div>
 		<div class="mui-content">
 			<c:forEach var="itm" items="${childList }" varStatus="i">
-				<div class="group-list" data-id="${itm.id }">
-					<div class="group-list-left">${i.index + 1 }</div>
-					<div class="group-list-right">
-						<span>${itm.childName }<span>
-						<p>${itm.emerMobile }</p>
+				<a href="<%=basePath %>/course/group/merber?oNo=${orderNo}&cId=${itm.id}">
+					<div class="group-list" data-id="${itm.id }">
+						<div class="group-list-left">${i.index + 1 }</div>
+						<div class="group-list-right">
+							<span>${itm.childName }<span>
+							<p>${itm.emerMobile }</p>
+						</div>
+						<div style="clear:both"></div>
 					</div>
-					<div style="clear:both"></div>
-				</div>		
+				</a>
 			</c:forEach>
 			<c:forEach var="x" begin="${childList.size() }" end="4" step="1" varStatus="i"> 
-			     <div class="group-list">
-					<div class="group-list-left">${i.index + 1 }</div>
-					<div class="group-list-right">
-						<span>空缺<span>
-						<p>队伍尚未组建完成</p>
+			     <a href="<%=basePath %>/course/group/merber?oNo=${orderNo}">
+				     <div class="group-list">
+						<div class="group-list-left">${i.index + 1 }</div>
+						<div class="group-list-right">
+							<span>空缺<span>
+							<p>队伍尚未组建完成</p>
+						</div>
+						<div style="clear:both"></div>
 					</div>
-					<div style="clear:both"></div>
-				</div>
+				</a>
 			</c:forEach>
 		</div>
 		
 		<div class="group-wel">
-			<a href="">
+			<a href="<%=basePath%>/course/group/poster?oNo=${orderNo}">
 				<div style="float: left; padding-left: 20px;">队伍邀请海报</div>
 				<p class="mui-icon mui-icon-arrowright" style="font-size: 15px;float:right;"></p>
 			</a>

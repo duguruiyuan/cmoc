@@ -474,4 +474,27 @@
   	update t_course_info set shelves = #{shelves,jdbcType=INTEGER}
   	where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectCourseGroupOrder" resultType="com.xuequ.cmoc.view.CourseGroupOrderView">
+  	SELECT 
+  	ci.`total_price` totalPrice, 
+  	IFNULL(cs.member, 0) member, 
+  	po.`order_status` orderStatus, 
+  	ai.`activity_name` activityName, 
+  	ai.`start_date` startDate, 
+  	ai.`activity_addr`,
+  	po.`order_no` orderNo,
+  	pio.`parent_name` emerName
+	FROM t_product_order po
+	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
+	INNER JOIN t_activity_info ai ON ai.`id` = po.`activity_id`
+	INNER JOIN t_parent_info pio on  pio.`id` = po.`cust_id`
+	LEFT JOIN (
+	  SELECT COUNT(1) member, csi.`order_no` FROM t_child_sign_info csi GROUP BY csi.`order_no`
+	) cs ON po.`order_no` = cs.order_no 
+	WHERE pio.`openid` = #{openid,jdbcType=VARCHAR}
+	<if test="orderNo != null">
+		and po.order_no = #{orderNo,jdbcType=VARCHAR}
+	</if>
+  </select>
 </mapper>

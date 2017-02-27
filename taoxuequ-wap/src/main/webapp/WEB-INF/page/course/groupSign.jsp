@@ -34,8 +34,14 @@
 	<div class="sign-title">我要报名</div>
 	<div class="mui-content">
 		<form id="courseSignForm" class="mui-form">
-			<mui-textfield type="text" id="emerName" label="填写报名联系人" floating></mui-textfield>
-			<mui-textfield type="text" id="emerMobile" label="填写联系电话" floating></mui-textfield>
+			<div class="mui-textfield">
+				<input type="text" id="emerName">
+				<label>填写报名联系人</label>
+			</div>
+			<div class="mui-textfield">
+				<input type="text" id="emerMobile">
+				<label>填写联系电话</label>
+			</div>
 		</form>
 		<h3>选择支付方式</h3>
 		<div class="pay-type">
@@ -110,20 +116,20 @@
 				var emerName = $("#emerName").val();
 				var emerMobile = $("#emerMobile").val();
 				var channel = $("input[name='payType']:checked").val();
-				/* if(!emerName) {
+				if(!emerName) {
 					alert("请填写报名联系人");
 					return;
 				}
-				if(!emerName) {
+				if(!emerMobile) {
 					alert("请填写联系电话");
 					return;
-				} */
+				}
 				$.ajax({
 			 		url : basePath + "/course/json/groupOrder/create",
 			 		type : "post",
 			 		data : {
-			 			emerName: '胡启萌',
-			 			emerMobile: '13681984045',
+			 			emerName: emerName,
+			 			emerMobile: emerMobile,
 			 			channel: channel,
 			 			productId: '${course.id}',
 			 			activityId: '${activityInfo.id}'

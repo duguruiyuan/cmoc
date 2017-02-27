@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.stat.TableStat.Mode;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
-import com.xuequ.cmoc.dao.ChildSignInfoMapper;
+import com.xuequ.cmoc.core.wechat.utils.TemplateUtil;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
@@ -31,9 +31,11 @@ import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IChildSignInfoService;
 import com.xuequ.cmoc.service.ICourseService;
+import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
 import com.xuequ.cmoc.view.CourseBuyerView;
+import com.xuequ.cmoc.view.CourseGroupOrderView;
 import com.xuequ.cmoc.view.CourseListView;
 import com.xuequ.cmoc.vo.CourseQueryVO;
 
@@ -50,6 +52,8 @@ public class CourseController extends BaseController {
 	private IProductOrderService productOrderService;
 	@Autowired
 	private IChildSignInfoService childSignInfoService;
+	@Autowired
+	private IParentInfoService parentInfoService;
 	
 	@RequestMapping(value={"","/","list"})
 	public String courseList(Model model) {
@@ -128,6 +132,7 @@ public class CourseController extends BaseController {
 		vo.setHeadImg(userInfo.getHeadimgurl());
 		vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
 		CourseSignVO view = courseService.addUPdateOrder(vo);
+		new Thread(new AsynExecutor(view.getOrderNo())).start();
 		Map<String, Object> map = new HashMap<>();
 		map.put("orderNo", view.getOrderNo());
 		map.put("pId", vo.getProductId());
@@ -167,12 +172,19 @@ public class CourseController extends BaseController {
 	}
 	
 	@RequestMapping("group/merber")
-	public String groupMerber(Model model, ChildSignInfo info) {
-		ProductOrder productOrder = productOrderService.selectByOrderNo(info.getOrderNo());
+	public String groupMerber(Model model) {
+		String orderNo = request.getParameter("oNo");
+		String cid = request.getParameter("cId");
+		Integer childId = StringUtils.isNotBlank(cid) ? Integer.valueOf(cid) : null;
+		ChildSignInfo childInfo = new ChildSignInfo();
+		if(childId != null) {
+			childInfo = childSignInfoService.selectById(childId);
+		}
+		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(Integer.valueOf(productOrder.getProductId()));
-		ChildSignInfo childSignInfo = childSignInfoService.selectById(id);
 		model.addAttribute("course", courseInfo);
-		model.addAttribute("orderNo", info.getOrderNo());
+		model.addAttribute("orderNo", orderNo);
+		model.addAttribute("childInfo", childInfo);
 		return "course/groupCreate";
 	}
 	
@@ -183,6 +195,16 @@ public class CourseController extends BaseController {
 		info.setActivityId(productOrder.getActivityId());
 		info.setProductId(productOrder.getProductId());
 		childSignInfoService.addAndUpdate(info, userInfo);
+		ParentInfo parentInfo = parentInfoService.selectById(productOrder.getCustId());
+		if(info.getId() == null) {
+			if(!parentInfo.getOpenid().equals(userInfo.getOpenid())) {
+				int members = childSignInfoService.selectCountByOrderNo(info.getOrderNo());
+				TemplateUtil.memberAccessMsg(info.getOrderNo(), parentInfo.getOpenid(), 
+						info.getEmerName(), members);
+				TemplateUtil.accessSucessMsg(info.getId(), parentInfo.getParentName(), 
+						userInfo.getOpenid(), info.getEmerName(), info.getOrderNo());
+			}
+		}
 		return new RspResult(StatusEnum.SUCCESS, productOrder.getOrderNo());
 	}
 	
@@ -194,21 +216,43 @@ public class CourseController extends BaseController {
 		List<ChildSignInfo> childList = childSignInfoService.selectListByOrderNo(orderNo);
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("childList", childList);
+		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("isPayed", productOrder.getOrderStatus().equals("000") ? 1 : 0);
 		return "course/groupAdd";
 	}
 	
 	@RequestMapping("group/poster")
 	public String groupPoster(Model model) {
-		String orderNum = request.getParameter("oid");
-		model.addAttribute("orderNum", orderNum);
+		String orderNo = request.getParameter("oNo");
 		WechatUserInfo userInfo = getWechatUserInfo();
 		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
+		model.addAttribute("orderNo", orderNo);
 		return "course/groupPoster";
 	}
 	
 	@RequestMapping("group/orderList")
 	public String groupOrderList(Model model) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		model.addAttribute("orderList", courseService.selectCourseGroupOrder(userInfo.getOpenid(), null));
 		return "course/groupOrderList";
+	}
+	
+	class AsynExecutor implements Runnable {
+		
+		private String orderNo;
+		
+		public AsynExecutor(String orderNo) {
+			this.orderNo = orderNo;
+		}
+		
+		@Override
+		public void run() {
+			WechatUserInfo userInfo = getWechatUserInfo();
+			CourseGroupOrderView view = courseService.selectCourseGroupOrder(userInfo.getOpenid(), orderNo).get(0);
+			TemplateUtil.activitySignSucessMsg(orderNo, view.getActivityAddr(), 
+					userInfo.getOpenid(), view.getEmerName(), view.getActivityName(), 
+					view.getStartDate());
+		}
+		
 	}
 }

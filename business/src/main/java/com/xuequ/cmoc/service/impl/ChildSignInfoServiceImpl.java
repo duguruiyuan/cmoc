@@ -13,6 +13,7 @@ import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.service.IChildSignInfoService;
+import com.xuequ.cmoc.utils.BeanUtils;
 
 @Service("childSignInfoService")
 public class ChildSignInfoServiceImpl implements IChildSignInfoService {
@@ -29,7 +30,8 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 		return childSignInfoMapper.selectCountByOrderNo(orderNo);
 	}
 	@Override
-	public void addAndUpdate(ChildSignInfo info, WechatUserInfo userInfo) {
+	public void addAndUpdate(ChildSignInfo vo, WechatUserInfo userInfo) {
+		ChildSignInfo info = BeanUtils.copyAs(vo, ChildSignInfo.class);
 		String familyNo = childSignInfoMapper.selectFamilyNoByOrderNo(info.getOrderNo());
 		if(StringUtils.isBlank(familyNo)) {
 			familyNo = sysCommonMapper.selectFamilyNoSeq();

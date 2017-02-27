@@ -22,38 +22,29 @@
 		<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 		队伍管理
 	</header>
-	<div style="margin-top: 60px;">
-		<div style="padding: 10px;border-top: 1px solid #E3D7D7;border-bottom: 1px solid #F9DEDE;">
-			<div style="float: left;">两天一夜</div>
-			<div style="float: right;"><span class="group-but">暂未组队</span></div>
-			<div style="clear:both"></div>
-		</div>
-		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">实际应付款：2800</div>
-		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">
-			<div style="float: left;">总价：2800</div>
-			<div style="float: right;">
-				<span class="group-but1">未付款 (转账支付)</span>
-				<span class="group-but2">管理队伍</span>
+	<div class="mt44"></div>
+	<c:forEach var="itm" items="${orderList }">
+		<div style="margin-top: 10px;">
+			<div style="padding: 10px;border-top: 1px solid #E3D7D7;border-bottom: 1px solid #F9DEDE;">
+				<div style="float: left;">${itm.activityName } <fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></div>
+				<div style="float: right;"><c:if test="${itm.member == 0 }"><a href="<%=basePath %>/course/group/create?orderNo=${itm.orderNo}"><span class="group-but">尚未组队</span></a></c:if></div>
+				<div style="clear:both"></div>
 			</div>
-			<div style="clear:both"></div>
-		</div>
-	</div>
-	<div style="margin-top:10px">
-		<div style="padding: 10px;border-top: 1px solid #E3D7D7;border-bottom: 1px solid #F9DEDE;">
-			<div style="float: left;">两天一夜</div>
-			<div style="float: right;"><span class="group-but">暂未组队</span></div>
-			<div style="clear:both"></div>
-		</div>
-		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">实际应付款：2800</div>
-		<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">
-			<div style="float: left;">总价：2800</div>
-			<div style="float: right;">
-				<span class="group-but1">未付款 (转账支付)</span>
-				<span class="group-but2">管理队伍</span>
+			<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">实际应付款：${itm.totalPrice }</div>
+			<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">
+				<div style="float: left;">总价：${itm.totalPrice }</div>
+				<div style="float: right;">
+					<c:choose>
+						<c:when test="${itm.orderStatus == '000' }"><span class="group-but2">已支付</span></c:when>
+						<c:otherwise><span class="group-but1">未付款 (转账支付)</span></c:otherwise>
+					</c:choose>
+					<a href="<%=basePath%>/course/group/add?oNo=${itm.orderNo}"><span class="group-but2">管理队伍</span></a>
+				</div>
+				<div style="clear:both"></div>
 			</div>
-			<div style="clear:both"></div>
 		</div>
-	</div>
+	</c:forEach>
+	
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 	<script type="text/javascript">
 		$(function() {

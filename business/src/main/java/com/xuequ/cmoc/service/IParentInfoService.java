@@ -22,4 +22,6 @@ public interface IParentInfoService {
 	List<ParentInfoView> selectBuyTotalByPage(Page<ParentInfoView> page);
 	
 	List<ParentInfo> selectListByPage(Page<ParentInfo> page);
+	
+	ParentInfo selectById(Integer custId);
 }
