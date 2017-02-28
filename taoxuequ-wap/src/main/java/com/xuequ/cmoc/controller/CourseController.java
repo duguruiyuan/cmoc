@@ -1,6 +1,8 @@
 package com.xuequ.cmoc.controller;
 
+import java.awt.Image;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuequ.cmoc.ImageSynthesisVo;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
@@ -33,7 +36,9 @@ import com.xuequ.cmoc.service.IChildSignInfoService;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.service.IProductOrderService;
+import com.xuequ.cmoc.utils.ImageUtils;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
+import com.xuequ.cmoc.utils.QRCoderUtils;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseGroupOrderView;
 import com.xuequ.cmoc.view.CourseListView;
@@ -223,11 +228,42 @@ public class CourseController extends BaseController {
 	
 	@RequestMapping("group/poster")
 	public String groupPoster(Model model) {
-		String orderNo = request.getParameter("oNo");
-		WechatUserInfo userInfo = getWechatUserInfo();
-		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
-		model.addAttribute("orderNo", orderNo);
+		try {
+			String orderNo = request.getParameter("oNo");
+			WechatUserInfo userInfo = getWechatUserInfo();
+			ProductOrder productOrder = productOrderService.selectByParam(userInfo.getOpenid(), orderNo);
+			List<ImageSynthesisVo> list = new ArrayList<>();
+			ImageSynthesisVo  vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
+			String url = Constants.BASEPATH + "course/group/merber?nNo=17460082";
+			url = QRCoderUtils.createEWM(url, 100, 100, "17460082");
+			ImageSynthesisVo  vo2 = new ImageSynthesisVo(url, 189, 305, 130, 130);
+			list.add(vo1);
+			list.add(vo2);
+			String fileSrc = Constants.BASEPATH + "/images/poster-share.png";
+			String outSrc = Constants.BASEPATH + "/out.png";
+			ImageUtils.composePic(fileSrc, outSrc, list, 642, 900);
+			productOrder.setPosterImg(outSrc);
+			productOrderService.updateById(productOrder);
+			model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
+			model.addAttribute("productOrder", productOrder);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return "course/groupPoster";
+	}
+	
+	@RequestMapping("group/poster/create")
+	@ResponseBody Object groupPosterCreate(String orderNo, String extName, String imgdata, String mkdir) {
+		RspResult rspResult = ImageUtils.saveImg(orderNo, extName, imgdata, mkdir);
+		if(rspResult.getCode().equals(StatusEnum.SUCCESS.getCode())) {
+			WechatUserInfo userInfo = getWechatUserInfo();
+			ProductOrder productOrder = productOrderService.selectByParam(userInfo.getOpenid(), orderNo);
+			productOrder.setPosterImg(String.valueOf(rspResult.getData()));
+			productOrderService.updateById(productOrder);
+			return new RspResult(StatusEnum.SUCCESS);
+		}
+		return rspResult;
 	}
 	
 	@RequestMapping("group/orderList")

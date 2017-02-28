@@ -97,7 +97,7 @@
 			<ul>
 				<li class="cur">课程详情</li>
 				<li>已预约家长</li>
-				<li>往期直播</li>
+				<!-- <li>往期直播</li> -->
 			</ul>
 		</div>
 		<div class="course-content">
@@ -110,11 +110,11 @@
 				<p class="more" id="more">查看更多</p>
 				<input type="hidden" id="pageNo" value="0"/>
 			</div>
-			<div class="course-content-live" style="display: none;">
+			<!-- <div class="course-content-live" style="display: none;">
 				<ul>
 				</ul>
 				<p class="more" id="more">查看更多课程</p>
-			</div>
+			</div> -->
 		</div>
 		<footer class="footer" style="padding:12px 10px;">
 	        <div class="btn-wrap clearfix" id="footerInner">

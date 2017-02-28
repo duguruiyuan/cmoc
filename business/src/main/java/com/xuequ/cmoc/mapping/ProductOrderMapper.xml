@@ -27,12 +27,13 @@
     <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="poster_img" jdbcType="VARCHAR" property="posterImg" />
   </resultMap>
   <sql id="Base_Column_List">
     id, order_no, cust_id, product_id, activity_id, product_type, res_amount, total_amount, exchangePoints, 
     give_points, channel, commision, commistion_rate, bank_code, bank_no, trans_no, bank_trans_no, 
     pay_submit_time, pay_callback_time, order_status, error_code, error_reason, is_delete, 
-    create_time, update_time
+    create_time, update_time,poster_img
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -46,6 +47,12 @@
     from t_product_order
     where order_status = '001' and order_no = #{orderNo,jdbcType=VARCHAR}
   </select>
+  <select id="selectByParam" resultMap="BaseResultMap">
+    SELECT pt.id, order_no, cust_id, product_id, activity_id, poster_img
+    FROM t_product_order pt, t_parent_info po 
+    WHERE pt.`cust_id` = po.`id`
+	AND po.`openid` = #{openid,jdbcType=VARCHAR} AND pt.`order_no` = #{orderNo,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_product_order
     where id = #{id,jdbcType=INTEGER}
@@ -58,7 +65,7 @@
       bank_code, bank_no, trans_no, 
       bank_trans_no, pay_submit_time, pay_callback_time, 
       order_status, error_code, error_reason, 
-      is_delete, create_time, update_time
+      is_delete, create_time, update_time,poster_img
       )
     values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, 
       #{productId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{resAmount,jdbcType=DECIMAL}, 
@@ -67,7 +74,8 @@
       #{bankCode,jdbcType=VARCHAR}, #{bankNo,jdbcType=VARCHAR}, #{transNo,jdbcType=VARCHAR}, 
       #{bankTransNo,jdbcType=VARCHAR}, #{paySubmitTime,jdbcType=TIMESTAMP}, #{payCallbackTime,jdbcType=TIMESTAMP}, 
       #{orderStatus,jdbcType=VARCHAR}, #{errorCode,jdbcType=VARCHAR}, #{errorReason,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{posterImg,jdbcType=VARCHAR}, 
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ProductOrder">
@@ -148,6 +156,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="posterImg != null">
+        poster_img,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -224,6 +235,9 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="posterImg != null">
+        #{posterImg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -302,6 +316,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="posterImg != null">
+        poster_img = #{posterImg,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -330,7 +347,8 @@
       error_reason = #{errorReason,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      poster_img = #{posterImg,jdbcType=VARCHAR},
     where id = #{id,jdbcType=INTEGER}
   </update>
 

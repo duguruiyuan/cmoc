@@ -8,4 +8,5 @@ ALTER TABLE `t_parent_info` MODIFY COLUMN head_img VARCHAR(256) COMMENT'头像';
 ALTER TABLE t_child_sign_info ADD COLUMN activity_id INT(11) COMMENT '活动编号' AFTER product_id;
 ALTER TABLE `t_child_sign_info` ADD COLUMN child_weight INT(4) COMMENT'小孩体重' AFTER disease_desc;
 ALTER TABLE `t_child_sign_info` ADD COLUMN child_height INT(4) COMMENT'小孩身高' AFTER disease_desc;
+ALTER TABLE t_product_order ADD COLUMN poster_img VARCHAR(128) COMMENT'邀请海报';
 --3月4号上线修改 end

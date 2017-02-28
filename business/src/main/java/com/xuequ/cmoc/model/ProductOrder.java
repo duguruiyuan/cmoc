@@ -54,6 +54,8 @@ public class ProductOrder implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+    
+    private String posterImg;
 
     private static final long serialVersionUID = 1L;
 
@@ -256,4 +258,13 @@ public class ProductOrder implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getPosterImg() {
+		return posterImg;
+	}
+
+	public void setPosterImg(String posterImg) {
+		this.posterImg = posterImg;
+	}
+    
 }

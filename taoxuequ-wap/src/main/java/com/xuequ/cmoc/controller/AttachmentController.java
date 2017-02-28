@@ -73,41 +73,4 @@ public class AttachmentController {
         return new RspResult(StatusEnum.FAIL);
 	}
 	
-	@RequestMapping("upload/img/base64")
-	@ResponseBody Object uploadImg(String imgdata) {
-		try{
-			String extName = "jpg";
-			String path = ResourcePathEnum.IMGE.getValue() + Const.SEPARATOR + "TEST";
-	    	String relativeAttachmentPath = Const.rootPath + path;
-	        FileUtils.createDir(relativeAttachmentPath);
-	        //数据库保存的文件路径
-	        String realFileName = UUID.randomUUID().toString() + Const.DOT + extName;
-	        // 文件保存磁盘的完整路径
-	        String attachmentURL = relativeAttachmentPath + Const.SEPARATOR + realFileName;
-	        // new一个文件对象用来保存图片，默认保存当前工程根目录  
-	        File imageFile = new File(attachmentURL);  
-	        // 创建输出流  
-	        FileOutputStream outputStream = new FileOutputStream(imageFile);  
-	        // 获得一个图片文件流，我这里是从flex中传过来的  
-	        byte[] result = Base64.decodeBase64(imgdata.split(",")[1]);//解码  
-	        for (int i = 0; i < result.length; ++i) {  
-	            if (result[i] < 0) {// 调整异常数据  
-	            	result[i] += 256;
-	            }
-	        }  
-	        outputStream.write(result);  
-	        outputStream.flush();   
-	        outputStream.close();  
-	        String dataMemoryURL = path + Const.SEPARATOR + realFileName;
-	        if(Configuration.getInstance().getEnv().equals("development")) {
-	        	dataMemoryURL = extName + Const.SEPARATOR + dataMemoryURL;
-	        	dataMemoryURL = dataMemoryURL.replaceAll(Const.SEPARATOR, Const.REPLACE_SEPARATOR);
-	        }
-	        return new RspResult(StatusEnum.SUCCESS, dataMemoryURL);
-	    } catch (Exception e) {  
-	        LOGGER.error("[文件上传（fileUpload）][errors:" + e + "]");  
-	    }
-	    return new RspResult(StatusEnum.FAIL);
-	}
-	
 }

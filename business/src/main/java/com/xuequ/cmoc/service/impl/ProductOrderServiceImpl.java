@@ -18,4 +18,14 @@ public class ProductOrderServiceImpl implements IProductOrderService {
 		return productOrderMapper.selectByOrderNo(orderNO);
 	}
 
+	@Override
+	public ProductOrder selectByParam(String openid, String orderNo) {
+		return productOrderMapper.selectByParam(openid, orderNo);
+	}
+
+	@Override
+	public int updateById(ProductOrder vo) {
+		return productOrderMapper.updateByPrimaryKeySelective(vo);
+	}
+
 }
