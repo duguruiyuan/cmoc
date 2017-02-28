@@ -22,14 +22,27 @@ public final class QRCoderUtils {
 	
 	public final static String IMAGE_FROMAT_NAME = "jpg";
 	
+	public static String getRealImgUrl(){
+		return ResourcePathEnum.IMGE.getValue() + Const.SEPARATOR + "EWM";
+	}
+	
+	public static String getRspImgUrl(String fileName) {
+		String dataMemoryURL = getRealImgUrl() + Const.SEPARATOR + fileName;;
+        if(Configuration.getInstance().getEnv().equals("development")) {
+        	dataMemoryURL = IMAGE_FROMAT_NAME + Const.SEPARATOR + dataMemoryURL;
+        	dataMemoryURL = dataMemoryURL.replaceAll(Const.SEPARATOR, Const.REPLACE_SEPARATOR);
+        }
+        return dataMemoryURL;
+	}
+	
 	public static String createEWM(String url, int width, int heigth, String name) {
-		String path = ResourcePathEnum.IMGE.getValue() + Const.SEPARATOR + "EWM";
+		String path = getRealImgUrl();
     	String relativeAttachmentPath = Const.rootPath + path;
 		File file = new File(relativeAttachmentPath);
 		if(!file.exists()) {
 			file.mkdirs();
 		}
-		String realFileName = name + "." + IMAGE_FROMAT_NAME;
+		String realFileName = "EWM" + name + "." + IMAGE_FROMAT_NAME;
 		String imageUrl = relativeAttachmentPath + File.separator + realFileName;
 		File imageFile = new File(imageUrl);
 		if(!imageFile.exists()) {
@@ -38,9 +51,9 @@ public final class QRCoderUtils {
 		String dataMemoryURL = path + Const.SEPARATOR + realFileName;
         if(Configuration.getInstance().getEnv().equals("development")) {
         	dataMemoryURL = IMAGE_FROMAT_NAME + Const.SEPARATOR + dataMemoryURL;
-        	dataMemoryURL = dataMemoryURL.replaceAll(Const.SEPARATOR, Const.REPLACE_SEPARATOR);
+        	dataMemoryURL = "/xuequ" + dataMemoryURL.replaceAll(Const.SEPARATOR, Const.REPLACE_SEPARATOR);
         }
-		return Constants.BASEPATH + dataMemoryURL;
+		return Configuration.getInstance().getImgUrl() + File.separator + dataMemoryURL;
 	}
 	
 	private static void encoderQRCoder(String url, int width, int heigth, String imageUrl) {

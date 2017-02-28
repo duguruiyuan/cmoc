@@ -19,7 +19,7 @@
 <script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <body>
 	<header class="header">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<a class="mui-icon mui-icon-left-nav mui-pull-left" href="<%=basePath%>/course/group/orderList"></a>
 		队伍信息管理
 	</header>
 	<div class="mt44"></div>

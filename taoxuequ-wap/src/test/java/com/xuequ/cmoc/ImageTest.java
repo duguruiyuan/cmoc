@@ -4,7 +4,6 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -17,6 +16,7 @@ import javax.imageio.ImageIO;
 
 import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.utils.QRCoderUtils;
+import com.xuequ.cmoc.vo.ImageSynthesisVo;
 
 public class ImageTest {
 

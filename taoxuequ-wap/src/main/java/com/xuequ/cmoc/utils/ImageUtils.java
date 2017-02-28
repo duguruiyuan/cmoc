@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -18,12 +17,12 @@ import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xuequ.cmoc.ImageSynthesisVo;
 import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.vo.ImageSynthesisVo;
 
 public class ImageUtils {
 	
@@ -83,7 +82,7 @@ public class ImageUtils {
 				conn.disconnect();
 			}
 			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER)); //透明度设置 结束
-			FileOutputStream out = new FileOutputStream(outsrc);
+			FileOutputStream out = new FileOutputStream(Const.rootPath + outsrc);
 			ImageIO.write(tag, "jpg", out);//写图片
 			out.close();
 		}catch (Exception e) {

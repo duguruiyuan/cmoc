@@ -1,6 +1,6 @@
 package com.xuequ.cmoc.controller;
 
-import java.awt.Image;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xuequ.cmoc.ImageSynthesisVo;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
@@ -43,6 +42,7 @@ import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseGroupOrderView;
 import com.xuequ.cmoc.view.CourseListView;
 import com.xuequ.cmoc.vo.CourseQueryVO;
+import com.xuequ.cmoc.vo.ImageSynthesisVo;
 
 @RequestMapping("course")
 @Controller
@@ -137,7 +137,10 @@ public class CourseController extends BaseController {
 		vo.setHeadImg(userInfo.getHeadimgurl());
 		vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
 		CourseSignVO view = courseService.addUPdateOrder(vo);
-		new Thread(new AsynExecutor(view.getOrderNo())).start();
+		CourseGroupOrderView orderView = courseService.selectCourseGroupOrder(userInfo.getOpenid(), view.getOrderNo()).get(0);
+		TemplateUtil.activitySignSucessMsg(view.getOrderNo(), orderView.getActivityAddr(), 
+				userInfo.getOpenid(), orderView.getEmerName(), orderView.getActivityName(), 
+				orderView.getStartDate());
 		Map<String, Object> map = new HashMap<>();
 		map.put("orderNo", view.getOrderNo());
 		map.put("pId", vo.getProductId());
@@ -180,6 +183,10 @@ public class CourseController extends BaseController {
 	public String groupMerber(Model model) {
 		String orderNo = request.getParameter("oNo");
 		String cid = request.getParameter("cId");
+		return toGroupMember(model, orderNo, cid);
+	}
+	
+	private String toGroupMember(Model model, String orderNo, String cid) {
 		Integer childId = StringUtils.isNotBlank(cid) ? Integer.valueOf(cid) : null;
 		ChildSignInfo childInfo = new ChildSignInfo();
 		if(childId != null) {
@@ -232,19 +239,21 @@ public class CourseController extends BaseController {
 			String orderNo = request.getParameter("oNo");
 			WechatUserInfo userInfo = getWechatUserInfo();
 			ProductOrder productOrder = productOrderService.selectByParam(userInfo.getOpenid(), orderNo);
-			List<ImageSynthesisVo> list = new ArrayList<>();
-			ImageSynthesisVo  vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
-			String url = Constants.BASEPATH + "course/group/merber?nNo=17460082";
-			url = QRCoderUtils.createEWM(url, 100, 100, "17460082");
-			ImageSynthesisVo  vo2 = new ImageSynthesisVo(url, 189, 305, 130, 130);
-			list.add(vo1);
-			list.add(vo2);
-			String fileSrc = Constants.BASEPATH + "/images/poster-share.png";
-			String outSrc = Constants.BASEPATH + "/out.png";
-			ImageUtils.composePic(fileSrc, outSrc, list, 642, 900);
-			productOrder.setPosterImg(outSrc);
-			productOrderService.updateById(productOrder);
-			model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
+			if(StringUtils.isBlank(productOrder.getPosterImg())) {
+				List<ImageSynthesisVo> list = new ArrayList<>();
+				ImageSynthesisVo vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
+				String url = Constants.BASEPATH + "/course/group/merber?oNo=" + productOrder.getOrderNo();
+				url = QRCoderUtils.createEWM(url, 100, 100, productOrder.getOrderNo());
+				ImageSynthesisVo vo2 = new ImageSynthesisVo(url, 189, 305, 130, 130);
+				list.add(vo1);
+				list.add(vo2);
+				String fileSrc = request.getRealPath("/images") + "/poster-share.png";
+				String outSrcName = orderNo + ".jpg";
+				String outSrc = QRCoderUtils.getRealImgUrl() + File.separator + outSrcName;
+				ImageUtils.composePic(fileSrc, outSrc, list, 642, 900);
+				productOrder.setPosterImg(QRCoderUtils.getRspImgUrl(outSrcName));
+				productOrderService.updateById(productOrder);
+			}
 			model.addAttribute("productOrder", productOrder);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -273,22 +282,4 @@ public class CourseController extends BaseController {
 		return "course/groupOrderList";
 	}
 	
-	class AsynExecutor implements Runnable {
-		
-		private String orderNo;
-		
-		public AsynExecutor(String orderNo) {
-			this.orderNo = orderNo;
-		}
-		
-		@Override
-		public void run() {
-			WechatUserInfo userInfo = getWechatUserInfo();
-			CourseGroupOrderView view = courseService.selectCourseGroupOrder(userInfo.getOpenid(), orderNo).get(0);
-			TemplateUtil.activitySignSucessMsg(orderNo, view.getActivityAddr(), 
-					userInfo.getOpenid(), view.getEmerName(), view.getActivityName(), 
-					view.getStartDate());
-		}
-		
-	}
 }

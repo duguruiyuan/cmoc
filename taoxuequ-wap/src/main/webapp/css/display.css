@@ -976,7 +976,7 @@ select.regMT-select{
     overflow: hidden;
 }
 .course-tab li {
-    width: 33%;
+    width: 50%;
     float: left;
     font-size: 14px;
     font-weight: 100;
