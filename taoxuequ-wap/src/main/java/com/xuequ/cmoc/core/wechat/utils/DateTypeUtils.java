@@ -11,7 +11,7 @@ public final class DateTypeUtils {
 	 * @return
 	 */
 	public static Long getSceneId(int type, String id) {
-		return Long.parseLong(type + "0" + id);
+		return Long.parseLong(type + id);
 	}
 	
 	public static void main(String[] args) {

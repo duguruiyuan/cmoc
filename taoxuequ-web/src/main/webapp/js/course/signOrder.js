@@ -5,6 +5,12 @@ var dataGrid;
 $(function() {
 	loadData();
 	initCourse();
+	$("#courseId").on("change", function() {
+		var val = this.value;
+		if(val.length > 0){
+			initActivity(val)
+		}
+	})
 });
 
 function loadData() {
@@ -67,7 +73,12 @@ function loadData() {
 			align : "center",
 			resizable : true
 		}, {
-			field : 'courseName',
+			field : 'totalPrice',
+			title : '应付金额',
+			align : "center",
+			resizable : true
+		}, {
+			field : 'signWay',
 			title : '课程报名方式',
 			align : "center",
 			resizable : true,
@@ -90,6 +101,14 @@ function loadData() {
 		}, {
 			field : 'orderCreateTime',
 			title : '报名时间',
+			align : "center",
+			resizable : true,
+			formatter : function(value) {
+				return getTime(value, "yyyy-MM-dd hh:mm:ss");
+			}
+		}, {
+			field : 'paySubmitTime',
+			title : '支付成功时间',
 			align : "center",
 			resizable : true,
 			formatter : function(value) {

@@ -294,6 +294,24 @@ function initCourse() {
 		}
 	});
 }
+function initActivity(courseId) {
+	$.ajax({
+		url : basePath + "/activity/json/activity/compent",
+		type : 'POST',
+		data: {
+			courseId: courseId
+		},
+		error : function() {
+			$.messager.progress('close');
+			$.messager.alert('系统提示', '操作异常', 'error');
+		},
+		success : function(data) {
+			$(".actCompent").each(function(index,item) {
+				$(item).html(data);
+			});
+		}
+	});
+}
 
 function initAllDictData(reload) {
 	if(window.localStorage.getItem("dictDataMap") != null && !reload) return;

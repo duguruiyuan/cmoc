@@ -76,4 +76,6 @@ public interface IActivityService {
     
     int updateByPrimaryKey(ActivityInfo info);
     
+    List<ActivityInfo> selectListByCourseId(Integer courseId);
+    
 }

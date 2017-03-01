@@ -28,6 +28,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ActivityChild;
 import com.xuequ.cmoc.model.ActivityHmSign;
+import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.CourseInfo;
@@ -413,6 +414,18 @@ public class ActivityManageController extends BaseController{
 			logger.error("--hmSignJudge, error={}", e);
 		}
 		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/activity/compent")
+	@ResponseBody Object activityCompent(Integer courseId) {
+		List<ActivityInfo> list = activityService.selectListByCourseId(courseId);
+		StringBuffer sb = new StringBuffer();
+		sb.append("<option value=\"\">全部</option>");
+		for(ActivityInfo info : list) {
+			String val = info.getActivityName() + "|" + info.getActivityNum();
+			sb.append("<option value=\"" + info.getId() + "\">" + val + "</option>");
+		}
+		return sb.toString();
 	}
 	
 }

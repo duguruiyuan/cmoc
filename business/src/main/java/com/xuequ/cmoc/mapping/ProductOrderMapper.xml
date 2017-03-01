@@ -45,7 +45,7 @@
     select 
     <include refid="Base_Column_List" />
     from t_product_order
-    where order_status = '001' and order_no = #{orderNo,jdbcType=VARCHAR}
+    where order_no = #{orderNo,jdbcType=VARCHAR}
   </select>
   <select id="selectByParam" resultMap="BaseResultMap">
     SELECT pt.id, order_no, cust_id, product_id, activity_id, poster_img
@@ -53,12 +53,39 @@
     WHERE pt.`cust_id` = po.`id`
 	AND po.`openid` = #{openid,jdbcType=VARCHAR} AND pt.`order_no` = #{orderNo,jdbcType=VARCHAR}
   </select>
+  <select id="selectCourseSignOrderByOrderId" resultType="com.xuequ.cmoc.view.CourseSignOrderView">
+  	SELECT 
+  	po.`id` orderId,
+	po.`order_no` orderNo, 
+	po.`order_status` orderStatus,
+	po.`create_time` orderCreateTime,
+	po.`pay_submit_time` paySubmitTime,
+	po.`total_amount` totalPrice,
+	pa.`id` custId,
+	pa.`parent_name` parentName,
+	pa.`parent_mobile` parentMobile,
+	pa.`openid`,
+	ci.`id` courseId,
+	ci.`course_name` courseName,
+	ci.`sign_way` signWay,
+	ai.`id` activityId,
+	ai.`activity_name` activityName,
+	ai.`activity_num` activityNum,
+	ai.`start_date` activityStartDate
+	FROM t_product_order po
+	INNER JOIN t_parent_info pa ON pa.`id` = po.`cust_id`
+	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
+	LEFT JOIN t_activity_info ai ON ai.`id` = po.`activity_id`
+	where po.`id` = #{orderId,jdbcType=INTEGER}
+  </select>
   <select id="selectCourseSignOrderByPage" resultType="com.xuequ.cmoc.view.CourseSignOrderView">
   	SELECT 
   	po.`id` orderId,
 	po.`order_no` orderNo, 
 	po.`order_status` orderStatus,
 	po.`create_time` orderCreateTime,
+	po.`pay_submit_time` paySubmitTime,
+	po.`total_amount` totalPrice,
 	pa.`id` custId,
 	pa.`parent_name` parentName,
 	pa.`parent_mobile` parentMobile,
@@ -101,7 +128,7 @@
     <if test="params.orderEndTime != null">
     	and DATE_FORMAT(po.`create_time`,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.orderEndTime,jdbcType=VARCHAR}
     </if>
-	ORDER BY po.`order_status`, po.`create_time` DESC
+	ORDER BY po.`order_status` desc , po.`create_time` DESC
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

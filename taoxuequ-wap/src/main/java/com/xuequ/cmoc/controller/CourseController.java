@@ -241,12 +241,12 @@ public class CourseController extends BaseController {
 		try {
 			String orderNo = request.getParameter("oNo");
 			WechatUserInfo userInfo = getWechatUserInfo();
-			ProductOrder productOrder = productOrderService.selectByParam(userInfo.getOpenid(), orderNo);
+			ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
 			if(StringUtils.isBlank(productOrder.getPosterImg())) {
 				List<ImageSynthesisVo> list = new ArrayList<>();
 				ImageSynthesisVo vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
 				WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_LIMIT_SCENE, 
-						MessageUtil.POSTER_MEMBER, orderNo);
+						MessageUtil.POSTER_MEMBER, String.valueOf(productOrder.getId()));
 				ImageSynthesisVo vo2 = new ImageSynthesisVo(rsp.getQrcode(), 189, 305, 130, 130);
 				list.add(vo1);
 				list.add(vo2);

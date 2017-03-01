@@ -39,4 +39,5 @@ public interface ActivityInfoMapper {
 
     int updateActivityImg(@Param("activityImg")String activityImg, 
     		@Param("id")Integer id);
+    List<ActivityInfo> selectListByCourseId(Integer courseId);
 }

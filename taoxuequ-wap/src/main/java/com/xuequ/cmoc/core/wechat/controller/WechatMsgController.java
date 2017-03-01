@@ -34,6 +34,7 @@ import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IHollowManService;
+import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
@@ -53,16 +54,21 @@ public class WechatMsgController extends BaseController{
 	private IHollowManService hollowManService;
 	@Autowired
 	private IActivityHmService activityHmService;
+	@Autowired
+	private IProductOrderService productOrderService;
 	
 	@RequestMapping(value="paySucessMsg", method = RequestMethod.POST)
 	@ResponseBody Object paySucessMsg(@RequestBody CourseSignOrderView vo) {
 		if(StringUtils.isBlank(Constants.BASEPATH)) Constants.BASEPATH = RequestUtil.getBasePath(request);
 		try {
-			TemplateUtil.courseOrderPaySucessMsg(vo.getPaySubmitTime(), vo.getOrderNo(), 
-					vo.getOpenid(), vo.getParentName(), vo.getActivityName(), 
-					vo.getActivityNum(), vo.getActivityStartDate(), vo.getTotalPrice());
+			CourseSignOrderView view = productOrderService.selectCourseSignOrderByOrderId(vo.getOrderId());
+			if(view != null) {
+				TemplateUtil.courseOrderPaySucessMsg(vo.getPaySubmitTime(), vo.getOrderNo(), 
+						vo.getOpenid(), vo.getParentName(), vo.getActivityName(), 
+						vo.getActivityNum(), vo.getActivityStartDate(), vo.getTotalPrice());
+			}
 		} catch (Exception e) {
-			logger.error("--hmRegMsg, error={}", e);
+			logger.error("--paySucessMsg, error={}", e);
 		}
 		return new RspResult(StatusEnum.FAIL);
 	}

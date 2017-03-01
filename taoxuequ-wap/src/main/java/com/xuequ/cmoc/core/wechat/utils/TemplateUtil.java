@@ -42,22 +42,24 @@ public class TemplateUtil {
 		outputData.setTemplate_id(PropertiesUtil.getProperty("activity_sign_sucess_template_id"));
 		TemplateDate templateDate = new TemplateDate();
 		Data_First first = new Data_First();
-		first.setValue(emerName + "家长, 您已经成功提交报名申请：");
-		Data_Clazz clazz  = new Data_Clazz();
-		clazz.setValue(activityName);
-		Data_Time time = new Data_Time();
-		time.setValue(DateUtil.dateToStr(startDate, DateUtil.DEFAULT_DATE_FORMAT1));
-		Data_Add add = new Data_Add();
-		add.setValue(activityAddr);
-		outputData.setData(templateDate);
+		first.setValue(emerName + "家长, 您已经成功提交报名申请。");
+		
+		Data_Keyword keyword1 = new Data_Keyword();
+		keyword1.setValue(activityName);
+		Data_Keyword keyword2 = new Data_Keyword();
+		keyword2.setValue(DateUtil.dateToStr(startDate, DateUtil.DEFAULT_DATE_FORMAT1));
+		Data_Keyword keyword3 = new Data_Keyword();
+		keyword3.setValue(activityAddr);
+		
 		Data_Remark remark = new Data_Remark();
-		remark.setValue("***点击“详情”立即进入队伍管理，邀请队员并完成支付***");
-		outputData.setUrl(Constants.BASEPATH + "/course/add?oNo=" + orderNo);
-		templateDate.setClazz(clazz);
+		remark.setValue("❀❀❀点击“详情”立即进入队伍管理，邀请队员并完成支付❀❀❀");
+		outputData.setUrl(Constants.BASEPATH + "/course/group/add?oNo=" + orderNo);
 		templateDate.setFirst(first);
-		templateDate.setTime(time);
 		templateDate.setRemark(remark);
-		templateDate.setAdd(add);
+		templateDate.setKeyword1(keyword1);
+		templateDate.setKeyword2(keyword2);
+		templateDate.setKeyword3(keyword3);
+		outputData.setData(templateDate);
 		try {
 			String json = JSONObject.toJSONString(outputData);
 			json = json.replace("clazz", "class");
@@ -90,7 +92,7 @@ public class TemplateUtil {
 		outputData.setData(templateDate);
 		Data_Remark remark = new Data_Remark();
 		remark.setValue("***欢迎使用陶学趣公众号***\n↓↓↓点击【详情】进入队伍管理↓↓↓");
-		outputData.setUrl(Constants.BASEPATH + "/course/add?oNo=" + orderNo);
+		outputData.setUrl(Constants.BASEPATH + "/course/group/add?oNo=" + orderNo);
 		templateDate.setClazz(clazz);
 		templateDate.setFirst(first);
 		templateDate.setTime(time);
@@ -124,14 +126,14 @@ public class TemplateUtil {
 		keyword1.setColor("#173177");
 		keyword1.setValue(orderNo);
 		Data_Keyword keyword2 = new Data_Keyword();
-		keyword1.setColor("#173177");
-		keyword1.setValue(activityName + "|" + activityNum + "|" + DateUtil.dateToStr(new Date(), DateUtil.DATE_FORMAT1));
+		keyword2.setColor("#173177");
+		keyword2.setValue(activityName + "|" + activityNum + "|" + DateUtil.dateToStr(new Date(), DateUtil.DATE_FORMAT1));
 		Data_Keyword keyword3 = new Data_Keyword();
-		keyword1.setColor("#173177");
-		keyword1.setValue("人民币" + price + "元");
+		keyword3.setColor("#173177");
+		keyword3.setValue("人民币" + price + "元");
 		Data_Keyword keyword4 = new Data_Keyword();
-		keyword1.setColor("#173177");
-		keyword1.setValue(DateUtil.dateToStr(payDate, DateUtil.DEFAULT_DATE_FORMAT2));
+		keyword4.setColor("#173177");
+		keyword4.setValue(DateUtil.dateToStr(payDate, DateUtil.DEFAULT_DATE_FORMAT2));
 		Data_Remark remark = new Data_Remark();
 		remark.setValue("如果您有什么问题，请直接拨打18027274621或者直接在陶学趣公众号回复“客服”会有客户人员来解答。谢谢！");
 		templateDate.setFirst(first);
@@ -140,6 +142,7 @@ public class TemplateUtil {
 		templateDate.setKeyword3(keyword3);
 		templateDate.setKeyword4(keyword4);
 		templateDate.setRemark(remark);
+		outputData.setData(templateDate);
 		try {
 			String json = JSONObject.toJSONString(outputData);
 			json = json.replace("clazz", "class");
@@ -165,7 +168,7 @@ public class TemplateUtil {
 		outputData.setData(templateDate);
 		Data_Remark remark = new Data_Remark();
 		remark.setValue("***欢迎使用陶学趣公众号***\n↓↓↓点击【详情】进入报名信息管理↓↓↓");
-		outputData.setUrl(Constants.BASEPATH + "/course/add?oNo=" + orderNo + "&cId=" + childId);
+		outputData.setUrl(Constants.BASEPATH + "/course/group/merber?oNo=" + orderNo + "&cId=" + childId);
 		templateDate.setClazz(clazz);
 		templateDate.setFirst(first);
 		templateDate.setTime(time);

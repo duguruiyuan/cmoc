@@ -15,4 +15,8 @@ public interface IProductOrderService {
 	int updateById(ProductOrder vo);
 	
 	List<CourseSignOrderView> selectCourseSignOrderByPage(Page<CourseSignOrderView> page);
+	
+	CourseSignOrderView selectCourseSignOrderByOrderId(Integer orderId);
+	
+	ProductOrder selectById(Integer id);
 }

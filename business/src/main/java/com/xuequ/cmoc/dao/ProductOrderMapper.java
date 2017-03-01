@@ -26,4 +26,6 @@ public interface ProductOrderMapper {
     ProductOrder selectByParam(@Param("openid")String openid, @Param("orderNo")String orderNo);
     
     List<CourseSignOrderView> selectCourseSignOrderByPage(Page<CourseSignOrderView> page);
+    
+    CourseSignOrderView selectCourseSignOrderByOrderId(Integer orderId);
 }

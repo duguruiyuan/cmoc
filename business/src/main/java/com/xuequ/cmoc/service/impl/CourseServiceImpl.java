@@ -132,6 +132,7 @@ public class CourseServiceImpl implements ICourseService {
 		ProductOrder order = new ProductOrder();
 		order.setOrderNo(StringUtil.getCourseOrderNum(parentInfo.getId()));
 		order.setResAmount(courseInfo.getResAmount());
+		order.setTotalAmount(courseInfo.getTotalPrice());
 		order.setCustId(parentInfo.getId());
 		order.setProductId(courseInfo.getId());
 		order.setProductType(ProductTypeEnum.COURSE.getCode());

@@ -482,7 +482,7 @@
   	po.`order_status` orderStatus, 
   	ai.`activity_name` activityName, 
   	ai.`start_date` startDate, 
-  	ai.`activity_addr`,
+  	ai.`activity_addr` activityAddr,
   	po.`order_no` orderNo,
   	pio.`parent_name` emerName
 	FROM t_product_order po

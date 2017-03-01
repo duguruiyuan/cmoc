@@ -20,12 +20,12 @@
 							<tbody>
 								<tr>
 									<td>课程名称: 
-										<select class="form-control1 course" style="width: 173px;" name="productId" id="productId">
+										<select class="form-control1 course" style="width: 173px;" name="courseId" id="courseId">
 											<option value="">全部</option>
 										</select>
 									</td>
 									<td>排期活动: 
-										<select class="form-control1 course" style="width: 173px;" name="productId" id="productId">
+										<select class="form-control1 actCompent" style="width: 173px;" name="activityId" id="activityId">
 											<option value="">全部</option>
 										</select>
 									</td>

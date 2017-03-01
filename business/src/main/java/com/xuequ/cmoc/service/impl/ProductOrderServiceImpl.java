@@ -37,4 +37,14 @@ public class ProductOrderServiceImpl implements IProductOrderService {
 		return productOrderMapper.selectCourseSignOrderByPage(page);
 	}
 
+	@Override
+	public CourseSignOrderView selectCourseSignOrderByOrderId(Integer orderId) {
+		return productOrderMapper.selectCourseSignOrderByOrderId(orderId);
+	}
+
+	@Override
+	public ProductOrder selectById(Integer id) {
+		return productOrderMapper.selectByPrimaryKey(id);
+	}
+
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.OrderStatusEnum;
@@ -28,9 +29,11 @@ import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignOrderVO;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IProductOrderService;
+import com.xuequ.cmoc.thread.WechatMsgCallback;
 import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.ExcelExportUtil;
 import com.xuequ.cmoc.utils.ExportSetInfoUtil;
+import com.xuequ.cmoc.utils.PropertiesUtil;
 import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseSignOrderView;
@@ -86,12 +89,18 @@ public class CourseManageController extends BaseController{
 	@RequestMapping("json/order/confirmPay")
 	@ResponseBody Object orderConfirmPay(CourseSignOrderVO vo) {
 		try {
-			ProductOrder order = new ProductOrder();
-			order.setId(vo.getOrderId());
-			order.setOrderStatus("000");
-			order.setUpdateTime(new Date());
-			order.setPaySubmitTime(new Date());
-			productOrderService.updateById(order);
+			ProductOrder order = productOrderService.selectById(vo.getOrderId());
+			if(order != null) {
+				order.setOrderStatus("000");
+				order.setUpdateTime(new Date());
+				order.setPaySubmitTime(new Date());
+				productOrderService.updateById(order);
+				CourseSignOrderView view = productOrderService.selectCourseSignOrderByOrderId(vo.getOrderId());
+				if(view != null) {
+					new WechatMsgCallback(PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_paySucessMsg"), 
+							view).execute();
+				}
+			}
 			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
 			logger.error("--orderConfirmPay, error={}", e);

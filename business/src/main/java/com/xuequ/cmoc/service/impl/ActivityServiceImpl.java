@@ -216,4 +216,9 @@ public class ActivityServiceImpl implements IActivityService {
 		return activityInfoMapper.updateByPrimaryKeySelective(info);
 	}
 
+	@Override
+	public List<ActivityInfo> selectListByCourseId(Integer courseId) {
+		return activityInfoMapper.selectListByCourseId(courseId);
+	}
+
 }

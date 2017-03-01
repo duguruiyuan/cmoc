@@ -104,6 +104,9 @@ public class InputMessage implements Serializable {
     @XStreamAlias("KfAccount")
     private String kfAccount;
     
+    @XStreamAlias("Status")
+    private String status;
+    
 	public String getToUserName() {
 		return toUserName;
 	}
@@ -265,6 +268,12 @@ public class InputMessage implements Serializable {
 	}
 	public void setKfAccount(String kfAccount) {
 		this.kfAccount = kfAccount;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

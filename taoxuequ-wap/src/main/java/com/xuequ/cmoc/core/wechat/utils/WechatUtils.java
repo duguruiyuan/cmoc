@@ -225,6 +225,7 @@ public class WechatUtils {
 		}
 		req.setAction_name(qrcodeType);
 		String response = HttpClientUtils.postJson(url, req);
+		logger.info("---getQrcode result={}", response);
 		JSONObject jsonObject = JSONObject.parseObject(response);
 		if(jsonObject.getString("errcode") == null) {
 			return JsonUtils.jsonToObject(response, WechatQrcodeRsp.class);

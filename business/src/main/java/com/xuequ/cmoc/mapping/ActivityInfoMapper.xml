@@ -41,6 +41,15 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectListByCourseId" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_activity_info
+    where product_id = #{courseId,jdbcType=INTEGER}
+    and is_delete = 'N'
+    order by start_date
+  </select>
+  
   <select id="selectScheduActivity" resultMap="BaseResultMap" parameterType="com.xuequ.cmoc.model.ActivityInfo">
 	  select 
   	  <include refid="Base_Column_List" />
