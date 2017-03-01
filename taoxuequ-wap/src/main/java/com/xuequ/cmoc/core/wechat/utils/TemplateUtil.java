@@ -1,5 +1,6 @@
 package com.xuequ.cmoc.core.wechat.utils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.template.Data_Add;
 import com.xuequ.cmoc.core.wechat.template.Data_Clazz;
 import com.xuequ.cmoc.core.wechat.template.Data_First;
+import com.xuequ.cmoc.core.wechat.template.Data_Keyword;
 import com.xuequ.cmoc.core.wechat.template.Data_Remark;
 import com.xuequ.cmoc.core.wechat.template.Data_Time;
 import com.xuequ.cmoc.core.wechat.template.OutputTemateData;
@@ -23,6 +25,15 @@ import com.xuequ.cmoc.utils.TextUtil;
 public class TemplateUtil {
 	static Logger logger = LoggerFactory.getLogger(TemplateUtil.class);
 	
+	/**
+	 * 提交活动报名申请
+	 * @param orderNo
+	 * @param activityAddr
+	 * @param openid
+	 * @param emerName
+	 * @param activityName
+	 * @param startDate
+	 */
 	public static void activitySignSucessMsg(String orderNo, String activityAddr, String openid, String emerName, String activityName, Date startDate) {
 		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
 				WechatUtils.getAccessToken());
@@ -56,6 +67,13 @@ public class TemplateUtil {
 		}
 	}
 	
+	/**
+	 * 成员加入提醒
+	 * @param orderNo
+	 * @param openid
+	 * @param emerName
+	 * @param member
+	 */
 	public static void memberAccessMsg(String orderNo, String openid, String emerName, Integer member) {
 		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
 				WechatUtils.getAccessToken());
@@ -83,6 +101,51 @@ public class TemplateUtil {
 			HttpClientUtils.postStringJosn(url, json);
 		} catch (Exception e) {
 			logger.error("--activitySignSucessMsg, error={}", e);
+		}
+	}
+	
+	/**
+	 * 订单支付成功提醒
+	 * @param orderNo
+	 * @param openid
+	 * @param emerName
+	 * @param member
+	 */
+	public static void courseOrderPaySucessMsg(Date payDate, String orderNo, String openid, String emerName, String activityName, String activityNum, Date startDate, BigDecimal price) {
+		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
+				WechatUtils.getAccessToken());
+		OutputTemateData outputData = new OutputTemateData();
+		outputData.setTouser(openid);
+		outputData.setTemplate_id(PropertiesUtil.getProperty("order_success_template_id"));
+		TemplateDate templateDate = new TemplateDate();
+		Data_First first = new Data_First();
+		first.setValue("亲爱的" + emerName + "家长, 您已经支付成功。");
+		Data_Keyword keyword1 = new Data_Keyword();
+		keyword1.setColor("#173177");
+		keyword1.setValue(orderNo);
+		Data_Keyword keyword2 = new Data_Keyword();
+		keyword1.setColor("#173177");
+		keyword1.setValue(activityName + "|" + activityNum + "|" + DateUtil.dateToStr(new Date(), DateUtil.DATE_FORMAT1));
+		Data_Keyword keyword3 = new Data_Keyword();
+		keyword1.setColor("#173177");
+		keyword1.setValue("人民币" + price + "元");
+		Data_Keyword keyword4 = new Data_Keyword();
+		keyword1.setColor("#173177");
+		keyword1.setValue(DateUtil.dateToStr(payDate, DateUtil.DEFAULT_DATE_FORMAT2));
+		Data_Remark remark = new Data_Remark();
+		remark.setValue("如果您有什么问题，请直接拨打18027274621或者直接在陶学趣公众号回复“客服”会有客户人员来解答。谢谢！");
+		templateDate.setFirst(first);
+		templateDate.setKeyword1(keyword1);
+		templateDate.setKeyword2(keyword2);
+		templateDate.setKeyword3(keyword3);
+		templateDate.setKeyword4(keyword4);
+		templateDate.setRemark(remark);
+		try {
+			String json = JSONObject.toJSONString(outputData);
+			json = json.replace("clazz", "class");
+			HttpClientUtils.postStringJosn(url, json);
+		} catch (Exception e) {
+			logger.error("--courseOrderPaySucessMsg, error={}", e);
 		}
 	}
 	

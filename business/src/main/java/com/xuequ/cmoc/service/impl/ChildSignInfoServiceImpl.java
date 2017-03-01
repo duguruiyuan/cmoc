@@ -70,5 +70,9 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 	public ChildSignInfo selectById(Integer id) {
 		return childSignInfoMapper.selectByPrimaryKey(id);
 	}
+	@Override
+	public ChildSignInfo selectByParam(String orderNo, String openid) {
+		return childSignInfoMapper.selectByParam(orderNo, openid);
+	}
 
 }

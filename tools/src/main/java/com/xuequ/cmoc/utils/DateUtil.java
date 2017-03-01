@@ -19,7 +19,9 @@ public class DateUtil {
 	
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public static final String DEFAULT_DATE_FORMAT1 = "yyyy-MM-dd HH:mm";
+	public static final String DEFAULT_DATE_FORMAT2 = "yyyy年MM月dd日 HH:mm";
 	public static final String DATE_FORMAT = "yyyyMMdd";
+	public static final String DATE_FORMAT1 = "yyyy/MM/dd";
 	public static final String DATE_MD_FORMAT = "MM月dd日";
 	
 	/**

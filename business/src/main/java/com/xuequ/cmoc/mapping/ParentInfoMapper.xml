@@ -177,6 +177,17 @@
 	AND po.`product_id`= #{courseId,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByOrderNoOpenid" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from t_parent_info t
+    where openid = #{openid,jdbcType=VARCHAR}
+    and exists (
+		select 1 from t_product_order where cust_id = t.`id` and 
+		order_no = #{orderNo,jdbcType=VARCHAR}
+    )
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_parent_info
     where id = #{id,jdbcType=INTEGER}

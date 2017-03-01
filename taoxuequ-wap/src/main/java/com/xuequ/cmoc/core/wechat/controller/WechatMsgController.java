@@ -28,6 +28,7 @@ import com.xuequ.cmoc.core.wechat.template.Data_Remark;
 import com.xuequ.cmoc.core.wechat.template.Data_Time;
 import com.xuequ.cmoc.core.wechat.template.OutputTemateData;
 import com.xuequ.cmoc.core.wechat.template.TemplateDate;
+import com.xuequ.cmoc.core.wechat.utils.TemplateUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.HollowManInfo;
@@ -40,6 +41,7 @@ import com.xuequ.cmoc.utils.RequestUtil;
 import com.xuequ.cmoc.utils.StringUtil;
 import com.xuequ.cmoc.utils.TextUtil;
 import com.xuequ.cmoc.view.ActivityHmSignView;
+import com.xuequ.cmoc.view.CourseSignOrderView;
 
 @RequestMapping("wechatmsg")
 @Controller
@@ -51,6 +53,19 @@ public class WechatMsgController extends BaseController{
 	private IHollowManService hollowManService;
 	@Autowired
 	private IActivityHmService activityHmService;
+	
+	@RequestMapping(value="paySucessMsg", method = RequestMethod.POST)
+	@ResponseBody Object paySucessMsg(@RequestBody CourseSignOrderView vo) {
+		if(StringUtils.isBlank(Constants.BASEPATH)) Constants.BASEPATH = RequestUtil.getBasePath(request);
+		try {
+			TemplateUtil.courseOrderPaySucessMsg(vo.getPaySubmitTime(), vo.getOrderNo(), 
+					vo.getOpenid(), vo.getParentName(), vo.getActivityName(), 
+					vo.getActivityNum(), vo.getActivityStartDate(), vo.getTotalPrice());
+		} catch (Exception e) {
+			logger.error("--hmRegMsg, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
 	
 	@RequestMapping(value="hmRegMsg", method = RequestMethod.POST)  
     @ResponseBody Object hmRegMsg(@RequestBody AuditReqVO vo) { 

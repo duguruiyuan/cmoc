@@ -2048,7 +2048,7 @@ color: #09BB07;
     padding-top: 10px;
 }
 .agreenment{
-	position: absolute;
+    position: absolute;
     top: 5%;
     left: 3%;
     width: 94%;
@@ -2056,6 +2056,80 @@ color: #09BB07;
     text-align: center;
     background: #fff;
     border-radius: 5px;
+}
+.agreenment-title{
+	height: 6%;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.agreenment-content{
+	text-align: left;
+    height: 88%;
+    overflow-y: scroll;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 22px;
+}
+.disabled{
+	background: #B6B3B3;
+}
+.payGrid{
+    position: absolute;
+    top: 1%;
+    left: 3%;
+    width: 94%;
+    height: 68%;
+    text-align: center;
+    background: #fff;
+    border-radius: 5px;
+}
+.payGrid .payGrid-title{
+	height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+    padding-left: 20px;
+}
+.payGrid .payGrid-content{
+	text-align: center;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 22px;
+}
+.payGrid .payGrid-content img{
+	width: 80%;
+}
+.payGrid .payGrid-content a{
+    background: #B14040;
+    padding: 10px 40px;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    line-height: 30px;
+}
+.payGrid .payGrid-btn{
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    color: #008200;
+    font-weight: bold;
+    border-top: 1px #ccc solid;
+}
+.agreenment-btn {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 6%;
+    line-height: 40px;
+    color: #008200;
+    font-weight: bold;
+    border-top: 1px #ccc solid;
 }
 .group-add-tips{
 	display: inline-block;

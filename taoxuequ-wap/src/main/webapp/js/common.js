@@ -203,3 +203,7 @@ function idCardNo(value){
 	          break;
 	    };
 	}
+
+function closeCode() {
+	$(".code").remove();
+}

@@ -10,7 +10,7 @@ public final class DateTypeUtils {
 	 * @param id 
 	 * @return
 	 */
-	public static Long getSceneId(int type, int id) {
+	public static Long getSceneId(int type, String id) {
 		return Long.parseLong(type + "0" + id);
 	}
 	

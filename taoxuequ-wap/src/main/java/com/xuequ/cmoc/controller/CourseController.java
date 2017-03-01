@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
+import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
+import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.TemplateUtil;
+import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
@@ -242,9 +245,9 @@ public class CourseController extends BaseController {
 			if(StringUtils.isBlank(productOrder.getPosterImg())) {
 				List<ImageSynthesisVo> list = new ArrayList<>();
 				ImageSynthesisVo vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
-				String url = Constants.BASEPATH + "/course/group/merber?oNo=" + productOrder.getOrderNo();
-				url = QRCoderUtils.createEWM(url, 100, 100, productOrder.getOrderNo());
-				ImageSynthesisVo vo2 = new ImageSynthesisVo(url, 189, 305, 130, 130);
+				WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_LIMIT_SCENE, 
+						MessageUtil.POSTER_MEMBER, orderNo);
+				ImageSynthesisVo vo2 = new ImageSynthesisVo(rsp.getQrcode(), 189, 305, 130, 130);
 				list.add(vo1);
 				list.add(vo2);
 				String fileSrc = request.getRealPath("/images") + "/poster-share.png";
@@ -254,7 +257,9 @@ public class CourseController extends BaseController {
 				productOrder.setPosterImg(QRCoderUtils.getRspImgUrl(outSrcName));
 				productOrderService.updateById(productOrder);
 			}
+			ActivityInfo activityInfo = activityService.selectById(productOrder.getActivityId());
 			model.addAttribute("productOrder", productOrder);
+			model.addAttribute("activityInfo", activityInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

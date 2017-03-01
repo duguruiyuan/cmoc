@@ -39,4 +39,6 @@ public interface ParentInfoMapper {
     
     CourseBuyerView selectRemindOrder(@Param("mobile")String mobile, 
     		@Param("openid")String openid, @Param("courseId")Integer courseId);
+    
+    ParentInfo selectByOrderNoOpenid(@Param("openid")String openid, @Param("orderNo")String orderNo);
 }

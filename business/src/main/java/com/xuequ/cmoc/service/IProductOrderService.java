@@ -1,6 +1,10 @@
 package com.xuequ.cmoc.service;
 
+import java.util.List;
+
 import com.xuequ.cmoc.model.ProductOrder;
+import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.view.CourseSignOrderView;
 
 public interface IProductOrderService {
  
@@ -9,4 +13,6 @@ public interface IProductOrderService {
 	ProductOrder selectByParam(String openid, String orderNo);
 	
 	int updateById(ProductOrder vo);
+	
+	List<CourseSignOrderView> selectCourseSignOrderByPage(Page<CourseSignOrderView> page);
 }

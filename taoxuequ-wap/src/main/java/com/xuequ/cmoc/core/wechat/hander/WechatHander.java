@@ -22,12 +22,16 @@ import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
+import com.xuequ.cmoc.model.ChildSignInfo;
+import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.model.WechatSendMessage;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
+import com.xuequ.cmoc.service.IChildSignInfoService;
 import com.xuequ.cmoc.service.IKeywordService;
+import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.service.IWechatMessageService;
 import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.DateUtil;
@@ -48,6 +52,10 @@ public class WechatHander {
 	private IWechatMessageService wechatMessageService;
 	@Autowired
 	private IActivityService activityService;
+	@Autowired
+	private IChildSignInfoService childSignInfoService;
+	@Autowired
+	private IParentInfoService parentInfoService;
 
 	public OutputMessage respMessage(InputMessage inputMsg) throws Exception{
 		String servername = inputMsg.getToUserName();// 服务端  
@@ -180,9 +188,10 @@ public class WechatHander {
 	 */
 	private void eventTypeScanOutPut(OutputMessage outputMsg, String eventKey, String openid) {
 		int type = Integer.parseInt(eventKey.substring(0, eventKey.indexOf("0"))); 
+		String key = eventKey.substring(eventKey.indexOf("0"), eventKey.length());
 		String content = null;
 		if(MessageUtil.BIND_TYPE_MARINE == type) {
-			Integer marineId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length())); 
+			Integer marineId = Integer.parseInt(key); 
 			RspResult rspResult = activityMarinesService.updateHmBindMarine(marineId, openid);
 			if(StatusEnum.SUCCESS.getCode().equals(rspResult.getCode())) {
 				content = PropertiesUtil.getProperty("hm_regiter_success");
@@ -196,7 +205,7 @@ public class WechatHander {
 				content = "提示绑定失败：" + rspResult.getMsg();
 			}
 		}else if(MessageUtil.ACTIVITY_SIGN == type) {
-			Integer activityId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length()));
+			Integer activityId = Integer.parseInt(key);
 			ActivityInfo activityInfo = activityService.selectByPrimaryKey(activityId);
 			Date currDate = new Date();
 			if(DateUtil.compare(activityInfo.getEndDate(), currDate) != 1) {
@@ -223,7 +232,7 @@ public class WechatHander {
 				}
 			}
 		}else if(MessageUtil.SUPPORT_MARINE == type) {
-			Integer marineId = Integer.parseInt(eventKey.substring(eventKey.indexOf("0"), eventKey.length())); 
+			Integer marineId = Integer.parseInt(key); 
 			RspResult result = activityMarinesService.addMarineVotes(marineId, openid);
 			ActivityMarines marines = (ActivityMarines) result.getData();
 			if(StatusEnum.MARINE_SUPPORT_HAD.getCode().equals(result.getCode())) {
@@ -241,6 +250,26 @@ public class WechatHander {
 				String url = Constants.BASEPATH + "/course/list";
 				content = PropertiesUtil.getProperty("support_marine_fail");
 				content = TextUtil.format(content, new String[]{result.getMsg(), url});
+			}
+		}else if(MessageUtil.POSTER_MEMBER == type) {
+			String orderNo = key;
+			String dateStr = DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT);
+			int count = childSignInfoService.selectCountByOrderNo(orderNo);
+			if(count >= 5) {
+				content = PropertiesUtil.getProperty("poster_member_over");
+				content = TextUtil.format(content, new String[]{orderNo, dateStr});
+			}else {
+				ParentInfo buyInfo = parentInfoService.selectByOrderNoOpenid(openid, orderNo);
+				ChildSignInfo info = childSignInfoService.selectByParam(orderNo, openid);
+				if(info == null) {
+					content = PropertiesUtil.getProperty("poster_member_welcome");
+					String url = Constants.BASEPATH + "/course/group/merber?oNo=" + orderNo;
+					content = TextUtil.format(content, new String[]{buyInfo.getParentName(), orderNo, dateStr, url});
+				}else {
+					content = PropertiesUtil.getProperty("poster_member_access");
+					String url = Constants.BASEPATH + "/course/group/merber?oNo=" + orderNo + "&cId=" + info.getParentId();
+					content = TextUtil.format(content, new String[]{buyInfo.getParentName(), orderNo, dateStr, url});
+				}
 			}
 		}
 		if(StringUtils.isNotBlank(content)) {

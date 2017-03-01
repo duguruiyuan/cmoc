@@ -36,4 +36,6 @@ public interface ChildSignInfoMapper {
     int selectCountByOrderNo(String orderNo);
     
     List<ChildSignInfo> selectListByOrderNo(String orderNo);
+    
+    ChildSignInfo selectByParam(@Param("orderNo")String orderNo, @Param("openid")String openid);
 }

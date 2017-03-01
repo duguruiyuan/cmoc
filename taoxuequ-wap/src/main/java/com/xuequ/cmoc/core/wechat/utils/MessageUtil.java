@@ -62,5 +62,7 @@ public final class MessageUtil {
     public static final int ACTIVITY_SIGN = 2;
     //投票支持战队
     public static final int SUPPORT_MARINE = 3;
+    //分享海报加入成员
+    public static final int POSTER_MEMBER = 4;
     
 }

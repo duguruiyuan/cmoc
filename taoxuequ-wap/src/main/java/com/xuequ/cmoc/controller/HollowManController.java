@@ -100,7 +100,7 @@ public class HollowManController extends BaseController {
 			if(StringUtils.isBlank(view.getBindQrcodeUrl())) {
 				try {
 					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_SCENE, 
-							MessageUtil.BIND_TYPE_MARINE, view.getId());
+							MessageUtil.BIND_TYPE_MARINE, String.valueOf(view.getId()));
 					if(rsp != null) {
 						view.setBindQrcodeUrl(rsp.getQrcode());
 						isUpdate = true;
@@ -112,7 +112,7 @@ public class HollowManController extends BaseController {
 			if(StringUtils.isBlank(view.getSupportQrcodeUrl())) {
 				try {
 					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_SCENE, 
-							MessageUtil.SUPPORT_MARINE, view.getId());
+							MessageUtil.SUPPORT_MARINE, String.valueOf(view.getId()));
 					if(rsp != null) {
 						view.setSupportQrcodeUrl(rsp.getQrcode());
 						isUpdate = true;
@@ -210,7 +210,7 @@ public class HollowManController extends BaseController {
 			if(StringUtils.isBlank(view.getQrcodeUrl())) {
 				try {
 					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_LIMIT_SCENE, 
-							MessageUtil.ACTIVITY_SIGN, view.getId());
+							MessageUtil.ACTIVITY_SIGN, String.valueOf(view.getId()));
 					if(rsp != null) {
 						view.setQrcodeUrl(rsp.getQrcode());
 						activityService.updateByPrimaryKey(view);

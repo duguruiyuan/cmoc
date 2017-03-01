@@ -1,6 +1,7 @@
 package com.xuequ.cmoc.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -21,14 +22,18 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.Grid;
+import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.reqVo.CourseSignOrderVO;
 import com.xuequ.cmoc.service.ICourseService;
+import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.ExcelExportUtil;
 import com.xuequ.cmoc.utils.ExportSetInfoUtil;
 import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
+import com.xuequ.cmoc.view.CourseSignOrderView;
 import com.xuequ.cmoc.vo.BuyerQueryVO;
 import com.xuequ.cmoc.vo.ChildSignReportVO;
 import com.xuequ.cmoc.vo.CourseQueryVO;
@@ -42,6 +47,8 @@ public class CourseManageController extends BaseController{
 
 	@Autowired
 	private ICourseService courseService;
+	@Autowired
+	private IProductOrderService productOrderService;
 	
 	@RequestMapping("manage")
 	public String manage() {
@@ -51,6 +58,45 @@ public class CourseManageController extends BaseController{
 	@RequestMapping("sign/record")
 	public String buyRecord(){
 		return "course/signRecord";
+	}
+	
+	@RequestMapping("sign/order")
+	public String signOrder() {
+		return "course/signOrder";
+	}
+	
+	@RequestMapping("json/signOrder/list")
+	@ResponseBody Object signOrderList(CourseSignOrderVO vo) {
+		try {
+			Page<CourseSignOrderView> page = new Page<>();
+			page.setPageNo(vo.getPage());
+			page.setPageSize(vo.getRows());
+			page.setParams(vo);
+			List<CourseSignOrderView> list = productOrderService.selectCourseSignOrderByPage(page);
+			Grid grid = new Grid();
+			grid.setRows(list);
+			grid.setTotal(page.getTotalRecord());
+			return grid;
+		} catch (Exception e) {
+			logger.error("--signOrderList, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/order/confirmPay")
+	@ResponseBody Object orderConfirmPay(CourseSignOrderVO vo) {
+		try {
+			ProductOrder order = new ProductOrder();
+			order.setId(vo.getOrderId());
+			order.setOrderStatus("000");
+			order.setUpdateTime(new Date());
+			order.setPaySubmitTime(new Date());
+			productOrderService.updateById(order);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--orderConfirmPay, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 	@RequestMapping("json/sign/list")

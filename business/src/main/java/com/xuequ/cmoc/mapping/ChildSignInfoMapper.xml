@@ -133,6 +133,17 @@
 	ORDER BY bi.`status`, bi.`create_time` 
   </select>
   
+  <select id="selectByParam" resultMap="BaseResultMap">
+    select
+  	<include refid="Base_Column_List" />
+    from t_child_sign_info t
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+    and exists (
+    	select 1 from t_parent_info where id = t.`parent_id` 
+    	and openid = #{openid,jdbcType=VARCHAR}
+    )
+  </select>
+  
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.xuequ.cmoc.model.ChildSignInfo" >
     insert into t_child_sign_info
     <trim prefix="(" suffix=")" suffixOverrides="," >

@@ -68,4 +68,9 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 		return parentInfoMapper.selectByPrimaryKey(custId);
 	}
 
+	@Override
+	public ParentInfo selectByOrderNoOpenid(String openid, String orderNo) {
+		return parentInfoMapper.selectByOrderNoOpenid(openid, orderNo);
+	}
+
 }

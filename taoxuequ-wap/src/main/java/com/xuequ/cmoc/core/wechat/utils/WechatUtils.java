@@ -209,7 +209,7 @@ public class WechatUtils {
 		return null;
 	}
 	
-	public static WechatQrcodeRsp getQrcode(String qrcodeType, int type, Integer id) throws Exception{
+	public static WechatQrcodeRsp getQrcode(String qrcodeType, int type, String id) throws Exception{
 		WechatModel model = WechatUtils.getWechatModel();
 		String url = TextUtil.format(WechatConfigure.getInstance().getQrcodeTicket(), 
 				model.getAccessToken());

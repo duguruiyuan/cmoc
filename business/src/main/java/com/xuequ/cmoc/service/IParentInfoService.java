@@ -24,4 +24,6 @@ public interface IParentInfoService {
 	List<ParentInfo> selectListByPage(Page<ParentInfo> page);
 	
 	ParentInfo selectById(Integer custId);
+	
+	ParentInfo selectByOrderNoOpenid(String openid, String orderNo);
 }
