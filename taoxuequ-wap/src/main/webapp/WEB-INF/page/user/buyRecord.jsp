@@ -25,19 +25,23 @@
 			    			<th class="mui-text-center">时间</th>
 			    			<th class="mui-text-center">项目名称</th>
 			    			<th class="mui-text-center">金额</th>
+			    			<th class="mui-text-center">状态</th>
 			    		</tr>
 		    		</thead>
 		    		<tbody>
 		    			<c:choose>
-				    		<c:when test="${list == null || list.isEmpty }">
+				    		<c:when test="${orderList == null || orderList.isEmpty() }">
 				    			<tr><td colspan="3"><p style="padding: 10px 10px;">暂无购买记录</p></td></tr>
 				    		</c:when>
 				    		<c:otherwise>
-				    			<tr>
-				    				<td class="mui-text-center">2015/09/01</td>
-				    				<td class="mui-text-center">北京7天夏令营</td>
-				    				<td class="mui-text-center">420</td>
-				    			</tr>
+				    			<c:forEach var="itm" items="${orderList }">
+				    				<tr>
+					    				<td class="mui-text-center"><fmt:formatDate value="${itm.orderCreateTime}" pattern="yyyy-MM-dd"/></td>
+					    				<td class="mui-text-center">${itm.activityName }|${itm.activityNum }</td>
+					    				<td class="mui-text-center">${itm.totalPrice }</td>
+					    				<td class="mui-text-center">${itm.orderStatus == '000' ? '已支付' : '未支付' }</td>
+					    			</tr>
+				    			</c:forEach>
 				    		</c:otherwise>
 				    	</c:choose>
 		    		</tbody>

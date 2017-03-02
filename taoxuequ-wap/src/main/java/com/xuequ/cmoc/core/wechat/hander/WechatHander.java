@@ -265,16 +265,15 @@ public class WechatHander {
 				content = PropertiesUtil.getProperty("poster_member_over");
 				content = TextUtil.format(content, new String[]{orderNo, dateStr});
 			}else {
-				ParentInfo parentInfo = parentInfoService.selectById(productOrder.getCustId());
 				ChildSignInfo info = childSignInfoService.selectByParam(orderNo, openid);
 				if(info == null) {
 					content = PropertiesUtil.getProperty("poster_member_welcome");
 					String url = Constants.BASEPATH + "/course/group/merber?oNo=" + orderNo;
-					content = TextUtil.format(content, new String[]{parentInfo.getParentName(), orderNo, dateStr, url});
+					content = TextUtil.format(content, new String[]{productOrder.getSignName(), orderNo, dateStr, url});
 				}else {
 					content = PropertiesUtil.getProperty("poster_member_access");
 					String url = Constants.BASEPATH + "/course/group/merber?oNo=" + orderNo + "&cId=" + info.getParentId();
-					content = TextUtil.format(content, new String[]{parentInfo.getParentName(), orderNo, dateStr, url});
+					content = TextUtil.format(content, new String[]{productOrder.getSignName(), orderNo, dateStr, url});
 				}
 			}
 		}

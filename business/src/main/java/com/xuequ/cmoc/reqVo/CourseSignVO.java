@@ -18,6 +18,8 @@ public class CourseSignVO extends ChildSignInfo {
 	
 	private String city;
 	
+	private String nickName;
+	
 	public String getOpenid() {
 		return openid;
 	}
@@ -64,6 +66,14 @@ public class CourseSignVO extends ChildSignInfo {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 }

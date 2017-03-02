@@ -39,7 +39,7 @@
 						<c:when test="${itm.orderStatus == '000' }"><span class="group-but2">已支付</span></c:when>
 						<c:otherwise><span class="group-but1 paySubmit">未付款 (转账支付)</span></c:otherwise>
 					</c:choose>
-					<a href="<%=basePath%>/course/group/add?oNo=${itm.orderNo}"><span class="group-but2">管理队伍</span></a>
+					<a href="<%=basePath%>/course/group/add/${itm.orderNo}"><span class="group-but2">管理队伍</span></a>
 				</div>
 				<div style="clear:both"></div>
 			</div>

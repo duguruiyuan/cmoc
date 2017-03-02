@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.model.ImgGroup;
+import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.WechatUserInfo;
+import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.reqVo.CourseSignOrderVO;
 import com.xuequ.cmoc.reqVo.ParentInfoVO;
 import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.view.ChildActRecordView;
+import com.xuequ.cmoc.view.CourseSignOrderView;
 
 @RequestMapping("user")
 @Controller
@@ -80,10 +84,19 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("buyRecord")
 	public String buyRecord(Model model) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		CourseSignOrderVO vo = new CourseSignOrderVO();
+		vo.setOpenid(userInfo.getOpenid());
+		Page<CourseSignOrderView> page = new Page<>();
+		page.setPageNo(1);
+		page.setPageSize(Integer.MAX_VALUE - 1);
+		page.setParams(vo);
+		List<CourseSignOrderView> orderList = productOrderService.selectCourseSignOrderByPage(page);
 		ImgGroup group = new ImgGroup();
 		group.setPosition("1");
 		group.setShelves(1);
 		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
+		model.addAttribute("orderList", orderList);
 		return "user/buyRecord";
 	}
 	

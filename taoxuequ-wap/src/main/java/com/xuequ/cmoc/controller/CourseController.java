@@ -140,6 +140,7 @@ public class CourseController extends BaseController {
 		vo.setOpenid(userInfo.getOpenid());
 		vo.setHeadImg(userInfo.getHeadimgurl());
 		vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
+		vo.setNickName(userInfo.getNickname());
 		CourseSignVO view = courseService.addUPdateOrder(vo);
 		String realPath = request.getRealPath("/");
 		new Thread(new PosterImgExecutor(view.getOrderNo(), userInfo, realPath)).start();
@@ -162,6 +163,7 @@ public class CourseController extends BaseController {
 			vo.setOpenid(userInfo.getOpenid());
 			vo.setHeadImg(userInfo.getHeadimgurl());
 			vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
+			vo.setNickName(userInfo.getNickname());
 			CourseSignVO view = courseService.addUPdateOrder(vo);
 			Map<String, Object> map = new HashMap<>();
 			map.put("orderNo", view.getOrderNo());
@@ -176,12 +178,19 @@ public class CourseController extends BaseController {
 	@RequestMapping("group/create")
 	public String groupCreate(Model model) {
 		String orderNo = request.getParameter("orderNo");
+		WechatUserInfo userInfo = getWechatUserInfo();
 		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(Integer.valueOf(productOrder.getProductId()));
 		int members = childSignInfoService.selectCountByOrderNo(orderNo);
+		ChildSignInfo childInfo = new ChildSignInfo();
+		if(productOrder.getOpenid().equals(userInfo.getOpenid())) {
+			childInfo.setEmerMobile(productOrder.getSignPhone());
+			childInfo.setEmerName(productOrder.getSignName());
+		}
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("members", members);
+		model.addAttribute("childInfo", childInfo);
 		return "course/groupCreate";
 	}
 	
@@ -228,9 +237,8 @@ public class CourseController extends BaseController {
 		return new RspResult(StatusEnum.SUCCESS, map);
 	}
 	
-	@RequestMapping("group/add")
-	public String groupAdd(Model model) {
-		String orderNo = request.getParameter("oNo");
+	@RequestMapping("group/add/{orderNo}")
+	public String groupAdd(Model model, @PathVariable String orderNo) {
 		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(Integer.valueOf(productOrder.getProductId()));
 		List<ChildSignInfo> childList = childSignInfoService.selectListByOrderNo(orderNo);
@@ -241,10 +249,9 @@ public class CourseController extends BaseController {
 		return "course/groupAdd";
 	}
 	
-	@RequestMapping("group/poster")
-	public String groupPoster(Model model) {
+	@RequestMapping("group/poster/{orderNo}")
+	public String groupPoster(Model model, @PathVariable String orderNo) {
 		try {
-			String orderNo = request.getParameter("oNo");
 			ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
 			ActivityInfo activityInfo = activityService.selectById(productOrder.getActivityId());
 			model.addAttribute("productOrder", productOrder);

@@ -119,6 +119,7 @@ public class CourseServiceImpl implements ICourseService {
 			parentInfo.setFamilyNo(familyNo);
 			parentInfo.setCity(info.getCity());
 			parentInfo.setHeadImg(info.getHeadImg());
+			parentInfo.setNickName(info.getNickName());
 			parentInfoMapper.insertSelective(parentInfo);
 		}else {
 			parentInfo.setRelation(info.getSignRelation());

@@ -315,7 +315,7 @@
         wechat_num = #{wechatNum,jdbcType=VARCHAR},
       </if>
       <if test="nickName != null">
-        wechat_num = #{nickName,jdbcType=VARCHAR},
+        nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},

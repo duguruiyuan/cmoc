@@ -16,9 +16,9 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	
 	private Integer activityId;
 	
-	private String parentName;
+	private String signName;
 	
-	private String parentMobile;
+	private String signPhone;
 	
 	private String activityStartDate;
 	
@@ -27,6 +27,8 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	private String orderStartTime;
 	
 	private String orderEndTime;
+	
+	private String openid;
 
 	public Integer getOrderId() {
 		return orderId;
@@ -60,20 +62,20 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 		this.activityId = activityId;
 	}
 
-	public String getParentName() {
-		return parentName;
+	public String getSignName() {
+		return signName;
 	}
 
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
+	public void setSignName(String signName) {
+		this.signName = signName;
 	}
 
-	public String getParentMobile() {
-		return parentMobile;
+	public String getSignPhone() {
+		return signPhone;
 	}
 
-	public void setParentMobile(String parentMobile) {
-		this.parentMobile = parentMobile;
+	public void setSignPhone(String signPhone) {
+		this.signPhone = signPhone;
 	}
 
 	public String getActivityStartDate() {
@@ -106,6 +108,14 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 
 	public void setOrderEndTime(String orderEndTime) {
 		this.orderEndTime = orderEndTime;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 }

@@ -54,7 +54,7 @@ public class TemplateUtil {
 		
 		Data_Remark remark = new Data_Remark();
 		remark.setValue("❀❀❀点击“详情”立即进入队伍管理，邀请队员并完成支付❀❀❀");
-		outputData.setUrl(Constants.BASEPATH + "/course/group/add?oNo=" + orderNo);
+		outputData.setUrl(Constants.BASEPATH + "/course/group/add/" + orderNo);
 		templateDate.setFirst(first);
 		templateDate.setRemark(remark);
 		templateDate.setKeyword1(keyword1);
@@ -104,7 +104,7 @@ public class TemplateUtil {
 		keyword2.setValue(DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT));
 		Data_Remark remark = new Data_Remark();
 		remark.setValue("❀❀❀欢迎使用陶学趣公众号***\n↓↓↓点击【详情】进入队伍管理❀❀❀");
-		outputData.setUrl(Constants.BASEPATH + "/course/group/add?oNo=" + orderNo);
+		outputData.setUrl(Constants.BASEPATH + "/course/group/add/" + orderNo);
 		templateDate.setFirst(first);
 		templateDate.setKeyword1(keyword1);
 		templateDate.setKeyword2(keyword2);

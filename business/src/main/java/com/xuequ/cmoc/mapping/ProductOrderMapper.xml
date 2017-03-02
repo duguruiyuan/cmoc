@@ -100,7 +100,6 @@
 	ai.`activity_num` activityNum,
 	ai.`start_date` activityStartDate
 	FROM t_product_order po
-	INNER JOIN t_parent_info pa ON pa.`id` = po.`cust_id`
 	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
 	LEFT JOIN t_activity_info ai ON ai.`id` = po.`activity_id`
 	<if test="params.orderStatus != null">
@@ -112,11 +111,11 @@
 	<if test="params.activityId != null">
 		and ai.id = #{params.activityId,jdbcType=INTEGER}
 	</if>
-	<if test="params.parentName != null">
-		and pa.`parent_name` like concat('%',#{params.parentName,jdbcType=VARCHAR},'%')
+	<if test="params.signName != null">
+		and po.`sign_name` like concat('%',#{params.signName,jdbcType=VARCHAR},'%')
 	</if>
-	<if test="params.parentMobile != null">
-		pa.`parent_mobile`= #{params.parentMobile,jdbcType=VARCHAR}
+	<if test="params.signPhone != null">
+		and po.`sign_phone`= #{params.signPhone,jdbcType=VARCHAR}
 	</if>
 	<if test="params.activityStartDate != null">
     	and DATE_FORMAT(ai.`start_date`,'%Y-%m-%d') >= #{params.activityStartDate,jdbcType=VARCHAR}
@@ -130,6 +129,9 @@
     <if test="params.orderEndTime != null">
     	and DATE_FORMAT(po.`create_time`,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.orderEndTime,jdbcType=VARCHAR}
     </if>
+    <if test="params.openid != null">
+		and po.`openid` = #{params.openid,jdbcType=VARCHAR}
+	</if>
 	ORDER BY po.`order_status` desc , po.`create_time` DESC
   </select>
   

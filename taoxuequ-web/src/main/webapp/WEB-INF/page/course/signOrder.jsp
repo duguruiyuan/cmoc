@@ -45,8 +45,8 @@
 										    <input type="text" class="form-control1 Wdate " id="orderEndTime" name="orderEndTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'orderStartTime\')}',readOnly:true})"></td>
 								 </tr>
 								 <tr>
-								 	<td>报名联系人： <input class="form-control1" type="text" name="parentName" id="parentName"/></td>
-									<td>报名联系电话： <input class="form-control1" type="text" name="parentMobile" id="parentMobile"/></td>
+								 	<td>报名联系人： <input class="form-control1" type="text" name="signName" id="signName"/></td>
+									<td>报名联系电话： <input class="form-control1" type="text" name="signPhone" id="signPhone"/></td>
 								 </tr>
 								 <tr>
 									<td colspan="3">

@@ -163,7 +163,7 @@
 			 					alert("队员信息提交成功！");
 			 				}
 			 				if(data.data.isSigner == 1) {
-			 					window.location.href = basePath + "/course/group/add?oNo=" + data.data.orderNo;
+			 					window.location.href = basePath + "/course/group/add/" + data.data.orderNo;
 			 				}else {
 			 					window.location.href = basePath + "/course";
 			 				}

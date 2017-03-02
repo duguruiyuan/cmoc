@@ -70,7 +70,7 @@
 		</div>
 		
 		<div class="group-wel">
-			<a href="<%=basePath%>/course/group/poster?oNo=${orderNo}">
+			<a href="<%=basePath%>/course/group/poster/${orderNo}">
 				<div style="float: left; padding-left: 20px;">队伍邀请海报</div>
 				<p class="mui-icon mui-icon-arrowright" style="font-size: 15px;float:right;"></p>
 			</a>
@@ -91,7 +91,7 @@
 			 		async : false,
 			 		success : function(data) {
 			 			if(data.code == '000') {
-			 				window.location.href = basePath + "/course/group/add?oNo=" + data.data;
+			 				window.location.href = basePath + "/course/group/add/" + data.data;
 			 			}else {
 			 				mui.alert(data.msg,'消息提示');
 			 			}
