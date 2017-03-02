@@ -11,4 +11,8 @@ ALTER TABLE `t_child_sign_info` ADD COLUMN child_height INT(4) COMMENT'小孩身
 ALTER TABLE t_product_order ADD COLUMN poster_img VARCHAR(128) COMMENT'邀请海报';
 INSERT INTO `t_sys_resource`(ID_RESOURCE, RESOURCE_NAME, RESOURCE_URL, RESOURCE_TYPE, RESOURCE_CODE, PARENT_RESOURCE_ID,WEIGHT,creator)
 VALUES(4030,'课程报名订单','/course/sign/order','M','course_sign_order',40,30,'admin');
+ALTER TABLE t_parent_info ADD COLUMN nick_name VARCHAR(128) COMMENT'微信昵称' AFTER wechat_num;
+ALTER TABLE t_product_order ADD COLUMN sign_phone VARCHAR(11) COMMENT'报名电话';
+ALTER TABLE t_product_order ADD COLUMN sign_name VARCHAR(128) COMMENT'报名人姓名';
+ALTER TABLE t_product_order ADD COLUMN openid VARCHAR(64) COMMENT'用户的标识，对当前公众号唯一';
 --3月4号上线修改 end

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.RspResult;
+import com.xuequ.cmoc.common.enums.OrderStatusEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
@@ -140,6 +141,8 @@ public class CourseController extends BaseController {
 		vo.setHeadImg(userInfo.getHeadimgurl());
 		vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
 		CourseSignVO view = courseService.addUPdateOrder(vo);
+		String realPath = request.getRealPath("/");
+		new Thread(new PosterImgExecutor(view.getOrderNo(), userInfo, realPath)).start();
 		CourseGroupOrderView orderView = courseService.selectCourseGroupOrder(userInfo.getOpenid(), view.getOrderNo()).get(0);
 		TemplateUtil.activitySignSucessMsg(view.getOrderNo(), orderView.getActivityAddr(), 
 				userInfo.getOpenid(), orderView.getEmerName(), orderView.getActivityName(), 
@@ -186,10 +189,6 @@ public class CourseController extends BaseController {
 	public String groupMerber(Model model) {
 		String orderNo = request.getParameter("oNo");
 		String cid = request.getParameter("cId");
-		return toGroupMember(model, orderNo, cid);
-	}
-	
-	private String toGroupMember(Model model, String orderNo, String cid) {
 		Integer childId = StringUtils.isNotBlank(cid) ? Integer.valueOf(cid) : null;
 		ChildSignInfo childInfo = new ChildSignInfo();
 		if(childId != null) {
@@ -207,20 +206,26 @@ public class CourseController extends BaseController {
 	@ResponseBody Object groupAddMember(ChildSignInfo info){
 		WechatUserInfo userInfo = getWechatUserInfo();
 		ProductOrder productOrder = productOrderService.selectByOrderNo(info.getOrderNo());
+		if(!userInfo.getOpenid().equals(productOrder.getOpenid())) {
+			int count = parentInfoService.selectCountByOpenidOrderNo(userInfo.getOpenid(), info.getOrderNo());
+			if(count > 0) return new RspResult(StatusEnum.MERMBER_REPEAT_JOIN);
+		}
 		info.setActivityId(productOrder.getActivityId());
 		info.setProductId(productOrder.getProductId());
 		childSignInfoService.addAndUpdate(info, userInfo);
-		ParentInfo parentInfo = parentInfoService.selectById(productOrder.getCustId());
 		if(info.getId() == null) {
-			if(!parentInfo.getOpenid().equals(userInfo.getOpenid())) {
+			if(!productOrder.getOpenid().equals(userInfo.getOpenid())) {
 				int members = childSignInfoService.selectCountByOrderNo(info.getOrderNo());
-				TemplateUtil.memberAccessMsg(info.getOrderNo(), parentInfo.getOpenid(), 
-						info.getEmerName(), members);
-				TemplateUtil.accessSucessMsg(info.getId(), parentInfo.getParentName(), 
+				TemplateUtil.memberAccessMsg(info.getOrderNo(), productOrder.getOrderStatus(),
+						productOrder.getOpenid(), info.getEmerName(), members);
+				TemplateUtil.accessSucessMsg(info.getId(), productOrder.getSignName(), 
 						userInfo.getOpenid(), info.getEmerName(), info.getOrderNo());
 			}
 		}
-		return new RspResult(StatusEnum.SUCCESS, productOrder.getOrderNo());
+		Map<String, Object> map = new HashMap<>();
+		map.put("orderNo", productOrder.getOrderNo());
+		map.put("isSigner", productOrder.getOpenid().equals(userInfo.getOpenid()) ? 1 : 0);
+		return new RspResult(StatusEnum.SUCCESS, map);
 	}
 	
 	@RequestMapping("group/add")
@@ -232,7 +237,7 @@ public class CourseController extends BaseController {
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("childList", childList);
 		model.addAttribute("orderNo", orderNo);
-		model.addAttribute("isPayed", productOrder.getOrderStatus().equals("000") ? 1 : 0);
+		model.addAttribute("isPayed", productOrder.getOrderStatus().equals(OrderStatusEnum.SUCCESS) ? 1 : 0);
 		return "course/groupAdd";
 	}
 	
@@ -240,23 +245,7 @@ public class CourseController extends BaseController {
 	public String groupPoster(Model model) {
 		try {
 			String orderNo = request.getParameter("oNo");
-			WechatUserInfo userInfo = getWechatUserInfo();
 			ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
-			if(StringUtils.isBlank(productOrder.getPosterImg())) {
-				List<ImageSynthesisVo> list = new ArrayList<>();
-				ImageSynthesisVo vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
-				WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_LIMIT_SCENE, 
-						MessageUtil.POSTER_MEMBER, String.valueOf(productOrder.getId()));
-				ImageSynthesisVo vo2 = new ImageSynthesisVo(rsp.getQrcode(), 189, 305, 130, 130);
-				list.add(vo1);
-				list.add(vo2);
-				String fileSrc = request.getRealPath("/images") + "/poster-share.png";
-				String outSrcName = orderNo + ".jpg";
-				String outSrc = QRCoderUtils.getRealImgUrl() + File.separator + outSrcName;
-				ImageUtils.composePic(fileSrc, outSrc, list, 642, 900);
-				productOrder.setPosterImg(QRCoderUtils.getRspImgUrl(outSrcName));
-				productOrderService.updateById(productOrder);
-			}
 			ActivityInfo activityInfo = activityService.selectById(productOrder.getActivityId());
 			model.addAttribute("productOrder", productOrder);
 			model.addAttribute("activityInfo", activityInfo);

@@ -48,8 +48,8 @@
 					<div class="group-list" data-id="${itm.id }">
 						<div class="group-list-left">${i.index + 1 }</div>
 						<div class="group-list-right">
-							<span>${itm.childName }<span>
-							<p>${itm.emerMobile }</p>
+							<span>${itm.childName }</span>
+							<p class="pt5">${itm.emerMobile }</p>
 						</div>
 						<div style="clear:both"></div>
 					</div>
@@ -60,8 +60,8 @@
 				     <div class="group-list">
 						<div class="group-list-left">${i.index + 1 }</div>
 						<div class="group-list-right">
-							<span>空缺<span>
-							<p>队伍尚未组建完成</p>
+							<span>空缺</span>
+							<p class="pt5">队伍尚未组建完成</p>
 						</div>
 						<div style="clear:both"></div>
 					</div>

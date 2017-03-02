@@ -2,6 +2,8 @@ package com.xuequ.cmoc.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.page.Page;
@@ -26,4 +28,6 @@ public interface IParentInfoService {
 	ParentInfo selectById(Integer custId);
 	
 	ParentInfo selectByOrderNoOpenid(String openid, String orderNo);
+	
+	int selectCountByOpenidOrderNo(String openid, String orderNo);
 }

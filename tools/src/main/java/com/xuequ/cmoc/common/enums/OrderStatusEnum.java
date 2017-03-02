@@ -2,7 +2,7 @@ package com.xuequ.cmoc.common.enums;
 
 public enum OrderStatusEnum {
 	SUCCESS("000", " 支付成功"),
-	PENDING("001", "支付中"),
+	PENDING("001", "未支付"),
 	FAIL("002", "支付失败"),
 	HANDING("003", "支付处理中");
 	

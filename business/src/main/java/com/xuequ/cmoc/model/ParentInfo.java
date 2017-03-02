@@ -15,6 +15,8 @@ public class ParentInfo implements Serializable {
     private String openid;
     
     private String wechatNum;
+    
+    private String nickName;
 
     private String city;
 
@@ -76,6 +78,14 @@ public class ParentInfo implements Serializable {
 
 	public void setWechatNum(String wechatNum) {
 		this.wechatNum = wechatNum;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getCity() {

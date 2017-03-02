@@ -347,6 +347,5 @@ public class WechatHander {
 	            e.printStackTrace(); 
 	        }
 		}
-
 	}
 }

@@ -8,6 +8,7 @@
     <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="wechat_num" property="wechatNum" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="points" jdbcType="INTEGER" property="points" />
     <result column="head_img" jdbcType="VARCHAR" property="headImg" />
@@ -16,7 +17,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, relation, parent_mobile, parent_name, openid, wechat_num, city, points, head_img, family_no, 
+    id, relation, parent_mobile, parent_name, openid, wechat_num, nick_name, city, points, head_img, family_no, 
     is_delete, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -57,6 +58,13 @@
   <select id="selectCountByOpenid" resultType="int">
   	SELECT count(1) FROM t_parent_info
     WHERE is_delete = 'N' and openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectCountByOpenidOrderNo" resultType="int">
+  	SELECT COUNT(1) FROM t_child_sign_info csi
+	INNER JOIN t_parent_info po ON csi.`parent_id` = po.`id`
+	WHERE po.`openid` = #{openid,jdbcType=VARCHAR} 
+	AND csi.`order_no` = #{orderNo,jdbcType=VARCHAR}
   </select>
   
   <resultMap id="ChildActResultMap" type="com.xuequ.cmoc.view.ChildActRecordView" >
@@ -194,11 +202,12 @@
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ParentInfo">
     insert into t_parent_info (id, relation, parent_mobile, 
-      parent_name, openid, wechat_num, city, 
+      parent_name, openid, wechat_num, nick_name, city, 
       points, head_img, family_no, 
       is_delete, create_time)
     values (#{id,jdbcType=INTEGER}, #{relation,jdbcType=VARCHAR}, #{parentMobile,jdbcType=VARCHAR}, 
-      #{parentName,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{wechatNum,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{parentName,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{wechatNum,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
       #{points,jdbcType=INTEGER}, #{headImg,jdbcType=VARCHAR}, #{familyNo,jdbcType=VARCHAR}, 
       #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
@@ -222,6 +231,9 @@
       </if>
       <if test="wechatNum != null">
         wechat_num,
+      </if>
+      <if test="nickName != null">
+        nick_name,
       </if>
       <if test="city != null">
         city,
@@ -261,6 +273,9 @@
       <if test="wechatNum != null">
         #{wechatNum,jdbcType=VARCHAR},
       </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
       </if>
@@ -299,6 +314,9 @@
       <if test="wechatNum != null">
         wechat_num = #{wechatNum,jdbcType=VARCHAR},
       </if>
+      <if test="nickName != null">
+        wechat_num = #{nickName,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
       </if>
@@ -327,6 +345,7 @@
       parent_name = #{parentName,jdbcType=VARCHAR},
       openid = #{openid,jdbcType=VARCHAR},
       wechat_num = #{wechatNum,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       points = #{points,jdbcType=INTEGER},
       head_img = #{headImg,jdbcType=VARCHAR},

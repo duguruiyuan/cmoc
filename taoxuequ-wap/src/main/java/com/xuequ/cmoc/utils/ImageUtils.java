@@ -82,7 +82,7 @@ public class ImageUtils {
 				conn.disconnect();
 			}
 			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER)); //透明度设置 结束
-			FileOutputStream out = new FileOutputStream(Const.rootPath + outsrc);
+			FileOutputStream out = new FileOutputStream(outsrc);
 			ImageIO.write(tag, "jpg", out);//写图片
 			out.close();
 		}catch (Exception e) {

@@ -48,8 +48,6 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 			parentInfo.setHeadImg(userInfo.getHeadimgurl());
 			parentInfoMapper.insertSelective(parentInfo);
 		}else {
-			parentInfo.setParentName(info.getEmerName());
-			parentInfo.setParentMobile(info.getEmerMobile());
 			parentInfo.setRelation(info.getSignRelation());
 			parentInfo.setCity(userInfo.getProvince() + " " + userInfo.getCity());
 			parentInfo.setHeadImg(userInfo.getHeadimgurl());
@@ -60,6 +58,7 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 			childSignInfoMapper.updateByPrimaryKey(info);
 		}else {
 			childSignInfoMapper.insertSelective(info);
+			vo.setId(info.getId());
 		}
 	}
 	@Override

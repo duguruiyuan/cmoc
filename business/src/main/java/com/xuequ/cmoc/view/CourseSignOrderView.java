@@ -13,8 +13,8 @@ public class CourseSignOrderView implements Serializable {
 	private String orderStatus;
 	private Date orderCreateTime;
 	private Integer custId;
-	private String parentName;
-	private String parentMobile;
+	private String signName;
+	private String signPhone;
 	private String openid;
 	private Integer courseId;
 	private String courseName;
@@ -57,17 +57,18 @@ public class CourseSignOrderView implements Serializable {
 	public void setCustId(Integer custId) {
 		this.custId = custId;
 	}
-	public String getParentName() {
-		return parentName;
+	
+	public String getSignName() {
+		return signName;
 	}
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
+	public void setSignName(String signName) {
+		this.signName = signName;
 	}
-	public String getParentMobile() {
-		return parentMobile;
+	public String getSignPhone() {
+		return signPhone;
 	}
-	public void setParentMobile(String parentMobile) {
-		this.parentMobile = parentMobile;
+	public void setSignPhone(String signPhone) {
+		this.signPhone = signPhone;
 	}
 	public String getOpenid() {
 		return openid;

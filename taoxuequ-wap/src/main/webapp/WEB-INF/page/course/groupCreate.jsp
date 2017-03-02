@@ -19,7 +19,6 @@
 <script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <body>
 	<header class="header">
-		<a class="mui-icon mui-icon-left-nav mui-pull-left" href="<%=basePath%>/course/group/orderList"></a>
 		队伍信息管理
 	</header>
 	<div class="mt44"></div>
@@ -40,6 +39,7 @@
 		<p style="padding-left: 10px;color: #3F3E3E;font-size: 16px;">以下信息仅用于活动报名，主办方承诺对资料保密</p>
 		<div class="mui-content">
 			<form id="courseSignForm" class="mui-form">
+				<input type="hidden" id="id" name="id" value="${childInfo.id}">
 				<div class="mui-textfield">
 					<input type="text" placeholder="请填写您孩子的姓名" id="childName" value="${childInfo.childName }">
 					<label>姓名</label>
@@ -115,25 +115,61 @@
 				var emerName = $("#emerName").val();
 				var emerMobile = $("#emerMobile").val();
 				var childIdcard = $("#childIdcard").val();
+				var childSex = $("input[name='childSex']:checked").val();
+				var id = $("#id").val();
+				if(!checkName(childName)) {
+					if(childName == '') mui.alert('请填写您孩子的姓名','消息提示');
+					else mui.alert('孩子姓名格式不正确','消息提示');
+					return false;
+				}
+				if(!checkName(emerName)) {
+					if(emerName == '') mui.alert('请填写紧急联系人姓名','消息提示');
+					else mui.alert('紧急联系人姓名格式不正确','消息提示');
+					return false;
+				}
+				if(!checkPhone(emerMobile)) {
+					if(emerMobile == '') mui.alert('请填写紧急联系人电话','消息提示');
+					else mui.alert('紧急联系人电话格式不正确','消息提示');
+					return false;
+				}
+				if(!idCardNo(childIdcard)) {
+					if(childIdcard == '') mui.alert('请填写小朋友身份证','消息提示');
+					else mui.alert('小朋友身份证格式不正确, 用于购买活动当天的保险请正确填写','消息提示');
+					return false;
+				}
+				if(!childSex) {
+					mui.alert('请选择小孩性别','消息提示');
+					return;
+				}
 				$.ajax({
 			 		url : basePath + "/course/json/group/addMember",
 			 		type : "post",
 			 		data : {
-			 			id: '${childInfo.id}',
+			 			id: id,
 			 			childName: childName,
 			 			emerName: emerName,
 			 			emerMobile: emerMobile,
 			 			childIdcard: childIdcard,
-			 			childAge: $("input[type='childSex']:checked"),
+			 			childSex: $("input[name='childSex']:checked").val(),
 			 			orderNo: '${orderNo}'
 			 		},
 			 		dataType : "json",
 			 		async : false,
 			 		success : function(data) {
 			 			if(data.code == '000') {
-			 				window.location.href = basePath + "/course/group/add?oNo=" + data.data;
+			 				if(id.length > 0) {
+			 					alert("队员信息变更成功！");
+			 				}else {
+			 					alert("队员信息提交成功！");
+			 				}
+			 				if(data.data.isSigner == 1) {
+			 					window.location.href = basePath + "/course/group/add?oNo=" + data.data.orderNo;
+			 				}else {
+			 					window.location.href = basePath + "/course";
+			 				}
 			 			}else {
 			 				mui.alert(data.msg,'消息提示');
+			 				return;
 			 			}
 			 		}, error:function(){
 			 			mui.alert("系统异常，请联系管理员",'消息提示');

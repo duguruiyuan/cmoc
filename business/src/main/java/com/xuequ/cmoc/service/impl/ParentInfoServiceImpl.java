@@ -73,4 +73,9 @@ public class ParentInfoServiceImpl implements IParentInfoService {
 		return parentInfoMapper.selectByOrderNoOpenid(openid, orderNo);
 	}
 
+	@Override
+	public int selectCountByOpenidOrderNo(String openid, String orderNo) {
+		return parentInfoMapper.selectCountByOpenidOrderNo(openid, orderNo);
+	}
+
 }

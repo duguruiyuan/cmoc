@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
@@ -46,7 +47,7 @@ public class SessionFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		String openid = RequestUtil.getCookieValue(request, "openid"); //"oXDCCs3AjlFVcKWtJybY54gqP9hI";//  
+		String openid = getOpenid(request);
 		if(StringUtils.isNotBlank(openid)) {
 			WechatUserInfo userInfo = (WechatUserInfo) request.getSession().getAttribute(Constants.WECHAT_USERINFO);
 			if(userInfo == null) {
@@ -63,6 +64,13 @@ public class SessionFilter extends OncePerRequestFilter {
 			response.sendRedirect(getRedirectUrl(uri));
             return;
 		}
+	}
+	
+	private static String getOpenid(HttpServletRequest request) {
+		if(Configuration.getInstance().getEnv().equals("development")) {
+			return "oXDCCs3AjlFVcKWtJybY54gqP9hI";
+		}
+		return RequestUtil.getCookieValue(request, "openid");
 	}
 
 	private static String getRedirectUrl(String requestUri) {

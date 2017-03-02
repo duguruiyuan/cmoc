@@ -64,7 +64,7 @@ public class WechatMsgController extends BaseController{
 			CourseSignOrderView view = productOrderService.selectCourseSignOrderByOrderId(vo.getOrderId());
 			if(view != null) {
 				TemplateUtil.courseOrderPaySucessMsg(vo.getPaySubmitTime(), vo.getOrderNo(), 
-						vo.getOpenid(), vo.getParentName(), vo.getActivityName(), 
+						vo.getOpenid(), vo.getSignName(), vo.getActivityName(), 
 						vo.getActivityNum(), vo.getActivityStartDate(), vo.getTotalPrice());
 			}
 		} catch (Exception e) {

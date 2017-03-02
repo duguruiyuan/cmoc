@@ -19,7 +19,7 @@
 <script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <body>
 	<header class="header">
-		<a class="mui-icon mui-icon-left-nav mui-pull-left" href="javascript:void(0)"></a>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		陶学趣
 		<a class="mui-pull-right group-sign-phone" href="tel:18027274621"><span><i class="fa fa-phone"></i></span></a>
 	</header>
@@ -139,8 +139,16 @@
 					alert("请填写报名联系人");
 					return;
 				}
+				if(!checkName(emerName)) {
+					alert("报名联系人格式不正确");
+					return;
+				}
 				if(!emerMobile) {
-					alert("请填写联系电话");
+					alert("请填写报名联系电话");
+					return;
+				}
+				if(!checkPhone(emerMobile)) {
+					alert("报名联系电话格式不正确");
 					return;
 				}
 				$.ajax({

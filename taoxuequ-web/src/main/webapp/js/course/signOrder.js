@@ -58,12 +58,12 @@ function loadData() {
 			align : "center",
 			resizable : true
 		}, {
-			field : 'parentName',
+			field : 'signName',
 			title : '报名联系人',
 			align : "center",
 			resizable : true
 		}, {
-			field : 'parentMobile',
+			field : 'signPhone',
 			title : '联系电话',
 			align : "center",
 			resizable : true

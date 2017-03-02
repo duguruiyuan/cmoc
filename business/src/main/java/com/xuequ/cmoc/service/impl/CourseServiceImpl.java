@@ -121,8 +121,6 @@ public class CourseServiceImpl implements ICourseService {
 			parentInfo.setHeadImg(info.getHeadImg());
 			parentInfoMapper.insertSelective(parentInfo);
 		}else {
-			parentInfo.setParentName(info.getEmerName());
-			parentInfo.setParentMobile(info.getEmerMobile());
 			parentInfo.setRelation(info.getSignRelation());
 			parentInfo.setCity(info.getCity());
 			parentInfo.setHeadImg(info.getHeadImg());
@@ -130,6 +128,9 @@ public class CourseServiceImpl implements ICourseService {
 		}
 		CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
 		ProductOrder order = new ProductOrder();
+		order.setSignName(info.getEmerName());
+		order.setSignPhone(info.getEmerMobile());
+		order.setOpenid(info.getOpenid());
 		order.setOrderNo(StringUtil.getCourseOrderNum(parentInfo.getId()));
 		order.setResAmount(courseInfo.getResAmount());
 		order.setTotalAmount(courseInfo.getTotalPrice());

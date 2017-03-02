@@ -122,7 +122,9 @@
 	from t_course_info ci 
 	inner join t_activity_info ai on ai.`product_id` = ci.`id`
 	left join (
-	  select count(1) buy_count, t.`product_id` from t_product_order t where t.`product_id` = 'COURSE' and t.`order_status` in ('000','001','003')
+	  select count(1) buy_count, t.`product_id` 
+	  from t_product_order t 
+	  where t.`product_id` = #{courseId,jdbcType=INTEGER} and t.`order_status` = '000'
 	) po on po.product_id = ci.`id`
 	where ci.`id` = #{courseId,jdbcType=INTEGER} and ai.start_date > now()
 	order by ai.start_date

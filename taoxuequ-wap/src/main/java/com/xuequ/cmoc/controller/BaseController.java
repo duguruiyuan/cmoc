@@ -1,7 +1,10 @@
 package com.xuequ.cmoc.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,17 +19,30 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.common.enums.WechatReqMsgType;
 import com.xuequ.cmoc.core.wechat.common.Constants;
+import com.xuequ.cmoc.core.wechat.message.InputMessage;
+import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
+import com.xuequ.cmoc.core.wechat.utils.FileUtil;
+import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
+import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ImgGroup;
+import com.xuequ.cmoc.model.ProductOrder;
+import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.model.WechatSnsToken;
 import com.xuequ.cmoc.model.WechatSnsUserInfo;
 import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.service.IContentManageService;
+import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.service.ISysDictService;
+import com.xuequ.cmoc.utils.ImageUtils;
+import com.xuequ.cmoc.utils.QRCoderUtils;
 import com.xuequ.cmoc.utils.TextUtil;
+import com.xuequ.cmoc.vo.ImageSynthesisVo;
 
 /**
 * <p>Title: BaseController </p>
@@ -46,9 +62,10 @@ public class BaseController {
 	
 	@Autowired
 	protected ISysDictService sysDictService;
-	
 	@Autowired
 	protected IContentManageService contentManageService;
+	@Autowired
+	protected IProductOrderService productOrderService;
 	
 	/**
 	 * 视图数据绑定模型前将字符串类型时间转型为日期格式
@@ -163,6 +180,45 @@ public class BaseController {
 		group.setPosition("1");
 		group.setShelves(1);
 		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
+	}
+	
+	class PosterImgExecutor implements Runnable {
+		
+		private String orderNo;
+		
+		private WechatUserInfo userInfo;
+		
+		private String realPath;
+		
+		public PosterImgExecutor(String orderNo, WechatUserInfo userInfo, String realPath) {
+			this.orderNo = orderNo;
+			this.userInfo = userInfo;
+			this.realPath = realPath;
+		}
+
+		@Override
+		public void run() {
+			try { 
+				ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
+				if(productOrder != null && StringUtils.isBlank(productOrder.getPosterImg())) {
+					List<ImageSynthesisVo> list = new ArrayList<>();
+					ImageSynthesisVo vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
+					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_LIMIT_SCENE, 
+							MessageUtil.POSTER_MEMBER, String.valueOf(productOrder.getId()));
+					ImageSynthesisVo vo2 = new ImageSynthesisVo(rsp.getQrcode(), 189, 305, 130, 130);
+					list.add(vo1);
+					list.add(vo2);
+					String fileSrc = realPath + "images/poster-share.png";
+					String outSrcName = orderNo + ".jpg";
+					String outSrc = QRCoderUtils.getPosterRealImgUrl() + File.separator + outSrcName;
+					ImageUtils.composePic(fileSrc, outSrc, list, 642, 900);
+					productOrder.setPosterImg(QRCoderUtils.getPosterRspImgUrl(outSrcName));
+					productOrderService.updateById(productOrder);
+				}
+	        } catch (Exception e) { 
+	            e.printStackTrace(); 
+	        }
+		}
 	}
 	
 }

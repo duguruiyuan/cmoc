@@ -13,12 +13,10 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONObject;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.WechatConfigure;
-import com.xuequ.cmoc.common.enums.ImgTypeEnum;
 import com.xuequ.cmoc.common.enums.MimeTypeEnum;
 import com.xuequ.cmoc.common.enums.ResourcePathEnum;
 import com.xuequ.cmoc.common.enums.WechatReqMsgType;

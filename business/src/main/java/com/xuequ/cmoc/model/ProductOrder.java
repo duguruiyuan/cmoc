@@ -10,6 +10,12 @@ public class ProductOrder implements Serializable {
     private String orderNo;
 
     private Integer custId;
+    
+    private String signName;
+    
+    private String signPhone;
+    
+    private String openid;
 
     private Integer productId;
     
@@ -83,7 +89,31 @@ public class ProductOrder implements Serializable {
         this.custId = custId;
     }
 
-    public Integer getProductId() {
+    public String getSignName() {
+		return signName;
+	}
+
+	public void setSignName(String signName) {
+		this.signName = signName;
+	}
+
+	public String getSignPhone() {
+		return signPhone;
+	}
+
+	public void setSignPhone(String signPhone) {
+		this.signPhone = signPhone;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+
+	public Integer getProductId() {
         return productId;
     }
 

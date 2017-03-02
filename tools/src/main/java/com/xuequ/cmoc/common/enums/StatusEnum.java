@@ -27,6 +27,7 @@ public enum StatusEnum {
 	PARAM_FAIL("1017", "参数错误"),
 	MARINE_SUPPORT_HAD("1018", "已经投过票"),
 	ACTIVITY_NON_START("1019", "活动未开始"),
+	MERMBER_REPEAT_JOIN("1020", "你已经加入到队伍了，请勿重复加入"),
 	ACCESS_TOKEN_FAIL("获取access_token失败","001"),
 	JSAPI_TICKET_FAIL("获取jsapi_ticket失败","002"),
 	FAIL("9999", "失败");

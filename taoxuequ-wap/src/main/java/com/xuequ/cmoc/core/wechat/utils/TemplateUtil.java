@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.common.enums.OrderStatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.template.Data_Add;
 import com.xuequ.cmoc.core.wechat.template.Data_Clazz;
@@ -76,7 +77,8 @@ public class TemplateUtil {
 	 * @param emerName
 	 * @param member
 	 */
-	public static void memberAccessMsg(String orderNo, String openid, String emerName, Integer member) {
+	public static void memberAccessMsg(String orderNo, String orderStatus, String openid, 
+			String emerName, Integer member) {
 		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
 				WechatUtils.getAccessToken());
 		OutputTemateData outputData = new OutputTemateData();
@@ -84,19 +86,30 @@ public class TemplateUtil {
 		outputData.setTemplate_id(PropertiesUtil.getProperty("member_access_template_id"));
 		TemplateDate templateDate = new TemplateDate();
 		Data_First first = new Data_First();
-		first.setValue("亲爱的家长, 您的队伍有新成员加入，目前队伍成员【" + member +"】人。");
-		Data_Clazz clazz  = new Data_Clazz();
-		clazz.setValue(emerName);
-		Data_Time time = new Data_Time();
-		time.setValue(DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT));
-		outputData.setData(templateDate);
+		StringBuffer sbr = new StringBuffer();
+		if(member == 5) {
+			sbr.append("亲爱的家长, 您的队伍人数已满，队伍组建成功了！");
+		}else {
+			sbr.append("亲爱的家长, 您的队伍有新成员加入，目前队伍成员【" + member +"】人\n");
+		}
+		if(orderStatus.equals(OrderStatusEnum.PENDING.getCode())) {
+			sbr.append("您还未支付，名额有限！您可以公众号回复“客服”联系客服进行支付,谢谢！");
+		}
+		first.setValue(sbr.toString());
+		Data_Keyword keyword1 = new Data_Keyword();
+		keyword1.setColor("#173177");
+		keyword1.setValue(emerName);
+		Data_Keyword keyword2 = new Data_Keyword();
+		keyword2.setColor("#173177");
+		keyword2.setValue(DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT));
 		Data_Remark remark = new Data_Remark();
-		remark.setValue("***欢迎使用陶学趣公众号***\n↓↓↓点击【详情】进入队伍管理↓↓↓");
+		remark.setValue("❀❀❀欢迎使用陶学趣公众号***\n↓↓↓点击【详情】进入队伍管理❀❀❀");
 		outputData.setUrl(Constants.BASEPATH + "/course/group/add?oNo=" + orderNo);
-		templateDate.setClazz(clazz);
 		templateDate.setFirst(first);
-		templateDate.setTime(time);
+		templateDate.setKeyword1(keyword1);
+		templateDate.setKeyword2(keyword2);
 		templateDate.setRemark(remark);
+		outputData.setData(templateDate);
 		try {
 			String json = JSONObject.toJSONString(outputData);
 			json = json.replace("clazz", "class");
@@ -167,7 +180,7 @@ public class TemplateUtil {
 		time.setValue(DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT));
 		outputData.setData(templateDate);
 		Data_Remark remark = new Data_Remark();
-		remark.setValue("***欢迎使用陶学趣公众号***\n↓↓↓点击【详情】进入报名信息管理↓↓↓");
+		remark.setValue("❀❀❀欢迎使用陶学趣公众号❀❀❀\n↓↓↓点击【详情】进入报名信息管理↓↓↓");
 		outputData.setUrl(Constants.BASEPATH + "/course/group/merber?oNo=" + orderNo + "&cId=" + childId);
 		templateDate.setClazz(clazz);
 		templateDate.setFirst(first);

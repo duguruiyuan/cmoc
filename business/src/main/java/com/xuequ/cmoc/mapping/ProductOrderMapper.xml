@@ -5,6 +5,9 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="cust_id" jdbcType="INTEGER" property="custId" />
+    <result column="sign_phone" jdbcType="VARCHAR" property="signPhone" />
+    <result column="sign_name" jdbcType="VARCHAR" property="signName" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="product_type" jdbcType="VARCHAR" property="productType" />
     <result column="activity_id" jdbcType="INTEGER" property="activityId" />
@@ -30,7 +33,7 @@
     <result column="poster_img" jdbcType="VARCHAR" property="posterImg" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_no, cust_id, product_id, activity_id, product_type, res_amount, total_amount, exchangePoints, 
+    id, order_no, cust_id, sign_name, sign_phone, openid, product_id, activity_id, product_type, res_amount, total_amount, exchangePoints, 
     give_points, channel, commision, commistion_rate, bank_code, bank_no, trans_no, bank_trans_no, 
     pay_submit_time, pay_callback_time, order_status, error_code, error_reason, is_delete, 
     create_time, update_time,poster_img
@@ -61,10 +64,10 @@
 	po.`create_time` orderCreateTime,
 	po.`pay_submit_time` paySubmitTime,
 	po.`total_amount` totalPrice,
-	pa.`id` custId,
-	pa.`parent_name` parentName,
-	pa.`parent_mobile` parentMobile,
-	pa.`openid`,
+	po.`cust_id` custId,
+	po.`sign_name` signName,
+	po.`sign_phone` signPhone,
+	po.`openid`,
 	ci.`id` courseId,
 	ci.`course_name` courseName,
 	ci.`sign_way` signWay,
@@ -73,7 +76,6 @@
 	ai.`activity_num` activityNum,
 	ai.`start_date` activityStartDate
 	FROM t_product_order po
-	INNER JOIN t_parent_info pa ON pa.`id` = po.`cust_id`
 	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
 	LEFT JOIN t_activity_info ai ON ai.`id` = po.`activity_id`
 	where po.`id` = #{orderId,jdbcType=INTEGER}
@@ -86,10 +88,10 @@
 	po.`create_time` orderCreateTime,
 	po.`pay_submit_time` paySubmitTime,
 	po.`total_amount` totalPrice,
-	pa.`id` custId,
-	pa.`parent_name` parentName,
-	pa.`parent_mobile` parentMobile,
-	pa.`openid`,
+	po.`cust_id` custId,
+	po.`sign_name` signName,
+	po.`sign_phone` signPhone,
+	po.`openid`,
 	ci.`id` courseId,
 	ci.`course_name` courseName,
 	ci.`sign_way` signWay,
@@ -136,7 +138,8 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xuequ.cmoc.model.ProductOrder">
-    insert into t_product_order (id, order_no, cust_id, 
+    insert into t_product_order (id, order_no, cust_id,
+      sign_name, sign_phone, openid, 
       product_id, activity_id, product_type, res_amount, 
       total_amount, exchangePoints, give_points, 
       channel, commision, commistion_rate, 
@@ -145,7 +148,8 @@
       order_status, error_code, error_reason, 
       is_delete, create_time, update_time,poster_img
       )
-    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER},
+      #{signName,jdbcType=VARCHAR}, #{signPhone,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
       #{productId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{resAmount,jdbcType=DECIMAL}, 
       #{totalAmount,jdbcType=DECIMAL}, #{exchangepoints,jdbcType=INTEGER}, #{givePoints,jdbcType=INTEGER}, 
       #{channel,jdbcType=VARCHAR}, #{commision,jdbcType=DECIMAL}, #{commistionRate,jdbcType=VARCHAR}, 
@@ -167,6 +171,15 @@
       </if>
       <if test="custId != null">
         cust_id,
+      </if>
+      <if test="signName != null">
+        sign_name,
+      </if>
+      <if test="signPhone != null">
+        sign_phone,
+      </if>
+      <if test="openid != null">
+        openid,
       </if>
       <if test="productId != null">
         product_id,
@@ -248,6 +261,15 @@
       <if test="custId != null">
         #{custId,jdbcType=INTEGER},
       </if>
+      <if test="signName != null">
+        #{signName,jdbcType=VARCHAR},
+      </if>
+      <if test="signPhone != null">
+        #{signPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
       <if test="productId != null">
         #{productId,jdbcType=INTEGER},
       </if>
@@ -328,6 +350,15 @@
       <if test="custId != null">
         cust_id = #{custId,jdbcType=INTEGER},
       </if>
+      <if test="signName != null">
+        sign_name = #{signName,jdbcType=VARCHAR},
+      </if>
+      <if test="signPhone != null">
+        sign_phone = #{signPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
       <if test="productId != null">
         product_id = #{productId,jdbcType=INTEGER},
       </if>
@@ -404,6 +435,9 @@
     update t_product_order
     set order_no = #{orderNo,jdbcType=VARCHAR},
       cust_id = #{custId,jdbcType=INTEGER},
+      sign_name = #{signName,jdbcType=VARCHAR},
+      sign_phone = #{signPhone,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
       product_type = #{productType,jdbcType=VARCHAR},

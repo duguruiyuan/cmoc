@@ -22,12 +22,24 @@ public final class QRCoderUtils {
 	
 	public final static String IMAGE_FROMAT_NAME = "jpg";
 	
-	public static String getRealImgUrl(){
+	public static String getEWMRealImgUrl(){
 		return ResourcePathEnum.IMGE.getValue() + Const.SEPARATOR + "EWM";
 	}
 	
-	public static String getRspImgUrl(String fileName) {
-		String dataMemoryURL = getRealImgUrl() + Const.SEPARATOR + fileName;;
+	public static String getPosterRelativeImgUrl() {
+		return ResourcePathEnum.IMGE.getValue() + Const.SEPARATOR + "POSTER";
+	}
+	public static String getPosterRealImgUrl() {
+		String path = Const.rootPath + getPosterRelativeImgUrl();
+		File file = new File(path);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		return path;
+	}
+	
+	public static String getPosterRspImgUrl(String fileName) {
+		String dataMemoryURL = getPosterRelativeImgUrl() + Const.SEPARATOR + fileName;;
         if(Configuration.getInstance().getEnv().equals("development")) {
         	dataMemoryURL = IMAGE_FROMAT_NAME + Const.SEPARATOR + dataMemoryURL;
         	dataMemoryURL = dataMemoryURL.replaceAll(Const.SEPARATOR, Const.REPLACE_SEPARATOR);
@@ -36,7 +48,7 @@ public final class QRCoderUtils {
 	}
 	
 	public static String createEWM(String url, int width, int heigth, String name) {
-		String path = getRealImgUrl();
+		String path = getEWMRealImgUrl();
     	String relativeAttachmentPath = Const.rootPath + path;
 		File file = new File(relativeAttachmentPath);
 		if(!file.exists()) {
