@@ -5,12 +5,11 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 public class ValidatorUtil {
 
-	private static ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();   
-    private static Validator validator = validatorFactory.getValidator(); 
+    private static Validator validator = Validation.buildDefaultValidatorFactory().
+    		getValidator(); 
     
     /**
      * 参数校验

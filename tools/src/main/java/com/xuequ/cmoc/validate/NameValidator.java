@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class NameValidator implements ConstraintValidator<Name, String> {
 
-	Pattern pattern = Pattern.compile("[\u4E00-\u9FA5]{2}");
+	Pattern pattern = Pattern.compile("[\u4E00-\u9FA5]{2,}");
 	public void initialize(Name constraintAnnotation) {
 		
 	}

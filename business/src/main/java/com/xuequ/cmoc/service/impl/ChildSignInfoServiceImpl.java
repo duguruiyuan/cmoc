@@ -90,6 +90,8 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 			signInfo.setSignResource(SignResource.ONLINE.getCode());
 			signInfo.setParentId(parentInfo.getId());
 			signInfo.setFamilyNo(parentInfo.getFamilyNo());
+			signInfo.setIsEffect(1);
+			signInfo.setIsPhoneConfirm(1);
 			childSignInfoMapper.insertSelective(signInfo);
 		}
 		return 1;

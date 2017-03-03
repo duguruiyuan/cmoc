@@ -42,7 +42,7 @@ function loadData() {
 			formatter : function(value, row, index) {
 				var str = "";
 				if(row.orderStatus != '000') {
-					str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="orderConfirmPay(\'{0}\');">确认支付</button>', index);
+					str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="orderConfirmPay(\'{0}\');">确认支付</button>', row.orderId);
 				}else {
 					str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="uploadNamelist(\'{0}\');">上传名单</button>', index);
 				}
@@ -160,9 +160,7 @@ function uploadInit1() {
 		$(".kv-file-remove").click();
 		if(data.response.code == '000') {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
-			$('#uploadDialog').dialog("close");
 		}else {
-			debugger;
 			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.data, 'info');
 		}
 	});
@@ -187,7 +185,7 @@ var uploadNamelist = function(index) {
 			loadData();
 		},
 		onOpen : function() {
-			$("#uploadDialog #orderId").val(row.id);
+			$("#uploadDialog #orderId").val(row.orderId);
 			$("#uploadDialog #orderNo").html(row.orderNo);
 			$("#uploadDialog #activityMsg").html(row.activityName + "|" + row.activityNum + "|" + getTime(row.activityStartDate, "yyyy-MM-dd"));
 		}

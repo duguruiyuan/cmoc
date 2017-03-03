@@ -262,10 +262,8 @@ function uploadInit1() {
         }
 	});
 	$("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
-		$(".kv-file-remove").click();
 		if(data.response.code == '000') {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
-			$('#uploadDialog').dialog("close");
 		}else {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.msg, 'info');
 		}

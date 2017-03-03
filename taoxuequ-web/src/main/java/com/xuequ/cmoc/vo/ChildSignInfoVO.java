@@ -32,14 +32,12 @@ public class ChildSignInfoVO implements Serializable {
     private String diseaseDesc;
     
     @NotNull(message="紧急联系人不能为空")
-    @Mobile
+    @Name
     private String emerName;
 
     @NotNull(message="紧急联系电话不能为空")
     @Mobile
     private String emerMobile;
-    
-    private Integer isPhoneConfirm = 1;
 
 	public Integer getRows() {
 		return rows;
@@ -116,15 +114,5 @@ public class ChildSignInfoVO implements Serializable {
 	public void setEmerMobile(String emerMobile) {
 		this.emerMobile = emerMobile;
 	}
-
-	public Integer getIsPhoneConfirm() {
-		return isPhoneConfirm;
-	}
-
-	public void setIsPhoneConfirm(Integer isPhoneConfirm) {
-		this.isPhoneConfirm = isPhoneConfirm;
-	}
-    
-    
 
 }

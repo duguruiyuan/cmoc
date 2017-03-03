@@ -116,7 +116,6 @@ function uploadInit(id, url, resourceId, type) {
         }
 	});
 	$("#"+id).on("fileuploaded", function(event, data, previewId, index) {
-		$(".kv-file-remove").click();
 		if(data.response.code == '000') {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
 		}else {
