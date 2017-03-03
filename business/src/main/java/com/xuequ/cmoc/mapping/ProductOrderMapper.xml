@@ -98,10 +98,15 @@
 	ai.`id` activityId,
 	ai.`activity_name` activityName,
 	ai.`activity_num` activityNum,
-	ai.`start_date` activityStartDate
+	ai.`start_date` activityStartDate,
+	IFNULL(csi.members, 0) members
 	FROM t_product_order po
 	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
 	LEFT JOIN t_activity_info ai ON ai.`id` = po.`activity_id`
+	LEFT JOIN (
+	   SELECT COUNT(1) members, order_no FROM t_child_sign_info s GROUP BY s.`order_no`
+	) csi ON csi.order_no = po.`order_no`
+	where 1 = 1
 	<if test="params.orderStatus != null">
 		and po.`order_status` = #{params.orderStatus,jdbcType=VARCHAR}
 	</if>

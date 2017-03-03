@@ -91,4 +91,5 @@ public interface ICourseService {
     List<CourseSchduleActivityView> selectScheduActivityInfoByCourseId(Integer courseId);
 
     List<CourseGroupOrderView> selectCourseGroupOrder(String openid, String orderNo);
+    
 }

@@ -1,10 +1,17 @@
 package com.xuequ.cmoc.controller;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xuequ.cmoc.common.Configuration;
@@ -27,17 +36,21 @@ import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignOrderVO;
+import com.xuequ.cmoc.service.IChildSignInfoService;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.thread.WechatMsgCallback;
 import com.xuequ.cmoc.utils.BeanUtils;
+import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.ExcelExportUtil;
 import com.xuequ.cmoc.utils.ExportSetInfoUtil;
 import com.xuequ.cmoc.utils.PropertiesUtil;
+import com.xuequ.cmoc.utils.ValidatorUtil;
 import com.xuequ.cmoc.view.ChildSignView;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseSignOrderView;
 import com.xuequ.cmoc.vo.BuyerQueryVO;
+import com.xuequ.cmoc.vo.ChildSignInfoVO;
 import com.xuequ.cmoc.vo.ChildSignReportVO;
 import com.xuequ.cmoc.vo.CourseQueryVO;
 import com.xuequ.cmoc.vo.CourseSubmitVO;
@@ -52,6 +65,8 @@ public class CourseManageController extends BaseController{
 	private ICourseService courseService;
 	@Autowired
 	private IProductOrderService productOrderService;
+	@Autowired
+	private IChildSignInfoService childSignInfoService;
 	
 	@RequestMapping("manage")
 	public String manage() {
@@ -266,4 +281,85 @@ public class CourseManageController extends BaseController{
 		model.addAttribute("signInfo", courseService.selectChildSignById(id));
 		return "course/signPrint";
 	}
+	
+	/**
+	 * 学生用户导入
+	 * @auther 胡启萌
+	 * @Date 2016年11月14日
+	 * @return
+	 */
+	@RequestMapping("namelist/import")
+	@ResponseBody Object namelistImport(@RequestParam(value="orderId") Integer orderId, 
+			@RequestParam(value="files",required=false) MultipartFile buildInfo) {
+		try {
+			return saveBuildInfo(buildInfo, orderId);
+		} catch (Exception e) {
+			logger.error("--namelistImport, error={}", e);
+		}
+		return new RspResult(StatusEnum.TEMPLATE_ERROR);
+	}
+	
+	public RspResult saveBuildInfo(MultipartFile buildInfo, Integer orderId) throws Exception{
+    	SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
+    	// 创建一个FileInputStream 文件输入流
+        InputStream inputStream = buildInfo.getInputStream();
+    	// 创建对Excel工作簿文件的引用
+        Workbook wookbook = null;
+        String filename = buildInfo.getOriginalFilename();
+        String fileType = filename.substring(filename.lastIndexOf(".") + 1,
+        		filename.length());
+        if (fileType.equals("xls")) {
+        	try{
+        		wookbook = new HSSFWorkbook(inputStream);
+        	}catch(Exception e){
+        		wookbook = null;
+           	 	wookbook = new XSSFWorkbook(inputStream);
+        	}
+        }else{
+       	 	wookbook = new XSSFWorkbook(inputStream);
+        }
+        // 在Excel文档中，第一张工作表的缺省索引是0
+        Sheet sheet = wookbook.getSheetAt(0);
+        int coloumNum=sheet.getRow(0).getPhysicalNumberOfCells();// 获取总列数
+        int rowNum=sheet.getPhysicalNumberOfRows();//获得总行数
+        if(rowNum <= 1) {
+        	return new RspResult(StatusEnum.TEMPLATE_DATA_NULL);
+        }
+        List<ChildSignInfoVO> list = new ArrayList<>();
+        // 遍历行 从第三行开始遍历
+        for (int i = 1; i < rowNum; i++) {
+        	// 读取左上端单元格
+            Row row = sheet.getRow(i);
+            // 行不为空
+            if (row != null) {
+            	ChildSignInfoVO signInfo = new ChildSignInfoVO();
+            	signInfo.setRows(i + 1);
+            	for(int j = 0; j < coloumNum; j ++) {
+            		Cell cell = row.getCell((short)j);
+            		if(cell != null) {
+            			String val = CellUtil.getCellValue(cell);
+            			if(j == 0) signInfo.setEmerName(val.trim());
+            			else if(j == 1) signInfo.setEmerMobile(val.trim());
+            			else if(j == 2) signInfo.setChildName(val.trim());
+            			else if(j == 3) signInfo.setChildSex(val.trim());
+            			else if(j == 4) signInfo.setChildIdcard(val.trim());
+            			else if(j == 5) signInfo.setIsDisease(val.trim());
+            			else if(j == 6) signInfo.setDiseaseDesc(val.trim());
+            		}
+            	}
+            	list.add(signInfo);
+            }
+        }
+        List<String> errorList = new ArrayList<>();
+        for(ChildSignInfoVO signInfo : list) {
+        	String validator = ValidatorUtil.validatorParams(signInfo);
+            if(null != validator) {
+            	errorList.add("第" + signInfo.getRows() + "行" + validator);
+            }
+        }
+        if(errorList.size() > 0) return new RspResult(StatusEnum.FAIL, errorList);
+        List<ChildSignInfo> childList = BeanUtils.copyAs(list, ChildSignInfo.class);
+        childSignInfoService.insertCourseSignNamelist(childList, orderId);
+        return new RspResult(StatusEnum.SUCCESS);
+    }
 }

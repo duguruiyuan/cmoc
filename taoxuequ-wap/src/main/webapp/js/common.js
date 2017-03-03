@@ -149,7 +149,7 @@ var excludeSpace = function(e) {
 
 //验证姓名
 function checkName(name) {
-	if(!/^[\u2E80-\u9FFF]+$/.test(name)){
+	if(!/^[\u2E80-\u9FFF]{2}/.test(name)){
 		return false;
 	}
 	return true;

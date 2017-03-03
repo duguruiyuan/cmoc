@@ -16,4 +16,6 @@ public interface IChildSignInfoService {
 	ChildSignInfo selectById(Integer id);
 	
 	ChildSignInfo selectByParam(String orderNo, String openid);
+	
+	int insertCourseSignNamelist(List<ChildSignInfo> childList, Integer orderId);
 }

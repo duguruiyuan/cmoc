@@ -6,13 +6,17 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xuequ.cmoc.common.enums.SignResource;
 import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.ParentInfoMapper;
 import com.xuequ.cmoc.dao.SysCommonMapper;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.service.IChildSignInfoService;
+import com.xuequ.cmoc.service.IParentInfoService;
+import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.utils.BeanUtils;
 
 @Service("childSignInfoService")
@@ -24,6 +28,8 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 	private ParentInfoMapper parentInfoMapper;
 	@Autowired
 	private SysCommonMapper sysCommonMapper;
+	@Autowired
+	private IProductOrderService productOrderService;
 	
 	@Override
 	public int selectCountByOrderNo(String orderNo) {
@@ -72,6 +78,21 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 	@Override
 	public ChildSignInfo selectByParam(String orderNo, String openid) {
 		return childSignInfoMapper.selectByParam(orderNo, openid);
+	}
+	@Override
+	public int insertCourseSignNamelist(List<ChildSignInfo> childList, Integer orderId) {
+		ProductOrder productOrder = productOrderService.selectById(orderId);
+		ParentInfo parentInfo = parentInfoMapper.selectByOpenid(productOrder.getOpenid());
+		for(ChildSignInfo signInfo : childList) {
+			signInfo.setOrderNo(productOrder.getOrderNo());
+			signInfo.setProductId(productOrder.getProductId());
+			signInfo.setActivityId(productOrder.getActivityId());
+			signInfo.setSignResource(SignResource.ONLINE.getCode());
+			signInfo.setParentId(parentInfo.getId());
+			signInfo.setFamilyNo(parentInfo.getFamilyNo());
+			childSignInfoMapper.insertSelective(signInfo);
+		}
+		return 1;
 	}
 
 }

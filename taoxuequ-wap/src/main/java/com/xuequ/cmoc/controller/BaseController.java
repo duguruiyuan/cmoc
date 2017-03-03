@@ -202,16 +202,16 @@ public class BaseController {
 				ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
 				if(productOrder != null && StringUtils.isBlank(productOrder.getPosterImg())) {
 					List<ImageSynthesisVo> list = new ArrayList<>();
-					ImageSynthesisVo vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 86, 134, 100, 100);
+					ImageSynthesisVo vo1 = new ImageSynthesisVo(userInfo.getHeadimgurl(), 65, 230, 100, 100);
 					WechatQrcodeRsp rsp = WechatUtils.getQrcode(MessageUtil.QR_LIMIT_SCENE, 
 							MessageUtil.POSTER_MEMBER, String.valueOf(productOrder.getId()));
-					ImageSynthesisVo vo2 = new ImageSynthesisVo(rsp.getQrcode(), 189, 305, 130, 130);
+					ImageSynthesisVo vo2 = new ImageSynthesisVo(rsp.getQrcode(), 165, 405, 130, 130);
 					list.add(vo1);
 					list.add(vo2);
-					String fileSrc = realPath + "images/poster-share.png";
+					String fileSrc = realPath + "images/poster-share1.png";
 					String outSrcName = orderNo + ".jpg";
 					String outSrc = QRCoderUtils.getPosterRealImgUrl() + File.separator + outSrcName;
-					ImageUtils.composePic(fileSrc, outSrc, list, 642, 900);
+					ImageUtils.composePic(fileSrc, outSrc, list, 642, 1444);
 					productOrder.setPosterImg(QRCoderUtils.getPosterRspImgUrl(outSrcName));
 					productOrderService.updateById(productOrder);
 				}

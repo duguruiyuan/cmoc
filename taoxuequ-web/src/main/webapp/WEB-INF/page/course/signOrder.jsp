@@ -37,8 +37,8 @@
 									<td>订单状态: 
 										<select class="form-control1" style="width: 173px;" name="orderStatus" id="orderStatus">
 											<option value="">全部</option>
-											<option value="000">000已支付</option>
-											<option value="001">001未支付</option>
+											<option value="000">已支付</option>
+											<option value="001">未支付</option>
 										</select>
 									</td>
 									<td colspan="2">报名时间:  <input type="text" class="form-control1 Wdate" id="orderStartTime" name="orderStartTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderEndTime\')}',readOnly:true})">  至 
@@ -65,6 +65,34 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="uploadDialog" style="display: none;height: 'auto';">
+		 <div class="col-md-12 p15">
+		  	<p class="text-left">
+		  		<span class="btn btn-success fileinput-button" onclick="downloadTemplate('报名名单模板.xls')">
+                    <i class="fa fa-cloud"></i>
+                    <span>模版下载</span>
+                </span>
+		  	</p>
+	  	 </div>
+	  	 <div class="col-md-12 p15">
+		  	<p class="text-left">
+		  		订单编号： <span id="orderNo"></span>
+		  	</p>
+	  	 </div>
+	 	 <div class="col-md-12 p15">
+		  	<p class="text-left">
+		  		排期活动信息： <span id="activityMsg"></span>
+		  	</p>
+	  	 </div>
+	  	 <div class="col-md-12 p15">
+	  	 	<form enctype="multipart/form-data">
+             	<div class="form-group">
+                    <input id="file-upload" name="files" type="file" accept=".xls,.xlsx" multiple class="file" data-overwrite-initial="false" data-max-file-count="1">
+                	<input type="hidden" name="orderId" id="orderId"/>
+                </div>
+            	</form>
+            </div>
 	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/course/signOrder.js"></script>

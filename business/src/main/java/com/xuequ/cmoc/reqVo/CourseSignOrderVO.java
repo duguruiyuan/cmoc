@@ -2,6 +2,8 @@ package com.xuequ.cmoc.reqVo;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.xuequ.cmoc.model.GridBase;
 
 public class CourseSignOrderVO extends GridBase implements Serializable {
@@ -39,7 +41,7 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	}
 
 	public String getOrderStatus() {
-		return orderStatus;
+		return StringUtils.isNotBlank(orderStatus) ? orderStatus : null;
 	}
 
 	public void setOrderStatus(String orderStatus) {
@@ -63,7 +65,7 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	}
 
 	public String getSignName() {
-		return signName;
+		return StringUtils.isNotBlank(signName) ? signName : null;
 	}
 
 	public void setSignName(String signName) {
@@ -71,7 +73,7 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	}
 
 	public String getSignPhone() {
-		return signPhone;
+		return StringUtils.isNotBlank(signPhone) ? signPhone : null;
 	}
 
 	public void setSignPhone(String signPhone) {
@@ -87,7 +89,7 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	}
 
 	public String getActivityEndDate() {
-		return activityEndDate;
+		return StringUtils.isNotBlank(activityEndDate) ? activityEndDate : null;
 	}
 
 	public void setActivityEndDate(String activityEndDate) {
@@ -95,7 +97,7 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	}
 
 	public String getOrderStartTime() {
-		return orderStartTime;
+		return StringUtils.isNotBlank(orderStartTime) ? orderStartTime : null;
 	}
 
 	public void setOrderStartTime(String orderStartTime) {
@@ -103,7 +105,7 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	}
 
 	public String getOrderEndTime() {
-		return orderEndTime;
+		return StringUtils.isNotBlank(orderEndTime) ? orderEndTime : null;
 	}
 
 	public void setOrderEndTime(String orderEndTime) {
@@ -111,7 +113,7 @@ public class CourseSignOrderVO extends GridBase implements Serializable {
 	}
 
 	public String getOpenid() {
-		return openid;
+		return StringUtils.isNotBlank(openid) ? openid : null;
 	}
 
 	public void setOpenid(String openid) {

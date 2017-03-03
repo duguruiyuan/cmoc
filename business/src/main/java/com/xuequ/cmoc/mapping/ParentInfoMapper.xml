@@ -128,7 +128,7 @@
   </select>
   
   <select id="selectCourseBuyerByPage" resultMap="CourseBaseResultMap">
-  	SELECT tp.`id`, tp.`parent_name`, tp.`wechat_num`, tp.openid, 
+  	SELECT tp.`id`, po.sign_name `parent_name`, tp.`wechat_num`, tp.openid, 
   		tp.head_img, po.`res_amount` 
 	FROM t_parent_info tp
 	INNER JOIN t_product_order po ON po.`cust_id` = tp.`id`
@@ -138,7 +138,7 @@
   </select>
   
   <select id="selectBuyRecordByPage" resultMap="CourseBaseResultMap">
-  	SELECT bi.`parent_name`, bi.`parent_mobile`, bi.`wechat_num`,bi.`openid`,bi.`head_img`, po.`order_no`, 
+  	SELECT po.sign_name `parent_name`, po.sign_phone bi.`parent_mobile`, bi.`wechat_num`,bi.`openid`,bi.`head_img`, po.`order_no`, 
        po.`product_type`,po.`res_amount`,po.`total_amount`, po.`create_time`,
        po.product_id,ci.id course_id, ci.course_name,ci.`course_type`
 	FROM t_parent_info bi
@@ -173,16 +173,6 @@
 		and DATE_FORMAT(po.create_time,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
 	</if>
 	ORDER BY po.`create_time` DESC
-  </select>
-  
-  <select id="selectRemindOrder" resultMap="CourseBaseResultMap">
-  	SELECT bi.id, parent_name, parent_mobile, wechat_num, openid, po.`order_no`,po.`product_type` 
-  	FROM t_parent_info bi
-	INNER JOIN t_product_order po ON bi.`id` = po.cust_id
-	WHERE po.`order_status`='001' AND 
-	bi.`parent_mobile` = #{mobile,jdbcType=VARCHAR} 
-	AND bi.`openid` = #{openid,jdbcType=VARCHAR}
-	AND po.`product_id`= #{courseId,jdbcType=INTEGER}
   </select>
   
   <select id="selectByOrderNoOpenid" resultMap="BaseResultMap">

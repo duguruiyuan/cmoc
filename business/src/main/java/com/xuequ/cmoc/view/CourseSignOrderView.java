@@ -25,7 +25,7 @@ public class CourseSignOrderView implements Serializable {
 	private Date activityStartDate;
 	private Date paySubmitTime;
 	private BigDecimal totalPrice;
-	
+	private Integer members;
 	
 	public Integer getOrderId() {
 		return orderId;
@@ -129,6 +129,12 @@ public class CourseSignOrderView implements Serializable {
 	}
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	public Integer getMembers() {
+		return members;
+	}
+	public void setMembers(Integer members) {
+		this.members = members;
 	}
 	
 	

@@ -37,9 +37,6 @@ public interface ParentInfoMapper {
     
     List<ParentInfoView> selectBuyTotalByPage(Page<ParentInfoView> page);
     
-    CourseBuyerView selectRemindOrder(@Param("mobile")String mobile, 
-    		@Param("openid")String openid, @Param("courseId")Integer courseId);
-    
     ParentInfo selectByOrderNoOpenid(@Param("openid")String openid, @Param("orderNo")String orderNo);
     
     int selectCountByOpenidOrderNo(@Param("openid")String openid, @Param("orderNo")String orderNo);

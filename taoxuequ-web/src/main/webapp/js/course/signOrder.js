@@ -13,6 +13,11 @@ $(function() {
 	})
 });
 
+window.onload = initLoad();
+function initLoad(){
+	uploadInit1();
+}
+
 function loadData() {
 	dataGrid = $('#dataGrid').datagrid({
 		url : buyRecordListUrl,
@@ -37,7 +42,9 @@ function loadData() {
 			formatter : function(value, row, index) {
 				var str = "";
 				if(row.orderStatus != '000') {
-					str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="orderConfirmPay(\'{0}\');">确认支付</button>', row.orderId);
+					str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="orderConfirmPay(\'{0}\');">确认支付</button>', index);
+				}else {
+					str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="uploadNamelist(\'{0}\');">上传名单</button>', index);
 				}
 				return str;
 			}
@@ -55,6 +62,11 @@ function loadData() {
 		}, {
 			field : 'orderNo',
 			title : '订单编号',
+			align : "center",
+			resizable : true
+		}, {
+			field : 'members',
+			title : '队伍人数',
 			align : "center",
 			resizable : true
 		}, {
@@ -94,7 +106,7 @@ function loadData() {
 			resizable : true,
 			formatter: function(value, row, index) {
 				if(row.activityId != null) {
-					return row.activityName + "|" + row.activityNum + "|" + getTime(row.activityStartDate, "yyyy-MM-dd");;
+					return row.activityName + "|" + row.activityNum + "|" + getTime(row.activityStartDate, "yyyy-MM-dd");
 				}
 				return "无";
 			}
@@ -118,6 +130,70 @@ function loadData() {
 	});
 }
 
+function uploadInit1() {
+	$("#file-upload").fileinput({
+        uploadUrl: basePath + '/course/namelist/import',
+        showRemove : false,
+        language : 'zh',
+        allowedFileExtensions : ['xls','xlsx'],
+        overwriteInitial: false,
+        previewFileIcon: '<i class="fa fa-file"></i>',
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        previewFileIconSettings: {
+        	'xls': '<i class="fa fa-file-excel-o text-success"></i>'
+        },
+        previewFileExtSettings : {
+        	'xls': function(ext) {
+                return ext.match(/(xls|xlsx)$/i);
+            },
+        },
+        uploadExtraData: function(previewId, index) {
+            var obj = {};
+        	obj.orderId = $("#uploadDialog #orderId").val()
+        	return obj;
+        },
+        slugCallback: function(filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+	});
+	$("#file-upload").on("fileuploaded", function(event, data, previewId, index) {
+		$(".kv-file-remove").click();
+		if(data.response.code == '000') {
+			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
+			$('#uploadDialog').dialog("close");
+		}else {
+			debugger;
+			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.data, 'info');
+		}
+	});
+}
+
+var uploadNamelist = function(index) {
+	var row = $("#dataGrid").datagrid('getData').rows[index];
+	if(row.members >= 5) {
+		$.messager.alert('系统提示', '队伍已经满员了', 'error');
+		return;
+	}
+	$('#uploadDialog').dialog({
+		title : "名单上传",
+		modal : true,
+		width : 600,
+		top : 100,
+		draggable : true,
+		resizable : true,
+		buttons : '#btns',
+		onClose : function() {
+			$(".fileinput-remove").click();
+			loadData();
+		},
+		onOpen : function() {
+			$("#uploadDialog #orderId").val(row.id);
+			$("#uploadDialog #orderNo").html(row.orderNo);
+			$("#uploadDialog #activityMsg").html(row.activityName + "|" + row.activityNum + "|" + getTime(row.activityStartDate, "yyyy-MM-dd"));
+		}
+	}).show();
+}
+
 function search(formId){
 	dataGrid.datagrid('load', $.serializeObject($('#' + formId)));
 }
@@ -125,10 +201,6 @@ function search(formId){
 function closeFormPanel(formId){
 	cleanFormPanel(formId);
 	confirmDialog.dialog("close");
-}
-
-function childSignReport(formId){
-	$('#'+formId).attr('action', basePath + '/course/json/list/import').submit();
 }
 
 function orderConfirmPay(orderId) {
