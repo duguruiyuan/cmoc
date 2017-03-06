@@ -231,7 +231,7 @@ public class WechatUtils {
 	public static List<ArticleItem> getMaterialMediaList(String type) {
 		try {
 			WechatGlobalValue globalValue = WechatGlobalMap.get(type); 
-			if(globalValue != null) {
+			if(globalValue != null && globalValue.getValue() != null) {
 				return (List<ArticleItem>) globalValue.getValue();
 			}
 			String url = TextUtil.format(WechatConfigure.getInstance().getMediaCount(), 

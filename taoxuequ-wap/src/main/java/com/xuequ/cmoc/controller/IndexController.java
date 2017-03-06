@@ -3,9 +3,11 @@ package com.xuequ.cmoc.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.runner.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuequ.cmoc.common.Const;
+import com.xuequ.cmoc.common.RspResult;
+import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
+import com.xuequ.cmoc.core.wechat.common.NewsTypeEnum;
+import com.xuequ.cmoc.core.wechat.message.ArticleItem;
+import com.xuequ.cmoc.core.wechat.utils.WechatGlobalMap;
+import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.HollowManInfo;
 import com.xuequ.cmoc.model.ImgGroup;
 import com.xuequ.cmoc.model.WechatUserInfo;
@@ -100,5 +108,17 @@ public class IndexController extends BaseController{
         OutputStream toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象  
         toClient.write(data); // 输出数据  
         toClient.close();  
+	}
+	
+	@RequestMapping("msg/refresh")
+	@ResponseBody Object msgRefresh() {
+		try {
+			WechatGlobalMap.put(NewsTypeEnum.NEWS_INFO.getCode(), null);
+			List<ArticleItem> list= WechatUtils.getMaterialMediaList(NewsTypeEnum.NEWS_INFO.getCode());
+			return new RspResult(StatusEnum.SUCCESS, list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 }
