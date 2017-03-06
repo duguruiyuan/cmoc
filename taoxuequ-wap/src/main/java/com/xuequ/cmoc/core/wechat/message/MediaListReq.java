@@ -8,9 +8,9 @@ public class MediaListReq implements Serializable {
 
 	private String type = "news";
 	
-	private int offset = 0;
+	private int offset;
 	
-	private int count = 6;
+	private int count;
 
 	public String getType() {
 		return type;

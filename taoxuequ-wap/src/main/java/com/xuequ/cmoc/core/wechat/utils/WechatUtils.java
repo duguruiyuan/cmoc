@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.core.wechat.common.NewsTypeEnum;
 import com.xuequ.cmoc.core.wechat.message.ArticleItem;
 import com.xuequ.cmoc.core.wechat.message.MediaListReq;
 import com.xuequ.cmoc.core.wechat.message.ShorturlReq;
@@ -41,16 +42,6 @@ public class WechatUtils {
 	private final static String ACCESS_TOKEN = "access_token";
 	//公众号用于调用微信JS-SDK接口的临时票据
 	private final static String JSAPI_TICKET = "jsapi_ticket";
-	//菜单点击图文消息
-    private static String EVENT_CLICK_MENU = "event_click_menu";
-    
-    public static List<ArticleItem> getEventClickMenu() {
-    	WechatGlobalValue globalValue = WechatGlobalMap.get(EVENT_CLICK_MENU); 
-		if(globalValue != null) {
-			return (List<ArticleItem>) globalValue.getValue();
-		}
-		return getMaterialMediaList();
-    }
 	
 	public static WechatModel getWechatModel() {
 		return new WechatModel(getAccessToken(), getJsapiTicket());
@@ -237,33 +228,71 @@ public class WechatUtils {
 	 * 获取图文素材
 	 * @return
 	 */
-	private static List<ArticleItem> getMaterialMediaList() {
-		List<ArticleItem> newsList = new ArrayList<>();
+	public static List<ArticleItem> getMaterialMediaList(String type) {
 		try {
-			String url = TextUtil.format(WechatConfigure.getInstance().getMediaList(), 
+			WechatGlobalValue globalValue = WechatGlobalMap.get(type); 
+			if(globalValue != null) {
+				return (List<ArticleItem>) globalValue.getValue();
+			}
+			String url = TextUtil.format(WechatConfigure.getInstance().getMediaCount(), 
 					getWechatModel().getAccessToken());
-			MediaListReq reqParam = new MediaListReq();
-			String resultStr = HttpClientUtils.postJson(url, reqParam);
-			NewsMedia newsMedia = JsonUtils.jsonToObject(resultStr, NewsMedia.class);
-			for(NewsTotItem totItem : newsMedia.getItem()) {
-				List<NewsItem> list = totItem.getContent().getNews_item();
-				if(!StringUtil.isNullOrEmpty(list) && list.size() == 1) {
-					NewsItem newsItem = list.get(0);
-					ArticleItem item = new ArticleItem();
-					item.setTitle(newsItem.getTitle());
-			        item.setDescription(newsItem.getDigest());
-			        item.setPicUrl(newsItem.getThumb_url());
-			        item.setUrl(getShortUrl(newsItem.getUrl()));
-			        newsList.add(item);
+			String resultStr = HttpClientUtils.doGet(url);
+			JSONObject jsonObject = JSONObject.parseObject(resultStr);
+			int newsCount = jsonObject.getIntValue("news_count");
+			int page = (int)Math.ceil(Double.valueOf(newsCount)/Double.valueOf(19));
+			List<ArticleItem> newsInfoList = new ArrayList<>();
+			List<ArticleItem> schoolCaseList = new ArrayList<>();
+			List<ArticleItem> followTweetList = new ArrayList<>();
+			for(int i = page; i >= 1; i--) {
+				url = TextUtil.format(WechatConfigure.getInstance().getMediaList(), 
+						getWechatModel().getAccessToken());
+				MediaListReq reqParam = new MediaListReq();
+				reqParam.setCount(19);
+				reqParam.setOffset((page * 19 - 19*(page-i+1)));
+				resultStr = HttpClientUtils.postJson(url, reqParam);
+				NewsMedia newsMedia = JsonUtils.jsonToObject(resultStr, NewsMedia.class);
+				for(NewsTotItem totItem : newsMedia.getItem()) {
+					List<NewsItem> list = totItem.getContent().getNews_item();
+					if(!StringUtil.isNullOrEmpty(list) && list.size() == 1) {
+						NewsItem newsItem = list.get(0);
+						ArticleItem item = new ArticleItem();
+						item.setTitle(newsItem.getTitle());
+				        item.setDescription(newsItem.getDigest());
+				        item.setPicUrl(newsItem.getThumb_url());
+				        String author = newsItem.getAuthor();
+				        author = StringUtils.isNotBlank(author) ? author : "";
+				        if(author.equals(NewsTypeEnum.NEWS_INFO.getDesc()) && newsInfoList.size() < 5) {
+				        	item.setUrl(getShortUrl(newsItem.getUrl()));
+				        	newsInfoList.add(item);
+				        	continue;
+				        }
+				        if(author.equals(NewsTypeEnum.SCHOOL_CASE.getDesc()) && schoolCaseList.size() < 5) {
+				        	item.setUrl(getShortUrl(newsItem.getUrl()));
+				        	schoolCaseList.add(item);
+				        	continue;
+				        }
+				        if(author.equals(NewsTypeEnum.FOLLOW_TWEET.getDesc()) && followTweetList.size() < 3) {
+				        	item.setUrl(getShortUrl(newsItem.getUrl()));
+				        	followTweetList.add(item);
+				        	continue;
+				        }
+					}
 				}
 			}
-			if(newsList.size() > 0) {
-				WechatGlobalMap.put(EVENT_CLICK_MENU, newsList, 24*60*60);
-			}
+			WechatGlobalMap.put(NewsTypeEnum.NEWS_INFO.getCode(), newsInfoList, 24*60*60);
+			WechatGlobalMap.put(NewsTypeEnum.SCHOOL_CASE.getCode(), schoolCaseList, 24*60*60);
+			WechatGlobalMap.put(NewsTypeEnum.FOLLOW_TWEET.getCode(), followTweetList, 24*60*60);
+			if(type.equals(NewsTypeEnum.NEWS_INFO.getCode())) {
+	        	return newsInfoList;
+	        } else if(type.equals(NewsTypeEnum.SCHOOL_CASE.getCode())) {
+	        	return schoolCaseList;
+	        } else if(type.equals(NewsTypeEnum.FOLLOW_TWEET.getCode())) {
+	        	return followTweetList;
+	        }
 		} catch (IOException e) {
 			logger.error("--getOpenidByFefreshToken, error={}", e);
 		}
-		return newsList;
+		return new ArrayList<>();
 	}
 	
 	/**

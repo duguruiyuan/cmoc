@@ -63,6 +63,11 @@ function loadData() {
 				return "";
 			}
 		}, {
+			field : 'orderNo',
+			title : '订单编号',
+			align : "center",
+			resizable : true
+		}, {
 			field : 'productId',
 			title : '课程编号',
 			align : "center",

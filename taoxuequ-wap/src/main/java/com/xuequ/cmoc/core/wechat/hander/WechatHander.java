@@ -13,6 +13,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.common.enums.WechatReqMsgType;
 import com.xuequ.cmoc.core.wechat.common.Constants;
+import com.xuequ.cmoc.core.wechat.common.NewsTypeEnum;
 import com.xuequ.cmoc.core.wechat.message.ArticleItem;
 import com.xuequ.cmoc.core.wechat.message.InputMessage;
 import com.xuequ.cmoc.core.wechat.message.OutputMessage;
@@ -99,7 +100,10 @@ public class WechatHander {
     			String eventType = inputMsg.getEvent();
     			// 关注
     			if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
-    				respContent = "谢谢您的关注！";
+    				List<ArticleItem> newsList = WechatUtils.getMaterialMediaList(NewsTypeEnum.FOLLOW_TWEET.getCode());
+    				outputMsg.setArticleCount(newsList.size());
+    				outputMsg.setArticles(newsList);
+    				outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
     			}
     			// 取消关注
     			else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
@@ -285,7 +289,12 @@ public class WechatHander {
 	
 	private void eventTypeClick(OutputMessage outputMsg, InputMessage inputMsg) {
 		if(inputMsg.getEventKey().equals("rselfmenu_3_0")) {
-			List<ArticleItem> newsList = WechatUtils.getEventClickMenu();
+			List<ArticleItem> newsList = WechatUtils.getMaterialMediaList(NewsTypeEnum.NEWS_INFO.getCode());
+			outputMsg.setArticleCount(newsList.size());
+			outputMsg.setArticles(newsList);
+			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+		}else if(inputMsg.getEventKey().equals("rselfmenu_3_1")) {
+			List<ArticleItem> newsList = WechatUtils.getMaterialMediaList(NewsTypeEnum.SCHOOL_CASE.getCode());
 			outputMsg.setArticleCount(newsList.size());
 			outputMsg.setArticles(newsList);
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
@@ -293,7 +302,7 @@ public class WechatHander {
 			customerService(outputMsg);
 		}
 	}
-	
+		
 	private void customerService(OutputMessage outputMsg) {
 		 Date now = new Date();
 		 int hours = now.getHours();

@@ -116,16 +116,22 @@ public class PushMenuService {
 		firstButtonMenu01.setName("🙇趣看看");
 		
 		SubButtonMenu subButtonMenu001 = new SubButtonMenu();
-		subButtonMenu001.setName("图文消息");
+		subButtonMenu001.setName("新闻资讯");
 		subButtonMenu001.setType("click");
 		subButtonMenu001.setKey("rselfmenu_3_0");
 		subButtonMenus01.add(subButtonMenu001);
 		
 		SubButtonMenu subButtonMenu002 = new SubButtonMenu();
-		subButtonMenu002.setName("回顾活动");
-		subButtonMenu002.setType("view");
-		subButtonMenu002.setUrl("http://m.xue110.top/index");
+		subButtonMenu002.setName("学校案例");
+		subButtonMenu002.setType("click");
+		subButtonMenu002.setKey("rselfmenu_3_1");
 		subButtonMenus01.add(subButtonMenu002);
+		
+		SubButtonMenu subButtonMenu003 = new SubButtonMenu();
+		subButtonMenu003.setType("view");
+		subButtonMenu003.setName("关于我们");
+		subButtonMenu003.setUrl("http://mp.weixin.qq.com/s/F4eDKmVwmYXGCtubGVUrMw");
+		subButtonMenus01.add(subButtonMenu003);
 		
 		firstButtonMenu01.setSub_button(subButtonMenus01);
 		firstButtonMenus.add(firstButtonMenu01);
@@ -170,7 +176,7 @@ public class PushMenuService {
 	
 	private static void pushMenu(MenuList menuList) {
 		try {
-			String acc = "8cFOC_syXFW8M9-07f927S1fbH4JyFcMJXOp2EAwaxPYfIg01bPgk3SrD2_I0dzHop2lhVcDDuOCz7UyGhe7pmP_P4PUMvXf9wQu39vKKIImeKN4R68xrZKfRyP9qPMwCMGhAEAYIC";//WechatUtils.getWechatModel().getAccessToken();
+			String acc = "GMs0UihDEQIs9zMZ2JR3OrpMEDNtCxHWs9IhwCh-UPpw9amTgNFqDp2M-KE04sS4kcuoj3VUOznCeQzLhAhkcvkZ-mmw0v4KCKpVKc5bSewsdNtz94Zc9w7tnxiTA3enZXLiAIAOMA";//WechatUtils.getWechatModel().getAccessToken();
 			String json = JSONObject.toJSONString(menuList);
 			String url = TextUtil.format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}", acc);
 			String result = HttpClientUtils.postStringJosn(url, json);

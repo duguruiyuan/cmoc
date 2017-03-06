@@ -24,6 +24,9 @@ public class ArticleItem extends XStreamSub implements Serializable {
 	@XStreamAlias("Url")
 	@XStreamCDATA
 	private String url;
+	
+	@XStreamCDATA
+	private String author;
 
 	public String getTitle() {
 		return title;
@@ -55,6 +58,14 @@ public class ArticleItem extends XStreamSub implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	

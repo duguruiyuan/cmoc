@@ -42,6 +42,8 @@ public class WechatConfigure implements Serializable {
 	
 	private String mediaList;
 	
+	private String mediaCount;
+	
 	private String longToShort;
 	
 	private static WechatConfigure configure;
@@ -76,6 +78,7 @@ public class WechatConfigure implements Serializable {
 			configure.setMediaDownload(prop.getString("media_download"));
 			configure.setTemplateMsg(prop.getString("template_msg"));
 			configure.setMediaList(prop.getString("media_list"));
+			configure.setMediaCount(prop.getString("media_count"));
 			configure.setLongToShort(prop.getString("long_to_short"));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
@@ -224,6 +227,14 @@ public class WechatConfigure implements Serializable {
 
 	public void setMediaList(String mediaList) {
 		this.mediaList = mediaList;
+	}
+
+	public String getMediaCount() {
+		return mediaCount;
+	}
+
+	public void setMediaCount(String mediaCount) {
+		this.mediaCount = mediaCount;
 	}
 
 	public String getLongToShort() {
