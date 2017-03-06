@@ -48,18 +48,36 @@
 	                	<div class="cal-none">暂无排期活动</div>
 	                </c:if>
               		<c:forEach var="itm" items="${schuduList }">
-              			<div class="cal-content" data-pid="${course.id }" data-aid="${itm.activityId }">
-		              		<div class="cal-left">
-		              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
-								<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
-								<span>已报名${itm.buyCount }组</span>
-		              		</div>
-		              		<div class="cal-right">
-		              			<span>[剩余<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />队]</span><br/>
-		              			<span></span><br/>
-		              			<span></span>
-		              		</div>
-	              		</div>
+              			<c:choose>
+              				<c:when test="${itm.buyCount * 5 >= itm.activityPeoples || itm.isFull == 'Y'}">
+              					<div class="cal-content full" data-pid="${course.id }" data-aid="${itm.activityId }">
+				              		<div class="cal-left">
+				              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
+										<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
+										<span>已报名<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />组</span>
+				              		</div>
+				              		<div class="cal-right">
+				              			<span>已满员</span><br/>
+				              			<span></span><br/>
+				              			<span></span>
+				              		</div>
+			              		</div>
+              				</c:when>
+              				<c:otherwise>
+              					<div class="cal-content" data-pid="${course.id }" data-aid="${itm.activityId }">
+				              		<div class="cal-left">
+				              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
+										<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
+										<span>已报名${itm.buyCount }组</span>
+				              		</div>
+				              		<div class="cal-right">
+				              			<span>[剩余<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />队]</span><br/>
+				              			<span></span><br/>
+				              			<span></span>
+				              		</div>
+			              		</div>
+              				</c:otherwise>
+              			</c:choose>
               		</c:forEach>
               </div>
         	</c:when>
@@ -158,6 +176,7 @@
 				});
 				
 				$(".cal-content").click(function() {
+					if($(this).hasClass("full")) return;
 					$(this).addClass("cal-content-active").siblings().removeClass("cal-content-active");
 				});
 				

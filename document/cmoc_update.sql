@@ -15,4 +15,5 @@ ALTER TABLE t_parent_info ADD COLUMN nick_name VARCHAR(128) COMMENT'微信昵称
 ALTER TABLE t_product_order ADD COLUMN sign_phone VARCHAR(11) COMMENT'报名电话' AFTER cust_id;
 ALTER TABLE t_product_order ADD COLUMN sign_name VARCHAR(128) COMMENT'报名人姓名' AFTER cust_id;
 ALTER TABLE t_product_order ADD COLUMN openid VARCHAR(64) COMMENT'用户的标识，对当前公众号唯一' AFTER cust_id;
+ALTER TABLE `t_activity_info` ADD COLUMN is_full VARCHAR(2) NULL DEFAULT 'N' COMMENT'是否满员 Y是 N否';
 --3月4号上线修改 end

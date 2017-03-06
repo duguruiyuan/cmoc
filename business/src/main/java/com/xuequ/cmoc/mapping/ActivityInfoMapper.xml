@@ -27,12 +27,13 @@
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="updater_time" property="updaterTime" jdbcType="TIMESTAMP" />
     <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="is_full" property="isFull" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, activity_name, start_date, end_date, activity_addr, line_name, line_id, activity_peoples, 
     activity_img_url, qrcode_url, city, city_id, activity_num, activity_desc, activity_type, year, 
     month, product_id, creater_user_id, creater, create_time, updater_user_id, updater, updater_time, 
-    is_delete
+    is_delete, is_full
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

@@ -2422,3 +2422,8 @@ color: #09BB07;
 	-ms-user-select: none;
 	user-select: none
 }
+
+.full{
+	background: #BDBABA;
+    border: 1px solid #fff;
+}

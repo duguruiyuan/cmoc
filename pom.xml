@@ -11,7 +11,7 @@
   	<parent.version>1.0.0</parent.version>
   	<taoxuequ-web.version>1.0.0</taoxuequ-web.version>
 	<taoxuequ-wap.version>1.0.0</taoxuequ-wap.version>
-  	<business.version>1.0.0</business.version>
+  	<business.version>1.0.0</business.version> 
   	<service.version>1.0.0</service.version>
   	<tools.version>1.0.0</tools.version>
   	<hqm-live.version>1.0.0</hqm-live.version>

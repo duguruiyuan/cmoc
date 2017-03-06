@@ -57,6 +57,8 @@ public class ActivityInfo implements Serializable {
     private Date updaterTime;
 
     private String isDelete;
+    
+    private String isFull;
 
     private static final long serialVersionUID = 1L;
 
@@ -266,4 +268,13 @@ public class ActivityInfo implements Serializable {
     	}
     	return "";
     }
+
+	public String getIsFull() {
+		return isFull;
+	}
+
+	public void setIsFull(String isFull) {
+		this.isFull = isFull;
+	}
+    
 }

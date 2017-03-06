@@ -18,6 +18,8 @@ public class CourseSchduleActivityView implements Serializable {
   	private Integer activityPeoples;
   	
   	private Integer buyCount;
+  	
+  	private String isFull;
 
 	public Integer getActivityId() {
 		return activityId;
@@ -65,6 +67,14 @@ public class CourseSchduleActivityView implements Serializable {
 
 	public void setBuyCount(Integer buyCount) {
 		this.buyCount = buyCount;
+	}
+
+	public String getIsFull() {
+		return isFull;
+	}
+
+	public void setIsFull(String isFull) {
+		this.isFull = isFull;
 	}
 
 }

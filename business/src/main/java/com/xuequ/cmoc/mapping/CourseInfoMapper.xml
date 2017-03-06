@@ -115,10 +115,11 @@
   	<result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
   	<result column="activity_peoples" property="activityPeoples" jdbcType="INTEGER" />
   	<result column="buy_count" property="buyCount" jdbcType="INTEGER" />
+  	<result column="is_full" property="isFull" jdbcType="VARCHAR" />
   </resultMap>
   <select id="selectScheduActivityInfoByCourseId" resultMap="ScheduResultMap">
  	select ai.id activity_id, ai.`activity_name`, ai.`activity_num`, ai.`start_date`, 
- 		   ai.`activity_peoples`, ifnull(po.buy_count,0) buy_count
+ 		   ai.`activity_peoples`, ifnull(po.buy_count,0) buy_count, ai.is_full
 	from t_course_info ci 
 	inner join t_activity_info ai on ai.`product_id` = ci.`id`
 	left join (
