@@ -224,3 +224,18 @@ function idCardNo(value){
 function closeCode() {
 	$(".code").remove();
 }
+
+function groupPay() {
+	var str = '<div class="code">\
+		<div class="payGrid">\
+			<div class="payGrid-title">报名支付方式</div>\
+			<div class="payGrid-content">\
+				<img src="'+ basePath +'/images/wechat-customer.png"/>\
+				<p>长按二维码识别，联系客服人员进行支付</p>\
+				<a href="tel:18027274621"><span>客服热线：18027274621</span></a>\
+			</div>\
+			<div class="payGrid-btn" onclick="closeCode()">关闭</div>\
+		</div>\
+	</div>';
+	$("body").append(str);
+};

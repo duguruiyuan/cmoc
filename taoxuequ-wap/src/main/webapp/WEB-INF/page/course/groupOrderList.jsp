@@ -37,7 +37,7 @@
 				<div style="float: right;">
 					<c:choose>
 						<c:when test="${itm.orderStatus == '000' }"><span class="group-but2">已支付</span></c:when>
-						<c:otherwise><span class="group-but1 paySubmit">未付款 (转账支付)</span></c:otherwise>
+						<c:otherwise><span class="group-but1" onclick="groupPay()">未付款 (转账支付)</span></c:otherwise>
 					</c:choose>
 					<a href="<%=basePath%>/course/group/add/${itm.orderNo}"><span class="group-but2">管理队伍</span></a>
 				</div>
@@ -48,23 +48,5 @@
 	</c:forEach>
 	
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
-	<script type="text/javascript">
-		$(function() {
-			$(".paySubmit").on("click", function(){
-				var str = '<div class="code">\
-					<div class="payGrid">\
-						<div class="payGrid-title">报名支付方式</div>\
-						<div class="payGrid-content">\
-							<img src="<%=basePath%>/images/wechat-customer.png"/>\
-							<p>长按二维码识别，联系客服人员进行支付</p>\
-							<a href="tel:18027274621"><span>客服热线：18027274621</span></a>\
-						</div>\
-						<div class="payGrid-btn" onclick="closeCode()">关闭</div>\
-					</div>\
-				</div>';
-				$("body").append(str);
-			});
-		});
-	</script>
 </body>
 </html>

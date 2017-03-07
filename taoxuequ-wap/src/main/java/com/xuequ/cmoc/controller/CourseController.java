@@ -148,6 +148,9 @@ public class CourseController extends BaseController {
 		TemplateUtil.activitySignSucessMsg(view.getOrderNo(), orderView.getActivityAddr(), 
 				userInfo.getOpenid(), orderView.getEmerName(), orderView.getActivityName(), 
 				orderView.getStartDate());
+		TemplateUtil.activitySignSucessMsgToCustomer(view.getOrderNo(), orderView.getEmerMobile(), 
+				orderView.getEmerName(), orderView.getActivityName(), orderView.getActivityNum(), 
+				orderView.getStartDate());
 		Map<String, Object> map = new HashMap<>();
 		map.put("orderNo", view.getOrderNo());
 		map.put("pId", vo.getProductId());
@@ -187,10 +190,12 @@ public class CourseController extends BaseController {
 			childInfo.setEmerMobile(productOrder.getSignPhone());
 			childInfo.setEmerName(productOrder.getSignName());
 		}
+		
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("members", members);
 		model.addAttribute("childInfo", childInfo);
+		model.addAttribute("isPay", 0);
 		return "course/groupCreate";
 	}
 	

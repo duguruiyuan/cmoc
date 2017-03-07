@@ -25,6 +25,7 @@
 	<c:if test="${members == 0 }">
 		<div class="group-add-tips">
 			队伍尚未组建，请填写以下信息完成队伍组建
+			<c:if test="${isPay == 0 }"><a class="group-pay" href="javascript:void(0)" onclick="groupPay()">付款</a></c:if>
 		</div>
 	</c:if> 
 	<div class="group-process">

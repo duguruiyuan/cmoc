@@ -15,7 +15,9 @@ public class CourseGroupOrderView implements Serializable {
   	private Date startDate;
   	private String orderNo;
   	private String activityAddr;
+  	private String activityNum;
   	private String emerName;
+  	private String emerMobile;
 	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
@@ -58,11 +60,23 @@ public class CourseGroupOrderView implements Serializable {
 	public void setActivityAddr(String activityAddr) {
 		this.activityAddr = activityAddr;
 	}
+	public String getActivityNum() {
+		return activityNum;
+	}
+	public void setActivityNum(String activityNum) {
+		this.activityNum = activityNum;
+	}
 	public String getEmerName() {
 		return emerName;
 	}
 	public void setEmerName(String emerName) {
 		this.emerName = emerName;
+	}
+	public String getEmerMobile() {
+		return emerMobile;
+	}
+	public void setEmerMobile(String emerMobile) {
+		this.emerMobile = emerMobile;
 	}
   	
   	

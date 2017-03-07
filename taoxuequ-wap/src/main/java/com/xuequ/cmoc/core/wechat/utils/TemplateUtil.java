@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.common.WechatConfigure;
 import com.xuequ.cmoc.common.enums.OrderStatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
-import com.xuequ.cmoc.core.wechat.template.Data_Add;
 import com.xuequ.cmoc.core.wechat.template.Data_Clazz;
 import com.xuequ.cmoc.core.wechat.template.Data_First;
 import com.xuequ.cmoc.core.wechat.template.Data_Keyword;
@@ -43,7 +42,7 @@ public class TemplateUtil {
 		outputData.setTemplate_id(PropertiesUtil.getProperty("activity_sign_sucess_template_id"));
 		TemplateDate templateDate = new TemplateDate();
 		Data_First first = new Data_First();
-		first.setValue(emerName + "家长, 您已经成功提交报名申请。");
+		first.setValue(emerName + "家长, 您已经成功提交报名申请。订单编号" + orderNo);
 		
 		Data_Keyword keyword1 = new Data_Keyword();
 		keyword1.setValue(activityName);
@@ -60,6 +59,56 @@ public class TemplateUtil {
 		templateDate.setKeyword1(keyword1);
 		templateDate.setKeyword2(keyword2);
 		templateDate.setKeyword3(keyword3);
+		outputData.setData(templateDate);
+		try {
+			String json = JSONObject.toJSONString(outputData);
+			json = json.replace("clazz", "class");
+			HttpClientUtils.postStringJosn(url, json);
+		} catch (Exception e) {
+			logger.error("--activitySignSucessMsg, error={}", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param orderNo
+	 * @param activityAddr
+	 * @param openid
+	 * @param emerName
+	 * @param activityName
+	 * @param startDate
+	 */
+	public static void activitySignSucessMsgToCustomer(String orderNo, String emerMobile, 
+			String emerName, String activityName, String activityNum, Date startDate) {
+		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
+				WechatUtils.getAccessToken());
+		OutputTemateData outputData = new OutputTemateData();
+		outputData.setTouser(PropertiesUtil.getProperty("customer_service_openid"));
+		outputData.setTemplate_id(PropertiesUtil.getProperty("course_sign_success_template_id"));
+		TemplateDate templateDate = new TemplateDate();
+		Data_First first = new Data_First();
+		first.setValue("有新的客户预约，订单编号" + orderNo + "，请及时确认");
+		
+		Data_Keyword keyword1 = new Data_Keyword();
+		keyword1.setColor("#173177");
+		keyword1.setValue(emerName);
+		Data_Keyword keyword2 = new Data_Keyword();
+		keyword2.setColor("#173177");
+		keyword2.setValue(emerMobile);
+		Data_Keyword keyword3 = new Data_Keyword();
+		keyword3.setValue(DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT));
+		Data_Keyword keyword4 = new Data_Keyword();
+		keyword4.setColor("#173177");
+		keyword4.setValue(activityName + "|" + activityNum + "|" + DateUtil.dateToStr(startDate, DateUtil.DATE_FORMAT1));
+		
+		Data_Remark remark = new Data_Remark();
+		remark.setValue("❀❀❀每天好心情，加油 加油 加油！❀❀❀");
+		templateDate.setFirst(first);
+		templateDate.setRemark(remark);
+		templateDate.setKeyword1(keyword1);
+		templateDate.setKeyword2(keyword2);
+		templateDate.setKeyword3(keyword3);
+		templateDate.setKeyword4(keyword4);
 		outputData.setData(templateDate);
 		try {
 			String json = JSONObject.toJSONString(outputData);

@@ -3,8 +3,9 @@ package com.xuequ.cmoc.core.wechat.common;
 public enum NewsTypeEnum {
 
 	NEWS_INFO("newsInfo", "新闻资讯"),
-	SCHOOL_CASE("school_Case", "学校案例"),
-	FOLLOW_TWEET("follow_tweet", "趣味推文");
+	SCHOOL_CASE("school_Case", "校本案例"),
+	FOLLOW_TWEET("follow_tweet", "趣味推文"),
+	ABOUT_US("about_us", "了解我们");
 	
 	NewsTypeEnum(String code, String desc){
 		this.code = code;

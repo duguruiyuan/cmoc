@@ -24,7 +24,6 @@ import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.ChildSignInfo;
-import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.WechatReceiveMessage;
 import com.xuequ.cmoc.model.WechatSendMessage;
@@ -33,7 +32,6 @@ import com.xuequ.cmoc.service.IActivityMarinesService;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IChildSignInfoService;
 import com.xuequ.cmoc.service.IKeywordService;
-import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.service.IWechatMessageService;
 import com.xuequ.cmoc.utils.BeanUtils;
@@ -57,8 +55,6 @@ public class WechatHander {
 	private IActivityService activityService;
 	@Autowired
 	private IChildSignInfoService childSignInfoService;
-	@Autowired
-	private IParentInfoService parentInfoService;
 	@Autowired
 	private IProductOrderService productOrderService;
 
@@ -298,11 +294,17 @@ public class WechatHander {
 			outputMsg.setArticleCount(newsList.size());
 			outputMsg.setArticles(newsList);
 			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+		}else if(inputMsg.getEventKey().equals("rselfmenu_3_2")) {
+			List<ArticleItem> newsList = WechatUtils.getMaterialMediaList(NewsTypeEnum.ABOUT_US.getCode());
+			outputMsg.setArticleCount(newsList.size());
+			outputMsg.setArticles(newsList);
+			outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
 		}else if(inputMsg.getEventKey().equals(MessageUtil.RESP_TRANSFER_CUSTOMER_SERVICE)) {
 			customerService(outputMsg);
 		}
 	}
 		
+	@SuppressWarnings("deprecation")
 	private void customerService(OutputMessage outputMsg) {
 		 Date now = new Date();
 		 int hours = now.getHours();

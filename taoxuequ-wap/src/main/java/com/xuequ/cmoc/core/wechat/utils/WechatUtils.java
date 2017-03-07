@@ -243,6 +243,7 @@ public class WechatUtils {
 			List<ArticleItem> newsInfoList = new ArrayList<>();
 			List<ArticleItem> schoolCaseList = new ArrayList<>();
 			List<ArticleItem> followTweetList = new ArrayList<>();
+			List<ArticleItem> aboutUsList = new ArrayList<>();
 			for(int i = page; i >= 1; i--) {
 				url = TextUtil.format(WechatConfigure.getInstance().getMediaList(), 
 						getWechatModel().getAccessToken());
@@ -276,18 +277,26 @@ public class WechatUtils {
 				        	followTweetList.add(item);
 				        	continue;
 				        }
+				        if(author.equals(NewsTypeEnum.ABOUT_US.getDesc())) {
+				        	item.setUrl(getShortUrl(newsItem.getUrl()));
+				        	aboutUsList.add(item);
+				        	continue;
+				        }
 					}
 				}
 			}
 			WechatGlobalMap.put(NewsTypeEnum.NEWS_INFO.getCode(), newsInfoList, 24*60*60);
 			WechatGlobalMap.put(NewsTypeEnum.SCHOOL_CASE.getCode(), schoolCaseList, 24*60*60);
 			WechatGlobalMap.put(NewsTypeEnum.FOLLOW_TWEET.getCode(), followTweetList, 24*60*60);
+			WechatGlobalMap.put(NewsTypeEnum.ABOUT_US.getCode(), aboutUsList, 24*60*60);
 			if(type.equals(NewsTypeEnum.NEWS_INFO.getCode())) {
 	        	return newsInfoList;
 	        } else if(type.equals(NewsTypeEnum.SCHOOL_CASE.getCode())) {
 	        	return schoolCaseList;
 	        } else if(type.equals(NewsTypeEnum.FOLLOW_TWEET.getCode())) {
 	        	return followTweetList;
+	        } else if(type.equals(NewsTypeEnum.ABOUT_US.getCode())) {
+	        	return aboutUsList;
 	        }
 		} catch (IOException e) {
 			logger.error("--getOpenidByFefreshToken, error={}", e);
