@@ -104,7 +104,9 @@
 	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
 	LEFT JOIN t_activity_info ai ON ai.`id` = po.`activity_id`
 	LEFT JOIN (
-	   SELECT COUNT(1) members, order_no FROM t_child_sign_info s GROUP BY s.`order_no`
+	   SELECT COUNT(1) members, order_no FROM t_child_sign_info s 
+	   where s.is_delete = 'N'
+	   GROUP BY s.`order_no`
 	) csi ON csi.order_no = po.`order_no`
 	where 1 = 1
 	<if test="params.orderStatus != null">

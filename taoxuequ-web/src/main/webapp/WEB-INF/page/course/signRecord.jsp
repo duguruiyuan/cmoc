@@ -66,6 +66,57 @@
 			</div>
 		</div>
 	</div>
+	<div id="childDialog" style="display: none;height: 'auto';">
+		<div class="col-md-12 p10">
+		  <form id="childUpdateForm" novalidate="novalidate">
+				<input type="hidden" id="id" name="id">
+				<div class="form-group col-md-6">
+					<label for="childName">小孩姓名</label>								
+					<input class="form-control" name="childName" id="childName">
+					</select>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childIdcard">小孩身份证</label>								
+					<input class="form-control" name="childIdcard" id="childIdcard">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childSex">小孩性别</label>								
+					<select class="form-control" name="childSex" id="childSex">
+						<option value="F">男</option>
+						<option value="M">女</option>
+					</select>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childAge">小孩年龄</label>								
+					<input class="form-control" name="childAge" id="childAge">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="emerName">紧急联系人</label>								
+					<input class="form-control" name="emerName" id="emerName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="emerMobile">紧急联系电话</label>								
+					<input class="form-control" name="emerMobile" id="emerMobile">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="isDisease">有无疾病</label>								
+					<select class="form-control" name="isDisease" id="isDisease">
+						<option value="N" selected>无</option>
+						<option value="Y">有</option>
+					</select>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="diseaseDesc">病情描述</label>								
+					<input class="form-control" name="diseaseDesc" id="diseaseDesc">
+				</div>
+				<div class="form-group col-md-12 text-right">
+					<button type="submit" class="btn btn-success">保存</button>
+					<button class="btn btn-info" type="button"
+						onclick="closeFormPanel('childUpdateForm')">取消</button>
+				</div>
+			</form>
+		</div>
+	</div>
 	<jsp:include page="/WEB-INF/page/common/_footer.jsp"/>
 	<script type="text/javascript" src="<%=basePath%>/js/course/signRecord.js"></script>
 </body>

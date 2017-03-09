@@ -96,5 +96,9 @@ public class ChildSignInfoServiceImpl implements IChildSignInfoService {
 		}
 		return 1;
 	}
+	@Override
+	public int updateByPrimaryKey(ChildSignInfo signInfo) {
+		return childSignInfoMapper.updateByPrimaryKeySelective(signInfo);
+	}
 
 }

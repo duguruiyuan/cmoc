@@ -494,7 +494,9 @@
 	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
 	INNER JOIN t_activity_info ai ON ai.`id` = po.`activity_id`
 	LEFT JOIN (
-	  SELECT COUNT(1) member, csi.`order_no` FROM t_child_sign_info csi GROUP BY csi.`order_no`
+	  SELECT COUNT(1) member, csi.`order_no` FROM t_child_sign_info csi 
+	  where csi.is_delete = 'N'
+	  GROUP BY csi.`order_no`
 	) cs ON po.`order_no` = cs.order_no 
 	WHERE po.`openid` = #{openid,jdbcType=VARCHAR}
 	<if test="orderNo != null">

@@ -31,7 +31,6 @@ public class ChildSignInfoVO implements Serializable {
 
     private String diseaseDesc;
     
-    @NotNull(message="紧急联系人不能为空")
     @Name
     private String emerName;
 

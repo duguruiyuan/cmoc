@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xuequ.cmoc.common.Configuration;
+import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.OrderStatusEnum;
@@ -362,4 +363,61 @@ public class CourseManageController extends BaseController{
         childSignInfoService.insertCourseSignNamelist(childList, orderId);
         return new RspResult(StatusEnum.SUCCESS);
     }
+	
+	/**
+	 * 根据编号查询名单信息
+	 * @param childId
+	 * @return
+	 */
+	@RequestMapping("namelist/query/{childId}")
+	@ResponseBody Object namelistQueryById(@PathVariable Integer childId) {
+		try {
+			ChildSignInfo childSignInfo = childSignInfoService.selectById(childId);
+			return new RspResult(StatusEnum.SUCCESS, childSignInfo);
+		} catch (Exception e) {
+			logger.error("--namelistQueryById error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	/**
+	 * 删除名单
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping("namelist/del")
+	@ResponseBody Object namelistDel(ChildSignInfo vo) {
+		try {
+			SysUser sysUser = (SysUser) request.getSession().getAttribute(Constants.APP_USER);
+			vo.setIsDelete("Y");
+			vo.setUpdateUserId(sysUser.getIdUser());
+			vo.setUpdater(sysUser.getUserName());
+			vo.setUpdateTime(new Date());
+			childSignInfoService.updateByPrimaryKey(vo);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--namelistDel error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	/**
+	 * 名单信息变更
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping("namelist/update")
+	@ResponseBody Object namelistUpdate(ChildSignInfo vo) {
+		try {
+			SysUser sysUser = (SysUser) request.getSession().getAttribute(Constants.APP_USER);
+			vo.setUpdateUserId(sysUser.getIdUser());
+			vo.setUpdater(sysUser.getUserName());
+			vo.setUpdateTime(new Date());
+			childSignInfoService.updateByPrimaryKey(vo);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--namelistUpdate error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
 }

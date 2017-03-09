@@ -57,6 +57,8 @@ public class ChildSignInfo implements Serializable {
     private String updater;
     
     private Date updateTime;
+    
+    private String isDelete;
 
     private static final long serialVersionUID = 1L;
 
@@ -274,6 +276,14 @@ public class ChildSignInfo implements Serializable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(String isDelete) {
+		this.isDelete = isDelete;
 	}
     
 }
