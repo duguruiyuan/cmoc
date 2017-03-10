@@ -102,7 +102,6 @@
 	bi.`status`, bi.`create_time`, bi.`order_no`, po.`product_type`,ci.`res_amount`,ci.`total_price`,
 	bi.is_phone_confirm, po.product_id,ci.course_name,ci.`course_type`
 	FROM t_child_sign_info bi 
-	INNER JOIN t_parent_info pa ON pa.`id` = bi.`parent_id`
 	INNER JOIN t_product_order po ON po.`order_no` = bi.`order_no`
 	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
 	WHERE bi.is_delete = 'N' and po.`product_type`='COURSE' 
@@ -417,4 +416,8 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <update id="updateEffectByOrderNo">
+  	update `t_child_sign_info` set is_effect = 1
+	where is_delete = 'N' and order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
 </mapper>

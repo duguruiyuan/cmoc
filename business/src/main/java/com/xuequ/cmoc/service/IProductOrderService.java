@@ -19,4 +19,6 @@ public interface IProductOrderService {
 	CourseSignOrderView selectCourseSignOrderByOrderId(Integer orderId);
 	
 	ProductOrder selectById(Integer id);
+	
+	int updateOrderConfirmPay(ProductOrder vo);
 }

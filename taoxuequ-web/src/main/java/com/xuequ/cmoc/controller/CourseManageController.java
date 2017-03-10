@@ -110,7 +110,7 @@ public class CourseManageController extends BaseController{
 				order.setOrderStatus("000");
 				order.setUpdateTime(new Date());
 				order.setPaySubmitTime(new Date());
-				productOrderService.updateById(order);
+				productOrderService.updateOrderConfirmPay(order);
 				CourseSignOrderView view = productOrderService.selectCourseSignOrderByOrderId(vo.getOrderId());
 				if(view != null) {
 					new WechatMsgCallback(PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_paySucessMsg"), 

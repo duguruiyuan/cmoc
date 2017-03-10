@@ -43,44 +43,46 @@
 				<label>填写联系电话</label>
 			</div>
 		</form>
-		<h3>选择支付方式</h3>
-		<div class="pay-type">
-			<div class="pay-item">
-	            <div class="pay-left">
-	                <img src="<%=basePath %>/images/unionPay.png" alt="">
-	            </div>
-	            <div class="pay-content">
-	                <div class="title">银行转账</div>
-	                <div class="description"></div>
-	            </div>
-	            <div class="mui-radio">
-	                <input type="radio" class="check" name="payType" value="ChinaPlay" checked="checked" id="js-unionPay">
-	            </div>
-		    </div> 	
-			<div class="pay-item">
-	            <div class="pay-left">
-	                <img src="<%=basePath %>/images/wechat.png" alt="">
-	            </div>
-	            <div class="pay-content">
-	                <div class="title">微信支付</div>
-	                <div class="description">适用于经常使用微信的同学</div>
-	            </div>
-	            <div class="mui-radio">
-	                <input type="radio" class="check" name="payType" value="WeiXin" id="js-wechat">
-	            </div>
+		<div style="display: none;">
+			<h3>选择支付方式</h3>
+			<div class="pay-type">
+				<div class="pay-item">
+		            <div class="pay-left">
+		                <img src="<%=basePath %>/images/unionPay.png" alt="">
+		            </div>
+		            <div class="pay-content">
+		                <div class="title">银行转账</div>
+		                <div class="description"></div>
+		            </div>
+		            <div class="mui-radio">
+		                <input type="radio" class="check" name="payType" value="ChinaPlay" checked="checked" id="js-unionPay">
+		            </div>
+			    </div> 	
+				<div class="pay-item">
+		            <div class="pay-left">
+		                <img src="<%=basePath %>/images/wechat.png" alt="">
+		            </div>
+		            <div class="pay-content">
+		                <div class="title">微信支付</div>
+		                <div class="description">适用于经常使用微信的同学</div>
+		            </div>
+		            <div class="mui-radio">
+		                <input type="radio" class="check" name="payType" value="WeiXin" id="js-wechat">
+		            </div>
+				</div>
+				<div class="pay-item">
+		            <div class="pay-left">
+		                <img src="<%=basePath %>/images/alipay.png" alt="">
+		            </div>
+		            <div class="pay-content">
+		                <div class="title">支付宝支付</div>
+		                <div class="description">适用于经常使用支付宝的同学</div>
+		            </div>
+		            <div class="mui-radio">
+		                <input type="radio" class="check" name="payType" value="ALiPay" id="js-alipay">
+		            </div>
+			    </div> 	
 			</div>
-			<div class="pay-item">
-	            <div class="pay-left">
-	                <img src="<%=basePath %>/images/alipay.png" alt="">
-	            </div>
-	            <div class="pay-content">
-	                <div class="title">支付宝支付</div>
-	                <div class="description">适用于经常使用支付宝的同学</div>
-	            </div>
-	            <div class="mui-radio">
-	                <input type="radio" class="check" name="payType" value="ALiPay" id="js-alipay">
-	            </div>
-		    </div> 	
 		</div>
 		<div style="height: 100px;padding: 10px 20px;">
 	            <input type="checkbox" checked="checked" id="checkAgree"/><a id="agreement" href="javascript:void(0)">《穿越广州报名协议》</a>
@@ -165,8 +167,8 @@
 			 		async : false,
 			 		success : function(data) {
 			 			if(data.code == '000') {
-			 				window.location.href = basePath + "/pay/wechatpay?" + data.data;
-			 				window.location.href = basePath + "/course/group/create?" + data.data;
+			 				//window.location.href = basePath + "/course/group/create?" + data.data;
+			 				window.location.href = basePath + "/course/group/customerPay?" + data.data;
 			 			}else {
 			 				mui.alert(data.msg,'消息提示');
 			 			}

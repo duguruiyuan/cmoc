@@ -38,4 +38,6 @@ public interface ChildSignInfoMapper {
     List<ChildSignInfo> selectListByOrderNo(String orderNo);
     
     ChildSignInfo selectByParam(@Param("orderNo")String orderNo, @Param("openid")String openid);
+    
+    int updateEffectByOrderNo(String orderNo);
 }

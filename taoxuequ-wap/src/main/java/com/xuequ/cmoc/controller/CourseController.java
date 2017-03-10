@@ -209,7 +209,7 @@ public class CourseController extends BaseController {
 			childInfo = childSignInfoService.selectById(childId);
 		}
 		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
-		CourseInfo courseInfo = courseService.selectByPrimaryKey(Integer.valueOf(productOrder.getProductId()));
+		CourseInfo courseInfo = courseService.selectByPrimaryKey(productOrder.getProductId());
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("childInfo", childInfo);
@@ -288,4 +288,13 @@ public class CourseController extends BaseController {
 		return "course/groupOrderList";
 	}
 	
+	@RequestMapping("group/customerPay")
+	public String groupCustomerPay(Model model) {
+		String orderNo = request.getParameter("orderNo");
+		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
+		ActivityInfo activityInfo = activityService.selectById(productOrder.getActivityId());
+		model.addAttribute("productOrder", productOrder);
+		model.addAttribute("activityInfo", activityInfo);
+		return "course/customerPay";
+	}
 }
