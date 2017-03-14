@@ -57,7 +57,7 @@
   	cs.child_mobile, cs.child_age, cs.child_sex, cs.is_disease, cs.disease_desc, cs.emer_name, 
   	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id
     from t_activity_child ac, t_child_sign_info cs 
-    where cs.id = ac.child_id and ac.is_delete = 'N' and
+    where cs.id = ac.child_id and ac.is_delete = 'N' and cs.is_delete = 'N' and 
 	ac.marine_id = #{marineId,jdbcType=INTEGER}
   </select>
   
@@ -69,7 +69,7 @@
   	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id, ai.activity_name, 
   	am.marine_name, ai.activity_num, ai.activity_type
   	from t_activity_child ac 
-  	inner join t_child_sign_info cs on ac.child_id = cs.id 
+  	inner join t_child_sign_info cs on ac.child_id = cs.id and cs.is_delete = 'N'
   	inner join t_activity_info ai on ac.activity_id = ai.id
   	inner join t_activity_marines am on am.id = ac.marine_id
     where ac.is_delete='N' and ac.id = #{id,jdbcType=INTEGER}
@@ -83,7 +83,7 @@
   	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id, ai.activity_name, 
   	cs.sign_resource, am.marine_name, ai.activity_num, ai.activity_type
   	from t_activity_child ac 
-  	inner join t_child_sign_info cs on ac.child_id = cs.id 
+  	inner join t_child_sign_info cs on ac.child_id = cs.id and cs.is_delete = 'N'
   	inner join t_activity_info ai on ac.activity_id = ai.id
   	inner join t_activity_marines am on am.id = ac.marine_id
     where ac.is_delete='N'
@@ -119,7 +119,8 @@
   	SELECT ac.id, ac.child_id, ac.child_img, ac.child_title, ac.child_comment, ac.activity_id, 
   		ac.marine_id, cs.`child_name` 
   	FROM t_activity_child ac, t_child_sign_info cs 
-	WHERE ac.child_id = cs.`id` AND ac.id = #{childId,jdbcType=INTEGER}
+	WHERE ac.child_id = cs.`id` and cs.is_delete = 'N' 
+	AND ac.id = #{childId,jdbcType=INTEGER}
   </select>
   
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ActivityChild" >

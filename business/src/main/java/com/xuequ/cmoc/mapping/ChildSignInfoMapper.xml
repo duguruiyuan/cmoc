@@ -26,6 +26,7 @@
   	<result column="status" property="status" jdbcType="VARCHAR" />
   	<result column="is_phone_confirm" property="isPhoneConfirm" jdbcType="VARCHAR" />
   	<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+  	<result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, child_idcard, child_name, child_mobile, child_age, child_sex, is_disease, disease_desc, child_height, child_height,
@@ -36,26 +37,28 @@
     select 
     <include refid="Base_Column_List" />
     from t_child_sign_info
-    where id = #{id,jdbcType=INTEGER}
+    where is_delete = 'N' and id = #{id,jdbcType=INTEGER}
   </select>
   
   <!-- 根据小孩姓名和紧急联系电话判断用户是否可以进行绑定 -->
   <select id="selectByChildNameMobile" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" /> 
 	from t_child_sign_info
-  	where is_effect = 1 and child_name = #{childName, jdbcType=VARCHAR}
+  	where is_effect = 1 and is_delete = 'N'
+  	and child_name = #{childName, jdbcType=VARCHAR}
   	and emer_mobile = #{emerMobile,jdbcType=VARCHAR}
   </select>
   
   <select id="selectCountByOrderNo" resultType="int">
-  	select count(1) from t_child_sign_info where order_no = #{orderNo, jdbcType=VARCHAR}
+  	select count(1) from t_child_sign_info 
+  	where is_delete = 'N' and order_no = #{orderNo, jdbcType=VARCHAR}
   </select>
   
   <select id="selectNonStartingList" resultMap="BaseResultMap" parameterType="com.xuequ.cmoc.model.ChildSignInfo">
   	select 
     <include refid="Base_Column_List" />
     from t_child_sign_info
-    where is_effect = 1 and status = '001'
+    where is_effect = 1 and status = '001' and is_delete = 'N'
     <if test="signResource != null">
     	and sign_resource = #{signResource,jdbcType=INTEGER}
     </if> 
@@ -66,19 +69,22 @@
   
   <select id="selectFamilyNo" resultType="String" parameterType="com.xuequ.cmoc.model.ChildSignInfo">
   	select family_no from t_child_sign_info
-    where child_idcard = #{childIdcard,jdbcType=VARCHAR} or 
-    emer_mobile = #{emerMobile,jdbcType=VARCHAR}
+    where is_delete = 'N' and 
+    (child_idcard = #{childIdcard,jdbcType=VARCHAR} or 
+    emer_mobile = #{emerMobile,jdbcType=VARCHAR})
     limit 1
   </select>
   
   <select id="selectFamilyNoByOrderNo" resultType="java.lang.String">
-  	select family_no from t_child_sign_info where order_no = #{orderNo,jdbcType=VARCHAR}
+  	select family_no from t_child_sign_info 
+  	where is_delete = 'N' and order_no = #{orderNo,jdbcType=VARCHAR}
   	limit 1
   </select>
   
   <select id="selectListByOrderNo" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" />
-    from t_child_sign_info where order_no = #{orderNo,jdbcType=VARCHAR}
+    from t_child_sign_info 
+    where is_delete = 'N' and order_no = #{orderNo,jdbcType=VARCHAR}
   </select>
   
   <resultMap id="SignBaseResultMap" extends="BaseResultMap" type="com.xuequ.cmoc.view.ChildSignView" >
@@ -96,10 +102,10 @@
 	bi.`status`, bi.`create_time`, bi.`order_no`, po.`product_type`,ci.`res_amount`,ci.`total_price`,
 	bi.is_phone_confirm, po.product_id,ci.course_name,ci.`course_type`
 	FROM t_child_sign_info bi 
-	INNER JOIN t_parent_info pa ON pa.`id` = bi.`parent_id`
 	INNER JOIN t_product_order po ON po.`order_no` = bi.`order_no`
 	INNER JOIN t_course_info ci ON po.`product_id` = ci.`id`
-	WHERE po.`product_type`='COURSE' AND po.`order_status` = '000' AND bi.`is_effect` = 1
+	WHERE bi.is_delete = 'N' and po.`product_type`='COURSE' 
+	AND po.`order_status` = '000' AND bi.`is_effect` = 1
 	<if test="params.productId != null">
 		and bi.product_id = #{params.productId,jdbcType=INTEGER}
 	</if>
@@ -134,7 +140,7 @@
     select
   	<include refid="Base_Column_List" />
     from t_child_sign_info t
-    where order_no = #{orderNo,jdbcType=VARCHAR}
+    where is_delete = 'N' AND order_no = #{orderNo,jdbcType=VARCHAR}
     and exists (
     	select 1 from t_parent_info where id = t.`parent_id` 
     	and openid = #{openid,jdbcType=VARCHAR}
@@ -373,6 +379,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="isDelete != null">
+      	is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -402,8 +411,13 @@
       order_no = #{orderNo,jdbcType=VARCHAR},
       update_user_id = #{updateUserId,jdbcType=VARCHAR},
       updater = #{updater,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <update id="updateEffectByOrderNo">
+  	update `t_child_sign_info` set is_effect = 1
+	where is_delete = 'N' and order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.ProductOrderMapper;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.page.Page;
@@ -16,6 +17,8 @@ public class ProductOrderServiceImpl implements IProductOrderService {
 
 	@Autowired
 	private ProductOrderMapper productOrderMapper;
+	@Autowired
+	private ChildSignInfoMapper childSignInfoMapper;
 	
 	@Override
 	public ProductOrder selectByOrderNo(String orderNO) {
@@ -45,6 +48,12 @@ public class ProductOrderServiceImpl implements IProductOrderService {
 	@Override
 	public ProductOrder selectById(Integer id) {
 		return productOrderMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateOrderConfirmPay(ProductOrder vo) {
+		productOrderMapper.updateByPrimaryKeySelective(vo);
+		return childSignInfoMapper.updateEffectByOrderNo(vo.getOrderNo());
 	}
 
 }

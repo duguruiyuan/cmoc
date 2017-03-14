@@ -63,7 +63,7 @@
   <select id="selectCountByOpenidOrderNo" resultType="int">
   	SELECT COUNT(1) FROM t_child_sign_info csi
 	INNER JOIN t_parent_info po ON csi.`parent_id` = po.`id`
-	WHERE po.`openid` = #{openid,jdbcType=VARCHAR} 
+	WHERE csi.is_delete = 'N' and po.`openid` = #{openid,jdbcType=VARCHAR} 
 	AND csi.`order_no` = #{orderNo,jdbcType=VARCHAR}
   </select>
   
@@ -82,7 +82,7 @@
   	SELECT ai.`activity_name`, ai.`activity_num`, ai.`start_date`, ai.end_date,
   	ai.id activity_id, am.`marine_name`, am.id marine_id, cs.`child_name` 
   	FROM t_parent_info pa
-	INNER JOIN t_child_sign_info cs ON cs.family_no = pa.family_no
+	INNER JOIN t_child_sign_info cs ON cs.family_no = pa.family_no and cs.is_delete = 'N'
 	INNER JOIN t_activity_child ac ON ac.child_id = cs.id
 	INNER JOIN t_activity_marines am ON am.`id` = ac.`marine_id`
 	INNER JOIN t_activity_info ai ON ai.`id` = am.`activity_id`
@@ -109,7 +109,8 @@
   	SELECT <include refid="Base_Column_List" />, IFNULL(buy_count,0) buy_count 
   	FROM t_parent_info p
 	LEFT JOIN (
-	  SELECT COUNT(1) buy_count, parent_id FROM t_child_sign_info WHERE is_effect = 1 GROUP BY parent_id
+	  SELECT COUNT(1) buy_count, parent_id FROM t_child_sign_info 
+	  WHERE is_delete = 'N' and is_effect = 1 GROUP BY parent_id
 	) c ON p.`id` = c.parent_id
 	WHERE p.`is_delete` = 'N'
 	<if test="params.emerName != null">

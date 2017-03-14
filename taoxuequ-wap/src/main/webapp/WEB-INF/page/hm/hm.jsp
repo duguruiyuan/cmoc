@@ -15,6 +15,7 @@
 <title>透明人注册[陶学趣]</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
+<script src="<%=basePath %>/js/plugins/wechat-config.js?v=1.2.1" type="text/javascript" charset="utf-8"></script>
 <body>
 	<div class="regTMHeader">
 		<img src="${userInfo.headimgurl }" class="regTMPic"><br>
@@ -101,7 +102,6 @@
 		</div>
 	</c:if>
 	<script type="text/javascript">
-		initSnsToken();
 		$(function(){
 			$("#regMT-btn").click(function(){
 				var arr = ["hmName","hmMobile","idCard"];
@@ -151,11 +151,6 @@
 			 	});
 			})
 		})
-		function initSnsToken() {
-			var snsToken = '${snsToken}';
-			setAccessToken(snsToken);
-		}
-
 		//拍照或从手机相册中选图接口
 	       function wxChooseImage() {
 	           wx.chooseImage({

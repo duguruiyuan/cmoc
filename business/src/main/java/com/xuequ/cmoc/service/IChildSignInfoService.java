@@ -18,4 +18,6 @@ public interface IChildSignInfoService {
 	ChildSignInfo selectByParam(String orderNo, String openid);
 	
 	int insertCourseSignNamelist(List<ChildSignInfo> childList, Integer orderId);
+	
+	int updateByPrimaryKey(ChildSignInfo signInfo);
 }
