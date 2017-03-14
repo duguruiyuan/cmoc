@@ -123,8 +123,9 @@ public class PushMenuService {
 		
 		SubButtonMenu subButtonMenu002 = new SubButtonMenu();
 		subButtonMenu002.setName("校本案例");
-		subButtonMenu002.setType("click");
-		subButtonMenu002.setKey("rselfmenu_3_1");
+		subButtonMenu002.setType("view");
+//		subButtonMenu002.setKey("rselfmenu_3_1");
+		subButtonMenu002.setUrl("http://mp.weixin.qq.com/mp/homepage?__biz=MzI2NDQ5MDE1NQ==&hid=4&sn=a72b4cdd737b39f38f422d31d5900695#wechat_redirect");
 		subButtonMenus01.add(subButtonMenu002);
 		
 		SubButtonMenu subButtonMenu003 = new SubButtonMenu();
@@ -176,7 +177,7 @@ public class PushMenuService {
 	
 	private static void pushMenu(MenuList menuList) {
 		try {
-			String acc = "GMs0UihDEQIs9zMZ2JR3Omrzu40QSMmKOHz5yjMJkl_vc70594Li045X--Y-zoGTi7v4OegF4nYzeL0_Vza2JAI3ShIRDQ6eaN17DLmOe7pJzeYV_XksQzC-BVJh27o3FODeAGABKZ";//WechatUtils.getWechatModel().getAccessToken();
+			String acc = "Cb3qMzpU5Zp3cpkBKxddFwB4ISxMZAbtIDm5RH-TT1J9K3uWB9YLRn6YoVf85JnfsonqF-leyBZe8r18eQumqkizzQf38DO4UeGohMtWFjwfxTGsLeBwIGnbKR1pY_g2FTAfACALZG";//WechatUtils.getWechatModel().getAccessToken();
 			String json = JSONObject.toJSONString(menuList);
 			String url = TextUtil.format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}", acc);
 			String result = HttpClientUtils.postStringJosn(url, json);
