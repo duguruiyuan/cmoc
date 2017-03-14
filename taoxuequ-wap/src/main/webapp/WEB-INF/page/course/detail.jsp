@@ -27,90 +27,93 @@
 		<div class="course-title" id="course-name">
 			${course.courseName }
 		</div>
-		<c:choose>
-        	<c:when test="${course.signWay == 1 }">
-        	 <div class="pl10">
-        		 	课程价格：<span class="price">¥<label>${course.totalPrice }</label> 组/5人</span>
-          	 </div>
-          	 <div class="clearfix mt10 dbb">
-          	 	 <p><i class="fa fa-universal-access" style="font-size: 17px;color: #E95800;"></i> 适合7~12岁儿童参加</p>
-                  <p><i class="fa fa-clock-o" style="font-size: 18px;color: #E95800;"></i>
-	                  <c:choose>
-	                  	<c:when test="${schuduList.size() == 0 }">暂无场次可选</c:when>
-	                  	<c:otherwise>有${schuduList.size()}个场次可选</c:otherwise>
-	                  </c:choose>
-                  </p>
-                  <p><i class="fa fa-map-marker" style="font-size: 18px;color: #E95800;"></i> ${course.addr }</p>
-              </div>
-              <div class="dbb" id="cal-change">
-              	<div class="fem12 lh25"><i class="fa fa-list-ol"></i> 选期参与</div>
-	                <c:if test="${schuduList.size() == 0 }">
-	                	<div class="cal-none">暂无排期活动</div>
-	                </c:if>
-              		<c:forEach var="itm" items="${schuduList }">
-              			<c:choose>
-              				<c:when test="${itm.buyCount * 5 >= itm.activityPeoples || itm.isFull == 'Y'}">
-              					<div class="cal-content full" data-pid="${course.id }" data-aid="${itm.activityId }">
-				              		<div class="cal-left">
-				              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
-										<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
-										<span>已报名<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />组</span>
+		<c:if test="${course.shelves != 1 }"><p style="font-size: 1.6em; color: #C42E2E;margin-left: 10px;">非常抱歉，课程已下架</p></c:if>
+		<c:if test="${course.shelves == 1 }">
+			<c:choose>
+	        	<c:when test="${course.signWay == 1 }">
+	        	 <div class="pl10">
+	        		 	课程价格：<span class="price">¥<label>${course.totalPrice }</label> 组/5人</span>
+	          	 </div>
+	          	 <div class="clearfix mt10 dbb">
+	          	 	 <p><i class="fa fa-universal-access" style="font-size: 17px;color: #E95800;"></i> 适合7~12岁儿童参加</p>
+	                  <p><i class="fa fa-clock-o" style="font-size: 18px;color: #E95800;"></i>
+		                  <c:choose>
+		                  	<c:when test="${schuduList.size() == 0 }">暂无场次可选</c:when>
+		                  	<c:otherwise>有${schuduList.size()}个场次可选</c:otherwise>
+		                  </c:choose>
+	                  </p>
+	                  <p><i class="fa fa-map-marker" style="font-size: 18px;color: #E95800;"></i> ${course.addr }</p>
+	              </div>
+	              <div class="dbb" id="cal-change">
+	              	<div class="fem12 lh25"><i class="fa fa-list-ol"></i> 选期参与</div>
+		                <c:if test="${schuduList.size() == 0 }">
+		                	<div class="cal-none">暂无排期活动</div>
+		                </c:if>
+	              		<c:forEach var="itm" items="${schuduList }">
+	              			<c:choose>
+	              				<c:when test="${itm.buyCount * 5 >= itm.activityPeoples || itm.isFull == 'Y'}">
+	              					<div class="cal-content full" data-pid="${course.id }" data-aid="${itm.activityId }">
+					              		<div class="cal-left">
+					              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
+											<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
+											<span>已报名<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />组</span>
+					              		</div>
+					              		<div class="cal-right">
+					              			<span>已满员</span><br/>
+					              			<span></span><br/>
+					              			<span></span>
+					              		</div>
 				              		</div>
-				              		<div class="cal-right">
-				              			<span>已满员</span><br/>
-				              			<span></span><br/>
-				              			<span></span>
+	              				</c:when>
+	              				<c:otherwise>
+	              					<div class="cal-content" data-pid="${course.id }" data-aid="${itm.activityId }">
+					              		<div class="cal-left">
+					              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
+											<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
+											<span>已报名${itm.buyCount }组</span>
+					              		</div>
+					              		<div class="cal-right">
+					              			<span>[剩余<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />队]</span><br/>
+					              			<span></span><br/>
+					              			<span></span>
+					              		</div>
 				              		</div>
-			              		</div>
-              				</c:when>
-              				<c:otherwise>
-              					<div class="cal-content" data-pid="${course.id }" data-aid="${itm.activityId }">
-				              		<div class="cal-left">
-				              			<span>${itm.activityNum } 【${itm.activityName }】</span><br/>
-										<span><fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></span><br/>
-										<span>已报名${itm.buyCount }组</span>
-				              		</div>
-				              		<div class="cal-right">
-				              			<span>[剩余<fmt:parseNumber integerOnly="true" value="${itm.activityPeoples/5 + (itm.activityPeoples%5 == 0 ? 0 : 1) - itm.buyCount }" />队]</span><br/>
-				              			<span></span><br/>
-				              			<span></span>
-				              		</div>
-			              		</div>
-              				</c:otherwise>
-              			</c:choose>
-              		</c:forEach>
-              </div>
-        	</c:when>
-        	<c:otherwise>
-	         	<div class="wrapper">
-		          	<div class="box">
-			            <div class="f_le">
-			               	 课程价格：<span class="price">¥<label>${course.totalPrice }</label><c:if test="${course.signWay == 1 }"> 组/5人</c:if></span>
-			            </div>
-			            <div class="clear"></div>
-			        </div>
-			        <div class="barT">
-			          	<ul>
-			              	<li>
-			                   <span class="price_gray">¥<label>${course.totalPrice }</label></span>
-			                   <br> 课程价格
-			                   <i class="split"></i>
-			               </li>
-			             		<li>
-			                   <span class="price_gray">¥<label>${course.resAmount }</label></span>
-			                   <br> 预约金
-			                   <i class="split"></i>
-			               </li>
-			               <li>
-			                   <span class="price_gray"><label>${course.peoples }</label>人</span>
-			                   <br> 已预约家长
-			                   <i class="split"></i>
-			               </li>
-			             </ul>
-			         </div>
-	       		</div>
-        	</c:otherwise>
-        </c:choose>
+	              				</c:otherwise>
+	              			</c:choose>
+	              		</c:forEach>
+	              </div>
+	        	</c:when>
+	        	<c:otherwise>
+		         	<div class="wrapper">
+			          	<div class="box">
+				            <div class="f_le">
+				               	 课程价格：<span class="price">¥<label>${course.totalPrice }</label><c:if test="${course.signWay == 1 }"> 组/5人</c:if></span>
+				            </div>
+				            <div class="clear"></div>
+				        </div>
+				        <div class="barT">
+				          	<ul>
+				              	<li>
+				                   <span class="price_gray">¥<label>${course.totalPrice }</label></span>
+				                   <br> 课程价格
+				                   <i class="split"></i>
+				               </li>
+				             		<li>
+				                   <span class="price_gray">¥<label>${course.resAmount }</label></span>
+				                   <br> 预约金
+				                   <i class="split"></i>
+				               </li>
+				               <li>
+				                   <span class="price_gray"><label>${course.peoples }</label>人</span>
+				                   <br> 已预约家长
+				                   <i class="split"></i>
+				               </li>
+				             </ul>
+				         </div>
+		       		</div>
+	        	</c:otherwise>
+	        </c:choose>
+	    </c:if>
 		<div class="course-tab">
 			<ul>
 				<li class="cur">课程详情</li>
@@ -139,14 +142,16 @@
 	            <a href="<%=basePath %>/course/list" class="wbl-btn btn-border " id="newest">
 	               	 更多课程
 	            </a>
-	            <c:choose>
-        			<c:when test="${course.signWay == 1 }">
-        				<a href="javascript:void(0)" class="wbl-btn btn-go" id="submit"><label>预约报名</label><i class="iconfont icon"></i></a>
-        			</c:when>
-        			<c:otherwise>
-        				<a href="<%=basePath %>/course/sign/${course.id}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
-        			</c:otherwise>
-	            </c:choose>
+	            <c:if test="${course.shelves == 1 }">
+		            <c:choose>
+	        			<c:when test="${course.signWay == 1 }">
+	        				<a href="javascript:void(0)" class="wbl-btn btn-go" id="submit"><label>预约报名</label><i class="iconfont icon"></i></a>
+	        			</c:when>
+	        			<c:otherwise>
+	        				<a href="<%=basePath %>/course/sign/${course.id}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
+	        			</c:otherwise>
+		            </c:choose>
+		       </c:if>
 	        </div>
 	    </footer>
 	    <script type="text/javascript">
@@ -213,8 +218,8 @@
 	                  		}
 	                  		for(var i = 0; i < result.length; i++){
 	    						str += '<li style="display: list-item;">'+
-	    			                        '<img src="${config.imgUrl}'+result[i].headImg +  
-	    			                        '"/><h4 class="nick-name">'+result[i].name+
+	    			                        '<img src="'+result[i].headImg +  
+	    			                        '"/><h4 class="nick-name">'+result[i].parentName+
 	    			                        '<span class="type pl15" style="display: inline;padding-left:10px;">成功预约</span></h4>'+
 	    			                        '<span class="price">¥<label style="display: inline;">'+result[i].resAmount+
 	    			                        '</label></span></li>';
