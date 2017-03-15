@@ -1,6 +1,7 @@
 var activityQueryUrl = basePath + "/activity/json/query";
 var addUpdateActivityUrl = basePath + "/activity/json/addUpdate";
 var queryByIdUrl = basePath + "/activity/json/queryById";
+var delByIdUrl = basePath + "/activity/json/delById";
 
 var dataGrid;
 $(function() {
@@ -42,7 +43,11 @@ function loadData() {
 			title : '操作',
 			align : 'center',
 			formatter : function(value, row, index) {
-				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">编辑</button>', row.id);
+				var str = "";
+				if(row.startDate > (new Date())) {
+					str += $.formatString('<button  type="button" class="btn btn-danger btn-xs" style="margin:4px 4px;" onclick="delActivity(\'{0}\');">删除</button>', row.id);
+				}
+				str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">编辑</button>', row.id);
 				str += $.formatString('<button type="button" class="btn btn-info btn-xs" style="margin:4px 4px;" onclick="uploadNamelist({0});">名单上传</button>', index);
 				return str;
 			}
@@ -201,6 +206,33 @@ var cancelSelect = function(){
 
 function addRole() {
 	loadForm(null);
+}
+
+function delActivity(id) {
+	$.messager.confirm('系统提示', '确定删除此活动吗？', function(r) {
+		if (r) {
+			$.ajax({
+		 		url : delByIdUrl,
+		 		type : "post",
+		 		data : {
+		 			id : id
+		 		},
+		 		dataType : "json",
+		 		async : false,
+		 		success : function(data) {
+		 			if(data.code == '000') {
+		 				search("searchForm")
+		 			}else {
+		 				$.messager.alert('系统提示', data.msg, 'error');
+		 			}
+		 		},
+		 		error : function() {
+					$.messager.progress('close');
+					$.messager.alert('系统提示', '操作异常', 'error');
+				},
+		 	});
+		}
+	});
 }
 
 function updateActivity(id) {

@@ -10,7 +10,7 @@
 <link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/bootstrap-theme.css" rel="stylesheet">
 <link href="<%=basePath%>/js/plugin/bootstrap-3.3.5-dist/css/fileinput.css" rel="stylesheet">
 
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link href="<%=basePath %>/css/font-awesome.min.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/reset.css"/>
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/main.css"/>

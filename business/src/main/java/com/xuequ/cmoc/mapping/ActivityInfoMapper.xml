@@ -100,7 +100,7 @@
     FROM t_activity_info a
     inner join t_course_info b on a.product_id = b.id
 	LEFT JOIN (
-	  SELECT COUNT(1) enter_peoples, activity_id FROM t_activity_child WHERE is_delete = 'n' GROUP BY activity_id
+	  SELECT COUNT(1) enter_peoples, activity_id FROM t_activity_child WHERE is_delete = 'N' GROUP BY activity_id
 	) f ON a.id = f.activity_id
 	WHERE a.is_delete = 'N'
     <if test="params.activityType != null">

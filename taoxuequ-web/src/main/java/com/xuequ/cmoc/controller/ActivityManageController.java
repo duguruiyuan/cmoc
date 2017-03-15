@@ -428,4 +428,17 @@ public class ActivityManageController extends BaseController{
 		return sb.toString();
 	}
 	
+	@RequestMapping("json/delById")
+	@ResponseBody Object delById(Integer id) {
+		try {
+			ActivityInfo info = new ActivityInfo();
+			info.setId(id);
+			info.setIsDelete("Y");
+			activityService.updateByPrimaryKey(info);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--delById, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
 }
