@@ -321,6 +321,9 @@
       <if test="activityImgUrl != null" >
         activity_img_url = #{activityImgUrl,jdbcType=VARCHAR},
       </if>
+      <if test="qrcodeUrl != null" >
+     	 qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
       <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
       </if>
