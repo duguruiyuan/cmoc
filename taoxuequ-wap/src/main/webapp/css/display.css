@@ -667,6 +667,10 @@ select.regMT-select{
 	font-size: 14px;
 }
 .code-pic img{
+    width: 200px;
+    height: 185px;
+}
+.code-pic1 img{
     width: 280px;
     height: 185px;
 }

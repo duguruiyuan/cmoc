@@ -242,7 +242,7 @@
 				$(".support").on("click", function(){
 					var str = '<div class="code">\
 						<div class="code-inner" style="height: 450px;width: 280px;">\
-							<div class="code-title" style="height: 40px;line-height: 40px;">支持我们</div><div class="code-pic">\
+							<div class="code-title" style="height: 40px;line-height: 40px;">支持我们</div><div class="code-pic1">\
 							<img style="width: 100%" src="' + $("#marineImg").val() + '"/></div>\
 							<div class="qr-group">\
 								<img style="width: 50%;float:left;padding: 10px 0px 10px 20px;" src="' + $("#supportQrcodeUrl").val()+ '">\
