@@ -2,6 +2,7 @@ package com.xuequ.cmoc.controller;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -431,9 +432,13 @@ public class ActivityManageController extends BaseController{
 	@RequestMapping("json/delById")
 	@ResponseBody Object delById(Integer id) {
 		try {
+			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
 			ActivityInfo info = new ActivityInfo();
 			info.setId(id);
 			info.setIsDelete("Y");
+			info.setUpdaterUserId(sysUser.getIdUser());
+			info.setUpdater(sysUser.getUserName());
+			info.setUpdaterTime(new Date());
 			activityService.updateByPrimaryKey(info);
 			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {
