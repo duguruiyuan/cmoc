@@ -1,5 +1,6 @@
 var activityQueryUrl = basePath + "/activity/json/hm/query";
 var hmSignJudgeUrl = basePath + "/activity/json/hmSign/judge";
+var delActivityHmUrl = basePath + "/activity/json/delActivityHm";
 
 var dataGrid;
 $(function() {
@@ -29,7 +30,11 @@ function loadData() {
 			title : '操作',
 			align : 'center',
 			formatter : function(value, row, index) {
-				return $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="judgeDialog(\'{0}\');">活动评价</button>', index);
+				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="judgeDialog(\'{0}\');">活动评价</button>', index);
+				if(row.startDate > (new Date())) {
+					str += $.formatString('<button  type="button" class="btn btn-danger btn-xs" style="margin:4px 4px;" onclick="delActivityHm(\'{0}\');">删除</button>', row.id);
+				}
+				return str;
 			}
 		}, {
 			field : 'activityId',
@@ -112,6 +117,34 @@ function search(formId){
 function closeFormPanel(formId){
 	cleanFormPanel(formId);
 	confirmDialog.dialog("close");
+}
+
+function delActivityHm(id) {
+	$.messager.confirm('系统提示', '确定删除这个绑定活动透明人吗？', function(r) {
+		if (r) {
+			$.ajax({
+		 		url : delActivityHmUrl,
+		 		type : "post",
+		 		data : {
+		 			id : id
+		 		},
+		 		dataType : "json",
+		 		async : false,
+		 		success : function(data) {
+		 			if(data.code == '000') {
+		 				$.messager.alert('系统提示', '删除成功', 'info');
+		 				search("searchForm");
+		 			}else {
+		 				$.messager.alert('系统提示', '删除失败', 'error');
+		 			}
+		 		},
+		 		error : function() {
+					$.messager.progress('close');
+					$.messager.alert('系统提示', '操作异常', 'error');
+				}
+			});
+		}
+	});
 }
 
 /**

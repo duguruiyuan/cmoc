@@ -26,4 +26,6 @@ public interface IActivityChildService {
 	ActivityChild selectByPrimaryKey(Integer id);
 	
 	ActivityChildView selectByChildId(Integer childId);
+	
+	int updateActivityByChildId(ActivityChild child);
 }

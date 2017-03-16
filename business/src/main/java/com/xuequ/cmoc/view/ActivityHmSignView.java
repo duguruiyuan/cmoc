@@ -1,6 +1,6 @@
 package com.xuequ.cmoc.view;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.xuequ.cmoc.model.ActivityHmSign;
 

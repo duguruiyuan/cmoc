@@ -1,6 +1,7 @@
 var activityQueryUrl = basePath + "/activity/json/namelist/query";
 var addUpdateActivityUrl = basePath + "/activity/json/namelist/addUpdate";
 var queryByIdUrl = basePath + "/activity/json/namelist/queryById";
+var delByIdUrl = basePath + "/activity/json/namelist/delById";
 
 var dataGrid;
 $(function() {
@@ -31,6 +32,9 @@ function loadData() {
 			align : 'center',
 			formatter : function(value, row, index) {
 				var str = $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="updateActivity(\'{0}\');">编辑</button>', row.id);
+				if(row.startDate > (new Date())) {
+					str += $.formatString('<button  type="button" class="btn btn-danger btn-xs" style="margin:4px 4px;" onclick="delNamelist(\'{0}\');">删除</button>', row.id);
+				}
 				return str;
 			}
 		}, {
@@ -82,6 +86,11 @@ function loadData() {
 		}, {
 			field : 'childName',
 			title : '小孩姓名',
+			align : "center",
+			resizable : true
+		}, {
+			field : 'childIdcard',
+			title : '小孩身份证',
 			align : "center",
 			resizable : true
 		}, {
@@ -162,6 +171,34 @@ function addRole() {
 	loadForm(null);
 }
 
+function delNamelist(id) {
+	$.messager.confirm('系统提示', '确定删除这条名单吗？', function(r) {
+		if (r) {
+			$.ajax({
+		 		url : delByIdUrl,
+		 		type : "post",
+		 		data : {
+		 			id : id
+		 		},
+		 		dataType : "json",
+		 		async : false,
+		 		success : function(data) {
+		 			if(data.code == '000') {
+		 				$.messager.alert('系统提示', '删除成功', 'info');
+		 				search("searchForm");
+		 			}else {
+		 				$.messager.alert('系统提示', '删除失败', 'error');
+		 			}
+		 		},
+		 		error : function() {
+					$.messager.progress('close');
+					$.messager.alert('系统提示', '操作异常', 'error');
+				}
+			});
+		}
+	});
+}
+
 function updateActivity(id) {
 	$.ajax({
  		url : queryByIdUrl,
@@ -180,10 +217,11 @@ function updateActivity(id) {
 			$("#addForm #marineName").val(data.marineName);
 			$("#addForm #childName").val(data.childName);
 			$("#addForm #childTitle").val(data.childTitle);
-			$("#addForm #fatherName").val(data.fatherName);
-			$("#addForm #fatherMobile").val(data.fatherMobile);
-			$("#addForm #motherName").val(data.motherName);
-			$("#addForm #motherMobile").val(data.motherMobile);
+			$("#addForm #emerName").val(data.emerName);
+			$("#addForm #emerMobile").val(data.emerMobile);
+			$("#addForm #childIdcard").val(data.childIdcard);
+			$("#addForm #childSex").val(data.childSex);
+			$("#addForm #childAge").val(data.childAge);
 			loadForm(1);
  		}
  	});
@@ -229,19 +267,24 @@ function validator() {
 				required : true,
 				maxlength : 40
 			},
+			emerMobile : {
+				required : true,
+				isPhone : true
+			},
 			childName : {
 				required : true,
 				maxlength : 40
 			},
+			childIdcard : {
+				required : true,
+				isIdcard : true
+			},
+			childAge : {
+				number : true
+			},
 			childTitle : {
 				required : true,
 				maxlength : 40
-			},
-			fatherMobile : {
-				number : true
-			},
-			motherMobile : {
-				number : true
 			}
 		},
 		submitHandler : function(form) {

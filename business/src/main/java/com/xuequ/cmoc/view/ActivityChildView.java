@@ -1,5 +1,7 @@
 package com.xuequ.cmoc.view;
 
+import java.util.Date;
+
 import com.xuequ.cmoc.model.ActivityChild;
 
 public class ActivityChildView extends ActivityChild {
@@ -41,6 +43,8 @@ public class ActivityChildView extends ActivityChild {
 	private String activityNum;
 	
 	private String activityType;
+	
+	private Date startDate;
 
 	public String getChildIdcard() {
 		return childIdcard;
@@ -184,6 +188,14 @@ public class ActivityChildView extends ActivityChild {
 
 	public void setActivityType(String activityType) {
 		this.activityType = activityType;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	
 	

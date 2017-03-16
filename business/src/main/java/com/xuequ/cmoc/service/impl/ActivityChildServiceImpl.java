@@ -47,6 +47,11 @@ public class ActivityChildServiceImpl implements IActivityChildService {
 			ChildSignInfo childSignInfo = new ChildSignInfo();
 			childSignInfo.setId(view.getChildId());
 			childSignInfo.setChildName(view.getChildName());
+			childSignInfo.setChildAge(view.getChildAge());
+			childSignInfo.setChildSex(view.getChildSex());
+			childSignInfo.setChildIdcard(view.getChildIdcard());
+			childSignInfo.setEmerMobile(view.getEmerMobile());
+			childSignInfo.setEmerName(view.getEmerName());
 			childSignInfo.setUpdateTime(new Date());
 			childSignInfoMapper.updateByPrimaryKeySelective(childSignInfo);
 		}
@@ -68,5 +73,12 @@ public class ActivityChildServiceImpl implements IActivityChildService {
 	public ActivityChildView selectByChildId(Integer childId) {
 		return activityChildMapper.selectChildByChildId(childId);
 	}
+
+	@Override
+	public int updateActivityByChildId(ActivityChild child) {
+		return activityChildMapper.updateByPrimaryKeySelective(child);
+	}
+
+
 
 }

@@ -49,6 +49,7 @@
     <result column="activity_num" property="activityNum" jdbcType="VARCHAR" />
     <result column="marine_name" property="marineName" jdbcType="VARCHAR" />
     <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <select id="selectListByMarineId" resultMap="ChildBaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -81,7 +82,7 @@
   	ac.creater_user_id, ac.creater, ac.create_time, cs.child_idcard, cs.child_name, 
   	cs.child_mobile, cs.child_age, cs.child_sex, cs.is_disease, cs.disease_desc, cs.emer_name, 
   	cs.emer_mobile, cs.city, cs.family_no, cs.product_id, cs.parent_id, ai.activity_name, 
-  	cs.sign_resource, am.marine_name, ai.activity_num, ai.activity_type
+  	cs.sign_resource, am.marine_name, ai.activity_num, ai.activity_type, ai.start_date
   	from t_activity_child ac 
   	inner join t_child_sign_info cs on ac.child_id = cs.id and cs.is_delete = 'N'
   	inner join t_activity_info ai on ac.activity_id = ai.id

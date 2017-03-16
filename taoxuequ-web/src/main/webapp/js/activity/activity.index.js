@@ -297,7 +297,8 @@ function uploadInit1() {
 		if(data.response.code == '000') {
 			$.messager.alert('系统提示', data.filenames.toString() + "上传成功!", 'info');
 		}else {
-			$.messager.alert('系统提示', data.filenames.toString() + "上传失败：" + data.response.msg, 'info');
+			var datamsg = data.response.data == null ? '' : ": " + data.response.data;
+			$.messager.alert('系统提示', data.filenames.toString() + "上传" + data.response.msg + datamsg, 'info');
 		}
 	});
 }

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.xuequ.cmoc.validate.Idcard;
 import com.xuequ.cmoc.validate.Mobile;
@@ -17,14 +18,17 @@ public class ChildSignInfoVO implements Serializable {
 	private Integer rows;
 	
 	@NotNull(message="小孩身份证不能为空")
+	@NotEmpty(message="小孩身份证不能为空")
 	@Idcard
 	private String childIdcard;
 
 	@NotNull(message="小孩姓名不能为空")
+	@NotEmpty(message="小孩姓名不能为空")
 	@Name
     private String childName;
 
-	@NotNull(message="小孩姓名性别为空")
+	@NotNull(message="小孩姓名性别不能为空")
+	@NotEmpty(message="小孩姓名性别不能为空")
     private String childSex;
 
     private String isDisease;
@@ -35,6 +39,7 @@ public class ChildSignInfoVO implements Serializable {
     private String emerName;
 
     @NotNull(message="紧急联系电话不能为空")
+    @NotEmpty(message="紧急联系电话不能为空")
     @Mobile
     private String emerMobile;
 
@@ -55,7 +60,7 @@ public class ChildSignInfoVO implements Serializable {
 	}
 
 	public String getChildName() {
-		return childName;
+		return StringUtils.isNotBlank(childName) ? childName : null;
 	}
 
 	public void setChildName(String childName) {
@@ -63,7 +68,7 @@ public class ChildSignInfoVO implements Serializable {
 	}
 
 	public String getChildSex() {
-		return childSex;
+		return StringUtils.isNotBlank(childSex) ? childSex : null;
 	}
 
 	public void setChildSex(String childSex) {
@@ -77,7 +82,7 @@ public class ChildSignInfoVO implements Serializable {
 	}
 
 	public String getIsDisease() {
-		return isDisease;
+		return StringUtils.isNotBlank(isDisease) ? isDisease : null;
 	}
 
 	public void setIsDisease(String isDisease) {
@@ -91,7 +96,7 @@ public class ChildSignInfoVO implements Serializable {
 	}
 
 	public String getDiseaseDesc() {
-		return diseaseDesc;
+		return StringUtils.isNotBlank(diseaseDesc) ? diseaseDesc : null;
 	}
 
 	public void setDiseaseDesc(String diseaseDesc) {
@@ -99,7 +104,7 @@ public class ChildSignInfoVO implements Serializable {
 	}
 
 	public String getEmerName() {
-		return emerName;
+		return StringUtils.isNotBlank(emerName) ? emerName : null;
 	}
 
 	public void setEmerName(String emerName) {
@@ -107,7 +112,7 @@ public class ChildSignInfoVO implements Serializable {
 	}
 
 	public String getEmerMobile() {
-		return emerMobile;
+		return StringUtils.isNotBlank(emerMobile) ? emerMobile : null;
 	}
 
 	public void setEmerMobile(String emerMobile) {

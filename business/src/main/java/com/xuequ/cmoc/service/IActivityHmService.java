@@ -53,4 +53,5 @@ public interface IActivityHmService {
     List<ActivityHmSignView> selectHmSignAuditoutByPage(Page<ActivityHmSignView> page);
     
     int updateHmSignById(ActivityHmSign hmSign);
+    
 }

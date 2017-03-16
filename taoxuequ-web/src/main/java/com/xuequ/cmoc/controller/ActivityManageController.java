@@ -32,6 +32,7 @@ import com.xuequ.cmoc.model.ActivityHmSign;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.AuditReqVO;
+import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.SysDictData;
@@ -46,9 +47,11 @@ import com.xuequ.cmoc.service.IActivityTeacherService;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.thread.WechatMsgCallback;
+import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.CellUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
+import com.xuequ.cmoc.utils.ValidatorUtil;
 import com.xuequ.cmoc.view.ActivityChildView;
 import com.xuequ.cmoc.view.ActivityHmSignView;
 import com.xuequ.cmoc.view.ActivityInfoView;
@@ -57,6 +60,7 @@ import com.xuequ.cmoc.view.ActivityTeacherView;
 import com.xuequ.cmoc.view.HollowManTakeView;
 import com.xuequ.cmoc.vo.ActivityQueryVO;
 import com.xuequ.cmoc.vo.ActivitySubmitVO;
+import com.xuequ.cmoc.vo.ChildSignInfoVO;
 import com.xuequ.cmoc.vo.HmResourceQueryVO;
 
 /**
@@ -85,6 +89,8 @@ public class ActivityManageController extends BaseController{
 	private IHollowManService hollowManService;
 	@Autowired
 	private ICourseService courseService;
+	@Autowired
+	private IActivityChildService activityChildService;
 	
 	/**
 	 * 活动管理页
@@ -211,6 +217,42 @@ public class ActivityManageController extends BaseController{
 		return grid;
 	}
 	
+	@RequestMapping("json/namelist/delById")
+	public @ResponseBody Object namelistDelById(Integer id) {
+		try {
+			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
+			ActivityChild child = new ActivityChild();
+			child.setId(id);
+			child.setIsDelete("Y");
+			child.setUpdater(sysUser.getUserName());
+			child.setUpdaterUserId(sysUser.getIdUser());
+			child.setUpdateTime(new Date());
+			activityChildService.updateActivityByChildId(child);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--namelistDelById, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/delActivityHm")
+	public @ResponseBody Object delActivityHm(Integer id) {
+		try {
+			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
+			ActivityHmSign hmSign = new ActivityHmSign();
+			hmSign.setId(id);
+			hmSign.setIsDelete("Y");
+			hmSign.setUpdater(sysUser.getUserName());
+			hmSign.setUpdaterUserId(sysUser.getIdUser());
+			hmSign.setUpdateTime(new Date());
+			activityHmService.updateHmSignById(hmSign);
+			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--namelistDelById, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
 	@RequestMapping("json/marines/queryById")
 	public @ResponseBody Object marinesQueryById(@RequestParam("id")Integer id) {
 		return activityMarinesService.selectById(id);
@@ -251,6 +293,7 @@ public class ActivityManageController extends BaseController{
             if (row != null) {
             	ActivityNamelistVO namelistVO = new ActivityNamelistVO();
             	namelistVO.setActivityId(activityId);
+            	namelistVO.setRows(i + 1);
             	for(int j = 0; j < coloumNum; j ++) {
             		Cell cell = row.getCell((short)j);
             		if(cell != null) {
@@ -269,6 +312,14 @@ public class ActivityManageController extends BaseController{
             	list.add(namelistVO);
             }
         }
+        List<String> errorList = new ArrayList<>();
+        for(ActivityNamelistVO vo : list) {
+        	String validator = ValidatorUtil.validatorParams(vo);
+            if(null != validator) {
+            	errorList.add("第" + vo.getRows() + "行" + validator);
+            }
+        }
+        if(errorList.size() > 0) return new RspResult(StatusEnum.FAIL, errorList);
         return activityService.addImportActivityNamelist(list, sysUser); 
     }
 	

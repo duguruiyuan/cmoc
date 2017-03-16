@@ -77,8 +77,32 @@
 					<input class="form-control" name="marineName" id="marineName" readonly="readonly">
 				</div>
 				<div class="form-group col-md-6">
-					<label for="childName">小队员姓名</label>								
+					<label for="emerName">紧急联系人</label>								
+					<input class="form-control" name="emerName" id="emerName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="emerMobile">紧急联系号码</label>								
+					<input class="form-control" name="emerMobile" id="emerMobile">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childName">队员姓名</label>								
 					<input class="form-control" name="childName" id="childName">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childIdcard">队员身份证</label>								
+					<input class="form-control" name="childIdcard" id="childIdcard">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childSex">队员性别</label>								
+					<select class="form-control" name="childSex" id="childSex">
+						<option value="">请选择</option>
+						<option value="F">帅哥</option>
+						<option value="M">美女</option>
+					</select>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="childAge">队员年龄</label>								
+					<input class="form-control" name="childAge" id="childAge">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="childTitle">小队员头衔</label>								
