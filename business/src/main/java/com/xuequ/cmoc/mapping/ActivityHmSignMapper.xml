@@ -178,7 +178,7 @@
     <if test="params.endDate != null">
     	and DATE_FORMAT(i.start_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{params.endDate,jdbcType=VARCHAR}
     </if>
-    order by s.id desc
+    order by m.id DESC,s.id DESC
   </select>
   
   <select id="selectWithTeamRecord" resultMap="PageBaseResultMap">
