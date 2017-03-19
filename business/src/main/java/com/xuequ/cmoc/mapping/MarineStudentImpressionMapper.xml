@@ -26,7 +26,7 @@
   <insert id="insertByMarineId" parameterType="java.lang.Integer">
   	INSERT INTO t_marine_student_impression(marine_id,impression)
 	SELECT #{marineId,jdbcType=INTEGER}, d.dict_data_key FROM t_sys_dict_data d, t_sys_dict_type t 
-	WHERE t.is_active = 1 AND d.dict_type_id = t.id AND t.dict_code='student_imp'
+	WHERE t.is_active = 1 AND d.dict_type_id = t.id AND t.dict_code='student_imp' AND d.`is_active` = 1
   </insert>
   <update id="addStuImpVotes" parameterType="java.lang.Integer">
   	update t_marine_student_impression

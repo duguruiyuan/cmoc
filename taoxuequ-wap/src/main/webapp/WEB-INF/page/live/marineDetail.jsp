@@ -179,7 +179,6 @@
 				imgUrl: $("#marineImg").val() 
 			}
 		</script>
-		<script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
 				var picListWrap = $(".liveDetail-list-content");

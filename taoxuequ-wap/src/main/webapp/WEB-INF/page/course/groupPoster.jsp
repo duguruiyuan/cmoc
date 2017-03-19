@@ -27,6 +27,5 @@
 			imgUrl: $("#course-img").attr("src") 
 		}
 	</script>
-	<script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

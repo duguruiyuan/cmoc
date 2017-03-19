@@ -16,7 +16,6 @@
 <title>课程报名[陶学趣]</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
-<script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <body>
 	<header class="header">
 		队伍信息管理

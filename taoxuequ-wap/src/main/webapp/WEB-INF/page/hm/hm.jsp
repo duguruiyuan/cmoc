@@ -15,7 +15,6 @@
 <title>透明人注册[陶学趣]</title>
 </head>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
-<script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <body>
 	<div class="regTMHeader">
 		<img src="${userInfo.headimgurl }" class="regTMPic"><br>
