@@ -16,6 +16,15 @@
 		<title>战队列表[陶学趣]</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
+	<script type="text/javascript">
+		var activityName = $("#activity-name").val();
+		window.param = {
+			title: '我们的战队邀你来打气,你不来一下吗',
+			desc: activityName + '，战队都在这里啦。你喜欢谁就点谁，不要害羞哦。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+			wZoneTitle: activityName + '，战队都在这里啦。你喜欢谁就点谁，不要害羞哦。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+			imgUrl: $("#marine-name").attr("src") 
+		}
+	</script>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -68,15 +77,6 @@
 			    </ul>
 		    </div>
 		</div>
-		<script type="text/javascript">
-			var activityName = $("#activity-name").val();
-			window.param = {
-				title: '我们的战队邀你来打气,你不来一下吗',
-				desc: activityName + '，战队都在这里啦。你喜欢谁就点谁，不要害羞哦。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
-				wZoneTitle: activityName + '，战队都在这里啦。你喜欢谁就点谁，不要害羞哦。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
-				imgUrl: $("#marine-name").attr("src") 
-			}
-		</script>
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />
 	</body>
 

@@ -15,17 +15,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <title>课程报名[陶学趣]</title>
 </head>
+<script type="text/javascript">
+   	window.param = {
+		title:'我的孩子参加了陶学趣${activityInfo.activityName}活动，城邀你加入我的队伍',
+		desc: '点击进入活动页面，并长按设别二维码识别。',
+		wZoneTitle: '我的孩子参加了陶学趣${activityInfo.activityName}活动，城邀你加入我的队伍。点击进入活动页面，并长按设别二维码识别。',
+		imgUrl: $("#course-img").attr("src") 
+	}
+</script>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>
 <body>
 	<img style="width:100%;" src="${config.imgUrl }${productOrder.posterImg }">
 	
-	<script type="text/javascript">
-    	window.param = {
-			title:'我的孩子参加了陶学趣${activityInfo.activityName}活动，城邀你加入我的队伍',
-			desc: '点击进入活动页面，并长按设别二维码识别。',
-			wZoneTitle: '我的孩子参加了陶学趣${activityInfo.activityName}活动，城邀你加入我的队伍。点击进入活动页面，并长按设别二维码识别。',
-			imgUrl: $("#course-img").attr("src") 
-		}
-	</script>
 </body>
 </html>

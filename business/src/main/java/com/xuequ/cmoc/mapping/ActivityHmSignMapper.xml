@@ -182,7 +182,7 @@
   </select>
   
   <select id="selectWithTeamRecord" resultMap="PageBaseResultMap">
-  	SELECT hm.`hm_name`, am.`marine_name`, ai.`activity_name`,ai.`activity_num`,ai.`start_date`  
+  	SELECT am.id, hm.`hm_name`, am.`marine_name`, ai.`activity_name`,ai.`activity_num`,ai.`start_date`  
     FROM t_activity_hm_sign hs
     INNER JOIN t_activity_marines am ON hs.`marine_id` = am.`id`
     INNER JOIN t_activity_info ai ON am.`activity_id` = ai.`id`

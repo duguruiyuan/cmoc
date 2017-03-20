@@ -15,6 +15,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <title>[陶学趣]课程详情</title>
 </head>
+<script type="text/javascript">
+   	window.param = {
+		title: $("#course-name").html() + ', 点我来了解我的精彩',
+		desc: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+		wZoneTitle: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+		imgUrl: $("#course-img").attr("src") 
+	}
+</script>
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />
 <body class="course-detail">
 		<header class="header">
@@ -154,14 +162,6 @@
 		       </c:if>
 	        </div>
 	    </footer>
-	    <script type="text/javascript">
-	    	window.param = {
-				title: $("#course-name").html() + ', 点我来了解我的精彩',
-				desc: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
-				wZoneTitle: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
-				imgUrl: $("#course-img").attr("src") 
-			}
-		</script>
 		<script type="text/javascript">
 			mui.init();
 			

@@ -15,6 +15,15 @@
 		<title>战队直播[陶学趣]</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
+	<script type="text/javascript">
+    	var marineName = $("#marineName").val();
+		window.param = {
+			title: '快来啊，' + marineName + "急需火力支援",
+			desc: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
+			wZoneTitle: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
+			imgUrl: $("#marineImg").val() 
+		}
+	</script>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body id="liveDetail">
 		<header class="header">
@@ -170,15 +179,6 @@
 	            <a href="<%=basePath %>/course/detail/${marine.productId}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
 	        </div>
 	    </footer>
-	    <script type="text/javascript">
-	    	var marineName = $("#marineName").val();
-			window.param = {
-				title: '快来啊，' + marineName + "急需火力支援",
-				desc: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
-				wZoneTitle: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
-				imgUrl: $("#marineImg").val() 
-			}
-		</script>
 		<script type="text/javascript">
 			$(function(){
 				var picListWrap = $(".liveDetail-list-content");

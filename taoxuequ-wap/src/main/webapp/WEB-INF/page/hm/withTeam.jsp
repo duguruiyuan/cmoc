@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+%>   
 <!doctype html>
 <html>
 
@@ -17,12 +23,12 @@
 				<img src="${userInfo.headimgurl }" class="regTMPic"><br>
 				<span style="line-height: 20px; color: white;">${hm.hmName }</span><br>
 			</div>
-			<div style="padding:10px 20px 0px;font-size: 14px;">
+			<div style="padding:10px 10px 0px;font-size: 14px;">
 	       		<i class="fa fa-list-ol"></i> 带过的队伍列表
 	       	</div>
 		    <div class="tableList">
 			    <c:choose>
-			    	<c:when test="${list == null || list.isEmpty()}">
+			    	<c:when test="${records == null || records.isEmpty()}">
 		   				<p style="padding: 10px 20px;">暂无带队记录</p>
 		   			</c:when>
 		   			<c:otherwise>
@@ -36,21 +42,14 @@
 					    		</tr>
 				    		</thead>
 				    		<tbody>
-				    			<c:choose>
-				    				<c:when test="${records == null || recourds.isEmpty()}">
-				    					<tr><td colspan="4"><p style="padding: 10px 10px;">暂无带队记录</p></td></tr>
-				    				</c:when>
-				    				<c:otherwise>
-				    					<c:forEach var="item" items="${records }">
-				    						<tr>
-							    				<td class="mui-text-center"><fmt:formatDate value='${item.startDate}' pattern='yyyy-MM-dd' /></td>
-							    				<td>${item.activityName }</td>
-							    				<td>${item.activityNum }</td>
-							    				<td>${item.marineName }</td>
-							    			</tr>
-				    					</c:forEach>
-				    				</c:otherwise>
-				    			</c:choose>
+		    					<c:forEach var="item" items="${records }">
+		    						<tr>
+					    				<td class="mui-text-center"><fmt:formatDate value='${item.startDate}' pattern='yyyy-MM-dd' /></td>
+					    				<td class="mui-text-center">${item.activityName }</td>
+					    				<td class="mui-text-center">${item.activityNum }</td>
+					    				<td class="mui-text-center"><a href="<%=basePath %>/live/marine/detail/${item.id}">${item.marineName }</a></td>
+					    			</tr>
+		    					</c:forEach>
 				    		</tbody>
 				    	</table>
 		   			</c:otherwise>

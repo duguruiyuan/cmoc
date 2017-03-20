@@ -21,7 +21,7 @@
 	  /***用户点击分享到微信圈后加载接口接口*******/
 	  $.ajax({
 			type : 'POST',
-			url : '/wechat/signature',
+			url : basePath + '/wechat/signature',
 			data : {url: window.location.href},
 			dataType : 'json',
 			success : function(response) {
@@ -70,7 +70,6 @@
 						'openCard'
 		            ]
 		      });
-			  window.param = {};
 			  var currUrl = window.location.href;
 			  if(!(currUrl.indexOf(basePath1 + "/live") == 0 || currUrl.indexOf(basePath1 + "/course") == 0)) {
 				  window.param = {
@@ -80,7 +79,7 @@
 						imgUrl: basePath + '/images/whead.png' 
 				  }
 			  }else {
-				  if(currUrl.indexOf(basePath1 + "/course/sign") == 0 || currUrl.indexOf(basePath1 + "/pay") == 0) {
+				  if(currUrl.indexOf(basePath1 + "/course/sign") == 0 || currUrl.indexOf(basePath1 + "/pay/") == 0 || currUrl.indexOf(basePath1 + "/hm/") == 0) {
 					  wx.hideOptionMenu();
 				  }
 			  }

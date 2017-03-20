@@ -13,6 +13,14 @@
 		<title>直播大厅[陶学趣]</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
+	<script type="text/javascript">
+		window.param = {
+			title: '陶学趣,专注于青少年社会实践教育',
+			desc: '我们在直播大厅等你，不见不散 🐳 💝 📷。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+			wZoneTitle: '邀您来看直播 🐳 💝 📷。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
+			imgUrl: '<%=basePath %>/images/whead.png' 
+		}
+	</script>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
 	<body id="courseList">
 		<header class="mui-bar mui-bar-nav">
@@ -57,14 +65,6 @@
 					<div style="text-align: center;padding-top: 55px;">亲，暂无活动哦</div>
 				{{/if}}
 		  </script>
-		<script type="text/javascript">
-			window.param = {
-				title: '陶学趣,专注于青少年社会实践教育',
-				desc: '我们在直播大厅等你，不见不散 🐳 💝 📷。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
-				wZoneTitle: '邀您来看直播 🐳 💝 📷。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
-				imgUrl: '<%=basePath %>/images/whead.png' 
-			}
-		</script>
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" /> 
 		<script type="text/javascript">
 			$(function(){
