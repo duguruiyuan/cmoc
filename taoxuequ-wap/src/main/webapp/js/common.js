@@ -21,10 +21,25 @@ function dictDataFormat(code, v) {
 	if(v) {
 		var dictDataMap = JSON.parse(window.localStorage.getItem("dictDataMap"));
 		var list = dictDataMap[code];
-		if(!list || (list && !list[v])) {
+		var arry = v.split(",");
+		if(!list || (list && !list[arry[0]])) {
 			initAllDictData(true);
 			dictDataMap = JSON.parse(window.localStorage.getItem("dictDataMap"));
+			if(arry.length > 1) {
+				var formatValue = "";
+				arry.forEach(function(v, i) {
+					formatValue += (i > 0 ? "," : "") + dictDataMap[code][v];
+				});
+				return formatValue;
+			}
 			return dictDataMap[code][v];
+		}
+		if(arry.length > 1) {
+			var formatValue = "";
+			arry.forEach(function(v, i) {
+				formatValue += (i > 0 ? "," : "") + dictDataMap[code][v];
+			});
+			return formatValue;
 		}
 		return list[v];
 	}

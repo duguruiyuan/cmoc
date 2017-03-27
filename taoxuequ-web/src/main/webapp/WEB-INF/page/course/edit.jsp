@@ -28,9 +28,10 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label for="city">城市</label>								
-							<select class="form-control city" name="city" id="city">
-								<option value="">请选择</option>
-							</select>
+							<input type="hidden" id="city" name="city">
+							<select id="cc" style="width:100%;height: 34px; padding:6px 12px;"></select>
+							<div id="sp" style="padding:10px">
+							</div>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="addr">地址</label>								
@@ -102,10 +103,51 @@
 			uploadPic();
 	        ue = getUeditor();
 	        initData();
-	        initCity();
 	        initCourseType();
 	        validator();
+	        $('#cc').combo({
+				editable:false
+			});
+			$('#sp').appendTo($('#cc').combo('panel'));
 		})
+		function loadCity() {
+			$.ajax({
+				url : basePath + "/content/dict/json/dictData/dictCode",
+				type : 'POST',
+				data : {
+					dictCode : "city"
+				},
+				error : function() {
+					$.messager.progress('close');
+					$.messager.alert('系统提示', '操作异常', 'error');
+				},
+				success : function(data) {
+					var city = $("#city").val();
+					city = city.split(",");
+					data.forEach(function(item) {
+						var check = "";
+						for(var i=0; i<city; i++) {
+							if(item.dictDataKey == city[i]) {
+								check = "checked";
+								break;
+							}
+						}
+						$("#sp").append('<input type="checkbox" name="lang" value="'+item.dictDataKey+'" + '+check+'><span>'+item.dictDataValue+'</span><br/>');
+					});
+					$('#sp input').click(function(){
+						var list = $("input[name='lang']:checked");
+						var cityValue='';
+						var cityDesc='';
+						for(var i=0; i<list.length;i++) {
+							cityValue += (i > 0 ? "," : "") + $(list[i]).val();
+							cityDesc += (i > 0 ? "," : "") + $(list[i]).next('span').text();
+						}
+						$('#cc').combo('setValue', cityValue).combo('setText', cityDesc);
+						$("#city").val(cityValue);
+					});
+				}
+			});
+		}
 		function initData() {
 			var courseId = '${courseId}';
 			if(courseId.length == 0) return;
@@ -126,6 +168,8 @@
 					$("#courseType").val(data.courseType);
 					$("#signWay").val(data.signWay);
 					$("#city").val(data.city);
+					$('#cc').combo('setValue', data.city).combo('setText', dictDataFormat('city',data.city));
+					$("#city").val(data.city);
 					$("#addr").val(data.addr);
 					$("#strStartDate").val(getTime(data.startDate, "yyyy-MM-dd hh:mm"));
 					$("#strEndDate").val(getTime(data.endDate, "yyyy-MM-dd hh:mm"));
@@ -135,6 +179,7 @@
 					$("#coursePeoples").val(data.coursePeoples);
 					$("#courseDesc").val(data.courseDesc);
 					$("#courseImg").val(data.courseImg);
+					loadCity();
 					if(data.courseImg != null)$("#regMT-uploadPic").attr({"src": imgUrl + data.courseImg+"?v=" + new Date().getTime(), "data-state": "yes"});
 					ue.ready(function() {//编辑器初始化完成再赋值  
 				           ue.setContent(Base64.decode(data.courseDetails));  //赋值给UEditor  
