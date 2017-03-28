@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
@@ -77,7 +78,8 @@ public class FileUtil {
             	BufferedImage sourceImg =  javax.imageio.ImageIO.read(bis);
             	if(sourceImg.getWidth() > 1280) {//压缩图片
             		isImageReduce = true;
-                	reduceImg(sourceImg, attachmentURL, 1280, 960);
+            		int height = new BigDecimal(1280).divide(new BigDecimal(sourceImg.getWidth()), BigDecimal.ROUND_FLOOR, 2).multiply(new BigDecimal(sourceImg.getHeight())).intValue();
+                	reduceImg(sourceImg, attachmentURL, 1280, height);
                 }
             	if(!isImageReduce) {
             		FileOutputStream fos = new FileOutputStream(new File(attachmentURL)); 

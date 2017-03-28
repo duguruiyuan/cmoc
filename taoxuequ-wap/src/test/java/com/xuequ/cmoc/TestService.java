@@ -1,16 +1,13 @@
 package com.xuequ.cmoc;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.core.wechat.message.ArticleItem;
-import com.xuequ.cmoc.core.wechat.message.FirstButtonMenu;
 import com.xuequ.cmoc.core.wechat.message.MediaListReq;
-import com.xuequ.cmoc.core.wechat.message.MenuList;
-import com.xuequ.cmoc.core.wechat.message.SubButtonMenu;
 import com.xuequ.cmoc.core.wechat.message.MaterialMedia.NewsItem;
 import com.xuequ.cmoc.core.wechat.message.MaterialMedia.NewsMedia;
 import com.xuequ.cmoc.core.wechat.message.MaterialMedia.NewsTotItem;
@@ -31,19 +28,10 @@ import com.xuequ.cmoc.utils.TextUtil;
 public class TestService {
 
 	public static void main(String[] args) {
-//		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), "GMs0UihDEQIs9zMZ2JR3OvTdg-pJ_yzdQkCRN7TfYtYTiAaABJa2LGppaKzWej5XHBj9BDhRIl-C4S8rYr7Ce7fhTyoILd_KjtvFv4VOXHN86VkIwA1E-tXmXkOC_mmKBAHcABAGFM");
-////		OutputTemateData outputData = regMsg();
-//		OutputTemateData outputData = sign();
-//		try {
-//			String json = JSONObject.toJSONString(outputData);
-//			json = json.replace("clazz", "class");
-//			String result = HttpClientUtils.postStringJosn(url, json);
-//			System.out.println(result);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		getMedia();
-//		System.out.println(WechatUtils.getWechatModel().getAccessToken());
+		
+		BigDecimal num = new BigDecimal("3844000000000");
+		String str = new DecimalFormat("地球和月球的距离：#,##,###,###米").format(num);
+		System.out.println(str);
 	}
 	
 	public static void getMedia() {
