@@ -314,11 +314,17 @@ function validator(data) {
 					success : function(data) {
 						$.messager.progress('close');
 						if (data.code == '000') {
-							$.messager.alert('系统提示', $("#idUser").val() == '' ? '用户权限新增成功' : '用户权限修改成功', 'info');
+							$.messager.alert('系统提示', $("#idUser").val() == '' ? '用户新增成功' : '用户权限修改成功', 'info');
 							cancelHandle("addForm");
 							loadData();
 						} else {
-							$.messager.alert('系统提示', $("#idRole").val() == '' ? '用户权限新增失败' : '用户权限修改失败', 'warning');
+							if(data.code == '1021') {
+								$("#addForm #userAccount").val(null);
+								$("#addForm #userAccount").focus();
+								$.messager.alert('系统提示', data.msg, 'warning');
+								return;
+							}
+							$.messager.alert('系统提示', $("#idRole").val() == '' ? '用户新增失败' : '用户权限修改失败', 'warning');
 						}
 					}
 				});

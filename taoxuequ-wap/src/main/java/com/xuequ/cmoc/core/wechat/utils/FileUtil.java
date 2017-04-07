@@ -59,6 +59,14 @@ public class FileUtil {
 		return resourceType + Const.SEPARATOR + realName;
 	}
 	
+	/**
+	 * 
+	 * @auther 胡启萌
+	 * @Date 2017年4月7日
+	 * @param path 文件保存路径
+	 * @param message 消息信息
+	 * @param isThumb 是否是缩略图
+	 */
 	public static void downloadWechatFile(String path, WechatReceiveMessage message, Boolean isThumb) {
 		try {
 			String mediaId = isThumb ? message.getThumbMediaId() : message.getMediaId();

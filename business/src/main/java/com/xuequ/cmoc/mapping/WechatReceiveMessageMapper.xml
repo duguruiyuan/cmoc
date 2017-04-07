@@ -51,6 +51,17 @@
     AND wm.`msg_type` = #{params.msgType,jdbcType=VARCHAR}
     ORDER BY wm.create_time ${params.order}
   </select>
+  
+  <select id="selectCountByParam" resultType="java.lang.Integer">
+  	select count(1) from t_wechat_receive_message
+  	where is_Delete = 'N' 
+  	<if test="msgType != null">
+  		and msg_Type = #{msgType,jdbcType=VARCHAR}
+  	</if>
+  	<if test="hmSignId != null">
+  		and hm_sign_id = #{hmSignId,jdbcType=INTEGER}
+  	</if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_wechat_receive_message
     where msg_Id = #{msgId,jdbcType=CHAR}

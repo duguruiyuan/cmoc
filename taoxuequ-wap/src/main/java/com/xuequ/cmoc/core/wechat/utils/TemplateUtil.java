@@ -214,7 +214,7 @@ public class TemplateUtil {
 		}
 	}
 	
-	public static void accessSucessMsg(Integer childId, String marginName, String openid, String emerName, String orderNo) {
+	public static void accessSucessMsg(Integer childId, String marineName, String openid, String emerName, String orderNo) {
 		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
 				WechatUtils.getAccessToken());
 		OutputTemateData outputData = new OutputTemateData();
@@ -222,7 +222,7 @@ public class TemplateUtil {
 		outputData.setTemplate_id(PropertiesUtil.getProperty("member_access_template_id"));
 		TemplateDate templateDate = new TemplateDate();
 		Data_First first = new Data_First();
-		first.setValue("您已经加入<" + marginName +">的队伍。");
+		first.setValue("您已经加入<" + marineName +">的队伍。");
 		Data_Clazz clazz  = new Data_Clazz();
 		clazz.setValue(emerName);
 		Data_Time time = new Data_Time();

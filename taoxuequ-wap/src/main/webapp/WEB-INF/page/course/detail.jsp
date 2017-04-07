@@ -17,10 +17,10 @@
 </head>
 <script type="text/javascript">
    	window.param = {
-		title: $("#course-name").html() + ', 点我来了解我的精彩',
+		title: '${course.courseName }, 点我来了解我的精彩',
 		desc: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
 		wZoneTitle: '精彩课程这里，邀你来趣学学。陶学趣,专注于青少年社会实践教育,欢迎您光临！',
-		imgUrl: $("#course-img").attr("src") 
+		imgUrl: '${config.imgUrl }${course.courseImg }'
 	}
 </script>
 <jsp:include page="/WEB-INF/page/common/_header.jsp" />

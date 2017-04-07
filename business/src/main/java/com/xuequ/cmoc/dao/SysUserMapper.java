@@ -22,4 +22,7 @@ public interface SysUserMapper {
     int selectCount(@Param("userAccount")String userAccount, @Param("password")String password);
     
     int updatePwd(@Param("userAccount")String userAccount, @Param("password")String password);
+
+    int selectCountByAcount(String userAccount);
+
 }

@@ -150,7 +150,10 @@
 		}
 		function initData() {
 			var courseId = '${courseId}';
-			if(courseId.length == 0) return;
+			if(courseId.length == 0) {
+				loadCity();
+				return;
+			}
 			$.ajax({
          		url : basePath + "/course/json/detail/query",
          		type : "post",

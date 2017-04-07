@@ -33,4 +33,5 @@ public interface ISysUserService {
 	
 	public RspResult updatePwd(String userAccount, String oldPwd, String newPwd);
 	
+	public int selectCountByAcount(String userAccount);
 }

@@ -28,6 +28,8 @@ public enum StatusEnum {
 	MARINE_SUPPORT_HAD("1018", "已经投过票"),
 	ACTIVITY_NON_START("1019", "活动未开始"),
 	MERMBER_REPEAT_JOIN("1020", "你已经加入到队伍了，请勿重复加入"),
+	USER_ACCOUNT_EXISTS("1021", "该账号已存在，请重新填写"),
+	MARINE_RESOURCE_OPTION_NOACCESS("1022", "您没有权限操作"),
 	ACCESS_TOKEN_FAIL("获取access_token失败","001"),
 	JSAPI_TICKET_FAIL("获取jsapi_ticket失败","002"),
 	FAIL("9999", "失败");

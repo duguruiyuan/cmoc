@@ -16,12 +16,11 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	</head>
 	<script type="text/javascript">
-    	var marineName = $("#marineName").val();
 		window.param = {
-			title: '快来啊，' + marineName + "急需火力支援",
+			title: '快来啊，${marine.marineName }急需火力支援',
 			desc: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
 			wZoneTitle: '我们的精彩表演缺你（忠实观众），喜欢我们，就投我们一票。陶学趣,专注于青少年社会实践教育,欢迎您光临！ ',
-			imgUrl: $("#marineImg").val() 
+			imgUrl: '${config.imgUrl }${marine.marineImg }'
 		}
 	</script>
 	<jsp:include page="/WEB-INF/page/common/_header.jsp" />
@@ -262,6 +261,30 @@
 					var currId = $(this).closest("li").attr("id");
 					showvideo(currId);
 				})
+				$(".liveDetail-list-content").on("click", ".liveDetail-del", function() {
+					if(confirm("是否确认删除？")) {
+						var thiz = $(this).closest('li')
+						var msgId = thiz.attr("id");
+						var marineId = $("#marineId").val();
+						$.ajax({
+			                  type:"POST",
+			                  url:'<%=basePath%>/live/marine/resource/del',
+			                  dataType:'json',
+			                  data: {
+			                	msgId: msgId,
+			                	marineId: marineId
+			                  },
+			                  cache:false,
+			                  success:function(data){
+			                	if(data.code == '000') {
+			                		thiz.remove();
+			                		return;
+			                	}
+			                	alert(data.msg);
+			                  }
+			              });
+					}
+				});
 			});
 			
 				function moreResItem() {
@@ -311,16 +334,22 @@
 	                  	var str = "";
 	                  	if(data.results.length > 0){
                     		if(currPage > 0) $(".liveDetail-list-title .mui-active").find("input[name='pageNo']").val(params.page);
+                    		var isDelete = ${isDelete};
                     		for(var i = 0,len = data.results.length;i < len;i++){
                     			if(params.msgType == 'image') {
-                    				str = ' <li><a class="detail-a" href="javascript:;">\
-	                    				<img src="'+imgUrl+data.results[i].sysUrl+'"/>\
-		                            </a></li> ';
+                    				str = ' <li id="'+ data.results[i].msgId +'"><a class="detail-a" href="javascript:;">';
+                    					if(isDelete) {
+                    						str += '<div class="liveDetail-del"><i class="fa fa-trash-o"></i></div>';
+                    					}	
+	                    				str += '<img src="'+imgUrl+data.results[i].sysUrl+'"/></a></li>';
 		                        }else if(params.msgType == 'shortvideo') {
-			                        str = '<li style="margin: 0 2px 10px;" id="vid_'+ data.results[i].msgId +'" video-url="'+ imgUrl + data.results[i].sysUrl +'">\
-			                        		<div class="bubble_content">\
-			                        		<div><img src="'+ basePath +'/images/vbtn.png" width="80"></div>\
-				                        	<img class="source" src="'+ imgUrl + data.results[i].picUrl +'"></div></li>';
+			                        str = '<li style="margin: 0 2px 10px;" id="'+ data.results[i].msgId +'" video-url="'+ imgUrl + data.results[i].sysUrl +'">';
+			                        str += '<div class="bubble_content">';
+			                        if(isDelete) {
+			                        	str += '<div class="liveDetail-del"><i class="fa fa-trash-o"></i></div>';
+			                        }
+			                        str += '<div class="video-div"><img src="'+ basePath +'/images/vbtn.png" width="80"></div>';
+			                        str += '<img class="source" src="'+ imgUrl + data.results[i].picUrl +'"></div></li>';
 		                        }
 		                        if(currPage == 1 && i == 0) {
 		                    			listObj.find("ul").html(str);
@@ -542,6 +571,7 @@
 		        $('#hide-bg').hide();
 		        $('#video')[0].pause();
 		    }
+		    
 		</script>
 	</body>
 

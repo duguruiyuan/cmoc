@@ -26,4 +26,15 @@ public class WechatMessageServiceImpl implements IWechatMessageService {
 		return wechatReceiveMessageMapper.selectListByPage(page);
 	}
 
+	@Override
+	public int selectCountByParam(WechatReceiveMessage message) {
+		return wechatReceiveMessageMapper.selectCountByParam(message);
+	}
+
+	@Override
+	public int updateByParam(WechatReceiveMessage record) {
+		return wechatReceiveMessageMapper.updateByPrimaryKeySelective(record);
+	}
+
+
 }

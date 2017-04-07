@@ -266,7 +266,16 @@
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
+    position: relative;
 }
+
+.liveDetail-del{
+	position: absolute; 
+	top: 3%; 
+	right: 5%;
+	color: #EF1A1A;
+}
+
  .detail-a img{
 	width: 100%;
 	border: 1px #00a5da solid;
@@ -1933,7 +1942,7 @@ color: #09BB07;
     height: 135px;
 }
 
-.bubble_content div {
+.bubble_content .video-div {
 	position: absolute;
 	top: 36%;
 	left: 30%;

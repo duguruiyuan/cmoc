@@ -131,6 +131,11 @@ public class ActivityMarinesServiceImpl implements IActivityMarinesService {
 		
 	}
 
+	@Override
+	public int selectCountForModify(String openid, Integer marineId) {
+		return activityMarinesMapper.selectCountForModify(openid, marineId);
+	}
+
 	
 	
 	

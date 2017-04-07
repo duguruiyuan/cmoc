@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,11 +84,34 @@ public class LiveCenterController extends BaseController{
 		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
 		model.addAttribute("marine", activityMarinesService.selectById(marineId));
 		model.addAttribute("familys", activityFamilyService.selectListByMarineId(marineId));
+		int count = activityMarinesService.selectCountForModify(userInfo.getOpenid(), marineId);
+		model.addAttribute("isDelete", count > 0 ? true : false);
 		ImgGroup group = new ImgGroup();
 		group.setPosition("1");
 		group.setShelves(1);
 		model.addAttribute("topBannerList",contentManageService.selectListByParam(group));
 		return "live/marineDetail";
+	}
+	
+	@RequestMapping("marine/resource/del")
+	public @ResponseBody Object marineResourceDel(String msgId, Integer marineId) {
+		try {
+			if(StringUtils.isNotBlank(msgId) && marineId != null) {
+				WechatUserInfo userInfo = getWechatUserInfo();
+				int count = activityMarinesService.selectCountForModify(userInfo.getOpenid(), marineId);
+				if(count == 0) {
+					return new RspResult(StatusEnum.MARINE_RESOURCE_OPTION_NOACCESS);
+				}
+				WechatReceiveMessage message = new WechatReceiveMessage();
+				message.setIsDelete("Y");
+				message.setMsgId(msgId);
+				wechatMessageService.updateByParam(message);
+				return new RspResult(StatusEnum.SUCCESS);
+			}
+		} catch (Exception e) {
+			logger.error("--marineResourceDel, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
 	@RequestMapping("marine/resource/query")

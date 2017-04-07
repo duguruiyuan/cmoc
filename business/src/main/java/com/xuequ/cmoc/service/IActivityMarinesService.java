@@ -2,6 +2,8 @@ package com.xuequ.cmoc.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.model.ActivityMarines;
 import com.xuequ.cmoc.model.MarineComment;
@@ -43,5 +45,7 @@ public interface IActivityMarinesService {
 	int addMarineReadnum(Integer id);
     
 	RspResult addMarineVotes(Integer marineId, String openid);
+	
+	int selectCountForModify(String openid, Integer marineId);
     
 }

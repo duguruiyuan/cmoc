@@ -20,7 +20,7 @@
 		title:'我的孩子参加了陶学趣${activityInfo.activityName}活动，城邀你加入我的队伍',
 		desc: '点击进入活动页面，并长按设别二维码识别。',
 		wZoneTitle: '我的孩子参加了陶学趣${activityInfo.activityName}活动，城邀你加入我的队伍。点击进入活动页面，并长按设别二维码识别。',
-		imgUrl: $("#course-img").attr("src") 
+		imgUrl: '${config.imgUrl }${activityInfo.activityImgUrl}'
 	}
 </script>
 <jsp:include page="/WEB-INF/page/common/_header.jsp"/>

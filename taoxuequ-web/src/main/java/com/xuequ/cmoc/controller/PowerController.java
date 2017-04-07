@@ -160,6 +160,12 @@ public class PowerController extends BaseController {
 	@ResponseBody Object userAddUpdate(AddAndUpdateUserVO vo) {
 		try {
 			SysUser sysUser = (SysUser) session.getAttribute(Constants.APP_USER);
+			if(vo.getIdUser() == null) {
+				int count = sysUserService.selectCountByAcount(vo.getUserAccount());
+				if(count > 0) {
+					return new RspResult(StatusEnum.USER_ACCOUNT_EXISTS);
+				}
+			}
 			sysUserService.addAndUpdateUser(vo, sysUser);
 			return new RspResult(StatusEnum.SUCCESS);
 		} catch (Exception e) {

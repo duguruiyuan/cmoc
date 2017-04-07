@@ -13,7 +13,7 @@ import com.xuequ.cmoc.utils.TextUtil;
 public class PushMenuService {
 	
 	public static void main(String[] args) {
-		menu20170222();
+		menu20170407();
 	}
 	
 	public static void menu20160115() {
@@ -176,9 +176,35 @@ public class PushMenuService {
 		pushMenu(menuList);
 	}
 	
+	public static void menu20170407() {
+		MenuList menuList = new MenuList();
+		List<FirstButtonMenu> firstButtonMenus = new ArrayList<>();
+		
+		FirstButtonMenu firstButtonMenu01 = new FirstButtonMenu();
+		firstButtonMenu01.setName("🌏趣介绍");
+		firstButtonMenu01.setType("view");
+		firstButtonMenu01.setUrl("http://mp.weixin.qq.com/s/F4eDKmVwmYXGCtubGVUrMw");
+		firstButtonMenus.add(firstButtonMenu01);
+		
+		FirstButtonMenu firstButtonMenu02 = new FirstButtonMenu();
+		firstButtonMenu02.setName("📚趣直播");
+		firstButtonMenu02.setType("view");
+		firstButtonMenu02.setUrl("http://m.xue110.top/live");
+		firstButtonMenus.add(firstButtonMenu02);
+		
+		FirstButtonMenu firstButtonMenu03 = new FirstButtonMenu();
+		firstButtonMenu03.setName("📚趣报名");
+		firstButtonMenu03.setType("view");
+		firstButtonMenu03.setUrl("http://m.xue110.top/course");
+		firstButtonMenus.add(firstButtonMenu03);
+		menuList.setButton(firstButtonMenus);
+		
+		pushMenu(menuList);
+	}
+	
 	private static void pushMenu(MenuList menuList) {
 		try {
-			String acc = "xQghm4xE7FO4P5XCGeemFYBg5bhWXSH3rJLXzZpZmSmeoI1Q0jruw2eQ9C_FtDYfSoe3jLjBVLoSYncclqToDFwuYZdWWttIGoDyBnpB5UURLRdAIAAUA";//WechatUtils.getWechatModel().getAccessToken();
+			String acc = "zBMLv07FeMLrJpmxuSMtIj3eySgALa205GbeLSsmc2TRdLraJNx3VEG7HVA5bf_oJD-HrlGv5dX-vuvcC11jcr50uwr3nL9dUOSfXke0jT-AU2qJgd2yOh15jHu_J8khAYXdAJAKIH";//WechatUtils.getWechatModel().getAccessToken();
 			String json = JSONObject.toJSONString(menuList);
 			String url = TextUtil.format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}", acc);
 			String result = HttpClientUtils.postStringJosn(url, json);

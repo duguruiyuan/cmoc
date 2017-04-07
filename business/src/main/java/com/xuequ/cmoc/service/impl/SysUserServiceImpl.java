@@ -70,4 +70,9 @@ public class SysUserServiceImpl implements ISysUserService {
 		return new RspResult(StatusEnum.SUCCESS);
 	}
 
+	@Override
+	public int selectCountByAcount(String userAccount) {
+		return sysUserMapper.selectCountByAcount(userAccount);
+	}
+
 }

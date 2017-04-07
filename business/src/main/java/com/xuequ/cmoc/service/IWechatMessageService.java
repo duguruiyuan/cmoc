@@ -10,4 +10,9 @@ public interface IWechatMessageService {
 	public int addReceiveMessage(WechatReceiveMessage message);
 	
 	public List<WechatReceiveMessage> selectListByPage(Page<WechatReceiveMessage> page);
+	
+	public int selectCountByParam(WechatReceiveMessage message);
+	
+	int updateByParam(WechatReceiveMessage record);
 }
+

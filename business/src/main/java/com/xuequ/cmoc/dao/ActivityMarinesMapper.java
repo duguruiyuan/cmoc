@@ -37,4 +37,7 @@ public interface ActivityMarinesMapper {
     int addMarineReadnum(Integer id);
     
     int addMarineVotes(Integer id);
+    
+    int selectCountForModify(@Param("openid")String openid, 
+    		@Param("marineId")Integer marineId);
 }

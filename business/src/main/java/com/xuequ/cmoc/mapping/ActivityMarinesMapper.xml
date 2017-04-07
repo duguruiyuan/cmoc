@@ -95,6 +95,17 @@
 	WHERE a.`is_delete` = 'N' and m.id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectCountForModify" resultType="java.lang.Integer">
+  	SELECT COUNT(1)
+	FROM t_activity_marines m
+	INNER JOIN t_activity_info ai ON ai.`id` = m.`activity_id`
+	INNER JOIN t_activity_hm_sign ahs ON ahs.`marine_id` = m.`id`
+	INNER JOIN t_hollow_man_info hmi ON hmi.`id` = ahs.`hm_id`
+	WHERE ahs.`is_delete` = 'N' AND hmi.`openid` = #{openid,jdbcType=VARCHAR} 
+	AND m.`id` = #{marineId,jdbcType=INTEGER} 
+	AND NOW() BETWEEN ai.`start_date` AND ai.`end_date`
+  </select>
+  
   <select id="selectListByPage" resultMap="PageBaseResultMap" >
   	select 
   	m.id, marine_name, marine_img, marine_slogan, marine_prize, m.line_name, 

@@ -26,6 +26,11 @@
     where ID_USER = #{idUser,jdbcType=INTEGER}
   </select>
   
+  <select id="selectCountByAcount" resultType="java.lang.Integer">
+  	select count(1) from t_sys_user 
+  	where USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectListByPage" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

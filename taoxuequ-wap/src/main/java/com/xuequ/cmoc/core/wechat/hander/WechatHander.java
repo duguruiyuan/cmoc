@@ -136,13 +136,17 @@ public class WechatHander {
     	}else {
     		WechatReceiveMessage message = BeanUtils.copyAs(inputMsg, WechatReceiveMessage.class);
     		if(message != null) {
-    			new Thread(new WechatMsgExecutor(inputMsg, hmSign, message)).start();
+    			WechatReceiveMessage reqMessage = new WechatReceiveMessage();
+    			reqMessage.setHmSignId(hmSign.getHmId());
+    			reqMessage.setMsgType(message.getMsgType());
+    			int resourceCount = wechatMessageService.selectCountByParam(reqMessage);
     			String content = PropertiesUtil.getProperty("hm_send_message");
     			content = TextUtil.format(content, new String[]{
-    					WechatReqMsgType.getDesc(inputMsg.getMsgType()), hmSign.getHmName(),
+    					WechatReqMsgType.getDesc(inputMsg.getMsgType()), hmSign.getHmName(), String.valueOf(resourceCount + 1), 
     					Constants.BASEPATH + "/live", Constants.BASEPATH + "/live/marine/detail/" + hmSign.getMarineId(),
     					hmSign.getMarineName(), Constants.BASEPATH + "/hm/manage/marine"});
     			outputMsg.setContent(content);
+    			new Thread(new WechatMsgExecutor(inputMsg, hmSign, message)).start();
     		}
     	}
     	outputMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
