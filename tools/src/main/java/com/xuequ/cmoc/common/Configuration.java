@@ -5,6 +5,8 @@ import java.io.Serializable;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import com.xuequ.cmoc.utils.RequestUtil;
+
 public class Configuration implements Serializable {
 
 	private static final long serialVersionUID = -6442108412998953656L;
@@ -16,6 +18,8 @@ public class Configuration implements Serializable {
 	private String version;
 	
 	private String imgUrl;
+	
+	private String serverIp;
 	
 	private String wechatAttention;
 	
@@ -37,6 +41,7 @@ public class Configuration implements Serializable {
 			config.setEnv(prop.getString("env"));
 			config.setAppName(prop.getString("appName"));
 			config.setVersion(prop.getString("version"));
+			config.setServerIp(RequestUtil.getServerIp());
 			prop.load("config.properties");
 			config.setImgUrl(prop.getString(config.getEnv() + "_visited.url"));
 			config.setWechatAttention(prop.getString("wechat_attention"));
@@ -85,5 +90,14 @@ public class Configuration implements Serializable {
 	public void setWechatAttention(String wechatAttention) {
 		this.wechatAttention = wechatAttention;
 	}
+
+	public String getServerIp() {
+		return serverIp;
+	}
+
+	public void setServerIp(String serverIp) {
+		this.serverIp = serverIp;
+	}
+
 	
 }

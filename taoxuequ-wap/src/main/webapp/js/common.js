@@ -51,6 +51,7 @@ function initAllDictData(reload) {
 	$.ajax({
 		url : basePath + "/dict/json/init/dictData",
 		type : 'POST',
+		async:false,
 		error : function() {
 			$.messager.progress('close');
 			$.messager.alert('系统提示', '操作异常', 'error');

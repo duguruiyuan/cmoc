@@ -17,7 +17,7 @@
 		    <h1 class="mui-title">购买记录</h1>
 		</header>
 		<jsp:include page="/WEB-INF/page/common/head.jsp" />
-		<div>
+		<div style="padding-bottom: 10px;">
 		    <div class="tableList">
 		    	<table border="0" cellspacing="0" cellpadding="0">
 		    		<thead>
@@ -37,7 +37,14 @@
 				    			<c:forEach var="itm" items="${orderList }">
 				    				<tr>
 					    				<td class="mui-text-center"><fmt:formatDate value="${itm.orderCreateTime}" pattern="yyyy-MM-dd"/></td>
-					    				<td class="mui-text-center">${itm.activityName }|${itm.activityNum }</td>
+					    				<c:choose>
+					    					<c:when test="${itm.signWay == 1 }">
+					    						<td class="mui-text-center">${itm.activityName }|${itm.activityNum }</td>
+					    					</c:when>
+					    					<c:otherwise>
+					    						<td class="mui-text-center">${itm.courseName }</td>
+					    					</c:otherwise>
+					    				</c:choose>
 					    				<td class="mui-text-center">${itm.totalPrice }</td>
 					    				<td class="mui-text-center">${itm.orderStatus == '000' ? '已支付' : '未支付' }</td>
 					    			</tr>

@@ -19,6 +19,8 @@ public class ProductOrder implements Serializable {
 
     private Integer productId;
     
+    private String productName;
+    
     private Integer activityId;
 
     private String productType;
@@ -62,6 +64,12 @@ public class ProductOrder implements Serializable {
     private Date updateTime;
     
     private String posterImg;
+    
+    private String tradeType;
+    
+    private String tradeState;
+    
+    private String tradeStateDesc;
 
     private static final long serialVersionUID = 1L;
 
@@ -121,7 +129,15 @@ public class ProductOrder implements Serializable {
         this.productId = productId;
     }
 
-    public Integer getActivityId() {
+    public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public Integer getActivityId() {
 		return activityId;
 	}
 
@@ -295,6 +311,30 @@ public class ProductOrder implements Serializable {
 
 	public void setPosterImg(String posterImg) {
 		this.posterImg = posterImg;
+	}
+
+	public String getTradeType() {
+		return tradeType;
+	}
+
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
+	}
+
+	public String getTradeState() {
+		return tradeState;
+	}
+
+	public void setTradeState(String tradeState) {
+		this.tradeState = tradeState;
+	}
+
+	public String getTradeStateDesc() {
+		return tradeStateDesc;
+	}
+
+	public void setTradeStateDesc(String tradeStateDesc) {
+		this.tradeStateDesc = tradeStateDesc;
 	}
     
 }

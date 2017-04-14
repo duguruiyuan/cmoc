@@ -156,7 +156,7 @@
 	        				<a href="javascript:void(0)" class="wbl-btn btn-go" id="submit"><label>预约报名</label><i class="iconfont icon"></i></a>
 	        			</c:when>
 	        			<c:otherwise>
-	        				<a href="<%=basePath %>/course/sign/${course.id}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
+	        				<a href="<%=basePath %>/course/sign/detail/${course.id}" class="wbl-btn btn-go" id="submit" ms-class-disabled="submit_enabled"><label>预约报名</label><i class="iconfont icon"></i></a>
 	        			</c:otherwise>
 		            </c:choose>
 		       </c:if>
@@ -189,7 +189,7 @@
 						window.location.hash = "#cal-change";
 					}else {
 						var obj = $("#cal-change").find(".cal-content-active");
-						window.location.href = basePath + "/course/sign/" + obj.attr("data-pid") + "/" + obj.attr("data-aid");
+						window.location.href = basePath + "/course/sign/group?pid=" + obj.attr("data-pid") + "&aid=" + obj.attr("data-aid");
 						return;
 					}	
 				});

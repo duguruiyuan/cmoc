@@ -42,21 +42,8 @@
 				<label>填写联系电话</label>
 			</div>
 		</form>
-		<div style="display: none;">
-			<h3>选择支付方式</h3>
+		<div>
 			<div class="pay-type">
-				<div class="pay-item">
-		            <div class="pay-left">
-		                <img src="<%=basePath %>/images/unionPay.png" alt="">
-		            </div>
-		            <div class="pay-content">
-		                <div class="title">银行转账</div>
-		                <div class="description"></div>
-		            </div>
-		            <div class="mui-radio">
-		                <input type="radio" class="check" name="payType" value="ChinaPlay" checked="checked" id="js-unionPay">
-		            </div>
-			    </div> 	
 				<div class="pay-item">
 		            <div class="pay-left">
 		                <img src="<%=basePath %>/images/wechat.png" alt="">
@@ -66,10 +53,22 @@
 		                <div class="description">适用于经常使用微信的同学</div>
 		            </div>
 		            <div class="mui-radio">
-		                <input type="radio" class="check" name="payType" value="WeiXin" id="js-wechat">
+		                <input type="radio" class="check" name="payType" value="WeiXin" checked="checked" id="js-unionPay">
 		            </div>
 				</div>
-				<div class="pay-item">
+				<div class="pay-item" style="display: none;">
+		            <div class="pay-left">
+		                <img src="<%=basePath %>/images/unionPay.png" alt="">
+		            </div>
+		            <div class="pay-content">
+		                <div class="title">银行转账</div>
+		                <div class="description"></div>
+		            </div>
+		            <div class="mui-radio">
+		                <input type="radio" class="check" name="payType" value="ChinaPlay" id="js-unionPay">
+		            </div>
+			    </div> 	
+				<div class="pay-item" style="display: none;">
 		            <div class="pay-left">
 		                <img src="<%=basePath %>/images/alipay.png" alt="">
 		            </div>
@@ -132,6 +131,10 @@
 			});
 			
 			$("#groupSignSubmit").click(function() {
+				if(payData != null) {
+					onBridgeReady(payData);
+					return;
+				}
 				if($("#groupSignSubmit").hasClass("disabled")) return;
 				var emerName = $("#emerName").val();
 				var emerMobile = $("#emerMobile").val();
@@ -153,7 +156,7 @@
 					return;
 				}
 				$.ajax({
-			 		url : basePath + "/course/json/groupOrder/create",
+			 		url : basePath + "/course/group/order/create",
 			 		type : "post",
 			 		data : {
 			 			emerName: emerName,
@@ -166,8 +169,9 @@
 			 		async : false,
 			 		success : function(data) {
 			 			if(data.code == '000') {
-			 				//window.location.href = basePath + "/course/group/create?" + data.data;
-			 				window.location.href = basePath + "/course/group/customerPay?" + data.data;
+			 				//window.location.href = basePath + "/course/group/customerPay?" + data.data;
+			 				payData = data.data;
+			 				onBridgeReady(payData);
 			 			}else {
 			 				mui.alert(data.msg,'消息提示');
 			 			}
@@ -176,6 +180,6 @@
 	        		}
 			 	});
 			});
-		})
+		});
 	</script>
 </html>

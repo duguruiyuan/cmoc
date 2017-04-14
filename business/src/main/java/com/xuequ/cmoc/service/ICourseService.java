@@ -5,6 +5,7 @@ import java.util.List;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ParentInfo;
+import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
@@ -71,7 +72,7 @@ public interface ICourseService {
 	 * @param info
 	 * @return
 	 */
-	CourseSignVO addUPdateOrder(CourseSignVO info);
+	ProductOrder addUPdateOrder(CourseSignVO info);
 	/**
 	 * 课程预约记录查询
 	 * @param page

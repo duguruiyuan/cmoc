@@ -127,7 +127,7 @@
 	  from t_product_order t 
 	  where t.`product_id` = #{courseId,jdbcType=INTEGER} and t.`order_status` = '000'
 	) po on po.product_id = ci.`id` and ai.id = po.activity_id
-	where ci.`id` = #{courseId,jdbcType=INTEGER} and ai.start_date > now()
+	where ai.`is_delete` = 'N' and ci.`id` = #{courseId,jdbcType=INTEGER} and ai.start_date > now()
 	order by ai.start_date
   </select>
   

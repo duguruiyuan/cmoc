@@ -25,6 +25,7 @@
 		<c:choose>
 			<c:when test="${isPayed == 1 }">
 				<c:if test="${childList.size() >= 5 }">已经组队完成</c:if>
+				<c:if test="${childList.size() < 5 }">本队伍暂未组队完成,多多努力哦</c:if>
 			</c:when>
 			<c:otherwise>
 				本队伍尚未完成支付，请完成队伍支付。

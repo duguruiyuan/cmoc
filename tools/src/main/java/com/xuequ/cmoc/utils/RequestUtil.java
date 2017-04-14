@@ -1,5 +1,10 @@
 package com.xuequ.cmoc.utils;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,6 +12,36 @@ import javax.servlet.http.HttpServletResponse;
 import com.xuequ.cmoc.common.Configuration;
 
 public final class RequestUtil {
+	
+	/**
+     * 获取服务器IP地址
+     * @return
+     */
+    public static String  getServerIp(){
+        String SERVER_IP = null;
+        try {
+        	Enumeration netInterfaces = NetworkInterface.getNetworkInterfaces();  
+            InetAddress ip = null;  
+            while (netInterfaces.hasMoreElements()) {  
+                NetworkInterface ni = (NetworkInterface) netInterfaces  
+                        .nextElement();  
+                Enumeration enumeration = ni.getInetAddresses();
+                if(!enumeration.hasMoreElements()) break;
+                ip = (InetAddress) enumeration.nextElement(); 
+                SERVER_IP = ip.getHostAddress();  
+                if (!ip.isSiteLocalAddress() && !ip.isLoopbackAddress()  
+                        && ip.getHostAddress().indexOf(":") == -1) {  
+                    SERVER_IP = ip.getHostAddress();  
+                    break;  
+                } else {  
+                    ip = null;  
+                }  
+            }  
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return SERVER_IP;
+    }
 
 	/**
 	 * 获取项目原路径

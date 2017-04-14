@@ -26,14 +26,14 @@
 		<div style="margin-top: 10px;">
 			<div style="padding: 10px;border-top: 1px solid #E3D7D7;border-bottom: 1px solid #F9DEDE;">
 				<div style="float: left;">${itm.activityName } <fmt:formatDate value="${itm.startDate}" type="date" dateStyle="full"/></div>
-				<div style="float: right;"><c:if test="${itm.member == 0 }"><a href="<%=basePath %>/course/group/create?orderNo=${itm.orderNo}"><span class="group-but">尚未组队</span></a></c:if></div>
+				<div style="float: right;margin-top: 10px;"><c:if test="${itm.member == 0 }"><a href="<%=basePath %>/course/group/create?orderNo=${itm.orderNo}"><span class="group-but">尚未组队</span></a></c:if></div>
 				<div style="clear:both"></div>
 			</div>
 			<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">订单编号：${itm.orderNo }</div>
 			<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">实际应付款：${itm.totalPrice }</div>
 			<div style="padding: 10px;border-bottom: 1px solid #F9DEDE;">
 				<div style="float: left;">总价：${itm.totalPrice }</div>
-				<div style="float: right;">
+				<div style="float: right;margin-top: 10px;">
 					<c:choose>
 						<c:when test="${itm.orderStatus == '000' }"><span class="group-but2">已支付</span></c:when>
 						<c:otherwise><span class="group-but1" onclick="groupPay()">未付款 (转账支付)</span></c:otherwise>

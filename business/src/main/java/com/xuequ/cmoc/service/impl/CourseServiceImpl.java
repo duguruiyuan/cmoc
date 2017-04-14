@@ -7,8 +7,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xuequ.cmoc.common.enums.PayType;
 import com.xuequ.cmoc.common.enums.ProductTypeEnum;
 import com.xuequ.cmoc.common.enums.SignResource;
+import com.xuequ.cmoc.common.enums.TradeType;
 import com.xuequ.cmoc.dao.ChildSignInfoMapper;
 import com.xuequ.cmoc.dao.CourseInfoMapper;
 import com.xuequ.cmoc.dao.ParentInfoMapper;
@@ -19,7 +21,6 @@ import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
-import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.page.Page;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.ICourseService;
@@ -104,7 +105,7 @@ public class CourseServiceImpl implements ICourseService {
 	}
 
 	@Override
-	public CourseSignVO addUPdateOrder(CourseSignVO info) {
+	public ProductOrder addUPdateOrder(CourseSignVO info) {
 		String familyNo = childSignInfoMapper.selectFamilyNo(info);
 		if(StringUtils.isBlank(familyNo)) {
 			familyNo = sysCommonMapper.selectFamilyNoSeq();
@@ -140,6 +141,10 @@ public class CourseServiceImpl implements ICourseService {
 		order.setProductType(ProductTypeEnum.COURSE.getCode());
 		order.setChannel(info.getChannel());
 		order.setActivityId(info.getActivityId());
+		order.setPaySubmitTime(new Date());
+		if(StringUtils.isNotBlank(info.getChannel()) && info.getChannel().equals(PayType.WEIXIN.getCode())) {
+			order.setTradeType(TradeType.JSAPI.getCode());
+		}
 		productOrderMapper.insertSelective(order);
 		info.setParentId(parentInfo.getId());
 		info.setFamilyNo(familyNo);
@@ -149,8 +154,8 @@ public class CourseServiceImpl implements ICourseService {
 		if(courseInfo.getSignWay() == 0) {
 			childSignInfoMapper.insertSelective(info);
 		}
-		info.setProductType(order.getProductType());
-		return info;
+		order.setProductName(courseInfo.getCourseName());
+		return order;
 	}
 
 	@Override

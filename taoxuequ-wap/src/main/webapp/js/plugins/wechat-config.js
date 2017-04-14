@@ -81,6 +81,7 @@
 			  }else {
 				  if(currUrl.indexOf(basePath1 + "/course/sign") == 0 || currUrl.indexOf(basePath1 + "/pay/") == 0 || currUrl.indexOf(basePath1 + "/hm/") == 0) {
 					  wx.hideOptionMenu();
+					  return;
 				  }
 			  }
 			  	wx.onMenuShareTimeline({//分享到朋友圈

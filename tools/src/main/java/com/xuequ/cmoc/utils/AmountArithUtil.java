@@ -279,20 +279,21 @@ private static int RETAIN_DECIMALF = 4;
 		return b1.subtract(b2);
 
 	}
+	
+	public static int muiFloor(BigDecimal amount, int mul) {
+		BigDecimal result = amount.multiply(new BigDecimal(mul));
+		result.setScale(0, BigDecimal.ROUND_FLOOR);
+		return result.intValue();
+	}
 
 	public static void main(String[] args) {
-		BigDecimal debtPrin =  new BigDecimal("2003.6326");
+		BigDecimal debtPrin =  new BigDecimal("2003.6589");
 		//System.out.println(moneyTo2(50032.2478));
 		
-		System.out.println(JepUtil.upAmt(debtPrin)); //BigDecimal.ROUND_HALF_UP 向上
-		
-		DecimalFormat formater = new DecimalFormat();
-        formater.setMaximumFractionDigits(2);
-        formater.setGroupingSize(0);
-        formater.setRoundingMode(RoundingMode.FLOOR);
-       
-		//System.out.println(debtPrin.setScale(2, BigDecimal.ROUND_HALF_UP));
+		System.out.println(muiFloor(debtPrin, 100)); //BigDecimal.ROUND_HALF_UP 向上
 	}
+	
+	
 	
 
 };

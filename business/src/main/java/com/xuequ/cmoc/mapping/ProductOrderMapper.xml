@@ -31,12 +31,16 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="poster_img" jdbcType="VARCHAR" property="posterImg" />
+    
+    <result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
+    <result column="trade_state" jdbcType="VARCHAR" property="tradeState" />
+    <result column="trade_state_desc" jdbcType="VARCHAR" property="tradeStateDesc" />
   </resultMap>
   <sql id="Base_Column_List">
     id, order_no, cust_id, sign_name, sign_phone, openid, product_id, activity_id, product_type, res_amount, total_amount, exchangePoints, 
     give_points, channel, commision, commistion_rate, bank_code, bank_no, trans_no, bank_trans_no, 
     pay_submit_time, pay_callback_time, order_status, error_code, error_reason, is_delete, 
-    create_time, update_time,poster_img
+    create_time, update_time,poster_img, trade_type, trade_state, trade_state_desc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -146,29 +150,8 @@
     delete from t_product_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xuequ.cmoc.model.ProductOrder">
-    insert into t_product_order (id, order_no, cust_id,
-      sign_name, sign_phone, openid, 
-      product_id, activity_id, product_type, res_amount, 
-      total_amount, exchangePoints, give_points, 
-      channel, commision, commistion_rate, 
-      bank_code, bank_no, trans_no, 
-      bank_trans_no, pay_submit_time, pay_callback_time, 
-      order_status, error_code, error_reason, 
-      is_delete, create_time, update_time,poster_img
-      )
-    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER},
-      #{signName,jdbcType=VARCHAR}, #{signPhone,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
-      #{productId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{resAmount,jdbcType=DECIMAL}, 
-      #{totalAmount,jdbcType=DECIMAL}, #{exchangepoints,jdbcType=INTEGER}, #{givePoints,jdbcType=INTEGER}, 
-      #{channel,jdbcType=VARCHAR}, #{commision,jdbcType=DECIMAL}, #{commistionRate,jdbcType=VARCHAR}, 
-      #{bankCode,jdbcType=VARCHAR}, #{bankNo,jdbcType=VARCHAR}, #{transNo,jdbcType=VARCHAR}, 
-      #{bankTransNo,jdbcType=VARCHAR}, #{paySubmitTime,jdbcType=TIMESTAMP}, #{payCallbackTime,jdbcType=TIMESTAMP}, 
-      #{orderStatus,jdbcType=VARCHAR}, #{errorCode,jdbcType=VARCHAR}, #{errorReason,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-      #{posterImg,jdbcType=VARCHAR}, 
-      )
-  </insert>
+  
+
   <insert id="insertSelective" parameterType="com.xuequ.cmoc.model.ProductOrder">
     insert into t_product_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -259,6 +242,15 @@
       <if test="posterImg != null">
         poster_img,
       </if>
+      <if test="tradeType != null">
+        trade_type,
+      </if>
+      <if test="tradeState != null">
+        trade_state,
+      </if>
+      <if test="tradeStateDesc != null">
+        trade_state_desc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -347,6 +339,15 @@
       </if>
       <if test="posterImg != null">
         #{posterImg,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null">
+        #{tradeState,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStateDesc != null">
+        #{tradeStateDesc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -437,40 +438,18 @@
       <if test="posterImg != null">
         poster_img = #{posterImg,jdbcType=VARCHAR},
       </if>
+      <if test="tradeType != null">
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null">
+        trade_state = #{tradeState,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStateDesc != null">
+        trade_state_desc = #{tradeStateDesc,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xuequ.cmoc.model.ProductOrder">
-    update t_product_order
-    set order_no = #{orderNo,jdbcType=VARCHAR},
-      cust_id = #{custId,jdbcType=INTEGER},
-      sign_name = #{signName,jdbcType=VARCHAR},
-      sign_phone = #{signPhone,jdbcType=VARCHAR},
-      openid = #{openid,jdbcType=VARCHAR},
-      product_id = #{productId,jdbcType=INTEGER},
-      activity_id = #{activityId,jdbcType=INTEGER},
-      product_type = #{productType,jdbcType=VARCHAR},
-      res_amount = #{resAmount,jdbcType=DECIMAL},
-      total_amount = #{totalAmount,jdbcType=DECIMAL},
-      exchangePoints = #{exchangepoints,jdbcType=INTEGER},
-      give_points = #{givePoints,jdbcType=INTEGER},
-      channel = #{channel,jdbcType=VARCHAR},
-      commision = #{commision,jdbcType=DECIMAL},
-      commistion_rate = #{commistionRate,jdbcType=VARCHAR},
-      bank_code = #{bankCode,jdbcType=VARCHAR},
-      bank_no = #{bankNo,jdbcType=VARCHAR},
-      trans_no = #{transNo,jdbcType=VARCHAR},
-      bank_trans_no = #{bankTransNo,jdbcType=VARCHAR},
-      pay_submit_time = #{paySubmitTime,jdbcType=TIMESTAMP},
-      pay_callback_time = #{payCallbackTime,jdbcType=TIMESTAMP},
-      order_status = #{orderStatus,jdbcType=VARCHAR},
-      error_code = #{errorCode,jdbcType=VARCHAR},
-      error_reason = #{errorReason,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      poster_img = #{posterImg,jdbcType=VARCHAR},
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 
 </mapper>

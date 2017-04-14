@@ -1,8 +1,6 @@
 package com.xuequ.cmoc.controller;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +19,7 @@ import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.OrderStatusEnum;
 import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.core.wechat.common.Constants;
-import com.xuequ.cmoc.core.wechat.model.WechatQrcodeRsp;
-import com.xuequ.cmoc.core.wechat.utils.MessageUtil;
 import com.xuequ.cmoc.core.wechat.utils.TemplateUtil;
-import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
@@ -33,20 +28,22 @@ import com.xuequ.cmoc.model.ParentInfo;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.WechatUserInfo;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.pay.wepay.common.WechatBridge;
+import com.xuequ.cmoc.pay.wepay.protocol.payProtocol.UnifiedOrderResData;
 import com.xuequ.cmoc.reqVo.CourseSignVO;
 import com.xuequ.cmoc.service.IActivityService;
 import com.xuequ.cmoc.service.IChildSignInfoService;
 import com.xuequ.cmoc.service.ICourseService;
 import com.xuequ.cmoc.service.IParentInfoService;
 import com.xuequ.cmoc.service.IProductOrderService;
+import com.xuequ.cmoc.utils.AmountArithUtil;
 import com.xuequ.cmoc.utils.ImageUtils;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
-import com.xuequ.cmoc.utils.QRCoderUtils;
+import com.xuequ.cmoc.utils.PayUtils;
 import com.xuequ.cmoc.view.CourseBuyerView;
 import com.xuequ.cmoc.view.CourseGroupOrderView;
 import com.xuequ.cmoc.view.CourseListView;
 import com.xuequ.cmoc.vo.CourseQueryVO;
-import com.xuequ.cmoc.vo.ImageSynthesisVo;
 
 @RequestMapping("course")
 @Controller
@@ -95,6 +92,13 @@ public class CourseController extends BaseController {
 		return "course/detail";
 	}
 	
+	/**
+	 * 课程购买人信息
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param vo
+	 * @return
+	 */
 	@RequestMapping("json/buyer")
 	public @ResponseBody Object courseBuyer(CourseQueryVO vo) {
 		try {
@@ -111,20 +115,36 @@ public class CourseController extends BaseController {
 		return null;
 	}
 
-	@RequestMapping("sign/{courseId}")
+	/**
+	 * 课程报名详情页
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param model
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping("sign/detail/{courseId}")
 	public String sign(Model model, @PathVariable Integer courseId) {
 		WechatUserInfo userInfo = getWechatUserInfo();
 		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
-		ParentInfo buyerInfo = courseService.selectByOpenid("aaaa");
+		ParentInfo buyerInfo = courseService.selectByOpenid(userInfo.getOpenid());
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("buyer", buyerInfo);
-		return "course/sign";
+		return "course/signDetail";
 	}
 	
-	@RequestMapping("sign/{courseId}/{activityId}")
-	public String groupSign(Model model, @PathVariable Integer courseId, 
-			@PathVariable Integer activityId) {
+	/**
+	 * 组团报名页
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("sign/group")
+	public String groupSign(Model model) {
+		Integer courseId = Integer.valueOf(request.getParameter("pid"));
+		Integer activityId = Integer.valueOf(request.getParameter("aid"));
 		WechatUserInfo userInfo = getWechatUserInfo();
 		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
 		ActivityInfo activityInfo = activityService.selectById(activityId);
@@ -134,32 +154,50 @@ public class CourseController extends BaseController {
 		return "course/groupSign";
 	}
 	
-	@RequestMapping("json/groupOrder/create")
+	/**
+	 * 组团报名订单创建
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping("group/order/create")
 	@ResponseBody Object jsonGroupCreate(CourseSignVO vo){
-		WechatUserInfo userInfo = getWechatUserInfo();
-		vo.setOpenid(userInfo.getOpenid());
-		vo.setHeadImg(userInfo.getHeadimgurl());
-		vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
-		vo.setNickName(userInfo.getNickname());
-		CourseSignVO view = courseService.addUPdateOrder(vo);
-		String realPath = request.getRealPath("/");
-		new Thread(new PosterImgExecutor(view.getOrderNo(), userInfo, realPath)).start();
-		CourseGroupOrderView orderView = courseService.selectCourseGroupOrder(userInfo.getOpenid(), view.getOrderNo()).get(0);
-		TemplateUtil.activitySignSucessMsg(view.getOrderNo(), orderView.getActivityAddr(), 
-				userInfo.getOpenid(), orderView.getEmerName(), orderView.getActivityName(), 
-				orderView.getStartDate());
-		TemplateUtil.activitySignSucessMsgToCustomer(view.getOrderNo(), orderView.getEmerMobile(), 
-				orderView.getEmerName(), orderView.getActivityName(), orderView.getActivityNum(), 
-				orderView.getStartDate());
-		Map<String, Object> map = new HashMap<>();
-		map.put("orderNo", view.getOrderNo());
-		map.put("pId", vo.getProductId());
-		map.put("aId", vo.getActivityId());
-		map.put("productType", view.getProductType());
-		return new RspResult(StatusEnum.SUCCESS, OrderEncryptUtils.getSignUrl(map));
+		try {
+			WechatUserInfo userInfo = getWechatUserInfo();
+			vo.setOpenid(userInfo.getOpenid());
+			vo.setHeadImg(userInfo.getHeadimgurl());
+			vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
+			vo.setNickName(userInfo.getNickname());
+			ProductOrder view = courseService.addUPdateOrder(vo);
+			WechatBridge bridge = PayUtils.wechatUnifiedOrder(view.getProductName(), String.valueOf(view.getProductId()), 
+					view.getOrderNo(), AmountArithUtil.muiFloor(view.getTotalAmount(), 100), 
+					view.getTradeType(), userInfo.getOpenid());
+			bridge.setOrderNo(view.getOrderNo());
+			String realPath = request.getRealPath("/");
+			new Thread(new PosterImgExecutor(view.getOrderNo(), userInfo, realPath)).start();
+			CourseGroupOrderView orderView = courseService.selectCourseGroupOrder(userInfo.getOpenid(), view.getOrderNo()).get(0);
+			TemplateUtil.activitySignSucessMsg(view.getOrderNo(), orderView.getActivityAddr(), 
+					userInfo.getOpenid(), orderView.getEmerName(), orderView.getActivityName(), 
+					orderView.getStartDate());
+			/*TemplateUtil.activitySignSucessMsgToCustomer(view.getOrderNo(), orderView.getEmerMobile(), 
+					orderView.getEmerName(), orderView.getActivityName(), orderView.getActivityNum(), 
+					orderView.getStartDate());*/
+			return new RspResult(StatusEnum.SUCCESS, bridge);
+		} catch (Exception e) {
+			logger.error("--jsonGroupCreate, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
 	}
 	
-	@RequestMapping("signorder/create")
+	/**
+	 * 单人报名订单创建
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping("sign/order/create")
 	@ResponseBody Object signOrderCreate(CourseSignVO vo) {
 		try {
 			WechatUserInfo userInfo = getWechatUserInfo();
@@ -167,7 +205,7 @@ public class CourseController extends BaseController {
 			vo.setHeadImg(userInfo.getHeadimgurl());
 			vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
 			vo.setNickName(userInfo.getNickname());
-			CourseSignVO view = courseService.addUPdateOrder(vo);
+			ProductOrder view = courseService.addUPdateOrder(vo);
 			Map<String, Object> map = new HashMap<>();
 			map.put("orderNo", view.getOrderNo());
 			map.put("productType", view.getProductType());
@@ -178,6 +216,13 @@ public class CourseController extends BaseController {
 		return new RspResult(StatusEnum.FAIL);
 	}
 	
+	/**
+	 * 组队创建页
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("group/create")
 	public String groupCreate(Model model) {
 		String orderNo = request.getParameter("orderNo");
@@ -199,6 +244,13 @@ public class CourseController extends BaseController {
 		return "course/groupCreate";
 	}
 	
+	/**
+	 * 成员加入页
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("group/merber")
 	public String groupMerber(Model model) {
 		String orderNo = request.getParameter("oNo");
@@ -216,6 +268,13 @@ public class CourseController extends BaseController {
 		return "course/groupCreate";
 	}
 	
+	/**
+	 * 新增成员
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param info
+	 * @return
+	 */
 	@RequestMapping("json/group/addMember")
 	@ResponseBody Object groupAddMember(ChildSignInfo info){
 		WechatUserInfo userInfo = getWechatUserInfo();
@@ -242,6 +301,14 @@ public class CourseController extends BaseController {
 		return new RspResult(StatusEnum.SUCCESS, map);
 	}
 	
+	/**
+	 * 新增成员页
+	 * @auther 胡启萌
+	 * @Date 2017年4月14日
+	 * @param model
+	 * @param orderNo
+	 * @return
+	 */
 	@RequestMapping("group/add/{orderNo}")
 	public String groupAdd(Model model, @PathVariable String orderNo) {
 		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
@@ -250,7 +317,7 @@ public class CourseController extends BaseController {
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("childList", childList);
 		model.addAttribute("orderNo", orderNo);
-		model.addAttribute("isPayed", productOrder.getOrderStatus().equals(OrderStatusEnum.SUCCESS) ? 1 : 0);
+		model.addAttribute("isPayed", productOrder.getOrderStatus().equals(OrderStatusEnum.SUCCESS.getCode()) ? 1 : 0);
 		return "course/groupAdd";
 	}
 	

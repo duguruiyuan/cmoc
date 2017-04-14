@@ -20,6 +20,7 @@ public class DateUtil {
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public static final String DEFAULT_DATE_FORMAT1 = "yyyy-MM-dd HH:mm";
 	public static final String DEFAULT_DATE_FORMAT2 = "yyyy年MM月dd日 HH:mm";
+	public static final String DEFAULT_DATE_FORMAT3="yyyyMMddHHmmss";
 	public static final String DATE_FORMAT = "yyyyMMdd";
 	public static final String DATE_FORMAT1 = "yyyy/MM/dd";
 	public static final String DATE_MD_FORMAT = "MM月dd日";
@@ -106,8 +107,14 @@ public class DateUtil {
         }
 	}
 	
+	public static String addDayDateToStr(Date date, int day, String pattern) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH, day);
+		return new SimpleDateFormat(pattern).format(calendar.getTime());
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(getYear(new Date()));
-		System.out.println(getMonth(new Date()));
+		System.out.println(addDayDateToStr(new Date(), 3, DateUtil.DEFAULT_DATE_FORMAT3));
 	}
 }

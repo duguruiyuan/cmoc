@@ -60,7 +60,6 @@ function loadData() {
 			field : 'courseName',
 			title : '课程名称',
 			align : "center",
-			width : 200,
 			resizable : true,
 			formatter : function(value) {
 				return "<span title='" + value + "'>" + value + "</span>";

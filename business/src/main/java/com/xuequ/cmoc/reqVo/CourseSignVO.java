@@ -20,6 +20,10 @@ public class CourseSignVO extends ChildSignInfo {
 	
 	private String nickName;
 	
+	private String productName;
+	
+	private String tradeType;
+	
 	public String getOpenid() {
 		return openid;
 	}
@@ -74,6 +78,22 @@ public class CourseSignVO extends ChildSignInfo {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getTradeType() {
+		return tradeType;
+	}
+
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
 	}
 
 }

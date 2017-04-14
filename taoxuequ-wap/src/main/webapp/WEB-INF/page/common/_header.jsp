@@ -36,6 +36,7 @@
 <script src="<%=basePath %>/js/plugins/wechat-config.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/plugins/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
 <script src="<%=basePath %>/js/common.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
+<script src="<%=basePath %>/js/pay.js?v=${config.version}" type="text/javascript" charset="utf-8"></script>
 <script>mui.init();</script>
 <!-- <script>
 	var _hmt = _hmt || [];
