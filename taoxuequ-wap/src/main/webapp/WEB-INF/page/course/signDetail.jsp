@@ -150,7 +150,7 @@
 			 		async : false,
 			 		success : function(data) {
 			 			if(data.code == '000') {
-			 				window.location.href=basePath + "/pay/detail?" + data.data;
+			 				window.location.href=basePath + "/pay/detail?ono=" + data.data.orderNo;
 			 			}else {
 			 				mui.alert(data.msg,'消息提示');
 			 			}

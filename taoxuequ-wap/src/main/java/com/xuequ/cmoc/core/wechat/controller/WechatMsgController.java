@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.WechatConfigure;
+import com.xuequ.cmoc.common.enums.OrderStatusEnum;
+import com.xuequ.cmoc.common.enums.PayType;
+import com.xuequ.cmoc.common.enums.RefundStatusEnum;
+import com.xuequ.cmoc.common.enums.ResultCode;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.common.enums.TradeState;
 import com.xuequ.cmoc.controller.BaseController;
 import com.xuequ.cmoc.core.wechat.common.Constants;
 import com.xuequ.cmoc.core.wechat.template.Data_Add;
@@ -32,9 +37,17 @@ import com.xuequ.cmoc.core.wechat.utils.TemplateUtil;
 import com.xuequ.cmoc.core.wechat.utils.WechatUtils;
 import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.HollowManInfo;
+import com.xuequ.cmoc.model.ProductOrder;
+import com.xuequ.cmoc.model.ProductRefundOrder;
+import com.xuequ.cmoc.pay.wepay.WXPay;
+import com.xuequ.cmoc.pay.wepay.common.Configure;
+import com.xuequ.cmoc.pay.wepay.protocol.refundProtocol.RefundReqData;
+import com.xuequ.cmoc.pay.wepay.protocol.refundProtocol.RefundResData;
 import com.xuequ.cmoc.service.IActivityHmService;
 import com.xuequ.cmoc.service.IHollowManService;
 import com.xuequ.cmoc.service.IProductOrderService;
+import com.xuequ.cmoc.service.IProductRefundOrderService;
+import com.xuequ.cmoc.utils.AmountArithUtil;
 import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.HttpClientUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
@@ -56,16 +69,94 @@ public class WechatMsgController extends BaseController{
 	private IActivityHmService activityHmService;
 	@Autowired
 	private IProductOrderService productOrderService;
+	@Autowired
+	private IProductRefundOrderService productRefundOrderService;
 	
+	/**
+	 * 订单退款
+	 * @auther 胡启萌
+	 * @Date 2017年4月17日
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping(value="orderRefundMsg", method = RequestMethod.POST)  
+    @ResponseBody Object orderRefund(@RequestBody AuditReqVO vo) { 
+		try {
+			if(vo != null) {
+				ProductOrder productOrder = productOrderService.selectById(Integer.valueOf(vo.getIds()));
+				if(productOrder != null) {
+					ProductRefundOrder refundOrder = new ProductRefundOrder();
+					refundOrder.setOutRefundNo(StringUtil.getCourseOrderNum(productOrder.getCustId()));
+	        		refundOrder.setOutTradeNo(productOrder.getOrderNo());
+	        		refundOrder.setTransNo(productOrder.getTransNo());
+	        		refundOrder.setTotalFee(productOrder.getTotalAmount());
+	        		refundOrder.setRefundFee(productOrder.getResAmount());
+	        		refundOrder.setOrderStatus(RefundStatusEnum.HANDING.getCode());
+	        		refundOrder.setRefundSubmitTime(new Date());
+	        		productRefundOrderService.insertSelective(refundOrder);
+					RefundReqData reqData = new RefundReqData(
+							refundOrder.getTransNo(), 
+							refundOrder.getOutTradeNo(), 
+							Configure.DEVICE_INFO, 
+							refundOrder.getOutRefundNo(), 
+							AmountArithUtil.muiFloor(refundOrder.getTotalFee(), 100), 
+							AmountArithUtil.muiFloor(refundOrder.getRefundFee(), 100));
+					
+					RefundResData resData = WXPay.requestRefundService(reqData);
+					
+					refundOrder.setRefundCallbackTime(new Date());
+					refundOrder.setReturnCode(resData.getResult_code());
+					if(resData.getReturn_code().equals(ResultCode.SUCCESS.getCode())) {
+			        	if(resData.getResult_code().equals(ResultCode.SUCCESS.getCode())) {
+			        		refundOrder.setRefundNo(resData.getRefund_id());
+			        	}else {
+			        		refundOrder.setErrCode(resData.getErr_code());
+			        		refundOrder.setErrorReason(resData.getErr_code_des());
+			        		refundOrder.setOrderStatus(RefundStatusEnum.FAIL.getCode());
+						}
+			        }else {
+		        		refundOrder.setReturnMsg(resData.getReturn_msg());
+		        		refundOrder.setOrderStatus(RefundStatusEnum.FAIL.getCode());
+			        }
+					productRefundOrderService.updateByPrimaryKeySelective(refundOrder);
+					if(refundOrder.getOrderStatus().equals(RefundStatusEnum.HANDING.getCode())) {
+						ProductOrder order = productOrderService.selectByOrderNo(refundOrder.getOutTradeNo());
+						order.setOrderStatus(OrderStatusEnum.REFUND_HANDING.getCode());
+						order.setUpdateTime(new Date());
+						productOrderService.updateById(order);
+						//退款通知模板
+						TemplateUtil.orderRefundApplyMsg(order.getOrderNo(), order.getOpenid(), refundOrder.getRefundFee());
+					}
+					return new RspResult(StatusEnum.SUCCESS, resData);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("--orderRefund, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	/**
+	 * 订单支付成功提醒
+	 * @auther 胡启萌
+	 * @Date 2017年4月17日
+	 * @param vo
+	 * @return
+	 */
 	@RequestMapping(value="paySucessMsg", method = RequestMethod.POST)
 	@ResponseBody Object paySucessMsg(@RequestBody CourseSignOrderView vo) {
-		if(StringUtils.isBlank(Constants.BASEPATH)) Constants.BASEPATH = RequestUtil.getBasePath(request);
 		try {
 			CourseSignOrderView view = productOrderService.selectCourseSignOrderByOrderId(vo.getOrderId());
 			if(view != null) {
-				TemplateUtil.courseOrderPaySucessMsg(vo.getPaySubmitTime(), vo.getOrderNo(), 
-						vo.getOpenid(), vo.getSignName(), vo.getActivityName(), 
-						vo.getActivityNum(), vo.getActivityStartDate(), vo.getTotalPrice());
+				if(view.getSignWay() == 1) {
+					TemplateUtil.courseOrderPaySucessMsg(vo.getPaySubmitTime(), vo.getOrderNo(), 
+							vo.getOpenid(), vo.getSignName(), vo.getActivityName(), 
+							vo.getActivityNum(), vo.getActivityStartDate(), vo.getTotalPrice());
+				}else {
+					TemplateUtil.courseOrderPaySucessMsg(vo.getPaySubmitTime(), vo.getOrderNo(), 
+							vo.getOpenid(), vo.getSignName(), vo.getCourseName(), 
+							null, null, vo.getResAmount());
+				}
 			}
 		} catch (Exception e) {
 			logger.error("--paySucessMsg, error={}", e);
@@ -73,9 +164,15 @@ public class WechatMsgController extends BaseController{
 		return new RspResult(StatusEnum.FAIL);
 	}
 	
+	/**
+	 * 透明人注册成功提醒
+	 * @auther 胡启萌
+	 * @Date 2017年4月17日
+	 * @param vo
+	 * @return
+	 */
 	@RequestMapping(value="hmRegMsg", method = RequestMethod.POST)  
     @ResponseBody Object hmRegMsg(@RequestBody AuditReqVO vo) { 
-		if(StringUtils.isBlank(Constants.BASEPATH)) Constants.BASEPATH = RequestUtil.getBasePath(request);
 		try {
 			if(vo != null) {
 				List<Integer> list = new ArrayList<>();
@@ -94,9 +191,15 @@ public class WechatMsgController extends BaseController{
 		return new RspResult(StatusEnum.FAIL);
 	}
 	
+	/**
+	 * 透明人报名成功提醒
+	 * @auther 胡启萌
+	 * @Date 2017年4月17日
+	 * @param vo
+	 * @return
+	 */
 	@RequestMapping(value="hmSignMsg", method = RequestMethod.POST)
 	@ResponseBody Object hmSignMsg(@RequestBody AuditReqVO vo) {
-		if(StringUtils.isBlank(Constants.BASEPATH)) Constants.BASEPATH = RequestUtil.getBasePath(request);
 		try {
 			if(vo != null) {
 				List<Integer> list = new ArrayList<>();

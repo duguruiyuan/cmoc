@@ -68,6 +68,7 @@
 	po.`create_time` orderCreateTime,
 	po.`pay_submit_time` paySubmitTime,
 	po.`total_amount` totalPrice,
+	po.`res_amount` resAmount,
 	po.`cust_id` custId,
 	po.`sign_name` signName,
 	po.`sign_phone` signPhone,
@@ -115,6 +116,9 @@
 	where 1 = 1
 	<if test="params.orderStatus != null">
 		and po.`order_status` = #{params.orderStatus,jdbcType=VARCHAR}
+	</if>
+	<if test="params.orderStatus == null">
+		and po.`order_status` in ('000','001','004','005','006')
 	</if>
 	<if test="params.courseId != null">
 		and ci.`id` = #{params.courseId,jdbcType=INTEGER}
@@ -451,5 +455,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-
+  <update id="updateInvalidOrder">
+  	UPDATE t_product_order t 
+  	SET 
+  	order_status = '004', 
+  	update_Time = NOW() 
+  	WHERE t.`order_status` = '001' AND 
+  	t.`create_time` >= DATE_SUB(NOW(),INTERVAL 3 DAY);
+  </update>
 </mapper>

@@ -33,7 +33,13 @@
 				<p>支付金额：<span class="price">¥<label>${productOrder.totalAmount }</label></span></p>
 			</c:otherwise>
 		</c:choose>
-	 	
+	 	<p>支付时间：<fmt:formatDate value="${productOrder.paySubmitTime}" type="date" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+	 	<p><c:choose>
+			<c:when test="${productOrder.orderStatus == '000' }">订单状态：<span style="color: green;">支付成功</span></c:when>
+			<c:when test="${productOrder.orderStatus == '004' }">订单状态：<span style="color: gray;">失效</span></c:when>
+			<c:when test="${productOrder.orderStatus == '005' }">订单状态：<span>退款中</span></c:when>
+			<c:when test="${productOrder.orderStatus == '006' }">订单状态：<span style="color: red;">已退款</span></c:when>
+		</c:choose></p>
     </div>
 	<div class="payGrid" style="position: inherit;">
 		<div class="payGrid-content">

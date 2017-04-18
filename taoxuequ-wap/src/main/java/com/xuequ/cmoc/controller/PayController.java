@@ -25,6 +25,7 @@ import com.xuequ.cmoc.common.enums.StatusEnum;
 import com.xuequ.cmoc.common.enums.TradeState;
 import com.xuequ.cmoc.common.enums.TradeType;
 import com.xuequ.cmoc.core.wechat.utils.SerializeXmlUtil;
+import com.xuequ.cmoc.core.wechat.utils.TemplateUtil;
 import com.xuequ.cmoc.model.ActivityInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.ProductOrder;
@@ -39,6 +40,7 @@ import com.xuequ.cmoc.utils.AmountArithUtil;
 import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.OrderEncryptUtils;
 import com.xuequ.cmoc.utils.PayUtils;
+import com.xuequ.cmoc.view.CourseSignOrderView;
 
 @Controller
 public class PayController extends BaseController{
@@ -54,28 +56,25 @@ public class PayController extends BaseController{
 
 	@RequestMapping("pay/detail")
 	public String wechatPay(Model model) {
-		String orderNo = request.getParameter("orderNo");
-		String productType = request.getParameter("productType");
-		String key = request.getParameter("key");
-		if(StringUtils.isBlank(orderNo) || StringUtils.isBlank(productType) || 
-				StringUtils.isBlank(key)) {
+		WechatUserInfo userInfo = getWechatUserInfo();
+		String orderNo = request.getParameter("ono");
+		ProductOrder order = productOrderService.selectByOrderNo(orderNo);
+		if(!(order != null && StringUtils.isNotBlank(orderNo) 
+				&& order.getOpenid().equals(userInfo.getOpenid()))) {
 			model.addAttribute("error", StatusEnum.PARAM_FAIL.getMsg());
 		}else {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("orderNo", orderNo);
-			map.put("productType", productType);
-			if(!OrderEncryptUtils.isCompare(map, key)) {
-				model.addAttribute("error", StatusEnum.ORDER_WARN.getMsg());
-			}else {
-				model.addAttribute("order", productOrderService.selectByOrderNo(orderNo));
-			}
+			model.addAttribute("order", order);
 		}
 		return "pay/detail";
 	}
 	
 	@RequestMapping("pay/result/{orderNo}")
-	public Object payResult(Model model, @PathVariable String orderNo) {
+	public String payResult(Model model, @PathVariable String orderNo) {
 		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
+		WechatUserInfo userInfo = getWechatUserInfo();
+		if(productOrder != null && !productOrder.getOpenid().equals(userInfo.getOpenid())) {
+			return null;
+		}
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(productOrder.getProductId());
 		if(courseInfo.getSignWay() == 1) {
 			ActivityInfo activityInfo = activityService.selectById(productOrder.getActivityId());
@@ -91,7 +90,8 @@ public class PayController extends BaseController{
 		try {
 			WechatUserInfo userInfo = getWechatUserInfo();
 			ProductOrder view = productOrderService.selectByOrderNo(vo.getOrderNo());
-			WechatBridge bridge = PayUtils.wechatUnifiedOrder(view.getProductName(), String.valueOf(view.getProductId()), 
+			CourseInfo courseInfo = courseService.selectByPrimaryKey(view.getProductId());
+			WechatBridge bridge = PayUtils.wechatUnifiedOrder(courseInfo.getCourseName(), String.valueOf(view.getProductId()), 
 					view.getOrderNo(), AmountArithUtil.muiFloor(view.getResAmount(), 100), 
 					TradeType.JSAPI.getCode(), userInfo.getOpenid());
 			bridge.setOrderNo(view.getOrderNo());
@@ -138,6 +138,23 @@ public class PayController extends BaseController{
 	        	order.setErrorReason(resData.getReturn_msg());
 	        }
 	        productOrderService.updateById(order);
+	        CourseSignOrderView view = productOrderService.selectCourseSignOrderByOrderId(order.getId());
+			if(view != null) {
+				if(view.getSignWay() == 1) {
+					TemplateUtil.courseOrderPaySucessMsg(view.getPaySubmitTime(), view.getOrderNo(), 
+							view.getOpenid(), view.getSignName(), view.getActivityName(), 
+							view.getActivityNum(), view.getActivityStartDate(), view.getTotalPrice());
+					TemplateUtil.activitySignSucessMsgToCustomer(view.getOrderNo(), view.getSignPhone(), 
+							view.getSignName(), view.getActivityName(), view.getActivityNum(), 
+							view.getActivityStartDate());
+				}else {
+					TemplateUtil.courseOrderPaySucessMsg(view.getPaySubmitTime(), view.getOrderNo(), 
+							view.getOpenid(), view.getSignName(), view.getCourseName(), 
+							null, null, view.getResAmount());
+					TemplateUtil.activitySignSucessMsgToCustomer(view.getOrderNo(), view.getSignPhone(), 
+							view.getSignName(), view.getCourseName(), null, null);
+				}
+			}
 	        response.getWriter().write("SUCCESS");
 		} catch (Exception e) {
 			e.printStackTrace();

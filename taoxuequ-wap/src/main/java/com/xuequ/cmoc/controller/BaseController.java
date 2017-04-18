@@ -41,6 +41,7 @@ import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.service.ISysDictService;
 import com.xuequ.cmoc.utils.ImageUtils;
 import com.xuequ.cmoc.utils.QRCoderUtils;
+import com.xuequ.cmoc.utils.RequestUtil;
 import com.xuequ.cmoc.utils.TextUtil;
 import com.xuequ.cmoc.vo.ImageSynthesisVo;
 
@@ -81,6 +82,13 @@ public class BaseController {
 	@ModelAttribute("config")
 	protected Configuration configInstance() {
 		return Configuration.getInstance();
+	}
+	
+	@ModelAttribute
+	protected void basePath() {
+		if(StringUtils.isBlank(Constants.BASEPATH)) {
+			Constants.BASEPATH = RequestUtil.getBasePath(request);
+		}
 	}
 	
 	public WechatUserInfo getWechatUserInfo() {

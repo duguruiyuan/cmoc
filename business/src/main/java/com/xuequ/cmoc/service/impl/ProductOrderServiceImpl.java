@@ -56,4 +56,9 @@ public class ProductOrderServiceImpl implements IProductOrderService {
 		return childSignInfoMapper.updateEffectByOrderNo(vo.getOrderNo());
 	}
 
+	@Override
+	public int updateInvalidOrder() {
+		return productOrderMapper.updateInvalidOrder();
+	}
+
 }

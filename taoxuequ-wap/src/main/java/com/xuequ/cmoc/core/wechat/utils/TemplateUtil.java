@@ -3,6 +3,7 @@ package com.xuequ.cmoc.core.wechat.utils;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +71,7 @@ public class TemplateUtil {
 	}
 	
 	/**
-	 * 
+	 * 活动报名成功提醒客服
 	 * @param orderNo
 	 * @param activityAddr
 	 * @param openid
@@ -87,7 +88,7 @@ public class TemplateUtil {
 		outputData.setTemplate_id(PropertiesUtil.getProperty("course_sign_success_template_id"));
 		TemplateDate templateDate = new TemplateDate();
 		Data_First first = new Data_First();
-		first.setValue("有新的客户预约，订单编号" + orderNo + "，请及时确认");
+		first.setValue("有新的客户已成功支付，订单编号" + orderNo + "，请及时确认");
 		
 		Data_Keyword keyword1 = new Data_Keyword();
 		keyword1.setColor("#173177");
@@ -99,7 +100,10 @@ public class TemplateUtil {
 		keyword3.setValue(DateUtil.dateToStr(new Date(), DateUtil.DEFAULT_DATE_FORMAT));
 		Data_Keyword keyword4 = new Data_Keyword();
 		keyword4.setColor("#173177");
-		keyword4.setValue(activityName + "|" + activityNum + "|" + DateUtil.dateToStr(startDate, DateUtil.DATE_FORMAT1));
+		String detail = activityName;
+		if(StringUtils.isNotBlank(activityNum)) detail += "|" + activityNum;
+		if(startDate != null) detail += "|" + DateUtil.dateToStr(startDate, DateUtil.DATE_FORMAT1);
+		keyword4.setValue(detail);
 		
 		Data_Remark remark = new Data_Remark();
 		remark.setValue("❀❀❀每天好心情，加油 加油 加油！❀❀❀");
@@ -189,7 +193,10 @@ public class TemplateUtil {
 		keyword1.setValue(orderNo);
 		Data_Keyword keyword2 = new Data_Keyword();
 		keyword2.setColor("#173177");
-		keyword2.setValue(activityName + "|" + activityNum + "|" + DateUtil.dateToStr(new Date(), DateUtil.DATE_FORMAT1));
+		String detail = activityName;
+		if(StringUtils.isNotBlank(activityNum)) detail += "|" + activityNum;
+		if(startDate != null) detail += "|" + DateUtil.dateToStr(startDate, DateUtil.DATE_FORMAT1);
+		keyword2.setValue(detail);
 		Data_Keyword keyword3 = new Data_Keyword();
 		keyword3.setColor("#173177");
 		keyword3.setValue("人民币" + price + "元");
@@ -197,7 +204,8 @@ public class TemplateUtil {
 		keyword4.setColor("#173177");
 		keyword4.setValue(DateUtil.dateToStr(payDate, DateUtil.DEFAULT_DATE_FORMAT2));
 		Data_Remark remark = new Data_Remark();
-		remark.setValue("如果您有什么问题，请直接拨打18027274621或者直接在陶学趣公众号回复“客服”会有客户人员来解答。谢谢！");
+		remark.setValue("❀❀❀欢迎使用陶学趣公众号***\n↓↓↓如果您有什么问题，请点击【详情】联系客服。谢谢！❀❀❀");
+		outputData.setUrl(Constants.BASEPATH + "/pay/result/" + orderNo);
 		templateDate.setFirst(first);
 		templateDate.setKeyword1(keyword1);
 		templateDate.setKeyword2(keyword2);
@@ -214,6 +222,64 @@ public class TemplateUtil {
 		}
 	}
 	
+	/**
+	 * 订单退款申请提醒
+	 * @auther 胡启萌
+	 * @Date 2017年4月17日
+	 * @param orderNo
+	 * @param openid
+	 * @param price
+	 */
+	public static void orderRefundApplyMsg(String orderNo, String openid, BigDecimal price) {
+		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
+				WechatUtils.getAccessToken());
+		OutputTemateData outputData = new OutputTemateData();
+		outputData.setTouser(openid);
+		outputData.setTemplate_id(PropertiesUtil.getProperty("order_success_template_id"));
+		TemplateDate templateDate = new TemplateDate();
+		Data_First first = new Data_First();
+		first.setValue("您的退款申请已提交。");
+		Data_Keyword keyword1 = new Data_Keyword();
+		keyword1.setColor("#173177");
+		keyword1.setValue(orderNo);
+		Data_Keyword keyword2 = new Data_Keyword();
+		keyword2.setColor("#173177");
+		keyword2.setValue("人民币" + price + "元");
+		Data_Keyword keyword3 = new Data_Keyword();
+		keyword3.setColor("#173177");
+		keyword3.setValue("退回原支付方");
+		Data_Keyword keyword4 = new Data_Keyword();
+		keyword4.setColor("#173177");
+		keyword4.setValue("3-7个工作日");
+		Data_Remark remark = new Data_Remark();
+		remark.setValue("❀❀❀欢迎使用陶学趣公众号***\n↓↓↓如果您有什么问题，请点击【详情】联系客服。谢谢！❀❀❀");
+		outputData.setUrl(Constants.BASEPATH + "/pay/result/" + orderNo);
+		templateDate.setFirst(first);
+		templateDate.setKeyword1(keyword1);
+		templateDate.setKeyword2(keyword2);
+		templateDate.setKeyword3(keyword3);
+		templateDate.setKeyword4(keyword4);
+		templateDate.setRemark(remark);
+		outputData.setData(templateDate);
+		try {
+			String json = JSONObject.toJSONString(outputData);
+			json = json.replace("clazz", "class");
+			HttpClientUtils.postStringJosn(url, json);
+		} catch (Exception e) {
+			logger.error("--courseOrderPaySucessMsg, error={}", e);
+		}
+	}
+	
+	/**
+	 * 加入队伍成功提醒
+	 * @auther 胡启萌
+	 * @Date 2017年4月16日
+	 * @param childId
+	 * @param marineName
+	 * @param openid
+	 * @param emerName
+	 * @param orderNo
+	 */
 	public static void accessSucessMsg(Integer childId, String marineName, String openid, String emerName, String orderNo) {
 		String url = TextUtil.format(WechatConfigure.getInstance().getTemplateMsg(), 
 				WechatUtils.getAccessToken());

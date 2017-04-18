@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,18 +25,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xuequ.cmoc.common.Configuration;
 import com.xuequ.cmoc.common.Const;
 import com.xuequ.cmoc.common.Constants;
 import com.xuequ.cmoc.common.RspResult;
 import com.xuequ.cmoc.common.enums.OrderStatusEnum;
+import com.xuequ.cmoc.common.enums.RefundStatusEnum;
+import com.xuequ.cmoc.common.enums.ResultCode;
 import com.xuequ.cmoc.common.enums.StatusEnum;
+import com.xuequ.cmoc.model.AuditReqVO;
 import com.xuequ.cmoc.model.ChildSignInfo;
 import com.xuequ.cmoc.model.CourseInfo;
 import com.xuequ.cmoc.model.Grid;
 import com.xuequ.cmoc.model.ProductOrder;
 import com.xuequ.cmoc.model.SysUser;
 import com.xuequ.cmoc.page.Page;
+import com.xuequ.cmoc.pay.wepay.protocol.refundProtocol.RefundResData;
 import com.xuequ.cmoc.reqVo.CourseSignOrderVO;
 import com.xuequ.cmoc.service.IChildSignInfoService;
 import com.xuequ.cmoc.service.ICourseService;
@@ -43,8 +49,11 @@ import com.xuequ.cmoc.service.IProductOrderService;
 import com.xuequ.cmoc.thread.WechatMsgCallback;
 import com.xuequ.cmoc.utils.BeanUtils;
 import com.xuequ.cmoc.utils.CellUtil;
+import com.xuequ.cmoc.utils.DateUtil;
 import com.xuequ.cmoc.utils.ExcelExportUtil;
 import com.xuequ.cmoc.utils.ExportSetInfoUtil;
+import com.xuequ.cmoc.utils.HttpClientUtils;
+import com.xuequ.cmoc.utils.JsonUtils;
 import com.xuequ.cmoc.utils.PropertiesUtil;
 import com.xuequ.cmoc.utils.ValidatorUtil;
 import com.xuequ.cmoc.view.ChildSignView;
@@ -118,6 +127,41 @@ public class CourseManageController extends BaseController{
 				}
 			}
 			return new RspResult(StatusEnum.SUCCESS);
+		} catch (Exception e) {
+			logger.error("--orderConfirmPay, error={}", e);
+		}
+		return new RspResult(StatusEnum.FAIL);
+	}
+	
+	@RequestMapping("json/order/refund")
+	@ResponseBody Object orderRefundPay(Integer orderId) {
+		try {
+			ProductOrder order = productOrderService.selectById(orderId);
+			if(order != null) {
+				if(!order.getOrderStatus().equals(OrderStatusEnum.SUCCESS.getCode())) {
+					return new RspResult(StatusEnum.EXPIRED_DATA);
+				}
+				if(DateUtil.compare(new Date(), DateUtil.addDay(order.getPayCallbackTime(), 3)) >= 0) {
+					return new RspResult(StatusEnum.ORDER_OVER_TIME);
+				}
+				String url = PropertiesUtil.getProperty(Configuration.getInstance().getEnv() + "_orderRefundMsg");
+				AuditReqVO reqVO = new AuditReqVO();
+				reqVO.setIds(String.valueOf(order.getId()));
+				String result = HttpClientUtils.postJson(url, reqVO);
+				RspResult rspResult = JsonUtils.jsonToObject(result, RspResult.class);
+				if(rspResult.getCode().equals(StatusEnum.SUCCESS.getCode())) {
+					RefundResData resData = JsonUtils.mapToObject((LinkedHashMap<String, Object>)rspResult.getData(), RefundResData.class);
+					if(resData.getReturn_code().equals(ResultCode.SUCCESS.getCode())) {
+			        	if(resData.getResult_code().equals(ResultCode.SUCCESS.getCode())) {
+			        		return new RspResult(StatusEnum.SUCCESS);
+			        	}else {
+			        		return new RspResult(StatusEnum.ORDER_EXCEPTION, resData.getErr_code_des());
+						}
+			        }else {
+		        		return new RspResult(StatusEnum.ORDER_EXCEPTION, resData.getReturn_msg());
+			        }
+				}
+			}
 		} catch (Exception e) {
 			logger.error("--orderConfirmPay, error={}", e);
 		}

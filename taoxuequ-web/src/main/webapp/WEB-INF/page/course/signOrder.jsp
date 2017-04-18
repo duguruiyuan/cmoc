@@ -39,6 +39,8 @@
 											<option value="">全部</option>
 											<option value="000">已支付</option>
 											<option value="001">未支付</option>
+											<option value="005">退款处理中</option>
+											<option value="006">已退款</option>
 										</select>
 									</td>
 									<td colspan="2">报名时间:  <input type="text" class="form-control1 Wdate" id="orderStartTime" name="orderStartTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'orderEndTime\')}',readOnly:true})">  至 

@@ -114,6 +114,13 @@ public class DateUtil {
 		return new SimpleDateFormat(pattern).format(calendar.getTime());
 	}
 	
+	public static Date addDay(Date date, int day) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH, day);
+		return calendar.getTime();
+	}
+	
 	public static void main(String[] args) {
 		System.out.println(addDayDateToStr(new Date(), 3, DateUtil.DEFAULT_DATE_FORMAT3));
 	}

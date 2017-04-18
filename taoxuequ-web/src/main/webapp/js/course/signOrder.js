@@ -1,5 +1,6 @@
 var buyRecordListUrl = basePath + "/course/json/signOrder/list";
 var orderConfirmPayUrl = basePath + "/course/json/order/confirmPay";
+var orderRefundUrl = basePath + "/course/json/order/refund";
 
 var dataGrid;
 $(function() {
@@ -41,10 +42,13 @@ function loadData() {
 			align : 'center',
 			formatter : function(value, row, index) {
 				var str = "";
-				if(row.orderStatus != '000') {
+				if(row.orderStatus == '000') {
+					if(row.signWay == 1) {
+						str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="uploadNamelist(\'{0}\');">上传名单</button>', index);
+					}
+					str += $.formatString('<button  type="button" class="btn btn-danger btn-xs" style="margin:4px 4px;" onclick="orderRefund(\'{0}\');">退款</button>', row.orderId, index);
+				}else if(row.orderStatus == '001') {
 					str += $.formatString('<button  type="button" class="btn btn-warning btn-xs" style="margin:4px 4px;" onclick="orderConfirmPay(\'{0}\');">确认支付</button>', row.orderId);
-				}else {
-					str += $.formatString('<button  type="button" class="btn btn-success btn-xs" style="margin:4px 4px;" onclick="uploadNamelist(\'{0}\');">上传名单</button>', index);
 				}
 				return str;
 			}
@@ -54,10 +58,14 @@ function loadData() {
 			align : "center",
 			resizable : true,
 			formatter: function(v) {
-				if(v == '000') {
-					return "已支付";
-				}
-				return "<span style='color: red;'>未支付</span>";
+				if(v == '000') return "<span style='color: green;'>已支付</span>";
+				if(v == '001') return "<span style='color: red;'>未支付</span>";
+				if(v == '002') return "支付失败";
+				if(v == '003') return "支付处理中";
+				if(v == '004') return "订单失效";
+				if(v == '005') return "退款中";
+				if(v == '006') return "已退款";
+				return "";
 			}
 		}, {
 			field : 'orderNo',
@@ -219,6 +227,36 @@ function orderConfirmPay(orderId) {
 						$.messager.alert('系统提示','确认成功', 'info');
 						loadData();
 					} else {
+						$.messager.alert('系统提示',data.msg, 'warning');
+					}
+				}
+			});
+		}
+	});
+}
+
+function orderRefund(orderId) {
+	$.messager.confirm('系统提示', '请再三确认，该订单是否确认退款？', function(r) {
+		if (r) {
+			$.ajax({
+				url : orderRefundUrl,
+				type : 'POST',
+				dataType:"json",
+				data : {
+					orderId: orderId
+				},
+				error : function() {
+					$.messager.alert('系统提示', '确认失败', 'error');
+				},
+				success : function(data) {
+					if (data.code == '000') {
+						$.messager.alert('系统提示','退款申请提交成功', 'info');
+						loadData();
+					} else {
+						if(data.code == '1024') {
+							$.messager.alert('系统提示',data.data, 'warning');
+							return;
+						}
 						$.messager.alert('系统提示',data.msg, 'warning');
 					}
 				}

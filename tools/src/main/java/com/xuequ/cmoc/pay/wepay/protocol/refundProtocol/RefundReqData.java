@@ -40,7 +40,7 @@ public class RefundReqData {
      * @param opUserID 操作员帐号, 默认为商户号
      * @param refundFeeType 货币类型，符合ISO 4217标准的三位字母代码，默认为CNY（人民币）
      */
-    public RefundReqData(String transactionID,String outTradeNo,String deviceInfo,String outRefundNo,int totalFee,int refundFee,String opUserID,String refundFeeType){
+    public RefundReqData(String transactionID,String outTradeNo,String deviceInfo,String outRefundNo,int totalFee,int refundFee){
 
         //微信分配的公众号ID（开通公众号之后可以获取到）
         setAppid(Configure.APPID);
@@ -63,8 +63,8 @@ public class RefundReqData {
 
         setRefund_fee(refundFee);
 
-        setOp_user_id(opUserID);
-
+        setOp_user_id(Configure.MCH_ID);
+        
         //随机字符串，不长于32 位
         setNonce_str(RandomStringGenerator.getRandomStringByLength(32));
 

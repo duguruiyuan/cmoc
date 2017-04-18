@@ -24,6 +24,8 @@ public class CourseSignVO extends ChildSignInfo {
 	
 	private String tradeType;
 	
+	private String orderNo;
+	
 	public String getOpenid() {
 		return openid;
 	}
@@ -94,6 +96,14 @@ public class CourseSignVO extends ChildSignInfo {
 
 	public void setTradeType(String tradeType) {
 		this.tradeType = tradeType;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 
 }

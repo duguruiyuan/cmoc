@@ -21,4 +21,12 @@ public interface IProductOrderService {
 	ProductOrder selectById(Integer id);
 	
 	int updateOrderConfirmPay(ProductOrder vo);
+	
+	/**
+     * 将订单状态修改为失效
+     * @auther 胡启萌
+     * @Date 2017年4月16日
+     * @return
+     */
+    int updateInvalidOrder();
 }

@@ -106,56 +106,73 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public ProductOrder addUPdateOrder(CourseSignVO info) {
-		String familyNo = childSignInfoMapper.selectFamilyNo(info);
-		if(StringUtils.isBlank(familyNo)) {
-			familyNo = sysCommonMapper.selectFamilyNoSeq();
-		}
-		ParentInfo parentInfo = parentInfoMapper.selectByOpenid(info.getOpenid());
-		if(parentInfo == null) {
-			parentInfo = new ParentInfo();
-			parentInfo.setOpenid(info.getOpenid());
-			parentInfo.setParentMobile(info.getEmerMobile());
-			parentInfo.setParentName(info.getEmerName());
-			parentInfo.setRelation(info.getSignRelation());
-			parentInfo.setFamilyNo(familyNo);
-			parentInfo.setCity(info.getCity());
-			parentInfo.setHeadImg(info.getHeadImg());
-			parentInfo.setNickName(info.getNickName());
-			parentInfoMapper.insertSelective(parentInfo);
-		}else {
-			parentInfo.setRelation(info.getSignRelation());
-			parentInfo.setCity(info.getCity());
-			parentInfo.setHeadImg(info.getHeadImg());
-			parentInfoMapper.updateByPrimaryKeySelective(parentInfo);
+		ProductOrder productOrder = null;
+		if(StringUtils.isNotBlank(info.getOrderNo())) {
+			productOrder = productOrderMapper.selectByOrderNo(info.getOrderNo());
+			if(!(productOrder != null && productOrder.getOpenid().equals(info.getOpenid()))) {
+				productOrder = null;
+			}
 		}
 		CourseInfo courseInfo = courseInfoMapper.selectByPrimaryKey(info.getProductId());
-		ProductOrder order = new ProductOrder();
-		order.setSignName(info.getEmerName());
-		order.setSignPhone(info.getEmerMobile());
-		order.setOpenid(info.getOpenid());
-		order.setOrderNo(StringUtil.getCourseOrderNum(parentInfo.getId()));
-		order.setResAmount(courseInfo.getResAmount());
-		order.setTotalAmount(courseInfo.getTotalPrice());
-		order.setCustId(parentInfo.getId());
-		order.setProductId(courseInfo.getId());
-		order.setProductType(ProductTypeEnum.COURSE.getCode());
-		order.setChannel(info.getChannel());
-		order.setActivityId(info.getActivityId());
-		order.setPaySubmitTime(new Date());
-		if(StringUtils.isNotBlank(info.getChannel()) && info.getChannel().equals(PayType.WEIXIN.getCode())) {
-			order.setTradeType(TradeType.JSAPI.getCode());
+		if(productOrder == null) {
+			String familyNo = childSignInfoMapper.selectFamilyNo(info);
+			if(StringUtils.isBlank(familyNo)) {
+				familyNo = sysCommonMapper.selectFamilyNoSeq();
+			}
+			ParentInfo parentInfo = parentInfoMapper.selectByOpenid(info.getOpenid());
+			if(parentInfo == null) {
+				parentInfo = new ParentInfo();
+				parentInfo.setOpenid(info.getOpenid());
+				parentInfo.setParentMobile(info.getEmerMobile());
+				parentInfo.setParentName(info.getEmerName());
+				parentInfo.setRelation(info.getSignRelation());
+				parentInfo.setFamilyNo(familyNo);
+				parentInfo.setCity(info.getCity());
+				parentInfo.setHeadImg(info.getHeadImg());
+				parentInfo.setNickName(info.getNickName());
+				parentInfoMapper.insertSelective(parentInfo);
+			}else {
+				parentInfo.setRelation(info.getSignRelation());
+				parentInfo.setCity(info.getCity());
+				parentInfo.setHeadImg(info.getHeadImg());
+				parentInfoMapper.updateByPrimaryKeySelective(parentInfo);
+			}
+			productOrder = new ProductOrder();
+			productOrder.setSignName(info.getEmerName());
+			productOrder.setSignPhone(info.getEmerMobile());
+			productOrder.setOpenid(info.getOpenid());
+			productOrder.setOrderNo(StringUtil.getCourseOrderNum(parentInfo.getId()));
+			productOrder.setResAmount(courseInfo.getResAmount());
+			productOrder.setTotalAmount(courseInfo.getTotalPrice());
+			productOrder.setCustId(parentInfo.getId());
+			productOrder.setProductId(courseInfo.getId());
+			productOrder.setProductType(ProductTypeEnum.COURSE.getCode());
+			productOrder.setChannel(info.getChannel());
+			productOrder.setActivityId(info.getActivityId());
+			productOrder.setPaySubmitTime(new Date());
+			if(StringUtils.isNotBlank(info.getChannel()) && info.getChannel().equals(PayType.WEIXIN.getCode())) {
+				productOrder.setTradeType(TradeType.JSAPI.getCode());
+			}
+			productOrderMapper.insertSelective(productOrder);
+			info.setParentId(parentInfo.getId());
+			info.setFamilyNo(familyNo);
+			info.setSignResource(SignResource.ONLINE.getCode());
+			info.setProductId(courseInfo.getId());
+			info.setOrderNo(productOrder.getOrderNo());
+			if(courseInfo.getSignWay() == 0) {
+				childSignInfoMapper.insertSelective(info);
+			}
+		}else {
+			productOrder.setSignName(info.getEmerName());
+			productOrder.setSignPhone(info.getEmerMobile());
+			if(StringUtils.isNotBlank(info.getChannel()) && info.getChannel().equals(PayType.WEIXIN.getCode())) {
+				productOrder.setTradeType(TradeType.JSAPI.getCode());
+			}
+			productOrder.setUpdateTime(new Date());
+			productOrderMapper.updateByPrimaryKeySelective(productOrder);
 		}
-		productOrderMapper.insertSelective(order);
-		info.setParentId(parentInfo.getId());
-		info.setFamilyNo(familyNo);
-		info.setSignResource(SignResource.ONLINE.getCode());
-		info.setProductId(courseInfo.getId());
-		info.setOrderNo(order.getOrderNo());
-		if(courseInfo.getSignWay() == 0) {
-			childSignInfoMapper.insertSelective(info);
-		}
-		order.setProductName(courseInfo.getCourseName());
-		return order;
+		productOrder.setProductName(courseInfo.getCourseName());
+		return productOrder;
 	}
 
 	@Override

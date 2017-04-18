@@ -28,8 +28,12 @@ public class BaseService{
         serviceRequest = (IServiceRequest) c.newInstance();
     }
 
-    protected String sendPost(Object xmlObj) throws UnrecoverableKeyException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+    protected String sendPost(Object xmlObj) throws Exception {
         return serviceRequest.sendPost(apiURL,xmlObj);
+    }
+    
+    protected String sendCertPost(Object xmlObj) throws Exception {
+    	return serviceRequest.sendCertPost(apiURL, xmlObj);
     }
     
     /**

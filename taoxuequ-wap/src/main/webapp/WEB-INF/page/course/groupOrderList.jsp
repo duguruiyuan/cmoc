@@ -36,7 +36,7 @@
 				<div style="float: right;margin-top: 10px;">
 					<c:choose>
 						<c:when test="${itm.orderStatus == '000' }"><span class="group-but2">已支付</span></c:when>
-						<c:otherwise><span class="group-but1" onclick="groupPay()">未付款 (转账支付)</span></c:otherwise>
+						<c:otherwise><span class="group-but1" onclick="groupPay('${itm.orderNo}')">未付款 (转账支付)</span></c:otherwise>
 					</c:choose>
 					<a href="<%=basePath%>/course/group/add/${itm.orderNo}"><span class="group-but2">管理队伍</span></a>
 				</div>

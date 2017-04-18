@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+%>
 <!doctype html>
 <html>
 
@@ -22,10 +28,10 @@
 		    	<table border="0" cellspacing="0" cellpadding="0">
 		    		<thead>
 			    		<tr>
-			    			<th class="mui-text-center">时间</th>
-			    			<th class="mui-text-center">项目名称</th>
-			    			<th class="mui-text-center">金额</th>
-			    			<th class="mui-text-center">状态</th>
+			    			<th class="mui-text-center" width="25%">时间</th>
+			    			<th class="mui-text-center" width="40%">项目名称</th>
+			    			<th class="mui-text-center" width="20%">金额</th>
+			    			<th class="mui-text-center" width="15%">状态</th>
 			    		</tr>
 		    		</thead>
 		    		<tbody>
@@ -46,7 +52,22 @@
 					    					</c:otherwise>
 					    				</c:choose>
 					    				<td class="mui-text-center">${itm.totalPrice }</td>
-					    				<td class="mui-text-center">${itm.orderStatus == '000' ? '已支付' : '未支付' }</td>
+					    				<td class="mui-text-center">
+					    					<c:choose>
+					    						<c:when test="${itm.orderStatus == '000' }"><a style="color: green;" href="<%=basePath%>/pay/result/${itm.orderNo}">已支付</a></c:when>
+					    						<c:when test="${itm.orderStatus == '001' }">
+					    							<c:if test="${itm.signWay == 1 }">
+					    								<a style="color: orange;" href="<%=basePath%>/course/sign/group?pid=${itm.courseId }&aid=${itm.activityId }&oid=${itm.orderNo }">未支付</a>
+					    							</c:if>
+					    							<c:if test="${itm.signWay == 0 }">
+					    								<a style="color: orange;" href="<%=basePath%>/pay/detail?ono=${itm.orderNo}">未支付</a>
+					    							</c:if>
+					    						</c:when>
+					    						<c:when test="${itm.orderStatus == '004' }"><span style="color: gray;">失效</span></c:when>
+					    						<c:when test="${itm.orderStatus == '005' }"><span>退款中</span></c:when>
+					    						<c:when test="${itm.orderStatus == '006' }"><span>已退款</span></c:when>
+					    					</c:choose>
+					    				</td>
 					    			</tr>
 				    			</c:forEach>
 				    		</c:otherwise>

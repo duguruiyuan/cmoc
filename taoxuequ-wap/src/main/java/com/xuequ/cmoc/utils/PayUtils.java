@@ -48,7 +48,6 @@ public class PayUtils {
 				String.valueOf(productId), 
 				openid);
 		UnifiedOrderResData unifiedOrderResData = WXPay.requestUnifiedOrderService(unifiedOrderReqData);
-		
 		WechatBridge bridge = new WechatBridge(WechatConfigure.getInstance().getAppid(), 
 				new Date().getTime(), RandomStringGenerator.getRandomStringByLength(32), 
 				"prepay_id=" + unifiedOrderResData.getPrepay_id(), "MD5");

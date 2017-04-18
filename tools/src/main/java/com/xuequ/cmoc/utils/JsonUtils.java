@@ -86,6 +86,24 @@ public class JsonUtils {
 	}
 	
 	/**
+	 * map转json
+	 * @auther 胡启萌
+	 * @Date 2017年4月17日
+	 * @param map
+	 * @param beanClass
+	 * @return
+	 * @throws Exception
+	 */
+	public static <T> T mapToObject(Map<String, Object> map, Class<T> beanClass)
+            throws Exception {
+        if (map == null)
+            return null;
+        Object obj = beanClass.newInstance();
+        org.apache.commons.beanutils.BeanUtils.populate(obj, map);
+        return (T) obj;
+    }
+	
+	/**
 	 * 集合转json字符串
 	 * @param list
 	 * @return

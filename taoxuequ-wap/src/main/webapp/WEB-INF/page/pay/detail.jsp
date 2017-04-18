@@ -68,35 +68,37 @@
 	</div>
 	<script type="text/javascript">
 		mui.init();
-		$("#regMT-btn").on("click",function() {
-			var channel = $("input[name='payType']:checked").val();
-			if(!payType) {
-				mui.alert("请选择支付方式",'消息提示');
-			}
-			if(payData != null) {
-				onBridgeReady(payData);
-				return;
-			}
-			$.ajax({
-		 		url : basePath + "/pay/sign",
-		 		type : "post",
-		 		data : {
-		 			channel: channel,
-		 			orderNo: '${order.orderNo}'
-		 		},
-		 		dataType : "json",
-		 		async : false,
-		 		success : function(data) {
-		 			if(data.code == '000') {
-		 				payData = data.data;
-		 				onBridgeReady(payData);
-		 			}else {
-		 				mui.alert(data.msg,'消息提示');
-		 			}
-		 		}, error:function(){
-		 			mui.alert("系统异常，请联系管理员",'消息提示');
-        		}
-		 	});
+		$(function() {
+			$("#regMT-btn").on("click",function() {
+				var channel = $("input[name='payType']:checked").val();
+				if(!channel) {
+					mui.alert("请选择支付方式",'消息提示');
+				}
+				if(payData != null) {
+					onBridgeReady(payData);
+					return;
+				}
+				$.ajax({
+			 		url : basePath + "/pay/sign",
+			 		type : "post",
+			 		data : {
+			 			channel: channel,
+			 			orderNo: '${order.orderNo}'
+			 		},
+			 		dataType : "json",
+			 		async : false,
+			 		success : function(data) {
+			 			if(data.code == '000') {
+			 				payData = data.data;
+			 				onBridgeReady(payData);
+			 			}else {
+			 				mui.alert(data.msg,'消息提示');
+			 			}
+			 		}, error:function(){
+			 			mui.alert("系统异常，请联系管理员",'消息提示');
+	        		}
+			 	});
+			});
 		});
 	</script>
 </body>

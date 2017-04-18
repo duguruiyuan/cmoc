@@ -34,11 +34,11 @@
 	<div class="mui-content">
 		<form id="courseSignForm" class="mui-form">
 			<div class="mui-textfield">
-				<input type="text" id="emerName">
+				<input type="text" id="emerName" value="${order.signName }">
 				<label>填写报名联系人</label>
 			</div>
 			<div class="mui-textfield">
-				<input type="text" id="emerMobile">
+				<input type="text" id="emerMobile" value="${order.signPhone }">
 				<label>填写联系电话</label>
 			</div>
 		</form>
@@ -163,7 +163,8 @@
 			 			emerMobile: emerMobile,
 			 			channel: channel,
 			 			productId: '${course.id}',
-			 			activityId: '${activityInfo.id}'
+			 			activityId: '${activityInfo.id}',
+			 			orderNo: '${order.orderNo}'
 			 		},
 			 		dataType : "json",
 			 		async : false,

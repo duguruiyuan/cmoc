@@ -79,14 +79,14 @@
 /*表格*/
 .tableList table{
 	width: 100%;
-	font-size: 12px;
+	font-size: 14px;
 	background-color: #fff;
 }
 .tableList thead th{
 	font-weight: normal;
 	color: #fff;
     height: 38px;
-    font-size: 13px;
+    font-size: 17px;
     background: rgba(76, 226, 127, .99);
 }
 .tableList tbody td{
@@ -2144,8 +2144,8 @@ color: #09BB07;
 }
 .group-add-tips{
 	display: inline-block;
-    height: 50px;
-    line-height: 50px;
+    height: auto;
+    line-height: 30px;
     padding-left: 10px;
     background: #EBC9C9;
     color: #8A1E1E;
@@ -2153,6 +2153,7 @@ color: #09BB07;
     font-weight: bold;
     width: 100%;
     border-radius: 0 0 5px 5px;
+    padding: 10px 0px 10px 10px;
 }
 .group-process{
     text-align: center;

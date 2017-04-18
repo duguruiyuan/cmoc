@@ -42,6 +42,11 @@
 	                     	<i class="fa fa-video-camera" style="color: #2CC33F"></i> 直播中心
 	                </a>
 	            </li>
+	            <li class="mui-table-view-cell">
+	                <a class="mui-navigate-right" href="<%=basePath%>/user/buyRecord">
+	                     	<i class="fa fa-opencart" style="color: #f3c90d"></i> 我的订单
+	                </a>
+	            </li>
 	        </ul>
 		</div>
 		<jsp:include page="/WEB-INF/page/common/_footer.jsp" />

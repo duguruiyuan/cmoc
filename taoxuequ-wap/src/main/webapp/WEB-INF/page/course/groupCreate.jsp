@@ -20,13 +20,11 @@
 	<header class="header">
 		队伍信息管理
 	</header>
-	<div class="mt44"></div>
-	<c:if test="${members == 0 }">
-		<div class="group-add-tips">
-			队伍尚未组建，请填写以下信息完成队伍组建
-			<c:if test="${isPay == 0 }"><a class="group-pay" href="javascript:void(0)" onclick="groupPay()">付款</a></c:if>
-		</div>
-	</c:if> 
+	<div class="group-add-tips mt44">
+		<c:if test="${members == 0 }">队伍尚未组建，填写以下信息完成队伍组建</c:if>
+		<c:if test="${isPay == 0 }"><a class="group-pay" href="javascript:void(0)" onclick="groupPay('${childInfo.orderNo}')">付款</a></c:if>
+		<c:if test="${wel }">请填写以下信息加入队伍</c:if>
+	</div>
 	<div class="group-process">
 		<span class="active">1.组建队伍</span>
 		<span> > </span>

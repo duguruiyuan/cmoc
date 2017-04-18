@@ -29,7 +29,7 @@
 			</c:when>
 			<c:otherwise>
 				本队伍尚未完成支付，请完成队伍支付。
-				<a class="group-pay" href="javascript:void(0)" onclick="groupPay()">付款</a>
+				<a class="group-pay" href="javascript:void(0)" onclick="groupPay('${orderNo}')">付款</a>
 			</c:otherwise>
 		</c:choose>
 	</div>

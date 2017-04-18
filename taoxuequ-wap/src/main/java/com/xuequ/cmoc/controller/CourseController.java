@@ -145,12 +145,15 @@ public class CourseController extends BaseController {
 	public String groupSign(Model model) {
 		Integer courseId = Integer.valueOf(request.getParameter("pid"));
 		Integer activityId = Integer.valueOf(request.getParameter("aid"));
+		String orderNo = request.getParameter("oid");
 		WechatUserInfo userInfo = getWechatUserInfo();
 		model.addAttribute(Constants.WECHAT_USERINFO, userInfo);
 		ActivityInfo activityInfo = activityService.selectById(activityId);
 		CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
+		ProductOrder productOrder = productOrderService.selectByOrderNo(orderNo);
 		model.addAttribute("activityInfo", activityInfo);
 		model.addAttribute("course", courseInfo);
+		model.addAttribute("order", productOrder);
 		return "course/groupSign";
 	}
 	
@@ -180,9 +183,6 @@ public class CourseController extends BaseController {
 			TemplateUtil.activitySignSucessMsg(view.getOrderNo(), orderView.getActivityAddr(), 
 					userInfo.getOpenid(), orderView.getEmerName(), orderView.getActivityName(), 
 					orderView.getStartDate());
-			/*TemplateUtil.activitySignSucessMsgToCustomer(view.getOrderNo(), orderView.getEmerMobile(), 
-					orderView.getEmerName(), orderView.getActivityName(), orderView.getActivityNum(), 
-					orderView.getStartDate());*/
 			return new RspResult(StatusEnum.SUCCESS, bridge);
 		} catch (Exception e) {
 			logger.error("--jsonGroupCreate, error={}", e);
@@ -206,10 +206,7 @@ public class CourseController extends BaseController {
 			vo.setCity(userInfo.getCountry() + " " + userInfo.getCity());
 			vo.setNickName(userInfo.getNickname());
 			ProductOrder view = courseService.addUPdateOrder(vo);
-			Map<String, Object> map = new HashMap<>();
-			map.put("orderNo", view.getOrderNo());
-			map.put("productType", view.getProductType());
-			return new RspResult(StatusEnum.SUCCESS, OrderEncryptUtils.getSignUrl(map));
+			return new RspResult(StatusEnum.SUCCESS, view);
 		} catch (Exception e) {
 			logger.error("--signOrderCreate, error={}", e);
 		}
@@ -265,6 +262,7 @@ public class CourseController extends BaseController {
 		model.addAttribute("course", courseInfo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("childInfo", childInfo);
+		model.addAttribute("wel", true);
 		return "course/groupCreate";
 	}
 	

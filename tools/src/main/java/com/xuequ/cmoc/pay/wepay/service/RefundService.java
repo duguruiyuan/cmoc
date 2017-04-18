@@ -33,7 +33,7 @@ public class RefundService extends BaseService{
     public RefundResData request(RefundReqData refundReqData) throws Exception {
     	long costTimeStart = System.currentTimeMillis();
     	
-    	String responseString = sendPost(refundReqData);
+    	String responseString = sendCertPost(refundReqData);
     	
     	long costTimeEnd = System.currentTimeMillis();
         long totalTimeCost = costTimeEnd - costTimeStart;
