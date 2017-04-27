@@ -54,7 +54,7 @@
 						</div>
 						<div class="mui-card-footer">
 							<div class="courseList-line1">{{activityName}}</div>
-							<div class="courseList-line2">[{{activityTypeValue}}] {{activityNum}} <span class="courseList-state">[{{statusFormat endDate}}]</span></div>
+							<div class="courseList-line2">[{{activityTypeFormat activityType}}] {{activityNum}} <span class="courseList-state">[{{statusFormat endDate}}]</span></div>
 							<div class="courseList-line3"><span class="clock-ico"></span>{{startDateFormat startDate}}</div>
 							<span class="courseList-text">直播</span>
 						</div>
@@ -208,7 +208,9 @@
 				        	}
 				    		return "已结束";
 				    	});
-				        
+				    	Handlebars.registerHelper("activityTypeFormat", function(val) {
+				    		return dictDataFormat("activity_type", val);
+				    	});
 				        Handlebars.registerHelper("activityImgFormat", function(activityImgUrl) {
 				        	if(activityImgUrl) {
 				        		return imgUrl + activityImgUrl;
